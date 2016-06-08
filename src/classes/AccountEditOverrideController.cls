@@ -24,7 +24,7 @@ public class AccountEditOverrideController {
                 thisAccount = new Account();
                 Apexpages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, e.getMessage()));
             }
-        //START: Code Review Implementation 2/12/2015 KLorica
+        //START: Code Review Implementation 2/12/2015 KLorica for testing only jcalma
         }
         //END: Code Review Implementation 2/12/2015 KLorica
     }
