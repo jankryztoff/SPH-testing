@@ -1,6 +1,6 @@
 @isTest(seeAllData = TRUE)
 public class AccountEditOverrideControllerTest {
-    /** for testing only jcalma
+    /**
      * Class Name: ContactNewOverrideControllerTest
      * @author: Jeffrey B. Teves
      * Date: 
