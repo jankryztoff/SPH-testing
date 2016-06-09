@@ -1,6 +1,10 @@
 @isTest(seeAllData = TRUE)
 public class AccountEditOverrideControllerTest {
-    /**
+<<<<<<< HEAD
+    /** testing jkrc
+=======
+    /** for testing jcalma
+>>>>>>> 91e97148123644126c96615fc64596acce6ae86e
      * Class Name: ContactNewOverrideControllerTest
      * @author: Jeffrey B. Teves
      * Date: 

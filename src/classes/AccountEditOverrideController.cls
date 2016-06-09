@@ -1,5 +1,9 @@
 public class AccountEditOverrideController {
-    /** 
+<<<<<<< HEAD
+    /** for testing jkrc
+=======
+    /** for testing jcalma
+>>>>>>> 91e97148123644126c96615fc64596acce6ae86e
      * Class Name: AccountEditOverrideController
      * @author: Marjorie Gaelo
      * Date: 
