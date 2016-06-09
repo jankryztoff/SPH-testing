@@ -1,0 +1,257 @@
+<!-- Start UD-3503 04Feb16 - reconstructed -->
+<apex:page controller="RenewalController" action="{!initializeMZ}" renderAs="pdf" applyBodyTag="false" standardStylesheets="false">
+    <head>
+        <style>
+            html {
+                font-size: 10pt;
+            }
+
+            #footer {
+                position: running(firstPageFooter);
+            }
+
+            @page {
+                size: A4 portrait;
+                margin-left: 45px;
+                margin-right: 45px;
+                margin-top: 100px;
+                margin-bottom: 95px;
+                @bottom-right { 
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-size: 10pt;
+                }
+            }
+
+            @page :first {
+                margin-top: 47px;
+                margin-right: 48px;
+                margin-bottom: 350px;
+                margin-left: 48px;
+                @bottom-left { content: element(firstPageFooter); }
+                @bottom-right { content: ""; }
+            }
+
+
+            table {
+                width: 100%;
+                padding: 0;
+            }
+
+            #table1 {
+                border: 0;
+                font-size: 10pt;
+            }
+
+            #table1 td {
+                vertical-align: top;
+            }
+
+            #table1 td:first-child {
+                width: 56%;
+            }
+
+            #table1 td:last-child {
+                width: 44%;
+            }
+
+            #sphAddressContainer {
+                font-size: 9pt;
+            }
+
+            #customerAddressContainer {
+                font-size: 9pt;
+                padding-left: 10mm;
+                padding-bottom: 8mm;
+            }
+
+            .checkBox {
+                font-family: Arial Unicode MS;
+            }
+
+            .hiddenRow {
+                display: none;
+            }
+
+            .content tr {
+                page-break-inside: avoid;
+            }
+            
+            .content th {
+                font-size: 10pt;
+                background-color: #ccc;
+                text-align: center;
+                padding-left: 3px;
+                border-top: 1px solid #000;
+                border-bottom: 1px solid #000;
+            }
+            
+            .content th:first-child {
+                border-left: 1px solid #000;
+            }
+
+            .content th.last {
+                border-right: 1px solid #000 !important;
+            }
+
+            .content th:first-child, .content td:first-child {
+                text-align: left !important;
+                width: 50% !important;
+            }
+
+
+            .content td, .content th {
+                text-align: center;
+                width: 12.5%;
+                padding: 3px;
+            }
+
+            .lineSeparator {
+                height: 1px;
+            }
+
+            .dashedBorderBottom {
+                border-bottom: 1px dashed #000;
+            }
+
+            .dashedBorderTop {
+                border-top: 1px dashed #000;
+            }
+
+            .pageBreaker {
+                page-break-before: always;
+            }
+
+
+            #succeedingContent {
+                -fs-table-paginate: paginate;
+            }
+
+            #renewal2ndPageNewspaperEnglishComponent {
+                font-size: 10pt !important;
+                font-name: Arial;
+            }
+        </style>
+    </head>
+    <apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+    <h2 style="font-size:23px;font-name:Arial;">Subscription {!notifAdvice} Advice</h2><br />
+    <table id="table1" cellspacing="0" style="margin-top:-10px">
+        <tr>
+            <td>  
+                DATE  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                <apex:outputText value="{0, date, dd/MM/yyyy}">
+                    <apex:param value="{!Today}" />
+                </apex:outputText>
+                <br/>    
+                Billing A/C No : {! billingAccountNumber}<br /><br /><br /><br />
+                <div id="customerAddressContainer">
+                    {!billingContactName}<br />
+                    <apex:outputText rendered="{! acct != '' && acct != null}">
+                        {!acct}<br/>
+                    </apex:outputText>
+                    <apex:outputtext escape="false" value="{!finalAddress}" />
+                    <div class='barcode' style="margin-top:1mm">
+                        <apex:outputPanel rendered="{!barChecker}">
+                            <apex:image url="{!URLFOR($Action.Attachment.Download, barcodeAttId)}" rendered="{!barChecker}" height="10mm" width="40mm"/>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <apex:image url="{!$Resource.SPHlogov2}" height="20mm" width="28.5mm" />
+                <div id="sphAddressContainer">
+                    <br/><b>Singapore Press Holdings Limited</b>
+                    <br/><b>Circulation</b>
+                    <br/>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+                    <br/>Enquiries: +65 6388  3838, Email: circs@sph.com.sg
+                    <br/>Co. Regn. No.: 198402868E
+                </div>
+            </td>
+        </tr>
+    </table>
+    <p>Thank you for subscribing to our publication/s in the past years.</p>
+    <p>
+        Your subscription is expiring soon. To renew your subscription, please complete the form below and mail all pages back to us with the attached envelope or fax all pages to us at (65) 6744 4875 or email us before 
+        <u>
+            <apex:outputText value="{0, date, dd/MM/yyyy}">
+                <apex:param value="{!dateOutput}" />
+            </apex:outputText>
+        </u>.
+    </p>
+    <p>
+        As part of our go green initiative, we will be sending acknowledgement letter via email.  Kindly update us your email address and contact number. <span class="checkBox">&#9744;</span> Please tick here if you wish to receive acknowledgement letter in hard copy.
+    </p>
+    <table cellspacing="0" style="style=margin-top:-5px">
+        <tr>
+            <td width="35%">Email : {!EmailAddress}</td>
+            <td width="21%">Tel: (H)  {!HomeNumber}</td>
+            <td width="21%">(O) {!OfficeNumber}</td>
+            <td width="21%">(Mobile) {!MobileNumber}</td>
+        </tr>
+    </table>
+    <p>Please ignore this advice if you have renewed all your subscription. We look forward to your continuous support.</p>
+    
+    <div id="footer">
+        <c:RenewalFooter Template="magazine" RecordAccountNumber="{!recAccountNum}" language="english" />
+    </div>
+     <table class="content" cellspacing="0">
+        <table style="font-size:10pt;border: solid 1px;background-color: #ccc;" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <thead >
+                        <tr>
+                            <th width="30%" align="left">Subscription &amp;<br/>Recipient Details</th>
+                            <th width="8%" align="center">Copy/s</th>
+                            <th width="8%" align="center">Last Issue</th>
+                            <th width="8%" align="center">1 Year Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Disc Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Please<br />Tick</th>
+                            <th width="8%" align="center">2-Year Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Disc Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Please<br />Tick</th>
+                        </tr>
+                    </thead>
+                </td>
+            </tr>
+        </table>
+        <tbody>
+            <tr>
+                <td colspan="9">
+                    <apex:outputText value="{!lineDetailGroupFirst}" escape="false" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pageBreaker">&nbsp;</div>
+   <c:Renewal2ndPageMagazineEnglish />
+    <div class="{!if(lineDetailGroupList.size >= 1, 'pageBreaker', 'hiddenRow')}">&nbsp;</div>
+    <table id="succeedingContent" class="{!if(lineDetailGroupList.size >= 1, '', 'hiddenRow')} content" cellspacing="0">
+         <table style="font-size:10pt;border: solid 1px;background-color: #ccc;" cellpadding="0" cellspacing="0" class="{!if(lineDetailGroupList.size >= 1, '', 'hiddenRow')} ">
+            <tr>
+                <td>
+                     <thead >
+                        <tr>
+                            <th width="30%" align="left">Subscription &amp;<br/>Recipient Details</th>
+                            <th width="8%" align="center">Copy/s</th>
+                            <th width="8%" align="center">Last Issue</th>
+                            <th width="8%" align="center">1 Year Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Disc Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Please<br />Tick</th>
+                            <th width="8%" align="center">2-Year Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Disc Sub<br />Rate S$</th>
+                            <th width="8%" align="center">Please<br />Tick</th>  
+                        </tr>
+                    </thead>
+              </td>
+            </tr>
+        </table>
+        <tbody>
+            <apex:repeat value="{!lineDetailGroupList}" var="line">
+            <tr>
+                <td colspan="9">
+                    <apex:outputText value="{!line}" escape="false" />
+                </td>
+            </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+</apex:page>

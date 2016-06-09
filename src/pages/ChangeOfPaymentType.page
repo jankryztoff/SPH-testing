@@ -1,0 +1,380 @@
+<!--History UD-0870 K. Tan 4.24.2015 / overhaul to include Change of Payment for ARMS--> 
+<apex:page controller="ChangeOfPaymentController" tabStyle="Case">
+        <!--START D-1174 3/13/15 MGaelo: ARMS pop up CSS-->       
+        <style type="text/css">         
+            .popup      
+            {       
+                background-color: white;        
+                border-width: 2px;      
+                border-style: solid;        
+                z-index: 9999;      
+                left: 37%;      
+                padding:10px;       
+                position: fixed;        
+                width: 300px;       
+                top:45%;        
+            }       
+                    
+            .popup01        
+            {       
+                background-color: white;        
+                border-width: 2px;      
+                border-style: solid;        
+                z-index: 9999;      
+                left: 15%;      
+                padding:10px;       
+                position: fixed;        
+                width: 900px;       
+                top:20%;        
+                overflow: auto;         
+                max-height: 400px;      
+                        
+                        
+            }       
+            
+            .popupBg        
+            {       
+                background-color:black;         
+                opacity: 0.20;      
+                filter: alpha(opacity = 70);        
+                position: absolute;         
+                width: 100%;        
+                height: 100%;       
+                top: 0;         
+                left: 0;        
+                z-index: 9998;      
+            }       
+            
+        </style>            
+        <!--Iframe-->        
+        <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" /> 
+        <!--END D-1174 3/13/15 MGaelo: ARMS pop up CSS-->
+    <apex:styleSheet value="{!URLFOR($Resource.css, 'css/SM_StartSubscription.css')}" />
+  
+    
+    <apex:sectionHeader title="Change Of Payment Type"/>
+    <apex:pageMessages id="errorPanel" />
+    
+    <apex:form >
+        <apex:pageBlock id="mainBlock">
+            <apex:pageBlockButtons location="Top" id="pageButtons">
+                <apex:commandButton value="Submit" onclick="getPaymentId();" action="{!saveRecord}"/>
+                <!--START: UD-0562 4/08/2015 K. Tan / added query to populate current payment mode.-->                
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection id="BillingAcctInfoSec" collapsible="TRUE" title="Billing Account Information" columns="2" >
+            
+                <apex:inputField value="{!thisCase.AccountId}" required="true"/>
+                <!--START: UD-0562 4/08/2015 K. Tan / added query to populate current payment mode.-->
+                <apex:outputField value="{!thisCase.Current_Payment_Mode__c}" id="total_pmode"/>
+                <apex:inputField value="{!thisCase.ContactID}"/>
+                <!-- START: D-2092 2/27/2015 K. Tan / Modify below component to rerender once Billing Account is selected-->
+                <apex:outputField value="{!thisCase.Credit_Balance__c}" id="total_amount"/>
+                
+                <apex:inputField value="{!thisCase.Billing_Account_Name__c}" required="true">
+                        <!--START UD-3294 26Nov2015 Added By C. Lin - Change retrieveCreditBalance to changeBillingAccount-->
+                        <apex:actionSupport event="onchange" action="{!changeBillingAccount}" rerender="total_amount,total_pmode,billarms"/>                
+                        <!--END UD-3294 26Nov2015 Added By C. Lin-->
+                </apex:inputField>
+                <!--END: UD-0562 4/08/2015 K. Tan / added query to populate current payment mode.-->
+                <!-- END: D-2092 2/27/2015 K. Tan / Modify below component to rerender once Billing Account is selected-->
+                
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="paymentSection" columns="1" collapsible="TRUE" title="Payment Details">
+                <apex:inputField value="{!thisCase.Payment_Mode__c}">
+                    <apex:actionSupport event="onchange" action="{!updateBillingAccountArms}"/>
+                </apex:inputfield>
+                
+                <apex:outputPanel id="paymentModeEntrySection" layout="block">
+                        <!-- payment mode = credit card -->
+                        <apex:outputPanel id="paymentGatwayPanel" rendered="{!thisCase.Payment_Mode__c=='CreditCard'}">
+                                <!--START UD-3351 12-18-2015 Added by J.Sarion - Check Credit Card: Visa/MasterCard/AmericanExpress-->
+                                <apex:actionRegion >
+                                    <apex:pageBlockSection columns="1">
+                                        
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel value="Credit Card Type"/>
+                                            <apex:selectRadio value="{!creditCardType}">
+                                                <apex:selectOption itemValue="Visa / MasterCard" itemLabel="Visa / MasterCard"/>
+                                                <apex:selectOption itemValue="American Express" itemLabel="Other"/>
+                                                <apex:actionSupport event="onchange" action="{!retrieveSource}" reRender="paymentGatwayPanel2"/>
+                                            </apex:selectRadio>
+                                        </apex:pageBlockSectionItem>
+                                        <apex:outputPanel id="paymentGatwayPanel2">
+                                            <apex:outputPanel rendered="{!paymentGetway != null}">
+
+                                                <iframe id="z_hppm_iframe" name="z_hppm_iframe" src="{!paymentGetway}"
+                                                    width="60%"
+                                                    height="200"
+                                                    frameborder="0">
+                                                </iframe>
+                                                <br/>
+                                                    <apex:outputPanel >
+                                                        <input class="btn" type="button" value="Save & Get Payment Id" onclick="submitPaymentMethod();"/>
+                                                    <input type="text" id="paymentMethodId" style="width:30%" readonly="readonly"/>
+                                                </apex:outputPanel>
+    
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSection>
+                                </apex:actionRegion>
+                                <!--END UD-3351 12-18-2015 Added by J.Sarion - Check Credit Card: Visa/MasterCard/AmericanExpress-->
+                        </apex:outputPanel>
+                        <!-- end payment mode = credit card -->
+                        
+                        
+                        <!-- START UD-0810v3 05-07-2015 Marvin G -->
+                        <apex:outputPanel id="chequePanel" rendered="{!thisCase.Payment_Mode__c == 'Cheque'}">
+                            <apex:pageBlockSection columns="1">
+                                <apex:inputField value="{!thisOrder.Check_Issuing_Bank__c}"/>
+                                <apex:inputField value="{!thisOrder.Check_No__c}"/>
+                                <apex:inputField value="{!thisOrder.Check_Dated__c}"/>
+                                <apex:inputField styleClass="currencyField" value="{!thisOrder.Check_Amount__c}"/>
+                                <apex:inputField value="{!thisOrder.Remarks_Check__c}"/>
+                            </apex:pageBlockSection>
+                            <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                        </apex:outputPanel>     
+
+                        <!-- END UD-0810v3 05-07-2015 Marvin G -->
+                        
+                        
+                        <!-- Start MMallorca 04/22/2015 ARMS -->
+                        <apex:outputPanel id="otherPaymentModeSection" layout="block">
+                        
+                                   <!-- Display details of the existing ARMS -->
+                                    <apex:pageBlockSection id="invoice2" title="ARMS Related Information" rendered="{!thisCase.Payment_Mode__c == 'Invoice' && isArms == true}" columns="2">
+                                        
+                                            <tr>
+                                                <td>ARMS Customer Number: <apex:outputLabel value="{!ARMS_Customer_Number}"></apex:outputLabel></td>
+                                                <td>ARMS Credit Balance: <apex:outputLabel value="{!ARMS_Credit_Balance}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS Account Number: <apex:outputLabel value="{!ARMS_Account_Number}"></apex:outputLabel></td>
+                                                <td>ARMS Debt Management: <apex:outputLabel value="{!ARMS_Debt_Management}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS ID: <apex:outputLabel value="{!ARMS_ID}"></apex:outputLabel></td>
+                                                <td>ARMS Bad Debt Amount: <apex:outputLabel value="{!ARMS_Bad_Debt_Amount}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS Business Profile: <apex:outputLabel value="{!ARMS_Business_Profile}"></apex:outputLabel></td>
+                                                <td>ARMS Total Outstanding Amount <apex:outputLabel value="{!ARMS_Total_Outstanding_Amount}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>AGD Unit: <apex:outputLabel value="{!Credit_Term}"></apex:outputLabel></td>
+                                                <td><!--Bad Debt Recovery: <apex:outputLabel value="{!}"></apex:outputLabel>--></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Credit Term: <apex:outputLabel value="{!Credit_Term}"></apex:outputLabel></td>
+                                                <td>Credit Reference: <apex:outputLabel value="{!Credit_Reference}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS Activity Status Type: <apex:outputLabel value="{!ARMS_Activity_Status_Type}"></apex:outputLabel></td>
+                                                <td>Credit Limit - Internal: <apex:outputLabel value="{!Credit_Limit_Internal}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS Activity Status Sub Type: <apex:outputLabel value="{!ARMS_Activity_Status_Sub_Type}"></apex:outputLabel></td>
+                                                <td>Credit Limit - External: <apex:outputLabel value="{!Credit_Limit_External}"></apex:outputLabel></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ARMS Account Required: <apex:outputLabel value="{!ARMS_Account_Required}"></apex:outputLabel></td>
+                                                <td></td>
+                                            </tr>
+                                    </apex:pageBlockSection>
+                        
+                                   <!--- Creating New ARMS --->
+                                   <!-- START-END UD-1488 KAREN HUNG 6/10/2015--><!--<apex:pageMessages id="billAccMessage" rendered="{!thisCase.Payment_Mode__c== 'Invoice' && isArms == false}"/>-->
+                                   
+                                    <apex:pageBlockSection id="invoice" title="For ARMS Information" rendered="{!thisCase.Payment_Mode__c == 'Invoice'  && isArms == false}" columns="6">
+                                
+                                                <tr>
+                                                         <apex:inputText label="ARMS Customer" id="aCustomer" value="{!aCust}" style="width:80%" /> 
+                                                        <apex:actionStatus id="armsProcessing">
+                                                            <apex:facet name="start">
+                                                            <center> <img style="position: relative" src="/img/loading.gif"/> </center>
+                                                            </apex:facet>
+                                                            <apex:facet name="stop">
+                                                            <apex:commandButton value="Search ARMS Customer" id="searchCustomer" action="{!searchCusName}" reRender="otherPaymentModeSection" style="width:80%" status="armsProcessing" />
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                         <apex:outputLabel value="Selected ARMS Customer" />
+                                                        
+                                                    <apex:inputText value="{!accTextName}" />
+                                                    <apex:inputText value="{!accNum}" />      
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    
+                                                        <apex:inputCheckbox id="createCB" value="{!thisBillingAccount.Create_ARMS_Customer_Account__c}" disabled="{!CBdisable}"/>
+                                                        <apex:outputLabel value="Create New ARMS Customer & Account account" /> 
+                            
+                                                    </apex:pageBlockSectionItem>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> <apex:outputLabel value="Business Profile" />  
+                                                   
+                                                        <apex:selectList multiselect="false" size="1" value="{!thisBillingAccount.ARMS_Business_Profile__c}" label="">
+                                                                                                                                                                                                                 <apex:selectOption itemValue="NONE" itemLabel="NONE"/>
+                                                            <apex:selectOption itemValue="NORM" itemLabel="NORM"/>
+                                                            <apex:selectOption itemValue="GOVT" itemLabel="GOVT"/>
+                                                            <!--apex:selectOption itemValue="GIRO" itemLabel="GIRO"/-->
+                                                        </apex:selectList>
+                                                    </td> 
+                                                </tr>
+                                                <tr>
+                                                    <td> <apex:outputLabel value="" /> </td>
+                                                    <td> </td>
+                                                    
+                                                    <td> <apex:outputLabel value="Debt Mgmt Treatment" /> 
+                                                     
+                                                        <apex:selectList multiselect="false" size="1" value="{!thisBillingAccount.ARMS_Debt_Management__c}" label="">
+                                                                                                                                                                                                                 <apex:selectOption itemValue="NONE" itemLabel="NONE"/>
+                                                            <apex:selectOption itemValue="SUBH" itemLabel="SUBH"/>
+                                                            <apex:selectOption itemValue="NORM" itemLabel="NORM"/>
+                                                           <apex:selectOption itemValue="SUBL" itemLabel="SUBL"/>
+                                                            <apex:selectOption itemValue="GOVT" itemLabel="GOVT"/>
+                                                        </apex:selectList>
+                                                    </td>
+                                                </tr>
+                                                <tr>  
+                                                    
+                                                    <td> </td>
+                                                    <td> 
+                                                        <apex:actionStatus id="armsAccProcessing">
+                                                            <apex:facet name="start">
+                                                            <center> <img style="position: relative" src="/img/loading.gif"/> </center>
+                                                            </apex:facet>
+                                                            <apex:facet name="stop">
+                                                            <apex:commandButton value="Search ARMS Account" action="{!searchAccName}" reRender="otherPaymentModeSection" style="width:80%" status="armsAccProcessing" /> 
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                    </td>
+                                                </tr>
+                                                
+                                        </apex:pageBlockSection>
+                                            
+                                        <apex:pageBlockSection id="searchResult" rendered="{!billAcc == true && addAccount == true}" columns="1">
+                                            <apex:pageBlock >
+                                                <apex:pageBlockTable value="{!armsSelected}" var="aw" id="ResultsList" >
+                                                <apex:column headervalue="ARMS Account Number">
+                                                    <apex:outputText >{!aw.arAccNum}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Account Type">
+                                                    <apex:outputText >{!aw.arType}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Credit Term">
+                                                    <apex:outputText >{!aw.arCredTerm}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Credit Term Reference">
+                                                    <apex:outputText >{!aw.arCredTermRef}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Debt Mgmt Treatment">
+                                                    <apex:outputText >{!aw.arDebtMgmt}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Company Code">
+                                                    <apex:outputText >{!aw.arCompCode}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Account Creation Date">
+                                                    <apex:outputText >{!aw.arCreateDate}</apex:outputText>
+                                                </apex:column>
+                                                </apex:pageBlockTable>   
+                                        </apex:pageBlock>
+                                    </apex:pageBlockSection>    
+                                                
+                                        <apex:outputPanel id="noCustomer">
+                                            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayCusErr}"/>
+                                                <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayCusErr}">
+                                                    <apex:outputLabel value="{!errorMsg}" /> <br>
+                                                    </br>                                                       
+                                                    <center> <apex:commandButton value="Ok" action="{!closePopup}" rerender="noCustomer, accSearch"/> </center>
+                                                </apex:outputPanel>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel id="accSearch">
+                                           <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayAccList}"/>
+                                                <apex:outputPanel styleClass="popup01" layout="block" rendered="{!displayAccList}"> 
+                                                
+                                              <!--   <apex:outputPanel styleClass="popupBg" layout="block" rendered="true"/>
+                                                <apex:outputPanel styleClass="popup01" layout="block" rendered="true"> -->
+                                                
+                                                    <apex:outputLabel value="ARMS Customer Search Results" style="font-weight: bold" />
+                                                    <br> </br>
+                                                    <apex:outputLabel value="{!aCust}" style="font-style:italic" />
+                                                    <apex:pageBlockTable value="{!armsCusWrapList}" var="aw" id="ResultsTable" >
+                                                    <apex:column headervalue="">
+                                                        <apex:inputCheckbox value="{!aw.isTick}"/>
+                                                    </apex:column>
+                                                    <apex:column headervalue="ARMS Customer Number">
+                                                        <apex:outputText >{!aw.arNum}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Customer Name">
+                                                        <apex:outputText >{!aw.arName}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Care of/attention-to Party">
+                                                        <apex:outputText >{!aw.arPOC}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Address">
+                                                        <apex:outputText >{!aw.arAddress}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Postcode">
+                                                        <apex:outputText >{!aw.arPostcode}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Status">
+                                                       <apex:outputText >{!aw.arStatus}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Business Profile">
+                                                        <apex:outputText >{!aw.arBusProf}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Create Date">
+                                                        <apex:outputText >{!aw.arDate}</apex:outputText>
+                                                    </apex:column>
+                                                    </apex:pageBlockTable> 
+                                                    <br />
+                                                    <apex:outputLabel value="Please select the correct Account and click Ok" style="font-style:italic" />
+                                                    <center> <apex:outputPanel > 
+                                                        <apex:commandButton value="Ok" action="{!addPopAcc}" rerender="accSearch, otherPaymentModeSection"/> 
+                                                        <apex:commandButton value="Cancel" action="{!cancelSearch}" rerender="accSearch, otherPaymentModeSection"/>
+                                                    </apex:outputPanel></center>
+                                                
+                                                </apex:outputPanel>
+                                        </apex:outputPanel>
+
+                                    <!----------------------------End D-0870 4/22/15 MMAllorca ARMS----------------------------->
+                                    <!-- end other payment mode - invoice -->
+                                    
+                                    
+                                </apex:outputPanel>
+                </apex:outputPanel>     
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <!--START: D-1392 KLorica 1/23/2015 Change inputHidden to new outputpanel and inputfield-->
+        <apex:outputPanel style="display:none;">
+        <apex:inputField style="display:none;" id="paymentMethodIdFromZuora" value="{!thisCase.Payment_Method_ID__c}" />
+         </apex:outputPanel>
+        <!--END: D-1392 KLorica 1/23/2015 Change inputHidden to new outputpanel and inputfield-->
+		<!-- Start UD-3351 21Jan16 Added by JohnD/JaysonS - added actionFunction -->
+		<apex:actionFunction name="reloadCrediCard" action="{!retrieveSource}" reRender="paymentGatwayPanel" />
+		<!-- End UD-3351 21Jan16 Added by JohnD/JaysonS - added actionFunction -->
+    </apex:form>
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SM_StartSubscription.js')}" />
+    <script src="https://apisandbox.zuora.com/apps/Hosted/postmessage.js" type="text/javascript"/>
+    
+    <!-- START UD-0810v3 05-07-2015 Marvin G -->
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/JQueryNumbericPlugin.js')}" />
+    <!-- END UD-0810v3 05-07-2015 Marvin G -->
+
+</apex:page>

@@ -1,0 +1,153 @@
+<apex:page controller="StopSubOrderEntry_VendorController"  tabstyle="Order__c" >
+
+    <style> 
+        .subItemTitle {
+            color: green;
+            font-weight: bold;
+        }
+        .scroll {
+            overflow-y: auto;
+            height: 100px; 
+        }
+
+        #lineItemTable, #giftItems {
+            background-color: #cccccc;
+        }
+
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+
+        #lineItemTable th, #giftItems th {
+            background-color: #336699;
+            color: #ffffff;
+        }
+
+        #giftItems {
+            width: 50%;
+            border-spacing: 1px;
+        }
+
+        #lineItemTable td, #lineItemTable th, 
+        .resultContainer td, .resultContainer th {
+            border: 0 !important;
+            padding: 2px;
+        }
+
+        #lineItemTable tr, .resultContainer tr,  #giftItems tr {
+            background-color: #ffffff;
+        }
+
+        .childList {
+            background-color: #0099FF;
+        }
+
+        .removeButtonCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+
+        .resultContainer > thead > tr > th {
+            background-color: #6666CC !important;
+            color: #ffffff !important;
+        }
+
+        .resultContainer > tbody > tr {
+            cursor: pointer;
+        } 
+
+        .packageResults th {
+            background-color: #800000 !important;
+            color: #ffffff !important;      
+        }
+
+        .packageResults tbody tr {
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
+
+        .packageContainer  {
+            padding-left: 50px !important;
+        }
+
+        .selectedPackage {
+            background-color: #336699;
+            color: #ffffff;
+        }
+
+        .numericField {
+            width: 50px;
+        }
+
+    </style>
+<apex:form >
+
+        <apex:pageBlock title="Order Entry - Stop Vendor Subscription">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Edit" action="{!edit}" disabled="false"/>
+                <apex:commandButton value="Save as Draft"  disabled="true"/>
+                <apex:commandButton value="Submit" action="{!submit}" disabled="false"/>
+                <apex:commandButton value="Void" action="{!voidStatus}" disabled="false"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" disabled="true"/> 
+            </apex:pageBlockButtons>
+
+<apex:outputPanel layout="block">        
+    
+            <apex:pageBlockSection collapsible="true" title="Case Information" columns="2">
+                <apex:outputField value="{!order.OwnerId}" label="Owner"/>
+                <apex:outputField value="{!order.Case_Record_Type__c}" label="Case Record Type"/>
+                <apex:outputField value="{!order.Name}" label="Order Number"/>
+                <apex:outputField value="{!order.Category__c}" label="Category"/>
+                <apex:outputField value="{!order.Status__c}" label="Status"/>
+                <apex:outputField value="{!order.Sub_Category__c}" label="Sub Category"/>
+            </apex:pageBlockSection>
+
+</apex:outputPanel>                  
+
+    <apex:pageBlockSection id="pubSelection" collapsible="true" title="Order Line Item" columns="1">
+        <apex:outputPanel layout="block" styleClass="scroll" id="pubTable">
+            <apex:dataTable value="{!orderLineItemList}" var="o" title="PublicationSection" border="1px" width="100%">
+                <apex:column headerValue="Publication" width="30%">
+                    <apex:outputField value="{!o.Publication__r.name}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Mo" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Mon__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Tu" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Tue__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="We" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Wed__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Th" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Thu__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Fr" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Fri__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Sa" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Sat__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Su" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.Sun__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="PHd" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.PHd__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="PHe" headerClass="selectedPackage" width="4%">
+                    <apex:outputField value="{!o.PHe__c}" styleClass="day"/>
+                </apex:column>
+                <apex:column headerValue="Notify Vendor" width="4%">
+                    <center>
+                        <apex:outputField value="{!o.Notify_Vendor__c}" styleClass="day"/>
+                    </center>
+                </apex:column>
+
+            </apex:dataTable>
+        </apex:outputPanel>
+    </apex:pageBlockSection>
+
+</apex:pageBlock>
+</apex:form>   
+</apex:page>

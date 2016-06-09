@@ -1,0 +1,6 @@
+<apex:page showHeader="false" sideBar="false" controller="UpdateZuoraArmsInfo" action="{!updateZuoraAccount}" >
+    <script>
+        alert('{!response}');
+        window.close();
+    </script>
+</apex:page>

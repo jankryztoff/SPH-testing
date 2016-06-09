@@ -1,0 +1,190 @@
+<apex:page id="giftLetterPage" controller="CreateGiftLettersBatchController" >
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+   <apex:messages />
+   <script>
+       // START : D-1630 1/23/2015 Alyana Navarro
+       checkboxCollect = [];
+       //START:UD-1262 6/2/2015 Added by Manolo Valena - Added new array.
+       allOLIGIds = [];
+       //END:UD-1262 6/2/2015 Added by Manolo Valena
+	   
+       Array.prototype.removeItem = function(obj) {
+            var i = this.length;
+            while (i--) {
+                if (this[i] === obj) {
+                    this.splice(i, 1);
+                    i = this.length;
+                }
+            }
+        }
+        // END : D-1630 1/23/2015
+   </script>
+    <apex:sectionHeader title="sample" subtitle="Gift Letters"/>
+        <apex:form id="theform" >
+            
+			<!--START:UD-1262 6/2/2015 Added by Manolo Valena - populate allOLIGIds array with all OLIG Ids-->
+            <apex:repeat value="{!OrderList1}" var="o"> 
+                <script> 
+                    allOLIGIds.push('{!o.ord.Id}'); 
+                </script> 
+            </apex:repeat>
+            <!--END:UD-1262 6/2/2015 Added by Manolo Valena-->
+			
+            <apex:pageBlock mode="edit" id="block" title="List of Customers Eligible for Gift Letters"> 
+                <apex:pageBlockButtons location="bottom">
+                    <!-- START : D-1630 1/27/2015 Alyana Navarro -->
+                    <apex:commandButton value="Preview Sample" onclick="preview(); return false;"/>
+                    <!-- END : D-1630 1/27/2015 -->
+                    <apex:commandButton value="Generate Letters" action="{!generateGiftLetterBatch}" onclick="printAlert()"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}"/>
+                </apex:pageBlockButtons>    
+                <apex:pageMessages ></apex:pageMessages>               
+                    <apex:pageBlockSection columns="1">   
+                        <!--START:D-1022 12/3/14 Added by Manolo Vale�a - Updated name of variable from "OrderList" to "OrderList1"-->
+                        <apex:pageBlockTable value="{!OrderList1}" var="o">
+                        <!--END:D-1022 12/3/14 Added by Manolo Vale�a-->
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+								<!--START:UD-1262 6/2/2015 Added by Manolo Valena - Added pushRemoveAllOLIGIds to be invoked-->
+                                <apex:inputCheckbox onclick="selectAllCheckboxes(this, 'inputId'); pushRemoveAllOLIGIds(this);"/>
+                                <!--END:UD-1262 6/2/2015 Added by Manolo Valena-->
+                            </apex:facet>
+                            <!-- START : D-1630 1/27/2015 Alyana Navarro -->
+                            <apex:inputCheckbox value="{!o.selected}" id="inputId" 
+                                onchange="if(this.checked) checkboxCollect.push('{!o.ord.Id}'); else checkboxCollect.removeItem('{!o.ord.Id}');"/>
+                            <!-- END : D-1630 1/27/2015 -->
+                        </apex:column>                                        
+                        <apex:column headervalue="Customer Name" value="{!o.ord.Order_Line_Item__r.Order__r.Account__r.Name}">          
+                        </apex:column>                                                  
+                        <apex:column headervalue="Customer Number" value="{!o.ord.Order_Line_Item__r.Order__r.Account__r.AccountNumber}">          
+                        </apex:column> 
+                        <apex:column headervalue="Customer Type" value="{!o.ord.Order_Line_Item__r.Order__r.Account__r.Sub_Group__c}"><!-- START D-4432 gdelrosario : change the Customer Type to Sub Group -->      <!--[JKVA 1127]updated for D-0618 -->
+                        </apex:column>            
+                        <apex:column headervalue="Order Date" value="{!o.ord.CreatedDate}"> 
+                        </apex:column>                                        
+               </apex:pageBlockTable> 
+                </apex:pageBlockSection>      
+                
+            </apex:pageBlock>
+            <!-- START : D-1141 2/6/2015 Alyana Navarro -->
+            <!--
+            <apex:outputPanel id="out">
+                <apex:pageBlock id="viewPdf" title="Letter Preview">
+                
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Back" action="{!showCustomerList}"/>
+                </apex:pageBlockButtons>
+                    <apex:pageBlockSection id="asd" columns="1">
+                        <apex:outputText value="{!template}" escape="false"/>                     
+                    </apex:pageBlockSection>
+                </apex:pageBlock>        
+            </apex:outputPanel>    
+               -->
+            <!-- END : D-1141 2/6/2015 -->
+            <apex:actionFunction name="cancel" action="{!cancel}"/>   
+            <apex:actionFunction name="createGiftLetter" action="{!createGiftLetter}"/>                    
+    </apex:form>
+     <script>
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+        
+		//START:UD-1262 6/2/2015 Added by Manolo Valena - Added new function to populate checkboxCollect array with all OLIG Ids when 'all' button is checked.
+        function pushRemoveAllOLIGIds(obj) {
+            checkboxCollect.length = 0;
+            if(obj.checked) {
+                for(var i = 0; i < allOLIGIds.length; i++) {
+                    checkboxCollect.push(allOLIGIds[i]);
+                }
+            }
+            else {
+                for(var i = 0; i < allOLIGIds.length; i++) {
+                    checkboxCollect.removeItem(allOLIGIds[i]);
+                }
+            }
+        }
+        //END:UD-1262 6/2/2015 Added by Manolo Valena
+		
+        function batchOverlap(param){
+        if(param){
+            var cont = confirm('This Gift Letter Batch overlaps with other Gift Letter Batch/es. Are you sure you want to continue?');
+                if(cont == true)
+                {  
+                    createGiftLetter();         
+                }
+                else
+                {
+                    cancel();
+                }    
+            }
+        }
+        function printAlert(){
+        alert('Gift letter printing has been successfully started. You will now be redirected back to the Gift Letter Batch Detail Page.');
+        }
+        // START : D-1630 1/23/2015 Alyana Navarro
+        function preview(){
+            
+            var paramToSend = '';
+            if(checkboxCollect.length > 0){
+                paramToSend = checkboxCollect[0];
+            }
+			//START UD-0406 4/8/2015 Added by Manolo Valena - D-2189 was not deployed for this page.
+            // START : D-2189 3/20/2015 Jean Cariño
+            var giftLetterBatchParam = '&giftletterbatchid={!giftletterbatch.id}';
+            // END : D-2189 3/20/2015 Jean Cariño
+			//END UD-0406 4/8/2015 Added by Manolo Valena
+            
+            //START:D-2218 2/13/15 Added by Manolo Valeña - Changed if-else string comparison with the correct picklist values of Letter Template field. Also added 2 new conditions for the new templates that will be created soon.
+            if("{! giftLetterBatch.Letter_Template__c}" == "SPHM (Eng)")
+            {
+                // START : D-1141 2/5/2015 Alyana Navarro
+                window.open('/apex/LP_GiftLetterMag?giftLetterBatchId={!$CurrentPage.parameters.Id}&id='+paramToSend, '_blank'); 
+                // END : D-1141 2/5/2015
+                //window.open('/apex/LP_GiftLetterMag' + (paramToSend == '' ? '' : '?id=' + paramToSend), '_blank');
+            } 
+            else if("{! giftLetterBatch.Letter_Template__c}" == "SPH Mag w/o Date (Eng)")
+            {
+                //START:D-2232 2/16/15 Added by Manolo Valeña - Updated
+                window.open('/apex/LP_May14GiftLetter?giftLetterBatchId={!$CurrentPage.parameters.Id}&id='+paramToSend, '_blank');
+                //END:D-2232 2/16/15 Added by Manolo Valeña
+            } 
+            //else if("{! giftLetterBatch.Letter_Template__c}" == "SPHM (Eng)")
+            //{
+                // START : D-1141 2/5/2015 Alyana Navarro
+                //window.open('/apex/LP_GiftLetterMag?giftLetterBatchId={!$CurrentPage.parameters.Id}&id='+paramToSend, '_blank');
+                // END : D-1141 2/5/2015
+                //window.open('/apex/LP_GiftLetterMag' + (paramToSend == '' ? '' : '?id=' + paramToSend), '_blank');
+            //} 
+            else if("{! giftLetterBatch.Letter_Template__c}" == "Retention (Eng)")
+            {
+                window.open('/apex/LP_GiftLetterNTUC' + (paramToSend == '' ? '' : '?id=' + paramToSend), '_blank');        
+            } 
+            else if("{! giftLetterBatch.Letter_Template__c}" == "IPP (Eng)")
+            {
+                //START : D-1630 2/3/2015 S.Puli
+                window.open('/apex/LP_IPPLetter?giftLetterBatchId={!$CurrentPage.parameters.Id}&id='+paramToSend, '_blank');
+                //END : D-1630 2/3/2015 S.Puli
+            }
+			//START UD-0406 4/8/2015 Added by Manolo Valena - D-2189 was not deployed for this page.
+            // START : D-2189 3/20/2015 Jean Cariño
+            else if("{! giftLetterBatch.Letter_Template__c}" == "Premium (Chi)")
+            {
+                window.open('/apex/LP_HappyCallLetterChinese' + (paramToSend == '' ? '' : '?id=' + paramToSend + giftLetterBatchParam), '_blank');
+            }
+            else if("{! giftLetterBatch.Letter_Template__c}" == "Premium (Eng)")
+            {
+                window.open('/apex/LP_HappyCallLetter' + (paramToSend == '' ? '' : '?id=' + paramToSend + giftLetterBatchParam), '_blank');
+            }
+            // END : D-2189 3/20/2015 Jean Cariño
+			//END UD-0406 4/8/2015 Added by Manolo Valena
+            //END:D-2218 2/13/15 Added by Manolo Valeña
+        }
+        // END : D-1630 1/23/2015
+      </script>  
+</apex:page>

@@ -1,0 +1,288 @@
+<!-- Start UD-3503 John Dacutan && Gdelrosario 04Feb16 - reconstructed -->
+<apex:page controller="RenewalController" action="{!initializeCHNP}" renderAs="pdf" applyBodyTag="false" standardStylesheets="false">
+    <head>
+        <style>
+            html {
+                font-size: 10pt;
+            }
+
+            #footer {
+                position: running(firstPageFooter);
+            }
+            .cf {
+                font-family: Arial Unicode MS; 
+            } 
+            @page {
+                size: A4 portrait;
+                margin-left: 48px;
+                margin-right: 48px;
+                margin-top: 80px;
+                margin-bottom: 50px;
+                font-family: Arial Unicode MS;
+                @bottom-right { 
+                    
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-size: 10pt;
+                }
+            }
+            
+            @page :first {
+               
+                margin-top: 47px;
+                margin-bottom: 350px;
+                font-family: Arial Unicode MS;
+                @bottom-left { content: element(firstPageFooter); }
+                @bottom-right { content: ""; }
+            }
+            
+
+            table {
+                width: 100%;
+                padding: 0;
+            }
+
+            #table1 {
+                border: 0;
+                font-size: 10pt;
+            }
+
+            #table1 td {
+                vertical-align: top;
+            }
+
+            #table1 td:first-child {
+                width: 56%;
+            }
+
+            #table1 td:last-child {
+                width: 44%;
+            }
+
+            #sphAddressContainer {
+                font-size: 9pt;
+            }
+
+            #customerAddressContainer {
+                font-size: 9pt;
+                margin-top: -3mm;
+               
+                padding-left: 10mm;
+                padding-bottom: 4.5mm;
+            }
+
+            .checkBox {
+                font-family: Arial Unicode MS;
+            }
+
+            .hiddenRow {
+                display: none;
+            }
+
+            .content tr {
+                page-break-inside: avoid;
+            }
+
+            .content th {
+                font-size: 10pt;
+                background-color: #ccc;
+                text-align: center;
+                padding-left: 3px;
+                border-top: 1px solid #000;
+                border-bottom: 1px solid #000;
+            }
+            
+            .content th:first-child {
+                border-left: 1px solid #000;
+            }
+
+            .content th.last {
+                border-right: 1px solid #000 !important;
+            }
+
+            .content th:first-child, .content td:first-child {
+                text-align: left !important;
+                width: 50% !important;
+            }
+
+
+            .content td, .content th {
+                text-align: center;
+                width: 12.5%;
+                padding: 3px;
+            }
+
+            .lineSeparator {
+                height: 1px;
+            }
+
+            .dashedBorderTopBottom {
+                border-bottom: 1px dashed #000;
+                border-top: 1px dashed #000;
+            }
+
+            .dashedBorderTop {
+                border-top: 1px dashed #000;
+            }
+
+            .pageBreaker {
+                page-break-before: always;
+            }
+
+            #succeedingContent {
+                -fs-table-paginate: paginate;
+            }
+
+            #renewal2ndPageNewspaperEnglishComponent {
+                font-size: 10pt !important;
+                font-name: Arial;
+            }
+        </style>
+    </head>
+    <apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+    <table width="100%" border="0" cellspacing="0" style="font-size:12pt; font-name:Arial">
+    
+        <tr>
+            <td  width="100%" align="left" colspan="2" style="font-family: Arial Unicode MS; font-size:11px">        
+                <b><h2>续订通知单</h2></b> 
+            </td>
+        </tr>
+    </table>
+    
+    <table id="table1" cellspacing="0">
+        <tr>
+            <td>
+                DATE  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                <apex:outputText value="{0, date, dd/MM/yyyy}">
+                    <apex:param value="{!Today}" />
+                </apex:outputText>
+                <br />               
+                Billing A/C No : {! billingAccountNumber}<br /><br /><br /><br />
+                <div id="customerAddressContainer">
+                <br />
+                    {!billingContactName}<br />
+                    <apex:outputText rendered="{! acct != '' && acct != null}">
+                        {!acct}<br/>
+                    </apex:outputText>
+                    <apex:outputtext escape="false" value="{!finalAddress}" />
+                    <div class='barcode' style="margin-top:1mm">
+                        <apex:outputPanel rendered="{!barChecker}">
+                            <apex:image url="{!URLFOR($Action.Attachment.Download, barcodeAttId)}" rendered="{!barChecker}" height="10mm" width="40mm"/>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <apex:image url="{!$Resource.SPHlogov2}" height="20mm" width="28.5mm" />
+                <div id="sphAddressContainer">
+                    <br/><b>Singapore Press Holdings Limited</b>
+                    <br/><b>Circulation</b>
+                    <br/>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+                    <br/>Enquiries: +65 6388  3838, Email: circs@sph.com.sg
+                    <br/>Co. Regn. No.: 198402868E
+                </div>
+            </td>
+        </tr>
+    </table>
+    <tr>
+        
+        <td>&nbsp;</td>
+    </tr>   
+    <tr>
+        <td colspan="2" style="font-family: Arial Unicode MS; font-size:11px">感谢您对本报的支持。</td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="font-family: Arial Unicode MS; font-size:11px">
+            您的报刊订阅期即将期满，我们谨此邀请您继续订阅。请将此续订表格填妥，并在 
+            <u>
+                <!-- START : UD-2427 9/1/2015 Alyana Navarro -->
+                <apex:outputText value="{0, date, dd/MM/yyyy}">
+                    <apex:param value="{! dateOutput}" />
+                </apex:outputText>
+                <!-- END : UD-2427 9/1/2015 Alyana Navarro -->
+            </u>.
+             前把所有的通知单寄回或传真至 (65) 6744 4875。 若有任何询问，请拨电 (65)6388 3838与我们的客户服务组联系。您也可以通过电邮地址：circs@sph.com.sg 与我们联络。 <br/>若您已续订，请将此函作废。 <!-- START-END : UD-2473 9/4/2015 Alyana Navarro -->
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+            <td colspan="2" style="font-family: Arial Unicode MS">为了提倡环保和更有效的服务，我们将通过电子邮件，发送订阅确认函给您，请提供以下最新资料。
+                    若您欲收到纸本订阅确认函，请打勾[   ]。 <font style="font-family: Arial Unicode MS;"></font></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="100%" cellspacing="0">
+                <tr>
+                    <td width="35%" style="font-family: Arial Unicode MS; font-size:11px">电邮地址： {!EmailAddress}</td>
+                    <td width="23%" style="font-family: Arial Unicode MS; font-size:11px">联络号码: (住家)  {!HomeNumber}</td>
+                    <td width="17%" style="font-family: Arial Unicode MS; font-size:11px">(办公室) {!OfficeNumber}</td>
+                    <td width="20%" style="font-family: Arial Unicode MS; font-size:11px">(手提电话) {!MobileNumber}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+            <!--START D-3455 29-Aug-2015 Added By S.Puli-->
+            <td colspan="2">
+                <apex:outputPanel rendered="{!charLengthMag}">
+                &nbsp;
+                </apex:outputPanel>
+            </td>
+            <!--END D-3455 29-Aug-2015 Added By S.Puli-->   
+        </tr> 
+    <tr>
+        <td colspan="2" style="font-family: Arial Unicode MS; font-size:11px">
+            祝阅读愉快 !
+        </td>
+    </tr>
+    <br/> 
+    
+    <div id="footer">
+        <c:RenewalFooter RecordAccountNumber="{!recAccountNum}" language="chinese" template="newspaper" />
+    </div>
+    <table class="content" cellspacing="0">
+      
+                <tr class="cf">                    
+                    <th>收件人编号/姓名<br/>报刊 <br/>刊期</th>
+                    <th valign="bottom">份数</th>
+                    <th valign="bottom">期满日期</th>
+                    <th valign="bottom">数额S$</th>
+                    <th class="last" valign="bottom">请打勾</th>
+                </tr>
+              
+        <tbody>
+            <tr>
+                <td colspan="5">
+                    <apex:outputText value="{!lineDetailGroupFirst}" escape="false" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pageBreaker">&nbsp;</div>
+    <c:Renewal2ndPageNewsPaperChinese />
+    <div class="{!if(lineDetailGroupList.size >= 1, 'pageBreaker', 'hiddenRow')}">&nbsp;</div>
+    <table id="succeedingContent" class="{!if(lineDetailGroupList.size >= 1, '', 'hiddenRow')} content" cellspacing="0">
+        <thead> <!--START/END UD-3710 Gdelrosario : no header for 4th page onwards -->
+            <tr class="cf">                    
+                <th>收件人编号/姓名<br/>报刊 <br/>刊期</th>
+                <th valign="bottom">份数</th>
+                <th valign="bottom">期满日期</th>
+                <th valign="bottom">数额S$</th>
+                <th class="last" valign="bottom">请打勾</th>
+            </tr>
+        </thead>  <!--START/END UD-3710 Gdelrosario : no header for 4th page onwards -->
+        <tbody>
+            <apex:repeat value="{!lineDetailGroupList}" var="line">
+            <tr>
+                <td colspan="5">
+                    <apex:outputText value="{!line}" escape="false" />
+                </td>
+            </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+</apex:page>

@@ -1,0 +1,65 @@
+<apex:page StandardController="Case" extensions="AdjustmentExtensionEdit" >
+    <apex:form >
+        <apex:pageBlock >       
+            <apex:pageMessages />     
+            <apex:pageBlockButtons >
+                <!-- START D-1839 Wenjun 04/02/15: Rename Method Name -->   
+                <apex:commandbutton value="Save" action="{!submitAdjustment}"/>
+                <apex:commandButton value="Save & New" action="{!submitAndNew}"/>
+                <apex:commandbutton value="Cancel" action="{!cancel}"/>
+				<!-- END D-1839 Wenjun 04/02/15 -->
+                            
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Case Information" >
+                <!---<apex:outputfield value="{!Case.OwnerId}"/>-->               
+                <apex:outputText value="{!ownerName}" label="Case Owner"/>
+                
+                <apex:inputField value="{!Case.ContactId}"/>
+                <!--START: UD-0889 4/21/2015 Added By K. Tan - For Subscriptions of related Account-->                                    
+                <apex:outputField value="{!Case.Account__c}" label="Account Name"/>
+                <!--END: UD-0889 4/21/2015 Added By K. Tan - For Subscriptions of related Account-->                                                     
+                <apex:inputField value="{!Case.Contact_Number__c}"/>
+                <apex:outputField value="{!Case.Billing_Account_Name__c}"/>
+
+                <!--<apex:repeat value="{!$ObjectType.Case.fieldsets.AdjustmentCaseInfo}" var="g">           
+                <apex:inputField value="{!Case[g]}"  required="{!OR(g.DBRequired, g.required)}"/>              
+                </apex:repeat>-->    
+                                        
+                <apex:repeat value="{!$ObjectType.Case.fieldsets.AdjustmentCaseInfo2}" var="f"> 
+                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>           
+                <apex:inputField value="{!Case[f]}"/>   
+                          
+                </apex:repeat>
+                    <apex:outputPanel style="display:none">
+                    <!--START: UD-0889 4/21/2015 Added By K. Tan - For Subscriptions of related Account-->                    
+                     <apex:inputField value="{!Case.RecordTypeId}" />
+                    <!--END: UD-0889 4/21/2015 Added By K. Tan - For Subscriptions of related Account-->                    
+                     
+                    <apex:inputField value="{!Case.Account__c}" />
+                    <!--START: D-1016 12/4/2014 Added By C. Lin - For Contact Name field's filter criteria. Select Contacts under current Account-->
+                    <apex:inputField value="{!Case.AccountId}" />
+                    <!--END: D-1016 12/4/2014 Added By C. Lin-->
+                </apex:outputPanel>                                                                                                                         
+            </apex:pageBlockSection>           
+            
+            <apex:pageBlockSection title="Additional Information">
+                <apex:repeat value="{!$ObjectType.Case.fieldsets.AdjustmentsAddInfo}" var="fset">           
+                <apex:inputField value="{!Case[fset]}"  required="{!OR(fset.DBRequired, fset.required)}"  />
+                </apex:repeat>                
+                 
+                <!-- START D-1839 Wenjun 04/02/15: Amount should be Required / Status is not required -->
+                <apex:inputField value="{!Case.Adjustment_Amount__c}" required="true"/>    
+                                <!-- END D-1839 Wenjun 04/02/15 -->                
+                                                         
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Description Information" columns="1">
+                <apex:repeat value="{!$ObjectType.Case.fieldsets.AdjustmentsAddInfo2}" var="a">           
+                <apex:inputField value="{!Case[a]}"  required="{!OR(a.DBRequired, a.required)}"/>              
+                </apex:repeat>
+                                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

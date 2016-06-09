@@ -1,0 +1,6 @@
+<apex:page showHeader="false" sideBar="false" controller="UpdateBatchNumber" action="{!queryBillingAccount}" >
+    <script>
+        alert('{!response}');
+        window.close();
+    </script>
+</apex:page>

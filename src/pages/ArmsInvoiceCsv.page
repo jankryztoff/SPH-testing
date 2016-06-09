@@ -1,0 +1,1 @@
+<apex:page contentType="application/octet-stream#test.csv" controller="ArmsInvoiceCsvController">{!fullCsv}</apex:page>

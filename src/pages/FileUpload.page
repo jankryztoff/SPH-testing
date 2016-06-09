@@ -1,0 +1,37 @@
+<apex:page sidebar="false" controller="FileUploader" action="{!Message}">
+
+        <apex:pagemessages />
+    <!--<apex:sectionHeader title="Start Subscription File Upload" subtitle="Welcome to the Order Upload interface."/>-->
+
+        <apex:form enctype="multipart/form-data">
+            <apex:pageBlock title="Order Upload">
+                <apex:outputPanel id="errorPanel">       
+                   <!-- <apex:pageMessages id="myMsg"/> -->
+                </apex:outputPanel> 
+                <apex:pageBlockButtons location="Bottom" >
+                    <apex:commandButton value="Begin Upload" id="BeginUpload"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+                </apex:pageBlockButtons>
+    
+            <apex:pageBlockSection showHeader="false" columns="2" id="block1">
+
+                <!--<apex:pageBlockSectionItem >
+                <apex:outputLabel value="File Name" for="fileName"/>
+                <apex:inputText value="{!document.name}" id="fileName"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem >
+                <apex:outputLabel value="File" for="file"/>
+                <apex:inputFile value="{!document.body}" filename="{!document.name}" id="file"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Description" for="description"/>
+                <apex:inputTextarea value="{!document.description}" id="description"/>
+                </apex:pageBlockSectionItem>-->
+      </apex:pageBlockSection>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

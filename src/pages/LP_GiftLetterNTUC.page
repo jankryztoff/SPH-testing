@@ -1,0 +1,148 @@
+<!-- @History: D-1189  01/22/2015 A. Navarro - Reconstructed the entire VF Page -->
+<!-- START D-3162 8/6/2015 MGaelo and GDelrosario : added for A4 portrait -->
+<apex:page controller="GiftLetterNTUC" renderAs="PDF" applyHtmlTag="true" applyBodyTag="false" standardStylesheets="false" >
+<head>
+    <style>
+        @page{
+            //border: solid;
+            font-family: 'Arial Unicode MS';
+            font-size: '12px';
+            size: A4 portrait;
+            margin-top: 130px;
+            margin-bottom: 130px;
+            margin-left: 82px; <!-- START UD-2448 GDELROSARIO : added for alignment ; -->
+            <!-- Start UD-2254 VPernicia 08/11/15-->
+            @bottom-right {
+            
+            content: "Page " counter(page) " of " counter(pages);
+            font-family: Arial;
+            font-size: 9pt;
+            }
+            <!-- End UD-2254 VPernicia 08/11/15-->
+            
+        }
+    </style>
+</head>
+<!-- END D-3162 8/6/2015 MGaelo and GDelrosario : added for A4 portrait -->
+<body>
+<font face="Time New Roman">
+
+    <!--START:D-2217 2/13/15 Added by Manolo Valeña - Made a table to allow the date to be at the left most, and then the Unique Number to be at the right most-->    
+    <table width="100%" cellpadding="0px" border="0" cellspacing="0px"> <!-- UD-2448 Added by Dags cellspacing and cellpadding -->
+        <td align='left'>
+            <apex:outputText value="{0, date, d MMMM yyyy}">
+                <apex:param value="{!Today()}" /> 
+            </apex:outputText>
+        </td>
+        
+        <!--START:D-2217 2/13/15 Added by Manolo Valeña - Display Unique Number field on upper right corner of VF Page-->    
+        <td align='right'>
+            <!--START: D-2383 02/26/2015 Added by Manolo Valena - Appended ProductCode in front of the unique number field.-->
+            {!ProductCode}<apex:outputText value="{!OrderLineItemGift.Unique_Number__c}"></apex:outputText>
+            <!--END: D-2383 02/26/2015 Added by Manolo Valena-->
+        </td>
+        <!--END:D-2217 2/13/15 Added by Manolo Valeña-->
+    </table>
+    <!--END:D-2217 2/13/15 Added by Manolo Valeña-->
+                                                                            <!-- START UD-2214 Gdelrosario : added for rcpn_accn to show -->
+<br/><!--<br/> --><i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account No: {!sub_accn} / {!rcpn_accn}</b></i> <!--START/END MGaelo D-3162 MGaelo&&Gio 8/6/2015 Adjust the Acct. No.-->   <!-- START UD-2448 GDELROSARIO : alignemnt issue -->                               <!-- END UD-2214 Gdelrosario : added for rcpn_accn to show -->
+
+<!-- END : D-1165 5/12/2015 Alyana -->
+<apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+
+<br/><br/>
+<!--START MGaelo D-3162 MGaelo&&Gio 8/6/2015 Adjust the Address block to envelope window-->
+   <div style="margin-left:5mm;margin-bottom:10mm;margin-top:3mm;"> <!--START UD-2448 GDelrosario : alignment issue -->
+        <div class='innerDiv' style = "position: relative; top: -25px;">  
+            <div class = 'address' style="margin-bottom:1mm;font-size:9pt;"> 
+            <!-- START 10/5/15 UD-2993 GDelRosario : added "attention to" to all gift letters -->
+            <apex:outputText value="{!contactName} <br/>" rendered="{!NOT(ISNULL(contactName))}" escape="false"/> 
+            {!billingContactName}
+            <!--{!OrderLineItemGift.Order_Line_Item__r.Order__r.Account__r.Name}-->
+            <!-- END 10/5/15 UD-2993 GDelRosario : added "attention to" to all gift letters  -->
+
+            <!--START UD-2995 Gdelrosario 6/10/2015 changed the address to  -->
+            <!--START D-3722 Gdelrosario 3/11/2015 changed the address to  -->
+            <br/>
+            <apex:outputText escape="false" value="{!finalAddress}" />
+            <!--END D-3722 Gdelrosario 3/11/2015 changed the address to  -->
+            <!--END UD-2995 Gdelrosario 6/10/2015 changed the address to  -->
+
+            <br/><apex:image url="{!barcode}" rendered="{!NOT(ISNULL(barcode))}" height="10mm" width="40mm"/> <!--START /END UD-2382 21/08/2015 Added by Dags - added to show barcode-->   
+            </div>       
+
+        </div>
+    </div>      
+<!--END MGaelo D-3162 MGaelo&&Gio 8/6/2015 Adjust the Address block to envelope windo-->
+<!-- END : D-1165 5/12/2015 Alyana -->                                        
+
+<!-- START/END UD-3316  GDelrosario change the billing account to contact-->
+Dear {!OrderLineItemGift.Order_Line_Item__r.Order__r.Billing_Contact__r.Name},  <!-- START/END D-3162 MGaelo and GDelrosario portrait removed br-->
+
+<br/><br/><b><u>SPH Subscriber Engagement Programme</u></b>
+
+<!--START: D-2156 02/11/2015 Added by Manolo Valena - Made the number of months dynamic based on the contract period of the promotion-->
+<!--START:D-2385 02/26/2015 Added by Manolo Valena - Updated dynamic field to show months from Term Length field of OLI.-->
+<!--START:UD-2446 21/08/2015 Added by dags - Updated dynamic field to contract period -->
+<br/><br/>Thank you for renewing your subscription by another <b>{!OrderLineItemGift.Order_Line_Item__r.Promotion_ID__r.Contract_Period__c} months</b>. 
+<!--END:UD-2446 21/08/2015 Added by dags - Updated dynamic field to contract period -->
+<!--END:D-2385 02/26/2015 Added by Manolo Valena-->
+<!--END: D-2156 02/11/2015 Added by Manolo Valena-->
+Your subscription has been processed and the following requested newspaper(s) will be delivered to your stated address from the mentioned date(s).
+
+
+<br/>
+
+<table width="100%">
+                    <tr> 
+                        <td width="20%" align="left">
+                            <br/><b><u>Start Date</u></b>
+                        </td>
+                        <td width="80%" valign="bottom">
+                            <b><u>Publication</u></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- START : D-1141 2/6/2015 Alyana Navarro -->
+                        <!--START: D-2156 02/16/2015 Added by Manolo Valena - Updated date format of start date displayed to follow template-->
+                        <td> <b><apex:outputText value="{0, date, dd.MM.yyyy}">
+                        <!--END: D-2156 02/16/2015 Added by Manolo Valena-->
+                            <apex:param value="{!subscription.Zuora__SubscriptionStartDate__c}" />
+                         </apex:outputText></b> </td>
+                    <td> 
+                        <!--START:D-2385 02/26/2015 Added by Manolo Valena - Updated dynamic field to show ProductName.-->
+                        <b>{!ProductName}</b> 
+                        <!--END:D-2385 02/26/2015 Added by Manolo Valena-->                       
+                    </td>                                       
+                    <!-- END : D-1141 2/6/2015 -->
+                    </tr>
+
+</table>
+
+<!-- //END: D-0908 12/02/2014 / R.Mayo -->
+<div style="page-break-inside: avoid;"> <!--START UD-2386 Gdelrosario added for not breaking  -->
+<br/>We are pleased to extend a $30 NTUC voucher in appreciation of your continuous support. The $30 NTUC voucher is enclosed in three $10 vouchers.
+</div> <!--END UD-2386 Gdelrosario added for not breaking  -->
+<!--START: D-2156 02/11/2015 Added by Manolo Valena - Added additional space to match template-->
+<div style="page-break-inside: avoid;"> <!--START UD-2386 Gdelrosario added for not breaking  -->
+<br/>For monthly payment, you will be charged the monthly subscription rate plus a monthly delivery fee.  This will take effect from <b>above Start Date</b>. If you have opted for full payment, an annual subscription rate plus an annual delivery fee will be charged. The effective date will be <b>above start date</b>. Please refer to our website www.sph.com.sg/legal/member_conditions.html for the Terms and Conditions of Subscription.
+</div> <!--END UD-2386 Gdelrosario added for not breaking  -->
+<!--END: D-2156 02/11/2015 Added by Manolo Valena-->
+<!--START:D-2385 02/26/2015 Added by Manolo Valena - Updated 12 static text to show months from Term Length field of OLI. Also added PenaltyCharge variable to text.-->
+<!--START:D-2446 21/08/2015 Added by Dags Changed to 12 months static text-->
+<div style="page-break-inside: avoid;"> <!--START UD-2386 Gdelrosario added for not breaking  --> <!--START UD-2446 GDelrosario 17/9/2015: change the ${!PenaltyCharge} to static &100 -->
+<!--START UD-2446 GDelrosario 11/10/2015: change the static 12months to dynamin contract period as per anup comment -->
+<br/>No cancellation is allowed within the first {!OrderLineItemGift.Order_Line_Item__r.Promotion_ID__r.Contract_Period__c} months otherwise an administration fee of $100 will be imposed.
+<!--END UD-2446 GDelrosario 11/10/2015: change the static 12months to dynamin contract period as per anup comment -->
+</div> <!--END UD-2386 Gdelrosario added for not breaking  --> <!--END UD-2446 GDelrosario 17/9/2015: change the ${!PenaltyCharge} to static &100 -->
+<!--END:D-2385 02/26/2015 Added by Manolo Valena-->
+<!--END:D-2446 21/08/2015 Added by Dags Changed to 12 months static text-->
+<div style="page-break-inside: avoid;"> <!--START UD-2386 Gdelrosario added for not breaking  -->
+<br/>We thank you for your continued support and wish you a pleasant time reading our publication(s).
+</div> <!--END UD-2386 Gdelrosario added for not breaking  -->
+<div style="page-break-inside: avoid;"> <!--START UD-2386 Gdelrosario added for not breaking  -->
+<br/><br/><br/>This is a computer-generated letter. No signature is required. <!-- START/END D-3162 MGaelo and GDelrosario portrait removed br-->
+</div> <!--END UD-2386 Gdelrosario added for not breaking  -->
+</font>
+</body>
+</apex:page>

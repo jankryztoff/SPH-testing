@@ -1,0 +1,471 @@
+<!--History 08/01/2014 Wenjun: Postage Charges-->
+<!--START 08/01/2014 Wenjun: Correct Page ID-->
+<apex:page id="SM_RenewalOfSubscriptionDetail" controller="SM_RenewalOfSubscriptionDetailController" tabStyle="Order__c" action="{!retrieveOrder}" >
+<!--END08/01/2014 Wenjun: Correct Page ID-->
+
+    <apex:styleSheet value="{!URLFOR($Resource.css, 'css/SM_StartSubscription.css')}" />
+    <apex:styleSheet value="{!URLFOR($Resource.css, 'css/SM_RenewalOfSubscription.css')}" />
+    <apex:form >
+        <apex:pageMessages id="pageMessage" />
+        <apex:pageBlock mode="detail" >
+            <!-- buttons -->
+            <apex:pageBlockButtons location="both" id="pageButtons">
+                <apex:commandButton value="Edit" action="{!edit}"/>
+                <apex:commandButton value="Save as Draft" disabled="true"/>
+                <apex:commandButton value="Submit" action="{!submit}"/>
+                <apex:commandButton value="Void" action="{!void}"/>
+                <apex:commandButton value="Cancel" disabled="true"/>  
+            </apex:pageBlockButtons>
+            <!-- end buttons -->
+            
+            <!-- account -->
+            <apex:pageBlockSection collapsible="true" title="Account and Order Information" columns="2">
+                <apex:outputField value="{!thisOrder.Account__c}"/>
+                <apex:outputField value="{!thisOrder.Status__c}"/>
+                <apex:outputField value="{!thisOrder.Account__r.AccountNumber}"/>
+                <apex:pageBlockSectionItem >
+                        <apex:outputLabel >Case Record Type</apex:outputLabel>
+                        <apex:outputText value="Renewal of Subscription" />
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{!thisOrder.Name}"/>
+                <apex:pageBlockSectionItem >
+                        <apex:outputLabel >DTL Date</apex:outputLabel>
+                        <!-- Start D-1345 01/19/2015 JohnD formatting date -->
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                <apex:param value="{!dtlDate}" />
+                        </apex:outputText>
+                        <!-- End D-1345 01/19/2015 JohnD -->
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <!-- end account -->
+            
+            <!-- subscription list -->
+            <apex:pageBlockSection collapsible="true" title="Existing Subscriptions for Renewal" columns="1">
+                <apex:dataTable value="{!subscriptionList}" var="s" styleClass="list" headerClass="headerRow" 
+                                columnClasses="dataCell dataCell2" rowClasses="dataRow dataRow2">
+                        <apex:column >
+                                <apex:facet name="header">Subscription Name</apex:facet>
+                                <apex:outputField value="{!s.Name}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Package Name</apex:facet>
+                                <apex:outputField value="{!s.Main_Package_1__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Type</apex:facet>
+                                <apex:outputField value="{!s.Subscription_Type_1__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Start Date</apex:facet>
+                                <apex:outputField value="{!s.Zuora__SubscriptionStartDate__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">End Date</apex:facet>
+                                <apex:outputField value="{!s.Zuora__SubscriptionEndDate__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Recipient</apex:facet>
+                                <apex:outputField value="{!s.Recipient_Contact__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Address</apex:facet>
+                                <apex:outputField value="{!s.Recipient_Contact__r.Address__r.Address_1__c}" />
+                        </apex:column>
+                        <apex:column >
+                                <apex:facet name="header">Recipient Number</apex:facet>
+                                <apex:outputField value="{!s.Recipient_Contact__r.HomePhone}" />
+                        </apex:column>
+                </apex:dataTable>
+            </apex:pageBlockSection>
+            <!-- end subscription list -->
+                        
+            <apex:pageBlockSection collapsible="true" title="Delivery Information" columns="1">
+                <apex:actionRegion >
+                    <apex:pageBlockSection id="deliveryInformationSection" collapsible="false" columns="2">
+                        <apex:outputField value="{!thisOrder.Recipient_Contact__c}" />
+                        <apex:outputField value="{!thisOrder.Cost_Centre__c}" />
+                        <apex:outputText value="" />
+                        <apex:outputField value="{!thisOrder.Vendor_Sms_Remarks__c}" />
+                    </apex:pageBlockSection>
+                </apex:actionRegion>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection collapsible="true" title="Subscription Details and Packages" columns="1">
+                
+                <!-- order line items -->
+                <apex:outputPanel id="orderLineItems">
+                    <apex:outputPanel rendered="{!AND(orderLineItemList.size != 0, orderLineItemList.size != null)}">
+                        <apex:outputText value="Line Items" styleClass="subItemTitle" />
+                        <apex:outputPanel styleClass="scroll">
+                            <table id="lineItemTable" class="list">
+                                <thead>
+                                    <tr>
+                                        <th>Order Line Item</th>
+                                        <th>Promotion Name</th>
+                                        <th>Package Name</th>
+                                        <th>Qty</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Subscription Type</th>
+                                        <th>Billing Type</th>
+                                        <th>Subscription Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!orderLineItemList}" var="oli">
+                                        <apex:variable value="{!IF(oli.Addon_Package__r.Name != '', 2, 0)}" var="rowAddOn" />
+                                        <apex:variable value="{!IF(oli.Order_Line_Item_Gifts__r.size != 0, oli.Order_Line_Item_Gifts__r.size + 1, 0)}" var="rowGifts" />
+                                        <tr class="dataRow pointer" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                    onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                                            <td>{!oli.Name}</td>
+                                            <td>{!oli.Promotion_ID__r.Name}</td>
+                                            <td>{!oli.Main_Package_ID__r.Name}</td>
+                                            <td align="center">{!oli.Qty__c}</td>
+                                            <!-- Start D-1345 01/19/2015 JohnD replace date format with system default -->
+                                            <td>
+                                                <apex:outputField value="{!oli.Start_Date__c}" />
+                                             </td>
+                                            <td>
+                                                <!-- Start UD-0410 03/24/2015 RReyes Changed from Start_Date__c to End_Date__c -->
+                                                <apex:outputField value="{!oli.End_Date__c}" />
+                                            <!-- End UD-0410 03/24/2015 RReyes Changed from Start_Date__c to End_Date__c -->
+                                            </td>
+                                            <!-- End D-1345 01/19/2015 JohnD -->
+                                            <td>{!oli.Main_Package_Type__c}</td>
+                                            <td>{!oli.Main_Package_Billing_Type__c}</td>
+                                            <td><apex:outputField value="{!oli.Total_Subscription_Rate__c}" /></td>
+                                        </tr>
+                                        <tr style="display: {!IF(rowGifts > 0, '', 'none')}">
+                                            <td rowspan="{!rowAddOn + rowGifts}" colspan="6"></td>
+                                            <td class="childList">Gift Name</td>
+                                            <td class="childList">Type</td>
+                                            <td class="childList">Price</td>
+                                        </tr>
+                                        <apex:repeat value="{!oli.Order_Line_Item_Gifts__r}" var="gift">
+                                        <tr>
+                                            <td>{!gift.Gift_Name__c}</td>
+                                            <td>{!gift.Type__c}</td>
+                                            <td><apex:outputField value="{!gift.Price__c}" /></td>
+                                        </tr>
+                                        </apex:repeat>
+                                        <tr style="display: {!IF(rowAddOn != 0, '', 'none')}" >
+                                            <td rowspan="{!IF(rowGifts != 0, '', 2)}" colspan="{!IF(rowGifts != 0, '', 6)}"  style="display: {!IF(rowGifts != 0, 'none', '')}"></td>
+                                            <td class="childList">Add On ID</td>
+                                            <td class="childList" colspan="2">Package Name</td>
+                                        </tr>
+                                        <tr style="display: {!IF(rowAddOn != 0, '', 'none')}">
+                                            <td>{!oli.Addon_Package__r.Package_Code__c}</td>
+                                            <td colspan="2">{!oli.Addon_Package__r.Name}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>    
+                            </table>
+                            <hr />           
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end order line items -->
+                
+                <!-- start subscription details -->
+                <apex:outputPanel id="subscriptionDetails">
+                     <apex:outputLabel value="Subscription Details" styleClass="subItemTitle" />
+                     <apex:outputPanel layout="block">
+                         <apex:pageBlockSection columns="2">
+                            <!-- Start D-1345 01/16/2015 JohnD value set to Id -->
+                             <apex:outputText label="Package ID:" value="{!selectedSubsriptionPackageName}" />
+                            <!-- End D-1345 01/16/2015 JohnD -->
+                             <apex:outputField id="isVendorSubscription" value="{!orderLineItem.Vendor_Conversion__c}" />
+                             <apex:pageBlockSectionItem >
+                                 <apex:outputLabel >Package Name</apex:outputLabel>
+                                 <apex:outputText value="{!orderLineItem.Main_Package_ID__r.Name}" />
+                             </apex:pageBlockSectionItem>
+                             <!-- START D-3152 06/23/15 - RReyes/GDel/James removed id -->
+                             <apex:outputField value="{!orderLineItem.Vendor_Subscription_ID__c}" />
+                             <!-- END D-3152 06/23/15 - RReyes/GDel/James removed id -->
+                             <apex:outputField id="earliestStartDate" value="{!orderLineItem.Earliest_Start_Date__c}"  />
+                             <apex:outputField value="{!orderLineItem.Charity__c}" />
+                             
+                             <apex:outputField value="{!orderLineItem.Start_Date__c}" id="subscriptionStartDate" />
+                             <apex:outputField value="{!orderLineItem.Delivered_By__c}" />
+                             
+                             <!-- term length -->
+                             <apex:outputText value="{!orderLineItem.Term_Length__c}" styleClass="numericField" 
+                                    id="subscriptionTermLength" rendered="{!IF(orderLineItem.Main_Package_Sub_Type__c = 'Termed', true, false)}" 
+                                    label="Term Length (Mth)" />
+                             <apex:pageBlockSectionItem rendered="{!IF(orderLineItem.Main_Package_Sub_Type__c = 'Evergreen', true, false)}">
+                                <apex:outputLabel >Term Length (Mth)</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- end term legth -->
+                             
+                             <apex:outputField value="{!orderLineItem.PO_Number__c}" />
+                             
+                             <!-- end date -->
+                             <apex:outputField value="{!orderLineItem.End_Date__c}" id="subscriptionEndDate" 
+                                    rendered="{!IF(orderLineItem.Main_Package_Sub_Type__c = 'Termed', true, false)}" />
+                             <apex:pageBlockSectionItem rendered="{!IF(orderLineItem.Main_Package_Sub_Type__c = 'Evergreen', true, false)}">
+                                <apex:outputLabel >End Date</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             
+                             <!-- end end date -->
+                             <apex:outputField value="{!orderLineItem.Suppress_Renewal_and_Reminder_Letter__c}" />
+                             
+                             <!-- new contract period -->
+                             <!-- START D-3156 06/23/15 GDel/RReyes changed rendered criteria-->
+                             <apex:outputField value="{!orderLineItem.New_Contract_Period__c}" styleClass="numericField" 
+                                    id="newContractPeriod" rendered="{!NOT(ISBLANK(orderLineItem.New_Contract_Period__c))}"/>
+                             <apex:pageBlockSectionItem rendered="{!ISBLANK(orderLineItem.New_Contract_Period__c)}">
+                                <apex:outputLabel >New Contract Period</apex:outputLabel>
+                                <apex:outputText value="N/A"/>
+                             </apex:pageBlockSectionItem>
+                             <!-- END D-3156 06/23/15 GDel/RReyes -->
+                             <!-- end new contract period -->
+                             <apex:outputField value="{!orderLineItem.Supressed_Acknowledgement_Letter__c}" />
+                             <!-- START D-3156 06/23/15 GDel/RReyes changed rendered criteria-->
+                             <!-- contract end date -->
+                             <apex:outputField value="{!orderLineItem.Contract_End_Date__c}" id="contractEndDate" 
+                                    rendered="{!NOT(ISBLANK(orderLineItem.Contract_End_Date__c))}" />
+                             <apex:pageBlockSectionItem rendered="{!ISBLANK(orderLineItem.Contract_End_Date__c)}" >
+                                <apex:outputLabel >Contract End Date</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- END D-3156 06/23/15 GDel/RReyes changed rendered criteria-->
+                             <!-- end contract end date -->
+                             
+                             <apex:outputField value="{!orderLineItem.Supressed_Vendor_Notification_New_Sub__c}" />
+                             
+                             <!-- START D-3156 06/23/15 GDel/RReyes changed rendered criteria-->
+                             <!-- penalty charge -->
+                             <apex:outputField value="{!orderLineItem.Penalty_Charge__c}" 
+                                    rendered="{!NOT(ISBLANK(orderLineItem.Penalty_Charge__c))}"/>
+                             <apex:pageBlockSectionItem rendered="{!ISBLANK(orderLineItem.Penalty_Charge__c)}">
+                                <apex:outputLabel >Penalty Charge</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- END D-3156 06/23/15 GDel/RReyes changed rendered criteria-->
+                             <!-- end penalty charge -->
+                             <!-- START UD-2222 08/05/15 RReyes - SIT Hotfix - removed Generate invoice and adjusted the order of other fields  -->
+                             <!-- apex:outputField value="{!orderLineItem.Generate_Invoice__c}" /-->
+                             <apex:outputField value="{!orderLineItem.Auto_Renew__c}" />
+                             <apex:outputField value="{!orderLineItem.Qty__c}" id="quantity" />
+                             <apex:outputField value="{!orderLineItem.Subscribed_as__c}" />
+                             <!-- START D-3155 06/23/15 GDelRosario -->
+                             <apex:outputField value="{!orderLineItem.Total_Subscription_Rate__c}" />                             
+                             <!-- END D-3155 06/23/15 GDelRosario -->
+                             <!-- END UD-2222 08/05/15 RReyes - SIT Hotfix - removed Generate invoice and adjusted the order of other fields  -->
+                         </apex:pageBlockSection>
+                         <input id="isDigital" type="hidden" value="{!isDigital}" />
+                         <input id="isFromPromotion" type="hidden" value="{!isFromPromotion}" />
+                     </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end subscription details --> 
+                    
+                <!-- start add on -->
+                <apex:outputPanel id="addOnSection" >
+                    <apex:outputPanel >
+                        <br /><hr />
+                        <apex:outputLabel value="Select Add On" styleClass="subItemTitle" />
+                        <apex:pageBlockSection columns="2">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >Package ID</apex:outputLabel>
+                                <apex:outputText value="{!orderLineItem.Addon_Package__c}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:outputField value="{!orderLineItem.Add_On_Package_Subscription_Rate__c}" />
+                            <apex:outputField value="{!orderLineItem.Addon_Package__c}" />
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!--  end add on -->
+                
+                <!-- start promotion gifts -->
+                <apex:outputPanel id="giftSection" styleClass="hide">
+                    <apex:outputPanel >
+                        <br /><hr />
+                        <apex:outputLabel value="Select Gifts" styleClass="subItemTitle" />
+                           <table id="giftItems">
+                               <thead>
+                                   <tr>
+                                       <th>Gift Name</th>
+                                       <th>Type</th>
+                                       <th>Price</th>
+                                       <th>Stock</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <apex:repeat value="{!promotionGifts}" var="gift">
+                                       <tr>
+                                           <td>{!gift['Promotion_Gift__r.Gift__r.Name']}</td>
+                                           <td>{!gift['Promotion_Gift__r.Gift__r.Gift_Type__c']}</td>
+                                           <td>{!gift['Promotion_Gift__r.Gift__r.Gift_Cost__c']}</td>
+                                           <td>{!gift['Promotion_Gift__r.Balance_Quantity__c']}</td>
+                                       </tr>
+                                   </apex:repeat>                                                  
+                               </tbody>
+                           </table>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end promotion gifts -->
+                
+                <!-- asia1 -->
+                
+                <apex:outputPanel id="asia1Section" layout="block">
+                    <hr />
+                    <apex:outputText value="Asia1" styleClass="subItemTitle" />
+                    <br /><br />           
+                    <apex:outputPanel id="listToBeCreated" layout="block" styleClass="container"> 
+                        <div id="toBeCreated">User ID To Be Created</div>
+                        <apex:outputPanel id="tobeCreatedContainer" styleClass="scrollAsia1" 
+                                rendered="{!IF(asia1Subscriptions.size = 0, false, true)}" layout="block">
+                            <div align="center">   
+                             <table id="asia1Subscriptions" class="list">
+                                 <thead class="rich-table-thead">
+                                     <tr>
+                                         <th>User ID</th>
+                                         <th width="100">Sevice Flag</th>
+                                         <th width="100">Concurrent</th>
+                                         <th width="100">Status</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <apex:repeat value="{!asia1Subscriptions}" var="asia1">
+                                         <tr class="dataRow">
+                                             <td>{!asia1.userId}</td>
+                                             <td colspan="3">
+                                                 <table id="asia1AccessFlag" class="list" width="100%" border="0" cellspacing="0" 
+                                                        cellpadding="0" >
+                                                     <apex:variable value="{!asia1['asia1Subscriptions']}" var="subs" />
+                                                     <apex:repeat value="{!subs}" var="sub">
+                                                         <tr class="asia1Cs">
+                                                             <td width="100">{!sub['serviceFlagName']}</td>
+                                                             <td width="100">{!sub['concurrent']}</td>
+                                                             <td width="100">{!sub['status']}</td>
+                                                         </tr>
+                                                     </apex:repeat>
+                                                 </table>
+                                             </td>
+                                         </tr>
+                                     </apex:repeat>
+                                 </tbody>
+                             </table>
+                            </div>                              
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <!-- end asia1 -->
+                
+                <!-- terms and conditions -->
+                <apex:outputPanel id="termsAndCondition">
+                    <br /><hr />
+                    <apex:outputLabel value="Subscriptions Terms & Conditions" styleClass="subItemTitle" />
+                    <br /><br />
+                    <apex:outputField value="{!orderLineItem.Term_is_discussed__c}" /> Terms and Conditions is communicated to Customer
+                    <br /><br />
+                    <a style="color:#0000ff;" href="/apex/TermsandCondition?id=a0CN0000001QxcS" target="_blank" title="Terms and Conditions">Show Terms and Conditions</a> 
+                </apex:outputPanel> 
+                <!-- end terms and condtions -->
+            </apex:pageBlockSection>
+
+            <!-- delivery charges -->    
+            <apex:pageBlockSection id="deliveryChargesSection" collapsible="true" title="Delivery Charges" columns="2">
+                <apex:outputField id="deliveryChargeType" value="{!thisOrder.Delivery_Charge_Type__c}" />
+                <apex:outputField value="{!thisOrder.Monthly_Delivery_Charge_for_Full_Payment__c}" />
+                <apex:outputField id="subscriberCharge" value="{!thisOrder.Subscriber_Charge__c}" />
+                <apex:outputText value="" />
+                <apex:outputField id="vendorCharge" value="{!thisOrder.Vendor_Credit__c}" />
+            </apex:pageBlockSection>
+            <!-- end delivery charges -->
+            
+            <!-- credit and charges -->
+            <apex:pageBlockSection id="creditAndChargesSection" collapsible="true" title="Credit and Charges" columns="2">
+                <apex:outputField value="{!thisOrder.Total_Full_Prepaid_Charge__c}" />
+                <apex:outputField value="{!thisOrder.Full_Prepaid_Inc_Del_Charge__c}" />
+                <apex:outputField value="{!thisOrder.Total_Monthly_Recurring_Charge__c}" />
+                <apex:outputField value="{!thisOrder.Recurring_Inc_Del_Charge__c}" />
+                <apex:outputField value="{!thisOrder.Total_Gift_Charge__c}" />
+                <!-- START: 07/02/2015 Wenjun: Change the Postage Field -->
+                <apex:outputField value="{!thisOrder.Total_Monthly_Postage_Charge__c}" />
+                <!-- END: 07/02/2015 Wenjun -->
+                <apex:outputField value="{!thisOrder.Credit_Balance__c}" />
+                <apex:outputText value="" />
+            </apex:pageBlockSection>
+            <!-- end credit charges -->
+    
+            <!-- start billing -->
+            <apex:pageBlockSection collapsible="true" title="Billing Sections" columns="1">
+                
+                <!-- existing billing account -->
+                <apex:outputPanel rendered="{!thisOrder.Billing_Account_Creation_Mode__c == 'Use existing Billing Account'}" layout="block">
+                                <apex:pageBlockSection columns="1">
+                                <apex:pageBlockSectionItem >
+                                        <apex:outputLabel >Creation Mode</apex:outputLabel>
+                                        <apex:outputText value="Existing Billing Account" />
+                                </apex:pageBlockSectionItem>
+                                <apex:outputField value="{!thisOrder.Billing_Account__c}" />
+                                <apex:outputField value="{!thisOrder.Billing_Account__r.Payment_Mode__c}" />
+                                <apex:outputField value="{!thisOrder.Amount_Paid__c}" rendered="{!thisOrder.Billing_Account__r.Payment_Mode__c == 'Cash'}" />
+                                <apex:outputField value="{!thisOrder.Billing_Account__r.Billing_Contact__c}" />
+                                </apex:pageBlockSection>
+                </apex:outputPanel>
+                <!-- end existing billing account -->
+                
+                <apex:outputPanel rendered="{!thisOrder.Billing_Account_Creation_Mode__c == 'Create New Billing Account'}" layout="block">
+                        
+                        <apex:pageBlockSection columns="1">
+                                <apex:pageBlockSectionItem >
+                                        <apex:outputLabel >Creation Mode</apex:outputLabel>
+                                        <apex:outputText value="New Billing Account" />
+                                </apex:pageBlockSectionItem>
+                                <apex:outputField value="{!thisOrder.Payment_Mode__c}" />
+                        </apex:pageBlockSection>
+                        
+                        <!-- credit card -->
+                        <apex:pageBlockSection columns="1" rendered="{!thisOrder.Payment_Mode__c == 'Credit Card'}">
+                                <apex:outputField value="{!thisOrder.Payment_Method_ID__c}" />
+                        </apex:pageBlockSection>
+                        <!-- end credit card -->
+                        
+                        <!-- check -->
+                        <apex:pageBlockSection columns="1" rendered="{!thisOrder.Payment_Mode__c == 'Check'}">
+                                <apex:outputField value="{!thisOrder.Check_Issuing_Bank__c}" />
+                                <apex:outputField value="{!thisOrder.Check_No__c}" />
+                                <apex:outputField value="{!thisOrder.Check_Dated__c}" />
+                                <apex:outputField value="{!thisOrder.Check_Amount__c}" />
+                                <apex:outputField value="{!thisOrder.Remarks_Check__c}" />
+                        </apex:pageBlockSection>
+                        <!-- end check -->
+                        
+                        <!-- cash -->
+                        <apex:pageBlockSection columns="1" rendered="{!thisOrder.Payment_Mode__c == 'Cash'}">
+                                <apex:outputField value="{!thisOrder.Amount_Paid__c}" />
+                        </apex:pageBlockSection>
+                        <!-- end cash -->
+                        
+                        <!-- other -->
+                        <apex:pageBlockSection columns="1" rendered="{!thisOrder.Payment_Mode__c == 'Other'}">
+                                <apex:outputField value="{!thisOrder.Other_Payment_Mode__c}" />
+                                <apex:outputField value="{!thisOrder.GL_Code__c}" rendered="{!thisOrder.Other_Payment_Mode__c == 'Internal Charge'}" />
+                                
+                                <!-- arms -->
+                                <apex:pageBlockSection rendered="{!thisOrder.Other_Payment_Mode__c == 'Invoice'}" columns="1">
+                                       <!--D-1174 3/13/2015 MGaelo Deleted outputext ARMS-->
+                                </apex:pageBlockSection>
+                                <!-- end arms -->
+                        </apex:pageBlockSection>
+                        <!-- end other -->
+                        
+                        <apex:pageBlockSection columns="1">
+                                <apex:outputField value="{!thisOrder.Billing_Contact__c}" />
+                        </apex:pageBlockSection>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <!-- end billing -->
+        </apex:pageBlock>
+    </apex:form>
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SM_RenewalOfSubscription.js')}" />
+    <!-- Start D-0122 UAT 03-03-2015 JohnD added javascript function -->
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SubscriptionDetailMiscellaneous.js')}" />
+    <!-- End D-0122 UAT 03-03-2015 JohnD added javascript function -->
+</apex:page>
