@@ -323,7 +323,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
         if (orderLineItem != null) {
             
             //START D-2588 [MD- 12] KEstoya - Processing of CreditBalance 3/17/15
-            // creditBalance(thisOrder.Id); // Start/End UD-2501 27Aug15 JohnD - commented out 
+            // creditBalance(thisOrder.Id);	// Start/End UD-2501 27Aug15 JohnD - commented out 
             //END D-2588 [MD- 12] KEstoya - Processing of CreditBalance 3/17/15
             
             thisOrder.Status__c = 'Provisioning';
@@ -400,7 +400,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
             }
             //END D-3226 JTeves 4-July-2015 - PSTOP/COS Process Updates
             
-            // sh.Subscription_Handler_Direct(thisOrder);   // Start/End D-3925 12Nov15 JohnD - commented out
+            // sh.Subscription_Handler_Direct(thisOrder);	// Start/End D-3925 12Nov15 JohnD - commented out
             //END D-3481 UAT Hotifx 02 Sep 15: Urgent COS
             //END D-3423 Wenjun 27 Aug 15
             
@@ -410,8 +410,8 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
                     thisOrder.DTL_Date__c = SM_SubscriptionHelper.getDtlDate();
                     update thisOrder;
                     
-                    sh.Subscription_Handler_Direct(thisOrder);  // Start/End D-3925 12Nov15 JohnD
-                    
+					sh.Subscription_Handler_Direct(thisOrder);	// Start/End D-3925 12Nov15 JohnD
+					
                     //START D-3166 24-26-2015 Marvin Gatchalian
                     List<Order_Line_Item__c> orderLIst = [SELECT id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];
                     if(!orderLIst.isEmpty())

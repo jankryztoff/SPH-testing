@@ -296,6 +296,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             //START: D-2279 02/20/2015 Added By John Dacutan -start retrieve all cancelled subscriptions
             for (Zuora__Subscription__c sub : (list<Zuora__Subscription__c>)trigger.new) {
                 if (sub.Zuora__Status__c == GlobalVariableClass.STATUS_CANCELLED && sub.Name != null) {
+                    system.debug('+++++CHA sub.Name ' + sub.Name);
                     cancelledSubNameList.add(sub.Name);
                 }
             }
@@ -304,13 +305,15 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             
             // START: D-2279 02/20/2015 Added By John Dacutan - retrieve and map order and order line item 
             // START: D-2526 03/16/2015 Added By Karl Tan- added Grace Days to Query
- 
+            system.debug('+++++CHA cancelledSubNameList ' + cancelledSubNameList);
             for (Order_Line_Item__c oli : [select Id, Order__c, Order__r.Recipient_Contact__c, Subscription_Name__c, Grace_Days__c from Order_Line_Item__c 
                     where Subscription_Name__c in :cancelledSubNameList]) {
             // END: D-2526 03/16/2015 Added By Karl Tan- added Grace Days to Query 
             //Start/End D-2324 02/26/15 Added by ABanaag - added Order__r.Recipient_Contact__c to query                        
+            system.debug('+++++CHA oli ' + oli);
                 if (oli.Subscription_Name__c != null) {
                     cancelledSubName_orderLineItem.put(oli.Subscription_Name__c, oli);
+                    system.debug('+++++CHA oli.Order__c ' + oli.Order__c);
                     orderIdSet.add(oli.Order__c); //START-END UD-2549 3/30/2016 Added by J.Sarion - Add Order
                 }
             }
@@ -357,14 +360,16 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             //End D-2324 02/26/15 Added by ABanaag - map values
             
             //START: D-2279 02/20/2015 Added By John Dacutan - added logic for stop
-            
+            system.debug('+++++CHA JUNE 7 trigger.new ' + trigger.new);
             for (Zuora__Subscription__c sub : (list<Zuora__Subscription__c>)trigger.new) {
-                    
+                    system.debug('+++++CHA sub ' + sub);
                 //START 04/05/15 UD-0776 Wenjun : By pass process for Zuora New Version
+                system.debug('+++++CHA1 Trigger.isInsert ' + sub.Order_Number__c);
+                system.debug('+++++CHA sub.Zuora__Version__c ' + sub.Zuora__Version__c);
                 if(Trigger.isInsert && sub.Zuora__Version__c != 1)
                     continue;
                 //END 04/05/15 UD-0776 Wenjun
-                                    
+                system.debug('+++++CHA sub.Order_Number__c ' + sub.Order_Number__c);
                 // start for case and order status update
                 if (sub.Order_Number__c != null) {
                     
@@ -373,13 +378,18 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                         orderId_isNoVendorNeeded.put((id)sub.Order_Number__c, false);                   
                         
                     //Start D-2324 02/26/15 Added by ABanaag - change from else if to "if"
+                    system.debug('+++++CHA sub.Zuora__Status__c ' + sub.Zuora__Status__c);
                     if (sub.Zuora__Status__c == GlobalVariableClass.STATUS_CANCELLED) {
                     //End D-2324 02/26/15 Added by ABanaag - change from else if to "if"                        
+                        system.debug('+++++CHA cancelledSubName_orderLineItem ' + cancelledSubName_orderLineItem);
                         if (cancelledSubName_orderLineItem != null) {
-                            
+                            system.debug('+++++CHA sub.Name ' + sub.Name);
+                            system.debug('+++++CHA cancelledSubName_orderLineItem.get(sub.Name) ' + cancelledSubName_orderLineItem.get(sub.Name));
                             orderLineItemTmp = cancelledSubName_orderLineItem.get(sub.Name);
                             //Start D-2324 02/26/15 Added by ABanaag - ensure recipient contact is populated
+                            system.debug('+++++CHA orderLineItemTmp ' + orderLineItemTmp);
                             if(orderLineItemTmp!=null){
+                                system.debug('+++++CHA orderLineItemTmp.Order__c ' + orderLineItemTmp.Order__c);
                                 orderIdSet.add(orderLineItemTmp.Order__c);
                             
                                 sub.Order_Number_1__c = orderNumberId_order.get(sub.Order_Number__c).id;
@@ -671,10 +681,13 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
 
     public void bulkAfter() {       
         // START UD-0533 04/30/2015 Added by S.Puli  - add flag to avoid SOQL 101
+        system.debug('+++++CHA JUNE 7 isBulkAfterToRun ' + isBulkAfterToRun);
         if(isBulkAfterToRun){
         // END UD-0533 04/30/2015 Added by S.Puli
         //START: PD-0035 Added by Kristine Balaoing May 16, 2016 - added variables
         Map<Id, Set<String>> mapPackToServiceFlags = new Map<Id, Set<String>>();
+        system.debug('+++++CHA JUNE 7 Trigger.isInsert ' + Trigger.isInsert);
+        system.debug('+++++CHA JUNE 7 Trigger.isUpdate ' + Trigger.isUpdate);
         if (Trigger.isInsert || Trigger.isUpdate) {
            
             set<id> publicationSubscriptionIdSet;   // Start/End UD-1646 23Jun15 JohnD
@@ -685,7 +698,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             //set<id> billingAccountIdSet = new set<id>(); // Start/End UD-1544
             //END D-3236 11-07-2015 Marvin/JOhn - removing all UD-1544 codes
             
-            
+            system.debug('+++++CHA JUNE 7 orderIdSet ' + orderIdSet);
             //START D-3194 07/01/2015 Added by J.Sarion - Set Case Status for Stop only when all related Subscriptions are cancelled
             if (!orderIdSet.isEmpty()) {
                 checkForActiveSub();
@@ -786,6 +799,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                 }
             }
             //End UD-3888 14-Apr-2016 Added By S.Puli - update LPR of the transferred Subs
+            system.debug('+++++CHA orderIdSet ' + orderIdSet);
             if (orderIdSet.size() > 0) {
                 //START D-3336 JTeves 10-Aug-2015 - Prevent "too many SOQL queries" issue
                 Order__c orderTmp;
@@ -808,6 +822,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                     SubscriptionID.put(ZSub.name, ZSub.id);
                 }
                 //START: D-2466 3/14/2015 VPernicia: Add Subscription_Name__c field in the query
+                system.debug('+++++CHA tmpCaseList ' + tmpCaseList);
                 for (Case caseTmp : tmpCaseList) {
                 //END D-3336 JTeves 10-Aug-2015 - Prevent "too many SOQL queries" issue
                 //END: D-2466 3/14/2015 VPernicia: Add Subscription_Name__c field in the query    
@@ -816,7 +831,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                     //START D-3194 07/01/2015 Added by J.Sarion - Set Case Status for Stop only when all related Subscriptions are cancelled
                     Boolean updateRec = true;
                     //END D-3194 07/01/2015 Added by J.Sarion - Set Case Status for Stop only when all related Subscriptions are cancelled
-                    
+                    system.debug('+++++CHA caseTmp.Order__c ' + caseTmp.Order__c);
                     if (caseTmp.Order__c != null) {
                             for(Order_Line_Item__c oliRec : orderLineItemId_orderLineItem.values()){
                                   
@@ -894,7 +909,9 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                         //END D-3336 JTeves 10-Aug-2015 - Prevent "too many SOQL queries" issue - move SOQL query outside FOR loop
                         
                         // create case subscription
+                        system.debug('+++++CHA trigger.isInsert ' + trigger.isInsert);
                         if (trigger.isInsert) { //START/END 27 October 2015 D-3491 Kevin Evasco - Create Case Subscription for ESHOP
+                            system.debug('+++++CHA caseTmp.Order_Line_Items__r ' + caseTmp.Order_Line_Items__r);
                             for (Order_Line_Item__c oli : caseTmp.Order_Line_Items__r) {
                                 
                                 
@@ -918,24 +935,32 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                                 // End UD-1646 23Jun15 JohnD - commented out logic is lacking
                                 
                                 // Start UD-1646 23Jun15 JohnD - improved previous logic for it does not cater multiple publciation subscriptions
+                                system.debug('+++++CHA orderLineItemId_subscripitonIdSet ' + orderLineItemId_subscripitonIdSet);
+                                system.debug('+++++CHA oli.Id ' + oli.Id);
+                                system.debug('+++++CHA orderLineItemId_subscripitonIdSet.get(oli.Id) ' + orderLineItemId_subscripitonIdSet.get(oli.Id));
                                 if (orderLineItemId_subscripitonIdSet != null && orderLineItemId_subscripitonIdSet.get(oli.Id) != null) {
                                     for (id subscriptionIdTmp :  orderLineItemId_subscripitonIdSet.get(oli.Id)) {
                                         Case_Subscription__c caseSubscription = new Case_Subscription__c();
                                         caseSubscription.Case__c  = caseTmp.Id;
                                         caseSubscription.Subscription__c = subscriptionIdTmp ;
                                         caseSubscription.Account__c = caseTmp.AccountId;
+                                        system.debug('+++++CHA caseSubscription1 ' + caseSubscription);
                                         caseSubscriptionList.add(caseSubscription);
                                     }
                                     
                                 } else {
                                     
                                     // Start UD-1646 23Jun15 JohnD - this code block was copied from original logic
+                                    system.debug('+++++CHA SubscriptionID ' + SubscriptionID);
+                                    system.debug('+++++CHA oli.Subscription_Name__c ' + oli.Subscription_Name__c);
+                                    system.debug('+++++CHA SubscriptionID.get(oli.Subscription_Name__c) ' + SubscriptionID.get(oli.Subscription_Name__c));
                                     string SubID = (string)SubscriptionID.get(oli.Subscription_Name__c);
                                     if (SubID != null) {
                                         Case_Subscription__c caseSubscription = new Case_Subscription__c();
                                         caseSubscription.Case__c  = caseTmp.Id;
                                         caseSubscription.Subscription__c = SubID ;
                                         caseSubscription.Account__c = caseTmp.AccountId;
+                                        system.debug('+++++CHA caseSubscription2 ' + caseSubscription);
                                         caseSubscriptionList.add(caseSubscription);
                                     }
                                     // End UD-1646 23Jun15 JohnD - this code block was copied from original logic
@@ -1066,7 +1091,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             //END D-3226 JTeves 4-July-2015 - PSTOP/COS Process Updates
             //END UD-1595 6/23/15 AddedBy FBenzon/JTeves : query of orders using cancelled subs for COS
         }
-        
+        system.debug('+++++CHA JUNE 77 Trigger.isInsert ' + Trigger.isInsert);
         if (Trigger.isInsert) {
             //START: PD-0035 May 16, 2016 Added by Kristine Balaoing - added mapping of oli to service flags
             Map<String, Id> mapServiceFlagtoSub = new Map<String, Id>();
@@ -1461,7 +1486,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
         integer i;
         set<id> asia1SubscriptionIdSet;
         List<Asia1_Subscription__c> asia1SubscriptionList = new List<Asia1_Subscription__c>(); //START/END 27 August 2015 UD-2271 Kevin Evasco - Asia1 Subscription creation for ESHOP
-        
+        system.debug('+++++CHA trigger.isAfter ' + trigger.isAfter);
         if (trigger.isAfter) {
             //Start UD-3888 14-Apr-2016 Added By S.Puli - update LPR of the transferred Subs
             if(!lprToUpdate.isEmpty()){
@@ -1560,11 +1585,12 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                     exceptionList.add(e);
                 }
             }
-            
+            system.debug('+++++CHA caseSubscriptionList ' + caseSubscriptionList);
             if (!caseSubscriptionList.isEmpty()) {
                 try {
                     upsert caseSubscriptionList;
                 } catch (exception e) {
+                    system.debug('+++++CHA exception debug ' + e);
                     exceptionList.add(e);
                 }
             }
@@ -2093,9 +2119,10 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
     
     private void mapZSubscripitonCustomFields(Zuora__Subscription__c sub){
         sub.Order_Line_Item_Number_1__c = idOf(sub.Order_Line_Item_Number__c);
-        
+        system.debug('+++++CHA orderLineItemId_orderLineItem ' + orderLineItemId_orderLineItem);
+        system.debug('+++++CHA sub.Order_Line_Item_Number_1__c ' + sub.Order_Line_Item_Number_1__c);
         Order_Line_Item__c orderLineItem = orderLineItemId_orderLineItem.get(sub.Order_Line_Item_Number_1__c);
-
+        system.debug('+++++CHA orderLineItem ' + orderLineItem);
         sub.Vendor_Subscription_To_Convert_1__c = idOf(sub.Vendor_Subscription_To_Convert__c);
         sub.Main_Package_1__c = idOf(sub.Main_Package__c);
         sub.Contract_End_Date_1__c = dateOf(sub.Contract_End_Date__c);
@@ -2122,12 +2149,18 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
         
         // Start UD-1646 23Jun15 JohnD - added logic for Addon field
         try {
+            system.debug('+++++CHA sub.Subscription_Type__c ' + sub.Subscription_Type__c);
+            system.debug('+++++CHA sub.Main_Package_1__c ' + sub.Main_Package_1__c);
+            //START PD-0083
+            if(orderLineItem != null){
             if (sub.Subscription_Type__c == GlobalVariableClass.SUBSCRIPTION_TYPE_PUBLICATION 
                 && sub.Main_Package_1__c != orderLineItem.Addon_Package__c) {
                     
                 sub.Addon_Package__c = orderLineItem.Addon_Package__c;
                 sub.Addon_Package_1__c = orderLineItem.Addon_Package__c;
             }
+            }
+            //END PD-0083
         }
         catch(exception e)
         {

@@ -1,6 +1,5 @@
 /*
  * Class Name: BT_AB_HDS036DX_DailyTempStopFile_Dummy
- * Test Class Name: BT_AB_HDS036DX_DailyTempStopFile_Dummy
  * Dummy Class
  */
 
@@ -27,10 +26,7 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
     
     global Map<String, Set<String>> mapProdPub = new Map<String, Set<String>>(); 
     global static String batchRunDateX = null;
-    global Set<Id> lastcreatedByIds = New Set<Id>();
     global Set<Id> lastmodifiedbyIds = New Set<Id>();
-    global Set<Id> setCaseSubIds = New Set<Id>();
-    global Set<Id> setSubIds = New Set<Id>();
     Date StartDate;
     Date Enddate;
     /* @description 
@@ -42,25 +38,13 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
     global BT_AB_HDS036DX_DailyTempStopFile_Dummy(){
     }
     
-    global BT_AB_HDS036DX_DailyTempStopFile_Dummy(Set<Id> lastcreatedById, Date Start_Date, Date End_date){
-        lastcreatedByIds.addAll(lastcreatedById);  
+    global BT_AB_HDS036DX_DailyTempStopFile_Dummy(Set<Id> lastmodifiedIds, Date Start_Date, Date End_date){
+        lastmodifiedbyIds.addAll(lastmodifiedIds);  
         StartDate = Start_Date;
         Enddate = End_date;
         System.debug(' Start_Date : '+Start_Date);
         System.debug(' End_date : '+End_date);
     }
-    
-    global BT_AB_HDS036DX_DailyTempStopFile_Dummy(Set<Id> setSubId, Set<Id> setCaseSubId, Set<Id> lastcreatedById, Set<Id> lastmodifiedById,Date Start_Date, Date End_date){
-        lastcreatedByIds.addAll(lastcreatedById); 
-        lastmodifiedbyIds.addAll(lastmodifiedById);
-        setCaseSubIds.addAll(setCaseSubId);
-        setSubIds.addAll(setSubId);
-        StartDate = Start_Date;
-        Enddate = End_date;
-        System.debug(' Start_Date : '+Start_Date);
-        System.debug(' End_date : '+End_date);
-    }
-    
     
     global Database.QueryLocator start(Database.BatchableContext BC)
     {   
@@ -97,8 +81,21 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
         caseRecordTypesSet = StringUtility.getValues(customRecordTypes);
     
         List<String> caseStatusList = new List<String>();
-        caseStatusList.add('Closed');        
+        caseStatusList.add('Closed');
         
+        //START UD-2145 HotFix 02-Sep-2015 Added by Raviteja - Applying logic for missing time
+        System.debug('dtLastBatchRunDate : '+dtLastBatchRunDate);
+        DateTime lastBatchruntime;
+        for(BT_CO_Batch_Run_Request__c brr : [SELECT CreatedDate,Id FROM BT_CO_Batch_Run_Request__c WHERE Interface_ID__c = 'HDS036DX' AND End_Time__c != Null 
+                                                                                                            AND Batch_Run_Date__c < :date.newinstance(dtLastBatchRunDate.year(), dtLastBatchRunDate.month(), dtLastBatchRunDate.day()) ORDER BY CreatedDate DESC limit 1]){
+            System.debug(' brr : '+brr);
+            lastBatchruntime = Datetime.valueof(brr.CreatedDate); 
+            System.debug('lastBatchruntime : '+lastBatchruntime);
+        }
+        
+        //End UD-2145 HotFix 02-Sep-2015 Added by Raviteja
+        
+        //START UD-2768 Renz 2015-09-29 New logic to get the new cut off date for previous run
         
         /*
         Date dBatchRunDate = convertBRD_To_Date(batchRunDate);
@@ -160,18 +157,7 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
         query += '      Case_Subscription__c     ';     
         query += ' WHERE ';
         query += '      Case__r.RecordType.DeveloperName IN :caseRecordTypesSet ';
-        if(!lastcreatedByIds.isEmpty()){
-            query += '      AND CreatedById  NOT IN :lastcreatedByIds ';
-        }
-        if(!lastmodifiedbyIds.isEmpty()){
-            query += '      AND LastModifiedById IN :lastmodifiedbyIds ';           
-        }       
-        if(!setCaseSubIds.isEmpty()){
-            query += '      AND Id IN :setCaseSubIds ';         
-        }   
-        if(!setSubIds.isEmpty()){
-            query += '      AND Subscription__c IN :setSubIds ';            
-        }
+        query += '      AND LastModifiedById  NOT IN :lastmodifiedbyIds ';
         query += '      AND Subscription__r.Delivered_By_1__c = \'Vendor\' ';     
         query += '     AND Case__r.Status IN :caseStatusList ';
         query += '      AND ( ';
@@ -198,13 +184,7 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
         query += '    Subscription__r.Product_Code__c, ';                                       // Use Product Code in place of Publication Code
         query += '    Case__r.LastModifiedDate, ';
         query += '    Case__r.Temp_Stop__r.Cancelled__c '; 
-        
-        if(Test.isRunningTest()){
-        query += '   Limit 180 '; 
-        }
-        
-        System.debug('query : '+query);
-        
+                
         return Database.getQueryLocator(query);
     }
     
@@ -216,7 +196,6 @@ global class BT_AB_HDS036DX_DailyTempStopFile_Dummy implements Database.Batchabl
      */ 
     global void execute(Database.BatchableContext BC, List<sObject> scope)
     {   
-        System.debug('scope size : '+scope.size());
         List<BA_INT_DATA_POOL__c> datapoolList = new List<BA_INT_DATA_POOL__c>();        //START/END 2015-10-12 Renino Niefes UD-2599 datapoolList shouldn't be a global variable
         List<BA_INT_DATA_FAILED_POOL__c> datapoolFailedList = new List<BA_INT_DATA_FAILED_POOL__c>();   //START/END 2015-12-18 Renino Niefes (D-4133) Hot Fix: reset the datapoolFailedList for each execute
         List<Case_Subscription__c> caseDirectSubsList = new List<Case_Subscription__c>();

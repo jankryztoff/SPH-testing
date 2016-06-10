@@ -410,7 +410,7 @@ public class BT_AB_HDS036DX_DailyTempStopFile_DTest {
         List<Singpost_Address__c> postSing = TestDataFactory.createSingpostAddress(1);
         
         BT_CO_Batch_Run_Request__c bRun = new BT_CO_Batch_Run_Request__c(Interface_ID__c = 'HDS036DX', Batch_Run_Date__c = System.Today()+1);
-        //insert bRUn;
+        insert bRUn;
         
         for(Account ac: acc){
             ac.Name = 'Test';

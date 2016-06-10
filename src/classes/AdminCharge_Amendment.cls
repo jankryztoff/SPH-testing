@@ -144,9 +144,7 @@ public with sharing class AdminCharge_Amendment {
         for(String subZuoraId :subZuoraIdToAdminChargeMap.keySet()) {
             Decimal adminCharge = subZuoraIdToAdminChargeMap.get(subZuoraId);
             if(subZuoraIdToStopDateMap.containsKey(subZuoraId)) {
-                //START PD-0289 5/31/2016 Added by J.Sarion - Set to stop date - 1
-                Date stopDate = subZuoraIdToStopDateMap.get(subZuoraId).addDays(-1);
-                //END PD-0289 5/31/2016 Added by J.Sarion - Set to stop date - 1
+                Date stopDate = subZuoraIdToStopDateMap.get(subZuoraId);
                 
                 amendmentMap = new Map<String, Object>();
                 

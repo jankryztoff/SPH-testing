@@ -1,0 +1,187 @@
+<apex:page standardController="Contact" extensions="ChangeOfAddressController">
+    <apex:form >      
+        <apex:pageBlock title="Contact Edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" onclick="return confirmCreation();" action="{!saveRecord}"/> <!-- onclick="displaymessage();"/-->
+                <apex:commandButton value="Cancel" action="{!cancel}"/>    
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel id="errorPanel">
+                <apex:pageMessages />
+            </apex:outputPanel>
+            
+            <apex:pageBlockSection title="Contact Information">
+                <apex:outputField value="{!Contact.AccountId}"/>
+                <apex:outputField value="{!Contact.Salutation}"/>
+                <apex:outputField value="{!Contact.FirstName}"/>
+                <apex:outputField value="{!Contact.LastName}"/>
+                <apex:outputField value="{!Contact.NRIC__c}"/>
+                <apex:outputField value="{!Contact.Passport__c}"/>
+                <apex:outputField value="{!Contact.Billing_Account_Name_2__c}"/> 
+                <!--<apex:inputCheckbox value="{!billingIndicator}" label="Billing Indicator"/> -->
+                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                <!--<apex:inputCheckbox value="{!recipientIndicator}" label="Recipient Indicator"/> -->           
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Additional Information">
+                <apex:outputField value="{!Contact.HomePhone__c}"/>
+                <apex:outputField value="{!Contact.Mobile_Number__c}"/>
+                <apex:outputField value="{!Contact.Mobile_Number_2__c}"/>
+                <apex:outputField value="{!Contact.Office_Number__c}"/>
+                <apex:outputField value="{!Contact.Office_Extension__c}"/>
+                <apex:outputField value="{!Contact.Fax__c}"/>
+                <apex:outputField value="{!Contact.Email__c}"/>
+                <apex:outputField value="{!Contact.Email_Secondary__c}"/>
+            </apex:pageBlockSection>   
+            
+ <apex:pageBlockSection title="Address Details">
+               
+                <apex:actionRegion >
+                    <apex:outputLabel ><b>Select Address Type</b></apex:outputLabel> &nbsp;
+                    <apex:selectList id="addressTypes" value="{!AddressType}" size="1" label="Select Address Type" >
+                        <apex:selectOptions value="{!AddressTypeOptions}"/>                            
+                        <apex:actionSupport event="onchange" action="{!clearAddressDetails}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                    </apex:selectList>
+                </apex:actionRegion>
+               
+            </apex:pageBlockSection>
+            <apex:outputPanel id="MainPanel">
+                
+                <apex:actionRegion >
+
+                    <apex:pageBlockSection id="localaddress" title="localaddress" showHeader="false" rendered="{!AddressType=='Local'}">
+                        <!--apex:inputField value="{!stagedAddress.Name}" label="Address Id" /-->
+                        <apex:inputField value="{!stagedAddress.Postal_Code__c}" label="Postal Code">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:inputField>
+                        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                        <apex:outputField value="{!stagedAddress.Block_House_Number__c}" label="Block/House Number">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:outputField>
+                        <apex:inputField value="{!stagedAddress.Level_Number__c}" label="Level Number">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:inputField>
+                        <apex:outputField value="{!stagedAddress.Street_Name__c}" label="Street Name">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:outputField> 
+                        <apex:inputField value="{!stagedAddress.Unit_Number__c}" label="Unit Number">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:inputField>
+                        <apex:outputField value="{!stagedAddress.Building_Name__c}" label="Building Name">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:outputField>
+                        <apex:outputField value="{!stagedAddress.Address_Type__c}" label="Type">
+                          <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:outputField>
+                        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem> 
+                        <apex:outputText value="{!stagedAddress.Name}" label="Selected Address" id="selectedAddress"/>                      
+                        <apex:commandButton value="Search" action="{!search}" reRender="MainPanel, scriptPanel, errorPanel" immediate="false"/> 
+                        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                        <apex:inputCheckbox id="createAddress" value="{!checked}" label="Create new Address using details above">
+                            <apex:actionSupport event="onchange" immediate="true" action="{!clearContactAddress}" reRender="MainPanel, errorPanel, scriptPanel"/>
+                        </apex:inputCheckbox>
+                    </apex:pageBlockSection> 
+                
+                    <apex:outputPanel id="resultPanel" rendered="{!AddressType=='Local'}">
+                        <apex:outputPanel id="hasResultPanel"  rendered="{!NOT(add.empty)}">
+                            <br/>
+                            <apex:pageBlock id="resultPageBlock">
+                                <apex:pageblockTable value="{!add}" var="a" align="center" rendered="{!not(add.empty)}">
+                                    <apex:column headerValue="Action">  
+                                         <apex:commandLink action="{!selectAddressRecord}" reRender="MainPanel, scriptPanel, errorPanel" immediate="false">
+                                            <b>Select</b>
+                                            <apex:param id="addressId" name="addressId" value="{!a.id}" assignTo="{!addressId}"/>
+                                        </apex:commandLink>   
+                                    </apex:column>
+                                    <apex:column headerValue="Address Id"> 
+                                        <apex:outputlink value="/{!a.id}" target="_blank">{!a.Name}
+                                        </apex:outputlink>
+                                    </apex:column>  
+                                    <apex:column value="{!a.Level_Number__c}" title="Level Number" headerValue="Level Number"/>
+                                    <apex:column value="{!a.Unit_Number__c}" title="Unit Number" headerValue="Unit Number"/>
+                                    <apex:column value="{!a.Block_House_Number__c}" title="Block/House Number" headerValue="Block/House Number"/>
+                                    <apex:column value="{!a.Street_Name__c}" title="Street Name" headerValue="Street Name"/>
+                                    <apex:column value="{!a.Building_Name__c}" title="Building Name" headerValue="Building Name"/>
+                                    <apex:column value="{!a.Address_Type__c}" title="Type" headerValue="Type"/>
+                                    <apex:column title="Postal Code" headerValue="Postal Code">
+                                        <apex:outputlink value="/{!a.Postal_Code__c}" target="_blank">{!a.Postal_Code__r.Name}
+                                        </apex:outputlink>
+                                    </apex:column>
+                                   
+                                </apex:pageBlockTable>
+                            </apex:pageBlock>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="noResultPanel" rendered="{!add.empty}">
+                           &nbsp;&nbsp;&nbsp;&nbsp; No Results Found.<br/><br/>
+                        </apex:outputPanel>                    
+                    </apex:outputPanel> 
+                
+                </apex:actionRegion>
+                
+                <apex:pageBlockSection id="internaladdress" showHeader="false" rendered="{!AddressType=='Internal'}" columns="1">
+                   <!--apex:inputField value="{!stagedAddress.Name}" required="true" /-->                                      
+                   
+                   <apex:inputField value="{!stagedAddress.Location_Code__c}"  label="Location Code"/>
+                   <apex:inputField value="{!stagedAddress.Company_Code__c}"  label="Company Code"/>
+                   <apex:inputField value="{!stagedAddress.Division_Code__c}"  label="Division Code"/>
+                   <apex:inputField value="{!stagedAddress.Department__c}"  label="Department Code"/>
+                   <apex:inputField value="{!stagedAddress.Section_Code__c}"  label="Section Code"/>
+                   
+                   
+                </apex:pageBlockSection>
+                
+                <apex:actionRegion >
+                    <apex:pageBlockSection id="overseasaddress" showHeader="false" rendered="{!AddressType=='Overseas'}" columns="1">
+                       <!--apex:inputField value="{!stagedAddress.Name}" required="true" /-->
+                       <apex:selectList id="countries" value="{!selectedCountry}" size="1" label="Country Name" >
+                           <apex:selectOptions value="{!countries}"/>                            
+                           <apex:actionSupport event="onchange" action="{!fetchCountryCode}" immediate="false" reRender="MainPanel, errorPanel"/>
+                       </apex:selectList>
+                       <apex:outputText value="{!countryCode}" label="Country Code"/>
+                       <apex:inputField value="{!stagedAddress.Address_1__c}"  label="Address 1"/>
+                       <apex:inputField value="{!stagedAddress.Address_2__c}"  label="Address 2"/>
+                       <apex:inputField value="{!stagedAddress.Address_3__c}"  label="Address 3"/>
+                       <apex:inputField value="{!stagedAddress.Address_4__c}"  label="Address 4"/>  
+                       <apex:inputField value="{!stagedAddress.Zonal_Code__c}"  label="Zonal Code"/> 
+                    </apex:pageBlockSection>
+                </apex:actionRegion>
+                
+                <apex:actionRegion >
+                    <apex:pageBlockSection id="airlineaddress" showHeader="false" rendered="{!AddressType=='Airline'}">
+                       <!--apex:inputField value="{!stagedAddress.Name}" required="true" /-->
+                       <apex:inputField value="{!stagedAddress.City__c}" label="City Code">
+                             <apex:actionSupport event="onchange" reRender="MainPanel, errorPanel" action="{!fetchCityName}"/>                      
+                       </apex:inputField>
+                       <apex:inputField value="{!stagedAddress.Packing_Code__c}" label="Packing Code">
+                             <apex:actionSupport event="onchange" reRender="MainPanel, errorPanel" action="{!fetchPackingGrpDetails}"/>                      
+                       </apex:inputField>
+                       <apex:outputText value="{!packingGroupDesc}" label="Packing Group Description"/>                       
+                       <apex:outputText value="{!flightNumber1}" label="Flight Number 1"/>
+                       <apex:outputText value="{!sequenceNumber}" label="Sequence No."/>  
+                       <apex:outputText value="{!flightNumber2}" label="Flight Number 2"/>                      
+                       <apex:outputText value="{!cityName}" label="City Name"/>         
+                    </apex:pageBlockSection>
+                </apex:actionRegion>
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+    </apex:form>
+    
+    <script src="/soap/ajax/30.0/connection.js" type="text/javascript" />
+    <script type="text/javascript">
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
+    </script>
+    
+    <!-- 8/27/2014 JD: remove header and sidebar if in iframe -->
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <script>
+        if (window.self !== window.top) {
+            $("body").removeClass();
+            $("#AppBodyHeader").remove();
+            $("#sidebarDiv").remove();
+            $(".bodyDiv").removeClass("bodyDiv");
+            $("#sidebarCell").remove();
+        }
+    </script>
+</apex:page>

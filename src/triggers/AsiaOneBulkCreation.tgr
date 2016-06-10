@@ -1,0 +1,78 @@
+trigger AsiaOneBulkCreation on BT_CO_ASIAONE_BulkIdCreation__c (after insert) {
+
+    List<BT_CO_ASIAONE_BulkIdCreation__c> recordsList = trigger.new;
+    List<Asia1__c> asia1RecList = new List<Asia1__c>();
+    List<Asia1_Subscription__c> asia1SubscriptionList = new List<Asia1_Subscription__c>();
+    Set<id> packSet = new Set<id>();
+    
+    Map<String, zuora__subscription__c> subMap = new Map<String, zuora__subscription__c>();
+    Map<zuora__subscription__c, List<Asia1__c>> subAsia1Map = new Map<zuora__subscription__c, List<Asia1__c>>();
+    Map<id, Set<Package_Access_Flag__c>> packPafMap = new Map<id, Set<Package_Access_Flag__c>>();
+    
+    Set<String> subNameSet = new Set<String>();
+    
+    for(BT_CO_ASIAONE_BulkIdCreation__c tempRec : recordsList){
+        subNameSet.add(tempRec.subscription__c);
+    }
+    
+    for(zuora__subscription__c tempRec : [select id, name,Main_Package_1__c,Order_Line_Item_Number_1__c,Recipient_Contact__r.firstName, Recipient_Contact__r.LastName ,Recipient_Contact__r.Mobile_Number__c,Recipient_Contact__r.HomePhone__c, Recipient_Contact__r.Email__c from zuora__subscription__c where name in :subNameSet]){
+        subMap.put(tempRec.name, tempRec);
+        packSet.add(tempRec.Main_Package_1__c);
+    }
+    
+    List<Package_Access_Flag__c> pafTmp = [select Package__c, Package_Service_Access_Flag__c, Package_Service_Access_Flag__r.Name, No_of_Concurrent_Users__c from Package_Access_Flag__c where Package__r.id in :packSet];
+    
+    for(id tmpPack : packSet){
+        Set<Package_Access_Flag__c> pafList = new Set<Package_Access_Flag__c>();
+        for(Package_Access_Flag__c tmp : pafTmp){
+            if(tmpPack == tmp.Package__c){
+                pafList.add(tmp);
+            }
+        }
+        packPafMap.put(tmpPack, pafList);
+    }
+    
+    for(BT_CO_ASIAONE_BulkIdCreation__c tempRec : recordsList){
+        Asia1__c asia1Rec = new Asia1__c();
+
+        asia1Rec.Email__c = subMap.get(tempRec.subscription__c).Recipient_Contact__r.Email__c;
+        asia1Rec.Display_Name__c = tempRec.Display_Name__c;
+        asia1Rec.User_ID_LDAP_ID__c = tempRec.User_ID_LDAP_ID__c;
+        asia1Rec.Password__c = tempRec.Password__c;
+        asia1Rec.Secret_Answer__c = tempRec.Secret_Answer__c;
+        asia1Rec.Secret_Question__c = tempRec.Secret_Question__c;
+        System.debug(subMap.get(tempRec.subscription__c).Recipient_Contact__r.id);
+        asia1Rec.Contact__c = subMap.get(tempRec.subscription__c).Recipient_Contact__r.id;
+        System.debug(subMap.get(tempRec.subscription__c).Recipient_Contact__r.id);
+        asia1Rec.status__c = 'Created';
+        asia1RecList.add(asia1Rec);
+        subAsia1Map.put(subMap.get(tempRec.subscription__c),asia1RecList);          
+        
+    }
+    insert asia1RecList;
+    
+    for(zuora__subscription__c subId : subAsia1Map.keySet()){
+        List<Asia1__c> asia1RecListTmp = subAsia1Map.get(subId);
+        for(Asia1__c asia1Tmp : asia1RecListTmp){
+            Set<Package_Access_Flag__c> pafList = packPafMap.get(subId.Main_Package_1__c);
+            for(Package_Access_Flag__c pafTmp2 : pafList){
+//                Asia1_Subscription__c asia1Subscription = new Asia1_Subscription__c();
+//                  
+//              asia1Subscription.Concurrent__c = pafTmp2.No_of_Concurrent_Users__c;
+//              asia1Subscription.Order_Line_Item__c = subId.Order_Line_Item_Number_1__c;
+//              asia1Subscription.Service_Access_Flag__c = pafTmp2.Package_Service_Access_Flag__c;
+//              asia1Subscription.Asia1__c = asia1Tmp.id;
+//              asia1Subscription.Subscription__c = subId.id;
+                
+                AsiaOneBulkTransactionHandler.apiSignUp(pafTmp2.Package_Service_Access_Flag__r.name, asia1Tmp.User_ID_LDAP_ID__c, asia1Tmp.Display_Name__c, subId.id, pafTmp2.No_of_Concurrent_Users__c, subId.Order_Line_Item_Number_1__c , pafTmp2.Package_Service_Access_Flag__c ,asia1Tmp.id);
+//              if(AsiaOneBulkTransactionHandler.apiSignUp(pafTmp2.Package_Service_Access_Flag__c.name, asia1Tmp.User_ID_LDAP_ID__c, asia1Tmp.Display_Name__c, subId, asia1Subscription )){
+//                  asia1Subscription.Status__c = 'Enabled';
+//              }else{
+//                  asia1Subscription.Status__c = 'Service Activation Error';
+//              }
+//              asia1SubscriptionList.add(asia1Subscription);
+            }
+        }
+    }   
+//  insert asia1SubscriptionList;
+}

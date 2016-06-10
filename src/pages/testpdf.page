@@ -1,0 +1,238 @@
+<apex:page controller="testpdfController" renderAs="PDF" action="{!initialize}" applyBodyTag="false" standardStylesheets="false">
+    <head>
+        <style> 
+            body {
+                font-family: 'Arial Unicode MS'; 
+            } 
+        </style>
+    </head>
+    <body>
+       
+<table width="100%">
+<tr>
+
+<td width="55%" align="left" style="font-size:12px">
+<br><b> 续订通知单 </b></br>
+<br><br>DATE        : <apex:outputText value="{0, date, dd'/'MM'/'yyyy}"><apex:param value="{!Today}" /></apex:outputText></br></br>
+<br><br>SUB A/C NO      : {!subAccountNum} </br></br>
+
+<br/><br/>{!contactName}
+<br/>{!billingContactName}
+<br/>{!accountName}
+<br/>{!mailingBlk} {!mailingStreet}
+<br/># {!mailingLevel} - {!mailingUnit}
+<br/>{!mailingBuilding}
+<br/>SINGAPORE {!mailingPostalCode}
+
+
+<br/><br/>
+<br><br><apex:image url="{!URLFOR($Action.Attachment.Download, '00PN0000001Eoth')}" width="100px" height="100px"/> 
+</br></br>
+</td>
+
+
+<td width="20%" align="left" style="font-size:12px">
+<img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N00000002ulS&oid=00DN0000000PmPG&lastMod=1403676977000" height="90" width="110"/>
+<br>Singapore Press Holdings Limited</br>
+<br>Circulation</br>
+<br>83 Genting Lane, Level 2, Media Centre</br>
+<br>Singapore 349567</br>
+<br>Fax : 650 67448 Enquiries: 65-63883838</br>
+<br>Email : circs@sph.com.sg</br>
+</td>
+
+</tr>
+</table>
+
+<br> 感谢您对本杂志的支持。</br>
+
+<br></br>
+<table width="100%">
+    <tr>
+        <td width="100%" valign="top" style="font-size:12px">
+
+        您的杂志订阅期即将期满，我们谨此邀请您继续订阅。请将此续订表格填妥，并在 ______________ 前把所有的通知单寄回或传真至 (65) 6744 4875。 若有任何询问，请拨电 (65)6388 3838与我们的客户服务组联系。您也可以通过电邮地址：circs@sph.com.sg 与我们联络。若您已续订，请将此函作废。. 
+        为了提倡环保和更有效的服务，我们将通过电子邮件，发送订阅确认函给您，请提供以下最新资料。
+        若您欲收到纸本订阅确认函，请打勾[   ]。
+        </td>    
+    </tr>
+</table>
+     
+    <table width="100%" style="font-size:12px">
+    <tr>
+    <td width="25%">电邮地址：</td>
+    <td width="25%">联络号码: (住家)</td>
+    <td width="25%">)(办公室)</td>
+    <td width="25%">(手提电话) </td>
+    </tr>
+    </table>
+
+<br>祝阅读愉快 !</br>
+
+
+<table frame="box" width="100%" bgcolor="#cccccc" cellpadding="0"  style="font-size:12px">
+<tr>
+                   
+                        <td width="41%" align="left">
+                        <b>收件人编号/姓名</b>
+                        <br><b>报刊</b></br>
+                        <br><b> 刊期 </b></br></td>
+                        <td width="8%" align="center"><b>份数</b></td>
+                        <td width="8%" align="center"><b>最后一期 </b></td> 
+                        <td width="8%" align="center"><b>一年原价S$</b></td>
+                        <td width="8%" align="center"><b>请打勾</b></td>
+                        <td width="8%" align="center"><b>两年原价S$</b></td>
+                        <td width="8%" align="center"><b>请打勾</b></td>
+
+</tr>
+    
+</table>
+
+    
+<table frame="box" width="100%" style="font-size:10px">
+    <apex:repeat value="{!z}" var="sub">
+        <tr>
+            <td width="41%" align="left">{!sub.Subscriber_Contact__r.Account.AccountNumber} {!sub.Zuora__Account__r.Name}<br/>{!sub.Recipient_Contact__r.Name}<br/><apex:repeat value="{!sMap[sub]}" var="temp">{!temp}&nbsp;</apex:repeat> {!sub.Frequency_1__c}</td>
+            <td width="8%" align="center">{!sub.Number_of_Copies__c}</td>
+            <td width="8%" align="center">{!sub.Subscription_End_Date__c}</td> 
+            
+            <apex:repeat value="{!pMap1[sub.Main_Package_1__c]}" var="temp1">
+                <td width="4%" align="center">{!temp1}</td>
+            </apex:repeat>
+            <apex:repeat value="{!pMap2[sub.Main_Package_1__c]}" var="temp2">
+                <td width="4%" align="center">{!temp2}</td>
+            </apex:repeat>
+            <td width="8%" align="center">()</td>
+            <apex:repeat value="{!pMap3[sub.Main_Package_1__c]}" var="temp3">
+                <td width="4%" align="center">{!temp3}</td>
+            </apex:repeat>
+            <apex:repeat value="{!pMap4[sub.Main_Package_1__c]}" var="temp4">
+                <td width="4%" align="center">{!temp4}</td>
+            </apex:repeat>
+            <td width="8%" align="center">()</td>
+            
+            <!--<apex:repeat value="{!pMap[sub.Main_Package_1__c]}" var="temp1">
+                <td width="8%" align="left">{!temp1}</td>
+            </apex:repeat>
+            <td width="8%" align="left">()</td>
+            <apex:repeat value="{!pMap2[sub.Main_Package_1__c]}" var="temp2">
+                <td width="8%" align="left">{!temp2}</td>
+            </apex:repeat>
+            <td width="8%" align="left">()</td>-->
+        </tr>
+        
+    </apex:repeat>
+</table>
+    
+    
+  
+    <td width="55%" align="left" style="font-size:12px">
+    <br><br>订户将会在杂志发行后的3-5天后收到订阅杂志。</br></br>
+    
+    <br><br><b>是的，我要续订以上杂志。</b>(请在以上挂号打勾)</br></br>
+    <br>◘ 付全额 S$__________________</br>
+           
+    <br><b>付款方式 </b> (请打勾)</br>
+    <br> 信用卡付款 ：  ◘ VISA       ◘ MASTERCARD       ◘ AMEX (请打勾) </br>
+    <br>信用卡用户姓名：___________________________________________________________________________________________</br>
+    <br>信用卡号码：_____________________________________________________有效日期至:_____________________（月份/年份)</br>
+    <br>     签名:____________________________________________________________ 日期:_____________________________________</br>
+
+    <br>支票付款（支票收款人“Singapore Press Holdings Limited”)</br>
+    <br>银行/ 支票号码：__________________________________________________ 数额 ：___________________________________ </br>                  
+
+    <br>订阅户口号码:</br>
+    
+    </td>
+    
+    
+    <table width="100%">
+    <td width="40%" align="left" style="font-size:12px">
+    <br><br><b><u>一、   条例</u></b></br></br> </td>
+    <tr>
+      <td width="8%" align="left" style="font-size:12px"> <br><b>付款方式</b></br></td>
+    </tr>
+    
+    <tr> 
+            <td width="8%" align="left" style="font-size:12px">•  所有订阅是根据预付方式</td>
+    </tr>
+      
+    <tr>        
+            <td width="8%" align="left" style="font-size:12px">•  付款可通过以下方式</td>
+    </tr>  
+    
+    <tr>      
+            <td width="8%" align="left" style="font-size:12px">o  支票、汇票（必须通过本地银行并以新元付款），领款者必须指定为</td>
+    </tr> 
+          
+     <tr>       
+            <td width="8%" align="left" style="font-size:12px"><b>“Singapore Press Holdings Limited”</b></td>
+     </tr>       
+         
+     <tr>       
+            <td width="8%" align="left" style="font-size:12px">o  信用卡（Visa/MasterCard/Amex）</td>
+            
+      </tr>      
+            
+      <tr>      
+            <td width="8%" align="left" style="font-size:12px">可通过传真/电子邮件订阅。请注明信用卡号码和有效日期</td>
+      </tr>      
+
+       <tr>     <td width="8%" align="left" style="font-size:12px"><b>确认订阅程序</b></td> </tr>
+         <tr>   <td width="8%" align="left" style="font-size:12px">•  一旦确认您的订阅，您将收到一份确认通知</td></tr>
+
+          <tr>  <td width="8%" align="left" style="font-size:12px"><b>其他</b></td></tr>
+           <tr> <td width="8%" align="left" style="font-size:12px">•  订阅标价包括7% 消费税</td></tr>
+          <tr>  <td width="8%" align="left" style="font-size:12px">•  订阅标价以及行政费（如有）的更改将不需预先通知</td></tr>
+           <tr> <td width="8%" align="left" style="font-size:12px">•  订单处理需4到6个星期</td></tr>
+
+           <tr> <td width="8%" align="left" style="font-size:12px"><b>联络方式</b></td></tr>
+            
+    </table>       
+    
+    <table width="80%" align="center" style="font-size:12px">
+            <tr>
+            <td>●   电话：(65) 6388 3838</td>
+            <td>●     传真：(65) 6744 4875/ (65) 6744 1646</td>
+            </tr>
+
+            <tr>
+            <td>●   电子邮件：circs@sph.com.sg     </td>
+            <td>●     网址：www.sphsubscription.com.sg</td>
+            </tr>
+            </table>
+            
+            
+            <table width="100%">
+
+                    <tr>
+                        <td width="32%" align="left" style="font-size:12px">
+                        <br>请将更新通知单寄到：</br>
+                        <br><br>订户号码：______________________</br></br>
+                        <br>姓名：__________________________</br>
+                        <br>地址：__________________________</br>
+                        <br>________________________________</br>
+                        <br>邮区：__________________________</br>
+                        <br>国家：__________________________</br>
+                        <br>生效日期：______________________</br>
+                        </td>
+                        
+                        
+                        <td width="32%" valign="left" style="font-size:12px">
+                        <br>请将更新通知单寄到：</br>
+                        <br><br>订户号码：______________________</br></br>
+                        <br>姓名：__________________________</br>
+                        <br>地址：__________________________</br>
+                        <br>________________________________</br>
+                        <br>邮区：__________________________</br>
+                        <br>国家：__________________________</br>
+                        <br>生效日期：______________________</br>
+                        </td>
+                    </tr>
+
+            </table>
+
+
+        
+    </body>
+</apex:page>

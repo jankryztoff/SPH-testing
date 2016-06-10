@@ -85,19 +85,14 @@ public class ResponseUtility {
             if (field.trim() == 'Balance') {
                 responseObject.setValue(field.trim(), 10);
             } else if (field.trim() == 'Amount') {
-              responseObject.setValue(field.trim(), 10);
-            } else if (field.trim() == 'ChargeAmount') {
-                responseObject.setValue(field.trim(), 105);
-            }else if (field.trim() == 'TaxAmount') {
-                responseObject.setValue(field.trim(), 10);
-            } 
-            else {
+            	responseObject.setValue(field.trim(), 10);
+            } else {
                 responseObject.setValue(field.trim(), 'test data');
             }
         }
         
         if (zuoraAccountId != null)
-          responseObject.setValue('AccountId', zuoraAccountId);
+        	responseObject.setValue('AccountId', zuoraAccountId);
         returnResult.add(responseObject);
         zuoraAccountId = null;
         return returnResult;

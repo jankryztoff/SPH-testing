@@ -1,0 +1,251 @@
+<!-- @History: D-1189  01/22/2015 A. Navarro - Reconstructed the entire VF Page -->
+<!-- @History: D-2982  06/10/2015 A. Navarro - Reconstructed the entire VF Page -->
+<!-- @History: UD-1419  07/20/2015 A. Navarro - Reconstructed the entire VF Page -->
+<apex:page controller="CreditNoteController" renderAs="PDF" action="{!generateCreditNoteController}">
+
+<head>
+    <style>         
+        @page{
+            font-family: Arial;
+            font-size: 11px;
+        }       
+    </style>
+       
+</head>
+<body>
+    <table width="100%" style = "font-family: Arial; font-size: 14px;">
+        <tr>
+            <td align="left" width="20%"><img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N00000002ulS&oid=00DN0000000PmPG&lastMod=1403676977000" height="90" width="110"> </img>
+            </td>
+            <td align="left">
+                    <b><i>Singapore Press Holdings Limited</i></b><br></br>
+                    Circulation, 82 Genting Lane, Media Centre, Singapore 349567<br></br>
+                    Co. Regn. No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    198402868E GST Reg. MR-850000</td>
+            
+            <!--<td align="right" width="20%" style="font-size:15px"><b>CREDIT NOTE</b></td>-->
+        </tr>
+        <tr>
+            <td align="right" width="100%" style="font-size:15px" colspan="5"><b>CREDIT NOTE</b></td>
+        </tr>
+    </table>
+        
+    <table width="100%" style = "font-family: Arial; font-size: 11px;">
+        <tr column = "2">
+                <td width="50%"> 
+                <apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+                <!--START:UD-1248 MGaelo 06/26/2015 Adjust the Address block to envelope window-->
+                <div style="margin-left:5mm"> 
+                    <div class='innerDiv' style = "position: relative; top: -10px;">   
+                        <div class = 'address'>
+                            {!billContactname}
+                            <br/><apex:outputtext escape="false" value="{!finalAddress}"/>  
+                        </div> <!--START/END UD-1248 MGaelo 07/10/15 - added closing div to address -->
+                        <div class = 'barcode'>
+                            <apex:outputText rendered="{!barcodeAttId != NULL}">
+                                <apex:image url="{!URLFOR($Action.Attachment.Download, barcodeAttId)}" height="10mm" width="40mm"/><!--START/END UD-1248 MGaelo 07/10/15 - added width and heigth  -->          
+                            </apex:outputText>
+                        </div>
+                    </div>   
+                </div>
+                <!--END:UD-1248 MGaelo 06/26/2015 Adjust the Address block to envelope window-->  
+                <!-- {!CreditNote.Related_Case__r.Account.Name} --> 
+                </td>
+                <td align="left" width="40%">
+                                <table width="100%" border="1" style = "font-family: Arial; font-size: 11px;">
+                                    <tr>
+                                        <td width="10%">Sub A/c</td>
+                                        <td width="20%">Credit Note No.</td>
+                                        <td width="10%">Date</td>
+                                    </tr>
+                                    <tr>
+                                    <!--START: D-1189 / 01/21/2015 / P.Villarica -->
+                                    <td width="10%">{!accountNumber}</td>
+                                    <!--START: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+                                    <!--END: D-1189 / 01/21/2015 / P.Villarica -->
+                                    <!--END: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+                                    <td width="20%" align = 'left'>{!creditNoteNumber }</td>
+                                    <td width="10%"><apex:outputText value="{0, date, dd/MM/yyyy}">
+                                                        <apex:param value="{! issueDate}" />
+                                                    </apex:outputText></td>
+                                    </tr>
+                                </table>
+                                <br></br>
+                                <table width="100%" border="1" style = "font-family: Arial; font-size: 11px;">
+                    <tr>
+                        <td width="30%">Payment A/C No.</td>
+                    </tr>
+                    <tr>
+                        <td width="30%">{! billingAccountNumber}</td>
+                    </tr>
+                </table>
+                                
+                                
+                </td>
+        </tr>
+
+        <tr>
+                <!--START: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+        <!--START: D-1189 / 01/21/2015 / P.Villarica -->
+        <!--END: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+                <td>
+                <br></br>              
+                </td>
+                <td align="left" width = "40%">
+                <!--START: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+        <!--END: D-1189 / 01/21/2015 / P.Villarica -->
+        <!--END: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+                
+                </td>
+        </tr>
+    </table>           
+        
+        <!--br/--> <!-- START/END UD-1248 MGaelo 07/10/15 removed space-->
+        
+        <!--START: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+    <!--START: D-1189 / 01/21/2015 / P.Villarica -->    
+    <!--END: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+        <div style = "border: solid;">
+            <table width="100%" style = "font-family: Arial; font-size: 11px; padding = 0; margin = 0;">
+                <tr>
+                    <td width="8%" align="center"><b>Invoice No.</b></td>
+                    <td width="8%" align="center"><b>Invoice Date</b></td>
+                    <td width="8%" align="center"><b>Publication </b></td> 
+                    <td width="8%" align="center"><b>Credit Amt
+                    <br/>Before GST (S$)</b></td>
+                    <td width="8%" align="center"><b>GST</b>
+                    <br/>(%)</td>
+                    <td width="8%" align="center"><b>GST Amt
+                    <br/>(S$)</b></td>
+                    <td width="8%" align="center"><b>Credit Amt</b>
+                    <br/>After GST (S$)</td>
+                </tr>
+                <apex:repeat value="{!creditNoteWrapperList}" var="credNote">
+                    <tr>
+                        <td align="center">{!credNote.invoiceName} </td>
+                        <td align="center"> 
+                            <apex:outputText value="{0, date, dd/MM/yyyy}">
+                                <apex:param value="{!credNote.invoiceDate}" />
+                            </apex:outputText>
+                        </td>
+                        <td align="center">{!credNote.publication}</td>
+                        <td align="center"> 
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{!credNote.credAmountBefGST}" />
+                            </apex:outputText>
+                        </td>
+                        <td align="center">{!credNote.credGSTPercentage}</td>
+                        <td align="center">
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{!credNote.credGSTAmount}" />
+                            </apex:outputText>
+                        </td>
+                        <td align="center">
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{!credNote.credAmountAfterGST}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr>
+                <tr>
+                    <td width="9%" align="left" colspan = '3'><b>TOTAL</b></td>
+                    <td style="border-top: solid; border-bottom: solid;" width="9%" align="center">
+                        <b>
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{! totalBeforeGST}" />
+                            </apex:outputText>
+                        </b>
+                    </td>
+                    <td style="border-top: solid; border-bottom: solid;" width="9%" align="left"><b></b></td>
+                    <td style="border-top: solid; border-bottom: solid;" width="9%" align="center">
+                        <b>
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{! totalAmount}" />
+                            </apex:outputText>
+                        </b>
+                    </td>
+                    <td style="border-top: solid; border-bottom: solid;" width="9%" align="center">
+                        <b>
+                            <apex:outputText value="{0, number, ###,##0.00}">
+                                <apex:param value="{! totalAfterGST}" />
+                            </apex:outputText>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'> {! textAmount} </td>
+                </tr>
+                <div style = "border-top: solid; font-family: Arial; font-size: 11px;">
+                    <tr>
+                        <td style="border-right:none;" width="15%" align="left" colspan = '7'><br/> Non-Delivery for XXXX </td>
+                    </tr>
+                </div>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr>
+                <tr>
+                    <td colspan = '7'></td>
+                </tr><tr>
+                    <td colspan = '7'></td>
+                </tr>
+            </table>
+        </div>
+    <!--START: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+    <!--END: D-1189 / 01/21/2015 / P.Villarica -->
+    <!--END: D-2438 Added by S.Puli syncing dv1 page to SIT and UAT-->
+    
+    <!-- <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>-->
+    
+    <!--<table frame="box" width="100%"  style="font-size:12px" border="0">
+        <tr>
+                        <td width="59%" align="left"><b>TOTAL</b></td>
+                        <td width="9%" align="left">{!credAmountBefTotal}</td>
+                        <td width="9%" align="left">{!credGSTPercentage}</td>
+                        <td width="9%" align="left">{!credGSTAmountTotal}</td>
+                        <td width="9%" align="left">{!credAmountAfterGST}</td>
+        </tr>
+    </table>-->
+    
+    <br/><br/>
+    
+    <table frame="box" width="100%" border="0" style = "font-family: Arial; font-size: 13px;">
+        <!-- <tr>
+                        <td width="59%" align="left">{!totalAmountWords}</td>
+        </tr>      
+        <tr>          
+                        <td width="59%" align="left"><br/><br/>Non Delivery for XXXX</td>
+        </tr>-->
+        
+        <tr>
+        <td align="right">For Singapore Press Holdings Limited
+                            <br/><br/><br/> _______________________________<br/>Authorised Signature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        </tr>
+
+    </table>   
+</body>
+</apex:page>
