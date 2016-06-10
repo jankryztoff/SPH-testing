@@ -44,7 +44,7 @@ public Class BT_CO_INT_Utilities{
         log('SZ1 ---------> '+setStrPubs.size());
         log('SZ2 ---------> '+setStrPubs);
 
-		//START 2015/12/03  Renino Niefes           - UD-1633 Remove Pagination_Rate__c field due to redundancy
+        //START 2015/12/03  Renino Niefes           - UD-1633 Remove Pagination_Rate__c field due to redundancy
         List<Publication__c> listPublications = [SELECT Active_Date__c,Available_For_Vendor_Subscriptions__c,Commission_Rate_Fri__c,
             Commission_Rate_Mon__c,Commission_Rate_PHE__c,Commission_Rate_PHW__c,Commission_Rate_Sat__c,Commission_Rate_Special_Fri__c,
             Commission_Rate_Special_Mon__c,Commission_Rate_Special_PHE__c,Commission_Rate_Special_PHW__c,Commission_Rate_Special_Sat__c,
@@ -59,7 +59,7 @@ public Class BT_CO_INT_Utilities{
             Public_Holiday_Weekend_Pub_Indicator__c,Published_Days__c,Publisher_Code__c,Publish_Pattern__c,Sph_Publication_Indicator__c,
             Sunday_Publication__c,SystemModstamp,Vendor_Sub_Delivery_Method__c,Vendor_Sub_Mailing_Agent__c FROM Publication__c 
             WHERE Publication_Code__c IN :setStrPubs AND  Platform_Type__c='Print' AND Publication_Type__c = 'N'];
-		//END 2015/12/03  Renino Niefes           - UD-1633 Remove Pagination_Rate__c field due to redundancy
+        //END 2015/12/03  Renino Niefes           - UD-1633 Remove Pagination_Rate__c field due to redundancy
         log('SZ2 ---------> '+listPublications.size());
         log('SZb ---------> '+listPublications);
 
@@ -70,15 +70,15 @@ public Class BT_CO_INT_Utilities{
 
         log('SZ4 ---------> '+ mapPRPCtoPub.size());
         log('SZ5 ---------> '+ mapPRPCtoPub);
-		// Start - Nitin - hot Fix - 20-Aug-2015 putting pset inside for loop
-		//START HotFix 27-July-2015 Added by Nitin - Moved pSet out of for loop
+        // Start - Nitin - hot Fix - 20-Aug-2015 putting pset inside for loop
+        //START HotFix 27-July-2015 Added by Nitin - Moved pSet out of for loop
         //Set<Publication__c> pSet = new Set<Publication__c>();
-		for(Package_Item__c pi : listPackageItem) {
-			//START UD-2598 - HotFix 03-Sep-2015 Added by Raviteja - Adding multiple subscriptions for 1 packgeid
+        for(Package_Item__c pi : listPackageItem) {
+            //START UD-2598 - HotFix 03-Sep-2015 Added by Raviteja - Adding multiple subscriptions for 1 packgeid
             /*
             Set<Publication__c> pSet = new Set<Publication__c>();
-		//End HotFix 27-July-2015 Added by Nitin - Moved pSet out of for loop	
-		// End- Nitin - hot Fix - 20-Aug-2015 putting pset inside for loop
+        //End HotFix 27-July-2015 Added by Nitin - Moved pSet out of for loop   
+        // End- Nitin - hot Fix - 20-Aug-2015 putting pset inside for loop
             for(zqu__ProductRatePlanCharge__c temp : listPRPC) {
                 if(pi.Product_Rate_Plan__c == temp.zqu__ProductRatePlan__c)
                     pSet.add(mapPRPCtoPub.get(temp));
@@ -89,7 +89,7 @@ public Class BT_CO_INT_Utilities{
         }
         log('SZ8 ---------> '+ mapPackToPub.size());
         log('SZ9 ---------> '+ mapPackToPub);
-		*/
+        */
             for(zqu__ProductRatePlanCharge__c temp : listPRPC) {
                 System.debug(' temp : '+temp );
                 System.debug(' pi.Product_Rate_Plan__c: '+pi.Product_Rate_Plan__c );
@@ -107,7 +107,7 @@ public Class BT_CO_INT_Utilities{
         return mapPackToPub;
     }
     
-	//START UD-2691 23-Sep-2015 Added by Raviteja  - Adding prodPubMapping method 
+    //START UD-2691 23-Sep-2015 Added by Raviteja  - Adding prodPubMapping method 
         public static Map<String, Set<String>> prodPubMapping(){
         List<Product_Publication__c> listPP = [SELECT ZProduct__r.productcode__c, publication_code__r.name FROM Product_Publication__c];
         Map<String, Set<String>> mProdPub = new Map<String, Set<String>>();
@@ -191,7 +191,7 @@ public Class BT_CO_INT_Utilities{
                     Main_Package_1__c,
                     LastModifiedDate,
                     Zuora__Status__c,
-					Vendor_Conversion_1__c, // START / End UD-2771 16-Sep-2015 Added by Raviteja - Adding Vendor Conversion field in Subscription records
+                    Vendor_Conversion_1__c, // START / End UD-2771 16-Sep-2015 Added by Raviteja - Adding Vendor Conversion field in Subscription records
                     Recipient_Contact__r.Address__r.Block_House_Number__c,
                     Recipient_Contact__r.Address__r.Level_Number__c,
                     Recipient_Contact__r.Address__r.Unit_Number__c,

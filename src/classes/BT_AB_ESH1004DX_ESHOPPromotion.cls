@@ -12,7 +12,7 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
      String query = '';    
      String interfaceName = '';
      List<String> fieldList = new List<String>();
-	 //START D-1882 04-Feb-2015 Added by Raviteja- Created new Integer to store the datapoolList size
+     //START D-1882 04-Feb-2015 Added by Raviteja- Created new Integer to store the datapoolList size
      global Integer datapoolListsize = 0;  
      //End D-1882 04-Feb-2015 Added by Raviteja
      
@@ -30,8 +30,8 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
     global Database.QueryLocator start(Database.BatchableContext BC){
         List<BA_INT_DATA_POOL__c> resultList = [SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = 'ESH1004DX'];
         delete resultList;  
-		
-		//START D-1882 04-Feb-2015 Added by Raviteja -INSERTING Header record into BA_INT_DATA_POOL__c 
+        
+        //START D-1882 04-Feb-2015 Added by Raviteja -INSERTING Header record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolHeaderRecord = new BA_INT_DATA_POOL__c();
         datapoolHeaderRecord.name = interfaceName;
         datapoolHeaderRecord.job_id__c = interfaceName;
@@ -57,7 +57,7 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
         List<BA_INT_DATA_POOL__c> datapoolList = new List<BA_INT_DATA_POOL__c>();
         
         //START D-1882 04-Feb-2015 Added by Raviteja -commented and move the code to start method
-		/*
+        /*
         BA_INT_DATA_POOL__c datapoolHRecord = new BA_INT_DATA_POOL__c();
         datapoolHRecord.name = interfaceName;
         datapoolHRecord.job_id__c = interfaceName;
@@ -67,8 +67,8 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
         datapoolHRecord.export_data__c = 'H,'+DateTime.now();
         datapoolList.add(datapoolHRecord);
         */
-		 //End D-1882 04-Feb-2015 Added by Raviteja
-		 
+         //End D-1882 04-Feb-2015 Added by Raviteja
+         
         for(sObject record : scope){          
             System.debug(record);  
             
@@ -113,13 +113,13 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
         datapoolTRecord.insert_time__c = DateTime.now(); 
         datapoolTRecord.export_data__c = 'T,'+(datapoolList.size()-1);
         datapoolList.add(datapoolTRecord);
-		*/
+        */
        //End D-1882 04-Feb-2015 Added by Raviteja
-	   
-	    //START D-1882 04-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
+       
+        //START D-1882 04-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
          datapoolListsize = datapoolList.size()+datapoolListsize;
          //End D-1882 04-Feb-2015 Added by Raviteja
-	   
+       
         // Set the database savepoint. In case DML Operation fails, use this savepoint for rollback.  
         Savepoint savepointBeforeDML = Database.setSavepoint();
         try{
@@ -140,7 +140,7 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
      */ 
     global void finish(Database.BatchableContext BC)
     {
-	   //START D-1882 04-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
+       //START D-1882 04-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolTailRecord = new BA_INT_DATA_POOL__c();
         datapoolTailRecord.name = interfaceName;
         datapoolTailRecord.job_id__c = interfaceName;
@@ -151,9 +151,9 @@ global class BT_AB_ESH1004DX_ESHOPPromotion implements Database.Batchable<sObjec
         insert datapoolTailRecord;
         //End D-1882 04-Feb-2015 Added by Raviteja
         
-		//start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
+        //start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
         BT_AT_BatchCalloutHandler calloutHandler = new BT_AT_BatchCalloutHandler(interfaceName);
         Database.executeBatch(calloutHandler);
-		//end Nitin/D-2087/6Feb2015 
+        //end Nitin/D-2087/6Feb2015 
     }
 }

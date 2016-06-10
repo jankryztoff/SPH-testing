@@ -138,8 +138,6 @@ global with sharing class EshopLDAPAPI{
         svcCon = 0;
         serviceCon = 0;
         
-        
-        
         mandatoryFieldChkResult = checkMandatoryFields(reqObj);
         //System.assertEquals(null, mandatoryFieldChkResult);
         //System.assertEquals(1, 0);
@@ -159,7 +157,9 @@ global with sharing class EshopLDAPAPI{
         }else{
             //START: D-4472 Retest Failed 3-23-2016 Added by Kristine Balaoing - added validation for existing ldap id in the system
             if(reqObj.asiaOneLdapId != null){
-                asiaOneRec = [SELECT Id, User_ID_LDAP_ID__c, Contact__c FROM Asia1__c WHERE User_ID_LDAP_ID__c = :reqObj.asiaOneLdapId];
+                asiaOneRec = [SELECT Id, User_ID_LDAP_ID__c, Contact__c 
+                              FROM Asia1__c 
+                              WHERE User_ID_LDAP_ID__c = :reqObj.asiaOneLdapId];
             }
             
             contactList = [SELECT Id, Name, AccountId, Recipient_Indicator__c FROM Contact 
@@ -172,12 +172,14 @@ global with sharing class EshopLDAPAPI{
             if(reqObj != null){
                 if(reqObj.subscriberId != null){
                     // Start UD-3391 02Mar16 JohnD - changed zuora__status__c to status_formula__c to allow future stop
-                    zuoraSubList =[SELECT Id, name, Zuora__Account__r.Account_Auto_Number__c, Main_Package_1__c, Recipient_Contact__c, Order_Line_Item_Number_1__c 
-                                   FROM Zuora__Subscription__c
-                                   // START D-4636 - 06Apr2016 - Raviteja Kumar - Adding Future Active in SOQL
-                                   //WHERE Zuora__Account__r.AccountNumber = :reqObj.subscriberId AND  Status_Formula__c = :ACTIVE AND Subscription_Type_1__c = :PUBLICATION];
-                                   WHERE Zuora__Account__r.AccountNumber = :reqObj.subscriberId AND  ( Status_Formula__c = :ACTIVE OR Status_Formula__c = 'Future Active' )AND Subscription_Type_1__c = :PUBLICATION];
-                                   // END D-4636 - 06Apr2016 - Raviteja Kumar
+                    zuoraSubList =[SELECT Id, Name, Zuora__Account__r.Account_Auto_Number__c, Main_Package_1__c, Recipient_Contact__c, Order_Line_Item_Number_1__c 
+                                   FROM Zuora__Subscription__c 
+                                   WHERE Zuora__Account__r.AccountNumber = :reqObj.subscriberId 
+                                   AND (Status_Formula__c = :ACTIVE OR Status_Formula__c = 'Future Active')
+                                   AND Subscription_Type_1__c = :PUBLICATION];
+                                    //START D-4636 - 06Apr2016 - Raviteja Kumar - Adding Future Active in SOQL
+                                    //WHERE Zuora__Account__r.AccountNumber = :reqObj.subscriberId AND  Status_Formula__c = :ACTIVE AND Subscription_Type_1__c = :PUBLICATION];
+                                    // END D-4636 - 06Apr2016 - Raviteja Kumar
                    // End UD-3391 02Mar16 JohnD - changed zuora__status__c to status_formula__c to allow future stop                
                 }
             }
@@ -185,9 +187,9 @@ global with sharing class EshopLDAPAPI{
             if(zuoraSubList.size()>0){
                 for(Zuora__Subscription__c sub: zuoraSubList){
                     subIds.add(sub.Id);
-            //START: D-4472 3-23-2016 Added by Kristine Balaoing - added logic for existing ldap validations
-            subNameSet.add(sub.Name);
-            //END: D-4472 3-23-2016 Added by Kristine Balaoing
+                    //START: D-4472 3-23-2016 Added by Kristine Balaoing - added logic for existing ldap validations
+                    subNameSet.add(sub.Name);
+                    //END: D-4472 3-23-2016 Added by Kristine Balaoing
                 }
             }
             
@@ -212,8 +214,7 @@ global with sharing class EshopLDAPAPI{
                 //START: D-4472 3-23-2016 Added by Kristine Balaoing - added logic for account checking
                 areSubsUnderSubscriberId = checkSubscriptionsAccount(subNameSet, reqObj);
                 //END: D-4472 3-23-2016 Added by Kristine Balaoing
-        }
-            
+            }
             
             if(!areSubsUnderSubscriberId){
                 resp.error_code = EXES0011_Code;
@@ -240,8 +241,8 @@ global with sharing class EshopLDAPAPI{
                 }
                 
                 zSPCs = [SELECT Id, Zuora__Subscription__c, PublicationCode__c 
-                            FROM Zuora__SubscriptionProductCharge__c
-                            WHERE Zuora__Subscription__c IN :zSubIdsToBeProcessed];
+                         FROM Zuora__SubscriptionProductCharge__c
+                         WHERE Zuora__Subscription__c IN :zSubIdsToBeProcessed];
                 
                 for(Zuora__SubscriptionProductCharge__c zSPC : zSPCs){
                     if(mapSubsToPubCodes.containsKey(zSPC.Zuora__Subscription__c)){
@@ -299,7 +300,10 @@ global with sharing class EshopLDAPAPI{
                     }
                 }
                 
-                safList = [SELECT Id, Name FROM Service_Access_Flag__c WHERE Name IN :setSAF];
+                safList = [SELECT Id, Name 
+                           FROM Service_Access_Flag__c 
+                           WHERE Name 
+                           IN :setSAF];
                 
                 for(Service_Access_Flag__c saf : safList){
                     mapFlagToSAFRec.put(saf.Name, saf);
@@ -307,13 +311,15 @@ global with sharing class EshopLDAPAPI{
                 
                 //START: D-4772 3-24-2016 Added by Kristine Balaoing - added additional logic for asia1Subs to be updated and created       
                 //check for Asia1Subs
-                asia1SubsList = [SELECT Id, Asia1__c, Service_Access_Flag__c, Subscription__c, Concurrent__c, Asia1__r.User_ID_LDAP_ID__c,          Service_Access_Flag__r.Name
-                                    FROM Asia1_Subscription__c
-                                    WHERE Subscription__c IN :zSubIdsToBeProcessed];
+                asia1SubsList = [SELECT Id, Asia1__c, Service_Access_Flag__c, Subscription__c, Concurrent__c, Asia1__r.User_ID_LDAP_ID__c,Service_Access_Flag__r.Name
+                                 FROM Asia1_Subscription__c
+                                 WHERE Subscription__c 
+                                 IN :zSubIdsToBeProcessed];
                                     
                 enabledAsia1List = [SELECT Id, Asia1__c, Service_Access_Flag__c, Subscription__c, Concurrent__c, Asia1__r.User_ID_LDAP_ID__c, Service_Access_Flag__r.Name, Status__c, Subscription__r.Number_of_Copies__c
                                     FROM Asia1_Subscription__c
-                                    WHERE Subscription__c IN :zSubIdsToBeProcessed AND Status__c = :ENABLED_VALUE];
+                                    WHERE Subscription__c 
+                                    IN :zSubIdsToBeProcessed AND Status__c = :ENABLED_VALUE];
                                     
                 //for update of Asia1             
                 for(Asia1_Subscription__c asia1Sub : asia1SubsList){
@@ -370,10 +376,10 @@ global with sharing class EshopLDAPAPI{
                             mapServFlagToCon = mapSubToMapSVCToCon.get(aSub.Subscription__c);
                             if(mapServFlagToCon.containsKey(aSub.Service_Access_Flag__r.Name)){
                                     svcCon = mapServFlagToCon.get(aSub.Service_Access_Flag__r.Name);
-                                    mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, svcCon + aSub.Concurrent__c);
+                                    mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, (svcCon + aSub.Concurrent__c)*aSub.Subscription__r.Number_of_Copies__c);
                             }else{
                                 //mapServFlagToCon = new Map<String, Integer>();
-                                mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, aSub.Concurrent__c);
+                                mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, (aSub.Concurrent__c)*aSub.Subscription__r.Number_of_Copies__c);
                             }
                             mapSubToMapSVCToCon.put(aSub.Subscription__c, mapServFlagToCon);
                             System.debug('map 1 ' + mapSubToMapSVCToCon);
@@ -382,15 +388,15 @@ global with sharing class EshopLDAPAPI{
                             mapServFlagToCon = new Map<String, Decimal>();
                             //mapSubToMapSVCToCon = new Map<Id, Map<String, Decimal>>(); 
 
-                            mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, aSub.Concurrent__c);
+                            mapServFlagToCon.put(aSub.Service_Access_Flag__r.Name, (aSub.Concurrent__c)*aSub.Subscription__r.Number_of_Copies__c);
                             mapSubToMapSVCToCon.put(aSub.Subscription__c, mapServFlagToCon);
                             System.debug('map 2 ' + mapSubToMapSVCToCon);
                         }
                         System.debug('TINE TINE finalconwithin  ' + finalCon);
                     }
                 }
-                System.debug('CONCURRENT MAP ' + mapSubToMapSVCToCon);
-                //System.assertEquals(1, 2);
+                System.debug('CONCURRENT MAP ' + mapServFlagToCon);
+                //System.assertEquals(null, mapSubToMapSVCToCon);
                 System.debug('TINE FINAL CON  ' + finalCon);
                 for(Id subId : asia1SubsToBeCreated){
                     svcForEnablement.addAll(mapPckToSVC.get(mapSubToSubRec.get(subId).Main_Package_1__c));  //perform debug here to check if naaccumulate
@@ -442,7 +448,6 @@ global with sharing class EshopLDAPAPI{
                             asia1RecTobeCreated.Status__c = CREATED_VALUE;
                             
                             insert asia1RecTobeCreated;
-                            
                             asiaOneForProcessing = asia1RecTobeCreated;
                         }
                     }
@@ -488,14 +493,12 @@ global with sharing class EshopLDAPAPI{
                         resp.error_message = (String)responseResult.get(ERRORS);
                     }
                 }
-                
             }
         }
         return resp;
     }
     //END: D-4472 Retest Failed 3-23-2016 Added by Kristine Balaoing
-    public static Map<String, Boolean> checkMandatoryFields(Request reqObj)
-    {
+    public static Map<String, Boolean> checkMandatoryFields(Request reqObj){
         Map<String, Boolean>  resultMandCheck = new Map<String, Boolean>();
         Boolean isValid = true;
         resultMandCheck.put(SUBSCRIBER_ID, isValid);
@@ -515,22 +518,16 @@ global with sharing class EshopLDAPAPI{
     }
     //START: D-4472 3-23-2016 Added by Kristine Balaoing - added logic for subs name instead of sub Id
     public static Boolean checkSubscriptionsAccount(Set<String> idsUnderAccountSet, Request reqObj){
-        
         Boolean isUnderAccount = true;
-        
         for(String zSubName: reqObj.subscriptionIds){
             if(!idsUnderAccountSet.contains(zSubName)){
                 isUnderAccount = false;
             }
         }
-      
         return isUnderAccount;
-        
     }
     //END: D-4472 3-23-2016 Added by Kristine Balaoing
-    
     public static void processAsia1Sub(Id asia1Id, Set<Id> subsIdToBeCreated, Set<Asia1_Subscription__c> asia1SubsToBeUpdated){
-        
         List<Asia1_Subscription__c> asia1SubList = new List<Asia1_Subscription__c>();
         List<Asia1_Subscription__c> asia1SubToBeUpdated2 = new List<Asia1_Subscription__c>();
         //asia1SubsToBeUpdated = new Set<Asia1_Subscription__c>();
@@ -575,8 +572,6 @@ global with sharing class EshopLDAPAPI{
                                     asia1SubToBeCreated.Concurrent__c = mapSVCToCon.get(serviceFlag);
                                 }
                             }
-                            
-                            
                             asia1SubList.add(asia1SubToBeCreated);
                         }
                     }
@@ -597,15 +592,12 @@ global with sharing class EshopLDAPAPI{
                 update asia1SubList;
             }
         }
-        
     }
     
     public static Map<String, Object> enableServiceFlag(String username, String serviceFlag){
-        
         System.debug('serviceFlag : '+serviceFlag);
         Map<String, Object> enableServiceResult = new Map<String, Object>();
         enableServiceResult = AsiaOneServicesController.enableService(username, serviceFlag.toLowerCase());
-        
         //System.assertEquals(null, enableServiceResult);
         return enableServiceResult;
     }
@@ -621,20 +613,14 @@ global with sharing class EshopLDAPAPI{
                 finalStr += '|';
                 finalStr += serStr;
         }
-
         return finalStr;
     }
     
     public static Integer addConcurrent(Set<Integer> concurVal){
-        
         Integer sumConcal = 0;
-        
         for(Integer con : concurVal){
             sumConcal = sumConcal + con;
         }
-        
         return sumConcal;
     }
-    
-    
 }

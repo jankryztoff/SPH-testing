@@ -5,8 +5,19 @@
 * Requirement/Project Name: SF SPH
 * @description: test class for ARMS_CreateAndUpdate
 */
-@isTest (Seealldata = TRUE)
+@isTest 
 public class ARMS_CreateAndUpdate_Test {
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createRecord_Type_Field_Setup();
+        insert CustomSettingsDataFactory.createBillingBatch();
+    }
+    
 
     static testmethod void cover_createAndUpdateAccountWebservice(){
         
@@ -638,166 +649,7 @@ public class ARMS_CreateAndUpdate_Test {
 
     }
     
-    static testmethod void cover_createAccount4(){
-        try{ 
-        Map<String, sObject> sObjectMap = null;
-        sObjectMap = new Map<String, sObject>();
-
-        //Create billing batch
-        Billing_Batch__c bbDef = new Billing_Batch__c();
-        bbDef.Name = 'Default';
-        bbDef.Batch__c = '19';
-        bbDef.Next_Batch_Number__c = null;
-        insert bbDef;
-        
-        Billing_Batch__c bbFull = new Billing_Batch__c();
-        bbFull.Name = 'Full Prepaid';
-        bbFull.Batch__c = '13,14,15';
-        bbFull.Next_Batch_Number__c = null;
-        insert bbFull;
-        
-        Billing_Batch__c rPost = new Billing_Batch__c();
-        rPost.Name = 'Recurring Postpaid';
-        rPost.Batch__c = '16';
-        rPost.Next_Batch_Number__c = null;
-        insert rPost;
-        
-        Billing_Batch__c rPre = new Billing_Batch__c();
-        rPre.Name = 'Recurring Prepaid';
-        rPre.Batch__c = '   1,2,3,4,5,6,7,8,9,10,11,12';
-        rPre.Next_Batch_Number__c = null;
-        insert rPre;
-        
-        //Create Address
-                  
-        Address__c add = TestDataFactory.createAddress(1)[0];
-        RecordType recordType = [SELECT ID, DeveloperName FROM RecordType WHERE sObjectType = 'Address__c' AND DeveloperName ='Overseas' LIMIT 1];
-        add .RecordTypeid = recordType.id;
-        add .Level_Number__c = '10';
-        add .Unit_Number__c = '10';
-        add .Address_1__c = 'Asiatown';
-        add .Address_2__c = 'Ebloc2';
-        add .Address_3__c = 'IT Park';
-        add .Address_4__c = 'Lahug';    
-        sObjectMap.put('Address__c', add);
-        Database.insert(add);
-        
-        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
-        acc.Name = 'Test Account';
-        acc.AccountNumber = '';
-        acc.Staff_ID__c = 'StaffId';
-        sObjectMap.put('Account', acc);
-        Database.insert(acc);        
-           
-        Contact con = TestDataFactory.createContact(1)[0];
-        con.FirstName = 'Test';
-        con.LastName = 'Contact';
-        con.AccountId = acc.id;
-        con.Address__c = add.id;
-        con.MailingCountry = 'Singapore';
-        con.MailingCity = 'Singapore';
-        con.MailingStreet = '123 Test Street';
-        con.MailingPostalCode = '1000';
-        con.Recipient_Indicator__c = true;
-        con.Billing_Indicator__c = true;
-        con.Address__c = add.id;
-        con.NRIC__c = 'T1234567R';
-        sObjectMap.put('Contact', con);
-        Database.insert(con);
-        
-        Order__c order = TestDataFactory.createOrder(1)[0];      
-        order.Account__c = acc.id;
-        order.Delivery_Charge__c = 20; 
-        order.Subscriber_Charge__c = 200; 
-        order.Recipient_Contact__c = con.id;
-        order.Billing_Contact__c = con.id;
-        order.Billing_Account_Creation_Mode__c = GlobalVariableClass.CREATE_NEW_BILLACC;
-        order.Create_ARMS_Customer_Account__c = true;
-        order.Create_ARMS_Account_Only__c = false;
-        sObjectMap.put('Order__c', order);
-        Database.insert(order);
-        
-        Zuora__CustomerAccount__c zCus = TestDataFactory.createBillingAccount(1)[0];
-        zCus.Name = 'April';
-        zCus.Zuora__Account__c = acc.Id;
-        zCus.Billing_Contact__C = con.id;
-        zCus.Billing_Type__c = 'Prepaid';
-        zCus.ARMS_Customer_Number__c = '1';
-        zCus.ARMS_Business_Profile__c = 'NORM';
-        zCus.ARMS_Account_Number__c = '1';
-        sObjectMap.put('Zuora__CustomerAccount__c', zCus);
-        Database.insert(zCus);
-        
-             
-        Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
-            zSub.Contact__c = con.Id;
-            zSub.Zuora__Account__c = acc.id;
-            zSub.Zuora__CustomerAccount__c = zCus.Id;
-            zSub.Order_Number_1__c = order.Id;
-            zSub.Classification__c = 'secret';
-        sObjectMap.put('Zuora__Subscription__c', zSub);
-        Database.insert(zSub);
-        
-        
-                      
-        Set<id> orderIdSet = new Set<id>();
-        orderIdSet.add(order.Id);
-        
-        //Zuora__CustomerAccount__c zCusAcc = (Zuora__CustomerAccount__c) sObjectMap.get('Zuora__CustomerAccount__c');
-        Map<id, Zuora__CustomerAccount__c> billingAccountId_billingAccount = new Map<id, Zuora__CustomerAccount__c>();
-        billingAccountId_billingAccount.put(zCus.Id, zCus);
-        
-        /*Zuora__Subscription__c zSub = (Zuora__Subscription__c) sObjectMap.get('Zuora__Subscription__c');
-        zSub.Zuora__CustomerAccount__c = zCusAcc.Id;
-        zSub.Order_Number_1__c = order.Id;
-        Database.insert(zSub);*/
-        
-               
-         ARMS_CreateAndUpdate.PaymentInfoWrapper cau_piw = new ARMS_CreateAndUpdate.PaymentInfoWrapper();
-            cau_piw.paymentMode = 'test';
-            cau_piw.otherPaymentMethod = 'test';
-            cau_piw.armsBusinessProfile = 'NORM';
-            cau_piw.armsDebtManagement = 'NORM';
-            cau_piw.armsId = 'test';
-
-        Map<id, ARMS_CreateAndUpdate.PaymentInfoWrapper> billingAccountId_paymentInfoWrapper = new Map <id,ARMS_CreateAndUpdate.PaymentInfoWrapper>();
-            billingAccountId_paymentInfoWrapper.put(zCus.Id, cau_piw);
-        
-        Map<id, Order__c> billingAccountId_Order = new Map<id, Order__c>();
-                
-            billingAccountId_Order.put(zCus.Id, order);
-            
-        BT_CO_ARMS_CreateAccountBatchFile__c BTcreatebatchfile = new BT_CO_ARMS_CreateAccountBatchFile__c();
-        BTcreatebatchfile.CCRID__c = '1';
-        insert BTcreatebatchfile;
-        
-       /* List<BT_CO_ARMS_CreateCustAccountFile__c> BTCreate = new List<BT_CO_ARMS_CreateCustAccountFile__c>();
-        BTCreate[0].Customer_Name1__c = 'April';
-        insert(BTCreate);*/
-/*TODO.start
-        Zuora__Subscription__c zSubAcc = 
-            [SELECT Id, Name, Zuora__CustomerAccount__c, Classification__c, Order_Number_1__r.Billing_Account_Creation_Mode__c, Order_Number_1__r.CreatedBy.Alias 
-                 FROM Zuora__Subscription__c 
-                 WHERE Classification__c = 'secret' AND Order_Number_1__r.Billing_Account_Creation_Mode__c = 'Create New Billing Account' Limit 1];
-        System.assertNotEquals(null, zSubAcc);
-*///TODO.end
-        Test.startTest();
-            
-            ARMS_CreateAndUpdate cau = new ARMS_CreateAndUpdate();      
-            cau.createAccount(orderIdSet, billingAccountId_billingAccount, billingAccountId_paymentInfoWrapper, billingAccountId_Order);
-            
-            order.Create_ARMS_Account_Only__c = true;
-            order.Customer_No__c = '1';
-            Database.update(order);
-            
-            cau.createAccount(orderIdSet, billingAccountId_billingAccount, billingAccountId_paymentInfoWrapper, billingAccountId_Order);
-            
-        Test.stopTest();
-        
-        System.assertNotEquals(null,cau);
-       }catch(Exception e){}
-
-    }
+    
     
     static testmethod void cover_updateAccountNotNull(){
         try{

@@ -9,124 +9,128 @@
 public class BillingBatchAllocationHandler {
     
     // Start D-4463 20Mar16 JohnD - new logic
-	public static void allocateBatchNumber(set<id> billingAccountIdSetParam) {
-		
-		list<Zuora__CustomerAccount__c> billingAccountList = [select Id, Zuora__Batch__c, Billing_Type__c, 
-				Zuora__Zuora_Id__c from Zuora__CustomerAccount__c where Id in :billingAccountIdSetParam];
+  public static void allocateBatchNumber(set<id> billingAccountIdSetParam) {
+    
+    list<Zuora__CustomerAccount__c> billingAccountList = [select Id, Zuora__Batch__c, Billing_Type__c, 
+        Zuora__Zuora_Id__c from Zuora__CustomerAccount__c where Id in :billingAccountIdSetParam];
 
-		Logger logger = new Logger(BillingBatchAllocationHandler.class.getName());
-		map<string, list<string>> billingType_batchNumberSequenceList = new map<string, list<string>>();
-		map<string, string> billingAccountZuoraId_batchNumber = new map<string, string>();
-		map<string, integer> billingType_nextBatchNumberIndex = new map<string, integer>();
-		list<string> batchNumberSequenceList = new list<string>();
+    Logger logger = new Logger(BillingBatchAllocationHandler.class.getName());
+    map<string, list<string>> billingType_batchNumberSequenceList = new map<string, list<string>>();
+    map<string, string> billingAccountZuoraId_batchNumber = new map<string, string>();
+    map<string, integer> billingType_nextBatchNumberIndex = new map<string, integer>();
+    list<string> batchNumberSequenceList = new list<string>();
 
-    	list<map<string, string>> responseResults = new list<map<string, string>>();
-    	list<map<string, object>> zuoraObjectList = new list<map<string, object>>();
-		set<string> billingAccountZuoraIdSet = new set<string>();
-		set<string> billingTypeSet = new set<string>();
-		billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_FULL_PRE);
-		billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_MR_PRE);
-		billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_MR_POST);
-		
-		integer currentBatchNumberIndex;
-		string batchNumber;
-		integer nextBatchNumberIndex;
-		string errorMsg = '';
-		
-    	// retrieve batch number assignment from custom settings
-		list<Billing_Batch__c> billingBatchList = [select Id, Name, Batch__c, Next_Batch_Number__c from Billing_Batch__c 
-				where Name in :billingTypeSet];
-		
-		if (billingBatchList.isEmpty()) {
-			throw new CustomException('Billing Batch Number is not configured.');
-		}
-		
-		for (Billing_Batch__c bb : billingBatchList) {
-			
-			if (bb.Batch__c != null) {
-				
-				currentBatchNumberIndex = 0;
-				batchNumberSequenceList = bb.Batch__c.split(',');
-				billingType_batchNumberSequenceList.put(bb.Name, batchNumberSequenceList);
-				
-				if (bb.Next_Batch_Number__c != null) {
-				
-					for (integer i = 0; i < batchNumberSequenceList.size(); i++) {
-						
-						if (batchNumberSequenceList[i] == string.valueOf(integer.valueOf(bb.Next_Batch_Number__c))) {
-							currentBatchNumberIndex = i;
-							break;
-						}
-					}
-				}
-				
-				billingType_nextBatchNumberIndex.put(bb.Name, currentBatchNumberIndex);
-				
-			} else {
-				errorMsg += 'No batch number configured for ' + bb.Name;
-			}
-		}
-		
-		for (Zuora__CustomerAccount__c ba : billingAccountList) {
-			
-			batchNumberSequenceList = billingType_batchNumberSequenceList.get(ba.Billing_Type__c);
-			currentBatchNumberIndex = billingType_nextBatchNumberIndex.get(ba.Billing_Type__c);
+      list<map<string, string>> responseResults = new list<map<string, string>>();
+      list<map<string, object>> zuoraObjectList = new list<map<string, object>>();
+    set<string> billingAccountZuoraIdSet = new set<string>();
+    set<string> billingTypeSet = new set<string>();
+    billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_FULL_PRE);
+    billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_MR_PRE);
+    billingTypeSet.add(GlobalVariableClass.BILLING_TYPE_MR_POST);
+    
+    integer currentBatchNumberIndex;
+    string batchNumber;
+    integer nextBatchNumberIndex;
+    string errorMsg = '';
+    
+      // retrieve batch number assignment from custom settings
+    list<Billing_Batch__c> billingBatchList = [select Id, Name, Batch__c, Next_Batch_Number__c from Billing_Batch__c 
+        where Name in :billingTypeSet];
+    
+    if (billingBatchList.isEmpty()) {
+      throw new CustomException('Billing Batch Number is not configured.');
+    }
+    
+    for (Billing_Batch__c bb : billingBatchList) {
+      
+      if (bb.Batch__c != null) {
+        
+        currentBatchNumberIndex = 0;
+        batchNumberSequenceList = bb.Batch__c.split(',');
+        billingType_batchNumberSequenceList.put(bb.Name, batchNumberSequenceList);
+        
+        if (bb.Next_Batch_Number__c != null) {
+        
+          for (integer i = 0; i < batchNumberSequenceList.size(); i++) {
+            
+            if (batchNumberSequenceList[i] == string.valueOf(integer.valueOf(bb.Next_Batch_Number__c))) {
+              currentBatchNumberIndex = i;
+              break;
+            }
+          }
+        }
+        
+        billingType_nextBatchNumberIndex.put(bb.Name, currentBatchNumberIndex);
+        
+      } else {
+        errorMsg += 'No batch number configured for ' + bb.Name;
+      }
+    }
+    
+    System.debug('#$# billingType_batchNumberSequenceList: ' + billingType_batchNumberSequenceList);
+    System.debug('#$# billingType_nextBatchNumberIndex: ' + billingType_nextBatchNumberIndex);
+    System.debug('#$# billingAccountList: ' + billingAccountList);
 
-			batchNumber = 'Batch' + batchNumberSequenceList[currentBatchNumberIndex];
-			nextBatchNumberIndex = currentBatchNumberIndex + 1;
-			
-			if (nextBatchNumberIndex == batchNumberSequenceList.size()) {
-				nextBatchNumberIndex = 0;
-			}
-			
-			billingType_nextBatchNumberIndex.put(ba.Billing_Type__c, nextBatchNumberIndex);
-			
+    for (Zuora__CustomerAccount__c ba : billingAccountList) {
+
+      batchNumberSequenceList = billingType_batchNumberSequenceList.get(ba.Billing_Type__c);
+      currentBatchNumberIndex = billingType_nextBatchNumberIndex.get(ba.Billing_Type__c);
+ 
+      batchNumber = 'Batch' + batchNumberSequenceList[currentBatchNumberIndex];
+      nextBatchNumberIndex = currentBatchNumberIndex + 1;
+      
+      if (nextBatchNumberIndex == batchNumberSequenceList.size()) {
+        nextBatchNumberIndex = 0;
+      }
+      
+      billingType_nextBatchNumberIndex.put(ba.Billing_Type__c, nextBatchNumberIndex);
+      
             map<string, object> requestField_value = new map<string, object>();
             requestField_value.put('Id', ba.Zuora__Zuora_Id__c);
-			requestField_value.put('Batch', batchNumber);
-			//requestField_value.put('Batch', 'Batch19');	// reset all for testing purposes
-			
-			zuoraObjectList.add(requestField_value);
-		}
+      requestField_value.put('Batch', batchNumber);
+      //requestField_value.put('Batch', 'Batch19');  // reset all for testing purposes
+      
+      zuoraObjectList.add(requestField_value);
+    }
 
         // start send request callout to zuora for update
         if (!zuoraObjectList.isEmpty()) {
-	        ZuoraCallOut zCall = new ZuoraCallOut();
-	        if (!Test.isRunningTest()) {
-	            responseResults = zCall.updateZObjects(zuoraObjectList, 'Account');
-	        } else {
-	            responseResults.add(new map<string, string>{'Status' => 'Error'});
-	        }
+          ZuoraCallOut zCall = new ZuoraCallOut();
+          if (!Test.isRunningTest()) {
+              responseResults = zCall.updateZObjects(zuoraObjectList, 'Account');
+          } else {
+              responseResults.add(new map<string, string>{'Status' => 'Error'});
+          }
         }
 
         // start parse result
         for (map<string, string> responseField_value : responseResults) {
-        	
-        	if (responseField_value.get('Status') != GlobalVariableClass.ZUORA_SUCCESS) {
-        		errorMsg += responseField_value.get('Message') + ' || ';
-        	}
+          
+          if (responseField_value.get('Status') != GlobalVariableClass.ZUORA_SUCCESS) {
+            errorMsg += responseField_value.get('Message') + ' || ';
+          }
         }
         // end parse result
 
-		// start update billing batch next batch number
-		for (Billing_Batch__c bb : billingBatchList) {
-			
-			batchNumberSequenceList = billingType_batchNumberSequenceList.get(bb.Name);
-			bb.Next_Batch_Number__c = integer.valueOf(batchNumberSequenceList[billingType_nextBatchNumberIndex.get(bb.Name)]);
-		}
-		
-		try {
-			update billingBatchList;
-		} catch (exception e) {
-			errorMsg += e.getMessage();
-		}
-		// end update billing batch next batch number
-		
-		if (errorMsg != '' && !Test.isRunningTest()) {
-			logger.log(false, errorMsg);
-			logger.save();
-		}
-	}
+    // start update billing batch next batch number
+    for (Billing_Batch__c bb : billingBatchList) {
+      
+      batchNumberSequenceList = billingType_batchNumberSequenceList.get(bb.Name);
+      bb.Next_Batch_Number__c = integer.valueOf(batchNumberSequenceList[billingType_nextBatchNumberIndex.get(bb.Name)]);
+    }
+    
+    try {
+      update billingBatchList;
+    } catch (exception e) {
+      errorMsg += e.getMessage();
+    }
+    // end update billing batch next batch number
+    
+    if (errorMsg != '' && !Test.isRunningTest()) {
+      logger.log(false, errorMsg);
+      logger.save();
+    }
+  }
     // End D-4463 20Mar16 JohnD - new logic
     
     // Start D-4463 20Mar16 JohnD - commented out 

@@ -39,7 +39,6 @@ global with sharing class PackageEligibilityCheck {
         // START 03/16/15 D-0605 Kevin Evasco - Added Mandatory Field Validation
         Boolean isValid = true;
         Boolean invalidSubscription = true; // Start/End - UD-1148 05-May-2015 Added by Raviteja
-        
         try
         {
             isValid = checkMandatoryFields(request);
@@ -183,7 +182,7 @@ global with sharing class PackageEligibilityCheck {
     
     //START UD-1148 05-May-2015 Added by Raviteja - Created subscriptionValidation method to validate the Subscription
     private static Boolean subscriptionValidation(PackageEligibilityCheckRequest request){
-        Boolean isvalidsubscription = True;
+        Boolean isvalidsubscription = true;
         String SubscriptionId = request.SubscriptionId;       
         SubscriptionId =  SubscriptionId.trim();         
         

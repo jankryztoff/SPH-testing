@@ -8,6 +8,13 @@
 
 @isTest
 private class  UpdateZuoraArmsInfoTest{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+    }
 
     static User createUser() {
         UserRole usrRole = [SELECT id, Name from UserRole LIMIT 1];
@@ -29,7 +36,7 @@ private class  UpdateZuoraArmsInfoTest{
     *  @return none
     *  @throws na
     */    
-    @isTest (SeeAllData = true)   
+    @isTest 
     static void testUpdateZuoraArmsInfo(){
         User usr = createUser();
             

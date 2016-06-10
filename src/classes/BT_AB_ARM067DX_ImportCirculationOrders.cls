@@ -54,13 +54,13 @@ global class BT_AB_ARM067DX_ImportCirculationOrders implements Database.Batchabl
         Integer maxCreditNoteNumberInt = Integer.valueOf(maxCreditNoteNumber.Value__c);
         //END UD-3912 5 April 2016 Kevin Evasco - Credit Note Number check
         
-		//START D-4724 22 April 2016 Kevin Evasco - Made Credit Note Item query selective.
-		Set<Id> creditNoteItemIdSet = new Set<Id>();
-		
-		for (Credit_Note__c cn : scope) {
-			creditNoteItemIdSet.add(cn.Id);
-		}
-		
+        //START D-4724 22 April 2016 Kevin Evasco - Made Credit Note Item query selective.
+        Set<Id> creditNoteItemIdSet = new Set<Id>();
+        
+        for (Credit_Note__c cn : scope) {
+            creditNoteItemIdSet.add(cn.Id);
+        }
+        
         List<Credit_Note_Item__c> creditNoteItemList =
             [SELECT
                 Amt_After_Tax__c,
@@ -72,7 +72,7 @@ global class BT_AB_ARM067DX_ImportCirculationOrders implements Database.Batchabl
                 Tax_Amt__c,
                 Tax_Rate__c
             FROM Credit_Note_Item__c WHERE Credit_Note__c IN :creditNoteItemIdSet];
-		//END D-4724 22 April 2016 Kevin Evasco - Made Credit Note Item query selective.
+        //END D-4724 22 April 2016 Kevin Evasco - Made Credit Note Item query selective.
         
         for(Credit_Note_Item__c creditNoteItem : creditNoteItemList) {
             if(creditNoteItemMap.get(creditNoteItem.Credit_Note__c) == null)
@@ -88,14 +88,12 @@ global class BT_AB_ARM067DX_ImportCirculationOrders implements Database.Batchabl
             
             try{
                 cnNumber = Integer.valueOf(cn.Credit_Note_Number__c);
-                
                 if(cnNumber < minCreditNoteNumberInt || cnNumber > maxCreditNoteNumberInt)
                     isValid = false;
                 
             } catch(Exception e) {
                 isValid = false;
             }
-            
             if(isValid) {
                 cn.To_ARMS_Time__c = DateTime.now();
                 List<Credit_Note_Item__c> cniList = creditNoteItemMap.get(cn.Id);
@@ -194,7 +192,7 @@ global class BT_AB_ARM067DX_ImportCirculationOrders implements Database.Batchabl
         //END UD-3912 5 April 2016 Kevin Evasco - Credit Note Number check      
         
         try {   
-            Map<String,String> resultMap = RefundCallOut.createMultipleZObjectForRefund(refundListMap, 'Refund');  
+            Map<String,String> resultMap = RefundCallOut.createMultipleZObjectForRefund(refundListMap, 'Refund'); 
             if(resultMap.get('Status') == 'Success') {
                 System.debug('Successful Refund Creation in Zuora');
             }
@@ -203,11 +201,9 @@ global class BT_AB_ARM067DX_ImportCirculationOrders implements Database.Batchabl
                 throw new GenericException(errorMessage);
             }
         } catch(Exception ex) {
-            if(!Test.isRunningTest()){ // Start/End PD-0236 Vpernicia: Test Class enhancement
-            System.debug('Exception Message: ' + ex.getMessage());
-            System.debug('Exception Stack Trace: ' + ex.getStackTraceString());
-            BT_AU_BATCHRUNREQUEST_UpdateInfo.abortJob(BC.getJobId(), interfaceId, BT_AB_ARM067DX_ImportCirculationOrders.class.getName(), ex, false);
-            } // Start/End PD-0236 Vpernicia: Test Class enhancement
+            if(!Test.isRunningTest()){
+                BT_AU_BATCHRUNREQUEST_UpdateInfo.abortJob(BC.getJobId(), interfaceId, BT_AB_ARM067DX_ImportCirculationOrders.class.getName(), ex, false);
+            }
         }
 
         

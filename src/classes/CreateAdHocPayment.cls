@@ -16,7 +16,7 @@ public class CreateAdHocPayment{
     String cashId;
     String checkId;
     Zuora__CustomerAccount__c currentRecord;
-    String billAcctId = ApexPages.currentPage().getParameters().get('Id');  
+    String billAcctId = ApexPages.currentPage().getParameters().get('Id'); 
 
     public CreateAdHocPayment(ApexPages.StandardController Controller) {      
         this.acct = (Zuora__CustomerAccount__c)Controller.getRecord();
@@ -42,14 +42,16 @@ public class CreateAdHocPayment{
         DateTime cT = ChequeDate; //START-END  UD-3284 11/24/2015 K. Tan
         month = '';
         day = '';             
-              
-        
+        //Start UD-3831 18-Mar-2016 Added By S.Puli
+        cT = acct.Cheque_Date__c;
+        dT = acct.Customer_Create_Date__c;
+        //End UD-3831
         if (Amount == null || Amount == 0){                  
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,ConstantsSLB.geterrorMessage('Invalid_Amount')));
             return null;
         }
         //START  UD-3284 11/24/2015 K. Tan      
-        if (ChequeDate != null && paymentMethod == 'Cheque') {                
+        if (cT != null && paymentMethod == 'Cheque') {                
             if (String.ValueOf(cT.month()).length() == 1){
                 month = '0'+cT.month();
             }
@@ -63,12 +65,12 @@ public class CreateAdHocPayment{
                 day = String.valueOf(cT.day());
             }
             chqDate = cT.year() + '-' + month + '-' + day;   
-        }                
+        }     
         //END  UD-3284 11/24/2015 K. Tan        
         
         
                
-        if (PaymentDate != null && PaymentDate <= date.today()) {                
+        if (dT != null && dT <= date.today()) {//Start/End UD-3831 Added by S.Puli                
             if (String.ValueOf(dT.month()).length() == 1){
                 month = '0'+dT.month();
             }
@@ -86,7 +88,7 @@ public class CreateAdHocPayment{
         else{           
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,ConstantsSLB.geterrorMessage('InvalidPaymentDate')));
             return null;
-        }                        
+        }  
         //Payment Method Id assignment based on Payment Mode (External)
         if (paymentMethod == 'Cash'){
             paymentMethodId = cashId;          

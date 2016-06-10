@@ -50,8 +50,8 @@
         Map<Id, Order_Line_Item__c> oliIdToOliMap = new Map<Id, Order_Line_Item__c>();
         Map<Id, Id> postageQuoteToOliMap = new Map<Id, Id>();
         //END 01/19/15 J. Sarion - Updated to include proration charges
-		
-		public static Boolean hasVendorDelivery = false; // START 03/26/2015 MD-59 Kevin Evasco - Restrict Delivery Rate Plan validation for Vendor Delivery only
+        
+        public static Boolean hasVendorDelivery = false; // START 03/26/2015 MD-59 Kevin Evasco - Restrict Delivery Rate Plan validation for Vendor Delivery only
         
         public Set<string> bulkQuoteCreation(Set<id> orderIdSet, String origin){
             Set<id> orderLineItemIdSet = new Set<id>();
@@ -128,7 +128,7 @@
             
             ratePlanChargeTierMap = getProdRatePlanChargeTier(prpIdToprpcListMap);
     // START K. Tan MD-26 D-1907 /3-18-2015 /Added to cater Delivery charges
-	
+    
             orderIdToProductRatePlanMap = getDeliveryCharge(orderList);
     // START K. Tan MD-18 D-2592 /3-18-2015 /New Implememtation of Delivery charges    
        
@@ -281,9 +281,9 @@
                     orderIdOrderLineItemMap.put(orderLineItem.order__c, new List<Order_Line_Item__c>{orderLineItem});
                 }
                 
-			//START 01/19/15 J. Sarion - Updated to include creation of Postage Subscription
+            //START 01/19/15 J. Sarion - Updated to include creation of Postage Subscription
             oliIdToOliMap.put(orderLineItem.Id, orderLineItem);
-			//END 01/19/15 J. Sarion - Updated to include proration charges
+            //END 01/19/15 J. Sarion - Updated to include proration charges
             }
             
             return orderIdOrderLineItemMap;
@@ -664,7 +664,7 @@
                             }
                         }
                     }
-					
+                    
                     //START 01/19/15 J. Sarion - Updated to include creation of Postage Subscription
                     //START D-1689 23/01/15 Wenjun: Postage Charge is required for each publication
                     if (oli.Delivered_By__c == 'Mailing Agent') {
@@ -865,7 +865,7 @@
             //START 01/19/15 J. Sarion - Updated to include creation of Postage Subscription
             Map<Id, List<zqu__QuoteCharge__c>>  quoteToquoteChargeMap = new Map<Id, List<zqu__QuoteCharge__c>>();
             
-			
+            
             for (Order_Line_Item__c oli :oliList) {
                 
                 for (Package_Item__c pkgItem : packIdToPackageItemListMap.get(oli.Main_Package_ID__c)) {
@@ -913,13 +913,13 @@
                 }
             }
                 // END K. Tan MD-26 D-1907 /3-18-2015 /Added to cater Delivery charges    
-			// START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
-			zqu__ProductRatePlan__c ratePlanPostage = [SELECT Id,Name,zqu__ZProduct__c,zqu__ZProduct__r.ProductCode__c,
+            // START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+            zqu__ProductRatePlan__c ratePlanPostage = [SELECT Id,Name,zqu__ZProduct__c,zqu__ZProduct__r.ProductCode__c,
                                zqu__ZProduct__r.ProductType__c,zqu__ZProduct__r.ProductSubType__c 
                                FROM zqu__ProductRatePlan__c 
                                WHERE RatePlanCode__c = 'CHGPOS' AND zqu__Deleted__c = false limit 1]; 
-			// END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
-			
+            // END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+            
             for (Id postageId :postageQuoteToOliMap.keySet()) {
                 if (quoteIdToQuote.containsKey(postageId)) {
                 
@@ -930,44 +930,44 @@
                         Order_Line_Item__c oli = oliIdToOliMap.get(quote.Order_Line_Item_Number__c);
                         //START D-1689 23/01/15 Wenjun: Postage Charge is required for each publication
                         if (quote.Subscription_Type__c == 'Postage' && oli.Delivered_By__c == 'Mailing Agent') {
-							// START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
-							zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(quote.Id, ratePlanPostage.Id);		
-							if(mapQuoteIdToChargeGroups.get(quote.Id) == null)
-							{
-								mapQuoteIdToChargeGroups.put(quote.Id, new List<zqu.zChargeGroup>());
-							}
-							mapQuoteIdToChargeGroups.get(quote.Id).add(chargeGroup);							
-							// END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+                            // START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+                            zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(quote.Id, ratePlanPostage.Id);     
+                            if(mapQuoteIdToChargeGroups.get(quote.Id) == null)
+                            {
+                                mapQuoteIdToChargeGroups.put(quote.Id, new List<zqu.zChargeGroup>());
+                            }
+                            mapQuoteIdToChargeGroups.get(quote.Id).add(chargeGroup);                            
+                            // END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
                         }
                         //END D-1689 23/01/15 Wenjun
                     }
-				}
+                }
             }
             //END 01/19/15 J. Sarion - Updated to include proration charges
             
             insert quoteChargeList;
-			
-			// START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
-			try{
-				for(Id quoteID : mapQuoteIdToChargeGroups.keySet())	{
-					List<zqu.zChargeGroup> lstChargeGroups = mapQuoteIdToChargeGroups.get(quoteID);
+            
+            // START 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+            try{
+                for(Id quoteID : mapQuoteIdToChargeGroups.keySet()) {
+                    List<zqu.zChargeGroup> lstChargeGroups = mapQuoteIdToChargeGroups.get(quoteID);
 
-					if(lstChargeGroups != NULL && !lstChargeGroups.isEmpty()) {
-						//Add up to 30 Charge Groups to a Quote
-						if(lstChargeGroups.size() > 30)
-							throw new CustomException(System.Label.ERR_MAX_30_CHARGE_GROUP);
-						else
-							zqu.zQuoteUtil.addChargeGroups(lstChargeGroups);
-					}
-				}
-			}
-			catch(Exception e){
-				System.debug(System.LoggingLevel.ERROR, 'Charge Group Error: ' + e.getMessage() + ' : ' + e.getStackTraceString());
-			}			
-			// END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
-			
+                    if(lstChargeGroups != NULL && !lstChargeGroups.isEmpty()) {
+                        //Add up to 30 Charge Groups to a Quote
+                        if(lstChargeGroups.size() > 30)
+                            throw new CustomException(System.Label.ERR_MAX_30_CHARGE_GROUP);
+                        else
+                            zqu.zQuoteUtil.addChargeGroups(lstChargeGroups);
+                    }
+                }
+            }
+            catch(Exception e){
+                System.debug(System.LoggingLevel.ERROR, 'Charge Group Error: ' + e.getMessage() + ' : ' + e.getStackTraceString());
+            }           
+            // END 03/26/2015 MD-59 Kevin Evasco - Quote Charges should be added using Charge Group
+            
         }
-		
+        
         //START 01/19/15 J. Sarion - Updated to include creation of Postage Subscription
         public zqu__Quote__c zBuildPostageQuote (Order__c orderObj, Order_Line_Item__c itemObj, String sSubType, String origin) {
             zqu__Quote__c quote = new zqu__Quote__c ();    
@@ -1023,7 +1023,7 @@
             }
             return quote;
         }
-		
+        
         
         public List<zqu__QuoteCharge__c> zPopulateQuoteChargePostage(Id zQuoteId,Order_Line_Item__c oli) {                  
             List<zqu__QuoteCharge__c> lstCharges = new List<zqu__QuoteCharge__c>();
@@ -1075,7 +1075,7 @@
             }
             return lstCharges;      
         }
-		
+        
             
                          
     
@@ -1089,17 +1089,17 @@
             q1.Name                                     = ordItem.Name;
             q1.zqu__SubscriptionType__c                 = 'New Subscription';                    
             q1.zqu__ValidUntil__c                       = Date.Today().addMonths(1);
-			//START: D-2910 Added by JTeves 15-May-2105 - Copy Term Type and Term Length from Main Subscription
+            //START: D-2910 Added by JTeves 15-May-2105 - Copy Term Type and Term Length from Main Subscription
             //q1.zqu__Subscription_Term_Type__c           = TERM_EVER_GREEN;
-			q1.zqu__Subscription_Term_Type__c           = ordItem.Main_Package_ID__r.Subscription_Type__c;
-			q1.Term_Length1__c = ordItem.Term_Length__c;
-			if (ordItem.Term_Length__c != null) {
-				q1.zqu__InitialTerm__c = Integer.valueof(ordItem.Term_Length__c);
-			} else {
-				q1.zqu__InitialTerm__c = 0;
-			}
-			q1.zqu__RenewalTerm__c = 0;
-			//END: D-2910 Added by JTeves 15-May-2105 - Copy Term Type and Term Length from Main Subscription
+            q1.zqu__Subscription_Term_Type__c           = ordItem.Main_Package_ID__r.Subscription_Type__c;
+            q1.Term_Length1__c = ordItem.Term_Length__c;
+            if (ordItem.Term_Length__c != null) {
+                q1.zqu__InitialTerm__c = Integer.valueof(ordItem.Term_Length__c);
+            } else {
+                q1.zqu__InitialTerm__c = 0;
+            }
+            q1.zqu__RenewalTerm__c = 0;
+            //END: D-2910 Added by JTeves 15-May-2105 - Copy Term Type and Term Length from Main Subscription
             q1.zqu__Currency__c                         = CURRENCY_SGD;
             q1.zqu__InvoiceProcessingOption__c          = INVOICE_PROC_OPTION;
             if(orderObj.Debt_Management_Treatment__c == GlobalVariableClass.SUBL) {

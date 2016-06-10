@@ -5,7 +5,7 @@
  * Project/Requirement: SPH
  * Description: Test Class for BulkAsiaOneSignUpLevel2Batchable
  */ 
-@isTest(SeeAllData = true)
+@isTest
 public with sharing class BulkAsiaOneSignUpLevel2BatchableTest {
 
         static testmethod void testSingleBatchJobScheduler(){
@@ -17,9 +17,10 @@ public with sharing class BulkAsiaOneSignUpLevel2BatchableTest {
             Set<id> asia1IdSet = new Set<id>();
             asia1IdSet.add(asia1.id);
             
+            Test.startTest();
             BulkAsiaOneSignUpLevel2Batchable bulkA1 = new BulkAsiaOneSignUpLevel2Batchable(asia1IdSet);
-
-            ID batchprocessid = Database.executeBatch(bulkA1 ,200);
+            ID batchprocessid = Database.executeBatch(bulkA1);
             System.assertNotEquals(null, batchprocessid);
+            Test.stopTest();
         }
 }

@@ -192,6 +192,7 @@ private Class TempStopDirectControllerTest{
             //c.Sub_Status__c = 'Waiting for Urgent Temp Stop/Restart Approval'; 
             c.AccountId = acc.Id;
         }
+        test.startTest();
         database.insert(cas);
       
         
@@ -270,7 +271,7 @@ private Class TempStopDirectControllerTest{
         subTempList.add(subTemp1);
         database.insert(subTempList);
     
-        test.startTest();
+        
             PageReference pageRef = page.TempStopDirect;
             test.setCurrentPage(pageRef);
             ApexPages.currentPage().getParameters().put('accountId', acc.id);
@@ -596,6 +597,7 @@ private Class TempStopDirectControllerTest{
             //c.Sub_Status__c = 'Waiting for Urgent Temp Stop/Restart Approval'; 
             c.AccountId = acc.Id;
         }
+        test.startTest();
         database.insert(cas);
       
         
@@ -682,7 +684,7 @@ private Class TempStopDirectControllerTest{
         tempS.Case__c = cas[0].Id;
         database.insert(tempS);
         
-        test.startTest();
+
             PageReference pageRef = page.TempStopDirect;
             test.setCurrentPage(pageRef);
             ApexPages.currentPage().getParameters().put('accountId', acc.id);
@@ -905,6 +907,7 @@ private Class TempStopDirectControllerTest{
             pi.Product_Rate_Plan__c = prp[counter].Id;
             counter++;
         }
+        Test.startTest();
         database.insert(packItem);
         
        
@@ -949,6 +952,7 @@ private Class TempStopDirectControllerTest{
             sub.Main_Package__c = pack.id;
             counter++;
         }
+        
         database.insert(subs);
         
         
@@ -975,7 +979,7 @@ private Class TempStopDirectControllerTest{
         subs[2].Order_Line_Item_Number_1__c = ordLine.Id;
         database.update(subs);
         
-        
+       
         List<Case> cas = TestDataFactory.createCase(2, 'Temp Stop Subscription');
         for(Case c : cas){
             c.Temp_Stop_Sub__c = subs[0].Id;
@@ -983,6 +987,7 @@ private Class TempStopDirectControllerTest{
             //c.Sub_Status__c = 'Waiting for Urgent Temp Stop/Restart Approval'; 
             c.AccountId = acc.Id;
         }
+        
         database.insert(cas);
       
         
@@ -1069,7 +1074,7 @@ private Class TempStopDirectControllerTest{
         tempS.Case__c = cas[0].Id;
         database.insert(tempS);
         
-        test.startTest();
+            //test.startTest();
             PageReference pageRef = page.TempStopDirect;
             test.setCurrentPage(pageRef);
             ApexPages.currentPage().getParameters().put('accountId', acc.id);

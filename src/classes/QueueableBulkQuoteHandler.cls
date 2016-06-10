@@ -17,14 +17,22 @@ public class QueueableBulkQuoteHandler implements Queueable, Database.allowsCall
     this.fileIdentifier = fileIdentifierParam;
     this.totalChunks = totalChunksParam;
     this.orderId_creditCard = orderId_creditCardParam;
+
   }
   
   
   public void execute(QueueableContext context) {
-
+    System.debug('##orderIdSet: ' + orderIdSet);
+    System.debug('##urgentOrderIdSet: ' + urgentOrderIdSet);
+    System.debug('##origin: ' + origin);
+    System.debug('##fileIdentifier: ' + fileIdentifier);
+    System.debug('##orderId_creditCard: ' + orderId_creditCard);
+    System.debug('##totalChunks: ' + totalChunks);
+    System.debug('##context: ' + context);
     BulkQuoteHandler createQuote = new BulkQuoteHandler();
+    system.debug(':::ORDERIdSET ' + orderIdSet + ' ' + 'ORIGIN' + origin);
     set<string> quoteNameSet = createQuote.bulkQuoteCreation(orderIdSet, origin);
-    
+    system.debug('===>QBQH urgentOrderIdSet: ' + urgentOrderIdSet);
     // start removing urgent order to avoid sending it to zuora
     if (urgentOrderIdSet != null && !urgentOrderIdSet.isEmpty()) {
       for (id orderId : urgentOrderIdSet) {
@@ -41,6 +49,8 @@ public class QueueableBulkQuoteHandler implements Queueable, Database.allowsCall
       list<Case> caseList = new list<Case>();
       list<Order__c> orderList = new list<Order__c>();
       
+    system.debug('===>QBQH casex: ' + [select Id, Sub_Status__c, Order__c from Case where Order__c in :orderIdSet]);
+    
       for (Case casex : [select Id, Sub_Status__c, Order__c from Case where Order__c in :orderIdSet]) {
         
         casex.Sub_Status__c = GlobalVariableClass.SUB_STATUS_PROVISIONING;

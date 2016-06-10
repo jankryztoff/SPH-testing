@@ -28,7 +28,7 @@ global class BT_AB_DATAPOOL_DeleteRecords implements Database.Batchable<sObject>
      */ 
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
-        String query = 'SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = :interfaceID';  
+        String query = 'SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = :interfaceID'; 
         return Database.getQueryLocator(query);
     }
     
@@ -75,18 +75,18 @@ global class BT_AB_DATAPOOL_DeleteRecords implements Database.Batchable<sObject>
             BT_AB_ARM066DX_UpdateAccountBatch batchJob = new BT_AB_ARM066DX_UpdateAccountBatch();
             Database.executeBatch(batchJob);
         }        
-		//START 11 March 2016 UD-3247 Kevin Evasco - Credit Note and Credit Adjustment Interfaces
+        //START 11 March 2016 UD-3247 Kevin Evasco - Credit Note and Credit Adjustment Interfaces
         else if(interfaceId == 'ARM067DX')
         {
             BT_AB_ARM067DX_ImportCirculationOrders batchJob = new BT_AB_ARM067DX_ImportCirculationOrders();
             Database.executeBatch(batchJob);
         } 
-		else if(interfaceId == 'ARM068DX')
+        else if(interfaceId == 'ARM068DX')
         {
             BT_AB_ARM068DX_ExportCreditAdjustment batchJob = new BT_AB_ARM068DX_ExportCreditAdjustment();
             Database.executeBatch(batchJob);
-        }  		
-		//END 11 March 2016 UD-3247 Kevin Evasco - Credit Note and Credit Adjustment Interfaces
+        }       
+        //END 11 March 2016 UD-3247 Kevin Evasco - Credit Note and Credit Adjustment Interfaces
         else if(interfaceId == 'CMI087DX')
         {
             BT_AB_CMI087DX_ExportVendorToPostal batchJob = new BT_AB_CMI087DX_ExportVendorToPostal();
@@ -239,6 +239,13 @@ global class BT_AB_DATAPOOL_DeleteRecords implements Database.Batchable<sObject>
             Database.executeBatch(cmi102dx);
         }
         //END 25 February 2016 NCR015-5 Kevin Evasco - Packing Label CR 
+        //START 25 February 2016 NCR016 Kevin Evasco - Packing Label CR 
+        else if(interfaceid == 'DIR105DX')
+        {            
+            BT_AB_DIR105DX_BuildingCodeValidation dir105dx = new BT_AB_DIR105DX_BuildingCodeValidation();
+            Database.executeBatch(dir105dx);
+        }
+        //END 25 February 2016 NCR016 Kevin Evasco - Packing Label CR 
         //START 28 March 2016 UD-3207 Kevin Evasco - Added ARM105DX
         else if(interfaceid == 'ARM105DX')
         {            

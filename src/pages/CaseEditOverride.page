@@ -1,3 +1,0 @@
-<apex:page standardController="Case" extensions="CaseEditOverrideController" action="{!redirect}">
-<apex:pageMessages ></apex:pageMessages>
-</apex:page>

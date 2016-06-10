@@ -74,8 +74,9 @@ public class BulkAsiaOneSignUpLevel2Queueable implements Queueable, Database.all
                 sReqVO.put(GlobalVariableClass.PHONE,'1234567890');
             }
             
-            
             AsiaOneServiceResponsetVO resp = asiaOneServiceCall(sReqVO, 'apiSignUp');
+            //System.debug('@@resp '+resp);
+            //System.debug('@@resp1 '+(String)resp.getReqValueObject().get('Sign-Up'));
             String responseString = (String)resp.getReqValueObject().get('Sign-Up');
             
             if (responseString == 'Success') {
@@ -103,6 +104,7 @@ public class BulkAsiaOneSignUpLevel2Queueable implements Queueable, Database.all
         AsiaOneServiceRequestVO serviceRequestVO = new AsiaOneServiceRequestVO();
         serviceRequestVO.setReqValueObject(sReqVO);
         serviceRequestVO.setasia1APIFunction(asiaOneAPI);
+
         return a1F.delegateAsiaOneCall(serviceRequestVO);
     }
     

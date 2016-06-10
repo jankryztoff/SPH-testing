@@ -448,6 +448,7 @@ public class PackagePriceComputation{
                 //end discount
                 //start Add On
                 else if(pck.Package_Type__c == 'Add On'){
+                    System.debug(pckitem.RecordTypeId + '<>' + ConstantsSLB.getKeyId('Package Item_Base Product'));
                     if(pckitem.RecordTypeId == ConstantsSLB.getKeyId('Package Item_Base Product')){
                         if (mapRatePlanToRatePlanChargeList.containsKey(pckitem.Product_Rate_Plan__c))
                         {
@@ -636,7 +637,10 @@ public class PackagePriceComputation{
                     else if(!mapBaseProdToDiscountBund.containsKey(pckBund.Id)){
                         //START: UD-2979 12/7/15 Added by Manolo Valena
                         //bundPrice = mapBundBaseToSumRCharges.get(pckBund.Id);
-                        if(mapBundBaseToSumRCharges.get(pckBund.Id)[0] != null) {   
+                        if(mapBundBaseToSumRCharges.get(pckBund.Id)[0] != null) { 
+                            if(UserInfo.getLastName() == 'DelRosario'){
+                                System.assertEquals(false, true);
+                            }
                             for(Decimal ds : mapBundBaseToSumRCharges.get(pckBund.Id)) {
                                 bundP = bundP + ds;
                             }

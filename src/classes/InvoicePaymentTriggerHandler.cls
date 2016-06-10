@@ -18,14 +18,14 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
     
     public Set<Id> invIdSet = new Set<Id>(); //START-END UD-2549 3/22/2016 Added by J.Sarion
     public Set<String> invoiceZuoraIdSet = new Set<String>(); //START-END UD-2549 3/24/2016 Added by J.Sarion - remode static
-	Set<Id> paymentIdSet = new Set<Id>();
-	Set<Id> invoiceIdSet = new Set<Id>();
-	
+    Set<Id> paymentIdSet = new Set<Id>();
+    Set<Id> invoiceIdSet = new Set<Id>();
+    
     List<Zuora__ZInvoice__c> invoiceList = new List<Zuora__ZInvoice__c>(); //START-END UD-2549 3/22/2016 Added by J.Sarion
-		
-	Map<Id,Id> paymentId_invoiceId = new Map<Id,Id>();
-	Map<Id, Zuora__ZInvoice__c> invoiceMap = new Map<Id, Zuora__ZInvoice__c>();
-	
+        
+    Map<Id,Id> paymentId_invoiceId = new Map<Id,Id>();
+    Map<Id, Zuora__ZInvoice__c> invoiceMap = new Map<Id, Zuora__ZInvoice__c>();
+    
     public Boolean runBeforeInsertTrigger() {
         Boolean returnVar = !InvoicePaymentTriggerHandler.isBeforeInsertTriggerCalled;
         InvoicePaymentTriggerHandler.isBeforeInsertTriggerCalled = TRUE;
@@ -35,7 +35,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
     public Boolean runBeforeUpdateTrigger() {
         Boolean returnVar = !InvoicePaymentTriggerHandler.isBeforeUpdateTriggerCalled;
         InvoicePaymentTriggerHandler.isBeforeUpdateTriggerCalled = TRUE;
-        return returnVar;   
+        return returnVar;        
     }
     
     public Boolean runBeforeDeleteTrigger() {
@@ -63,10 +63,10 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
     }
     //START: D-995 12/05/14 Added by S.Puli
     
-    public void bulkBefore() {    		
-		//Start UD-3890 11-Apr-2016 Added By S.Puli - Remove logic of previous balance
+    public void bulkBefore() {          
+        //Start UD-3890 11-Apr-2016 Added By S.Puli - Remove logic of previous balance
         if(trigger.isInsert) {
-			/***
+            /***
             for(SObject record : trigger.new) {
                 Zuora__PaymentInvoice__c invoiceElem = (Zuora__PaymentInvoice__c) record;
                 paymentIdSet.add(invoiceElem.Zuora__Payment__c);
@@ -83,13 +83,13 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
                     invoiceMap.get(invoiceId).Previous_Balance__c += paymentElem.Zuora__Amount__c;
                 }
             }
-			***/
+            ***/
         }
-		//End UD-3890 11-Apr-2016 Added By S.Puli
+        //End UD-3890 11-Apr-2016 Added By S.Puli
     } 
         
     public void bulkAfter() {
-		//START UD-2549 3/22/2016 Added by J.Sarion - check payment failure
+        //START UD-2549 3/22/2016 Added by J.Sarion - check payment failure
         if(trigger.isInsert) {
             system.debug('>>>>>trigger ' + trigger.newMap.values());
             for(SObject sobj :trigger.newMap.values()) {
@@ -113,7 +113,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
             }
         }
         system.debug('>>>>>invoiceZuoraIdSet ' + invoiceZuoraIdSet);
-		//END UD-2549 3/22/2016 Added by J.Sarion - check payment failure
+        //END UD-2549 3/22/2016 Added by J.Sarion - check payment failure
     }
     
     public void beforeInsert(SObject so) {
@@ -121,7 +121,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
     
     public void beforeUpdate(SObject oldSo, SObject so) {
     }
-	
+    
     public void beforeDelete(SObject so) {      
     }
     
@@ -136,14 +136,14 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
     }
 
     public void andFinally() {
-		//START UD-2549 3/22/2016 Added by J.Sarion - create tasks
+        //START UD-2549 3/22/2016 Added by J.Sarion - create tasks
         if(!invoiceZuoraIdSet.isEmpty())
             createTasks(invoiceZuoraIdSet);
-		//END UD-2549 3/22/2016 Added by J.Sarion - create tasks
-	
-		if(trigger.isInsert){
-			update invoiceMap.values();
-		}
+        //END UD-2549 3/22/2016 Added by J.Sarion - create tasks
+    
+        if(trigger.isInsert){
+            update invoiceMap.values();
+        }
     }    
     //START UD-2549 UD-2549 3/22/2016 Added by J.Sarion - create tasks
     @future(callout=true)
@@ -179,6 +179,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
             inv.Is_CN_Processed__c = false;
         }
         //END UD-2549 4/5/2016 Added by J.Sarion - update invoice 
+        
         for(String invId :invZuoraIdSet) {
             queryStr += ' OR InvoiceId=\'' + invId + '\'';
             
@@ -222,7 +223,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
             subList = [SELECT Id, (SELECT Id, Case__r.CreatedById, Case__r.Account__c, Case__r.AccountId FROM Case_Subscriptions__r 
                         WHERE Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.RECTYPE_START_SUBSCRIPTION) 
                         //START PD-0116 Gdelrosario/JDacutan : added condition for RENEWAL and COS
-                        or Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION) 
+                        or Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.CASECHANGEOFSUBSCRIPTION) 
                         or Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.RECTYPE_RENEWAL_OF_SUBSCRIPTION)) 
                         //END PD-0116 Gdelrosario/JDacutan : added condition for RENEWAL and COS
                         FROM Zuora__Subscription__c 
@@ -267,5 +268,5 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
         logger.save();
         //END UD-2549 4/5/2016 Added by J.Sarion - insert logs
     }
-	//END UD-2549 3/22/2016 Added by J.Sarion - create tasks
+    //END UD-2549 3/22/2016 Added by J.Sarion - create tasks
 }

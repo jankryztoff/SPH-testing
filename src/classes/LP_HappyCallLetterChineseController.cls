@@ -325,7 +325,7 @@ public class LP_HappyCallLetterChineseController {
                               
             if(!PackItemRecord.isEmpty())
             {
-                ProductCode = '';
+                ProductCode = ''; 
                 ProductName = '';
                 for(Package_Item__c packageItem : PackItemRecord)
                 {

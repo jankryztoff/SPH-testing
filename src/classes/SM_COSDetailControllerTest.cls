@@ -28,6 +28,7 @@ public class SM_COSDetailControllerTest{
     static  Asia1_Subscription__c asia1Sub;
     static List<Asia1__c> asiaOneList;
     static Contact con;
+    Static Key_Id__c cs;
     //static PageReference pageRef;
     
     static testMethod void orderPreparation(){
@@ -767,14 +768,26 @@ public class SM_COSDetailControllerTest{
         insert billAcc;
     }
     
+    //create custom settings
+    private static void createCustomSettings(){
+        cs = new Key_Id__c();
+        cs.Name='NEXT_RECIPIENT_NUMBER';
+        cs.Id__c= '30466619';
+        //cs.Other fiels values
+     insert cs;
+    }
+    
     //Create Contact
     private static void setContact(){
         //Create Contact
+        createCustomSettings();
         con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
         con.AccountId = accList[0].Id;
         con.Recipient_Indicator__c = true;
+        con.Recipient_Number__c = Integer.valueOf(cs.Id__c);
         insert con;
     }
+    
     
     //Create Package 
     private static void setPackage(){

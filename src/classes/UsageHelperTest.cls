@@ -1932,4 +1932,189 @@ private class UsageHelperTest {
             }
         }catch(Zuora.zremoteException e) {} 
      } */          
+     
+    static testmethod void test09b(){
+        
+        try {
+            Test.setMock(WebServiceMock.class, new zLoginMock());
+            //create user
+            User u = new User(
+                Alias = 'stndrd',
+                Email='standarduser@test.com', 
+                EmailEncodingKey='UTF-8',
+                LastName='Test',
+                LanguageLocaleKey='en_US', 
+                LocaleSidKey='en_US',
+                ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+                TimeZoneSidKey='America/Los_Angeles',
+                UserName='standard@test.com'
+            );        
+            
+            System.runAs(u){   
+                Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+                insert postal;              
+                
+                Account acc = TestDataFactory.createAccount(1, 'Vendor')[0];
+                insert acc;
+                
+                Address__c addressRec = TestDataFactory.createAddress(1)[0];
+                addressRec.Address_Type__c='P';
+                addressRec.Postal_Code__c = postal.Id;
+                insert addressRec;
+                
+                Zuora__CustomerAccount__c defaultPayment = TestDataFactory.createBillingAccount(1)[0]; 
+                defaultPayment.Zuora__DefaultPaymentMethod__c = 'Other'; 
+                defaultPayment.Zuora__Account__c = acc.id; 
+                defaultPayment.Zuora__AccountNumber__c = '12345';
+                defaultPayment.Name = 'Test Name';
+                insert defaultPayment;
+                
+                
+                Contact con = TestDataFactory.createContact(1)[0];
+                con.Address__c = addressRec.Id;
+                con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact'); // invalid?
+                con.Phone = '1234567';
+                con.AccountId = acc.Id;
+                con.Recipient_Indicator__c = true;
+                insert con;  
+                
+                //create order
+                Order__c order = TestDataFactory.createOrder(1)[0];
+                order.Account__c = acc.Id;
+                order.Recipient_Contact__c = con.Id;
+                    System.debug('DEBUG con.Id' + con.Id);
+                order.Informed_Customer__c = True;
+                order.Subscriber_Charge__c = 15;
+                insert order;       
+                
+                System.assertEquals(con.Id, order.Recipient_Contact__c);
+                
+                Package__c testPackage = TestDataFactory.createPackage(1)[0];
+                testPackage.Subscription_Period__c = '15';
+                testPackage.Billing_Type__c = 'Full Prepaid';                
+                insert testPackage;
+                
+                //create order line item
+                List<Order_Line_Item__c> oli = TestDataFactory.createOrderLineItem(1);
+                oli[0].Order__c = order.Id;
+                oli[0].Main_Package_ID__c = testPackage.id;
+                oli[0].Ph_d__c = true;
+                oli[0].Main_Package_Frequency__c = 'Default';
+                oli[0].Start_Date__c = date.today()+1;
+                insert oli;           
+                
+                List<Publication__c> pub = TestDataFactory.createPublication(1);
+                for(Publication__c pb : pub){
+                    pb.Publication_Code__c = 'ZQP1';
+                    pb.Publication_Next_Start_Date__c = date.today()+1;
+                    pb.Publication_Type__c = 'N';
+                    pb.Published_Days__c = 'YNYNYNY';
+                    pb.Platform_Type__c = 'Online';
+                    pb.Frequency_Code__c = 'D';
+                    insert pub;
+                }
+                
+                Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
+                zSub.Name = 'Sample Subscription';
+                zsub.Acquisition_Type__c = 'Test';
+                zSub.Zuora__Account__c = acc.Id;
+                zSub.Order_Line_Item_Number__c = oli[0].Id;
+                zSub.Order_Line_Item_Number_1__c = oli[0].id;
+                zSub.Order_Number__c = order.Id;                
+                zSub.Suppress_Vendor_Start_Notice__c = 'false';
+                zSub.Supressed_Acknowledgement_Letter__c = 'false';
+                zSub.Supressed_Renewal_and_Reminder_Letter__c = 'false';
+                zSub.Urgent__c = 'false';
+                zSub.Vendor_Conversion__c = 'false';
+                zSub.Charity__c = 'true';
+                zSub.Sponsor__c = 'false';
+                zSub.Recipient_Contact__c = con.Id;
+                zSub.Subscription_Type__c ='Delivery';
+                zSub.Frequency__c = 'Default';
+                zSub.Frequency_1__c = GlobalVariableClass.FREQ_DEFAULT;
+                zSub.Zuora__CustomerAccount__c = defaultPayment.id;
+                zSub.Number_of_Copies__c= 100;
+                zSub.Number_of_Copies1__c =  '100';
+                zSub.Qty__c = 20;
+                insert zSub;
+                
+                List<Non_Publication_Day__c> nonPub = TestDataFactory.createNonPublicationDay(1);
+                nonPub[0].Publication_Code__c = 'BH';
+                nonPub[0].Publication__c = pub[0].id;
+                insert nonPub;
+             
+                Zuora__SubscriptionProductCharge__c spc = TestDataFactory.createSubProductCharge(1)[0];
+                spc.Zuora__Subscription__c = zSub.Id;
+                spc.PublicationCode__c = 'BH';            
+                spc.Zuora__UOM__c = 'APT';
+                spc.Zuora__ChargeNumber__c = '00001';
+                insert spc;            
+                
+                Public_Holiday__c pubHol = new Public_Holiday__c();
+                pubHol.Holiday_Date__c = date.Today();
+                                insert pubHol;
+                
+                Public_Holiday_Pub_Indiators__c pubHolin = new Public_Holiday_Pub_Indiators__c();
+                pubHolin.Weekday__c = true;
+                pubHolin.Name = 'Pub Indicator';
+                insert pubHolin;
+                
+          
+                Usage__c usage = new Usage__c();
+                usage.UOM__c = null;
+                usage.Account_Id__c = defaultPayment.Id;
+                usage.Subscription_Id__c = defaultPayment.Id;
+                usage.Start_Date__c =date.today();
+                usage.Quantity__c = null;
+                usage.Status__c = 'New';
+                usage.Rate_Plan_Charge_Id__c = '00001';
+                usage.Publication_Code__c = 'BH';
+                usage.StopType__c = 'Pstop';
+                
+                List<Usage__c> usageList = new List<Usage__c>();
+                usageList.add(usage);
+                
+                set<string> uomSet = new set<string>();
+                uomSet.add(spc.Zuora__UOM__c);                     
+                
+                //NON PUBLICATION DATE
+                //Publication Codes available (StartDate >= 2014, EndDate <= 1 month from now)
+                //-----------BH, BM, 
+                UsageHelper.UsageParamWrapper usageparamwrapper = new UsageHelper.UsageParamWrapper();
+                usageparamwrapper.billingAccountNumber = '';
+                usageparamwrapper.isPhd = zSub.Ph_d__c;
+                usageparamwrapper.isPhe = zSub.Ph_e__c;
+                usageparamwrapper.startDate = System.today()-365;
+                usageparamwrapper.endDate = System.today()+30;
+                usageparamwrapper.subscriptionName = zSub.Name;
+                usageparamwrapper.frequency = zSub.Frequency__c;           
+                usageParamWrapper.subscriptionProductChargeUom = uomSet;              
+                
+                Map<id, List<UsageHelper.UsageParamWrapper>> mapSubUsageParam = new Map<id, List<UsageHelper.UsageParamWrapper>>();
+                mapSubUsageParam.put(zSub.id, new List<UsageHelper.UsageParamWrapper>{usageparamwrapper});
+                
+                //Set<Id usageIdSet> uIdSet = new Set<Id usageIdSet>();
+                //uIdSet.put(zSub.id);
+                Test.startTest();
+                UsageHelper.generateUsage(mapSubUsageParam);
+                UsageHelper.isValidUOM(usage);
+                
+                UsageHelper.initialize();   
+              
+                
+                PublicationIssueWrapper returnWrap = UsageHelper.IssueCalculation('ZQP1', date.today()+2, date.today()+30, zSub, 1);
+                zSub.Frequency_1__c = GlobalVariableClass.FREQ_MONSAT;
+                PublicationIssueWrapper returnWrap1 = UsageHelper.IssueCalculation('ZQP1', date.today()+2, date.today()+30, zSub, 1);
+                zSub.Frequency_1__c = GlobalVariableClass.FREQ_SATSUN;
+                PublicationIssueWrapper returnWrap2 = UsageHelper.IssueCalculation('ZQP1', date.today()+2, date.today()+30, zSub, 1);
+                zSub.Frequency_1__c = GlobalVariableClass.FREQ_FRISUN;
+                PublicationIssueWrapper returnWrap3 = UsageHelper.IssueCalculation('ZQP1', date.today()+2, date.today()+30, zSub, 1);
+                
+                
+                Test.stopTest();
+            }
+        }catch(Zuora.zremoteException e) {}        
+    }
+    
+     
 }

@@ -538,6 +538,7 @@ public class AsiaOneServicesController{
         if (sRespVO != null) {   
             resMap = sRespVO.reqValueObject;
         }
+        System.debug('resMap' + resMap);
         if(Test.isRunningTest()){
             resMap.put('User-View','Success');
             resMap.put('Display Name','Test Class');

@@ -83,9 +83,9 @@ public class InvoiceProcessForStopSubscription {
         List<Map<String, Object>> invoiceMapList = new List<Map<String, Object>>();
         List<Map<String, Object>> paymentMapList = new List<Map<String, Object>>();
         List<Map<String, Object>> updateInvoiceMapList = new List<Map<String, Object>>();
-		List<Zuora__Subscription__c> subList = new List<Zuora__Subscription__c>();
+        List<Zuora__Subscription__c> subList = new List<Zuora__Subscription__c>();
         List<Map<String, Object>> negativeInvoiceMapList = new List<Map<String, Object>>(); //START/END D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
-		Set<String> paymentZuoraIdSet = new Set<String>();
+        Set<String> paymentZuoraIdSet = new Set<String>();
         Set<String> invoiceIdSet = new Set<String>();
         Set<String> updateInvoiceIdSet = new Set<String>();
         Order_Line_Item__c oli = new Order_Line_Item__c();
@@ -158,7 +158,7 @@ public class InvoiceProcessForStopSubscription {
             {
                 zCallOut = new ZuoraCallOut(); 
                 List<Map<String,String>> results = zCallOut.generateInvoiceList(invoiceMapList);
-            
+                system.debug('>>>>>results ' + results);
                 for (Map<String,String> resultMap :results) {           
                     if (resultMap.get('Status') == 'Success') {
                         invoiceZuoraId = resultMap.get('Id');
@@ -242,13 +242,13 @@ public class InvoiceProcessForStopSubscription {
                 toAdjust.put('Amount', amount);
                 toAdjust.put('ReferenceId', zOb.getValue('Id'));
                 listToAdjust.add(toAdjust);
-				
-				//START D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
-				Map<String, Object> invoiceMap = new Map<String, Object>();         
-				invoiceMap.put('Id', zOb.getValue('Id'));
-				invoiceMap.put('Immediate_CB__c', 'Y');
-				negativeInvoiceMapList.add(invoiceMap);
-				//END D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
+                
+                //START D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
+                Map<String, Object> invoiceMap = new Map<String, Object>();         
+                invoiceMap.put('Id', zOb.getValue('Id'));
+                invoiceMap.put('Immediate_CB__c', 'Y');
+                negativeInvoiceMapList.add(invoiceMap);
+                //END D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
             }
         }
         
@@ -271,7 +271,7 @@ public class InvoiceProcessForStopSubscription {
         //END UD-2854 10/03/15 RReyes
         //END UD-0790 4/22/2015 Added by Manolo Valena
         
-		//START D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
+        //START D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
         //START 11 March 2016 UD-3247 Kevin Evasco - Immediate CB to true for Negative Invoices
         try{
             invoicePostProcessingForDirectCorp.updateInvoiceImmediateCB(negativeInvoiceMapList);
@@ -279,7 +279,7 @@ public class InvoiceProcessForStopSubscription {
             logger.log(e);
         }
         //END 11 March 2016 UD-3247 Kevin Evasco - Immediate CB to true for Negative Invoices
-		//END D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
+        //END D-4588 04 April 2016 Kevin Evasco - Zuora Invoice - Immediate CB to true
         
         //START UD-3337 16Dec15 FrancisBenzon : bulkify
         //START UD-1595 AddedBy FrancisBenzon : call Queueable class for sending of quotes for new Subs

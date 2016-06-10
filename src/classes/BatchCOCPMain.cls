@@ -16,7 +16,7 @@ global class BatchCOCPMain implements Database.Batchable<sObject>, Database.Allo
     
     //Contructor for Full Run
     global BatchCOCPMain(Date executionDay){
-		jobRunDate = executionDay;
+        jobRunDate = executionDay;
     }
     
     global String getQueryString(){

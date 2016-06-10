@@ -337,7 +337,8 @@ public  class ComplaintNewsPaperController {
                     csWrap.counterWrap = counter;
                     CSubWrapperList.add(csWrap);
                 }
-        }   
+        }
+
         
     //START: UD-0653 03/30/2015 RReyes - Sets isComplaint to true for filtering subscription 
        for(CaseSubWrapper wrapCas : CSubWrapperList) {
@@ -394,6 +395,7 @@ public  class ComplaintNewsPaperController {
     
     
     public PageReference save() {
+
         //EmailNotificationCreation emailNotif = new EmailNotificationCreation(); // START-END : D-1796 2/5/2015 Alyana Navarro - Declare instance variable.
         //START: D-1789 / 1/20/2015 /K. Tan/ Clearing Case Subscription List
         insertCaseSubsList.clear();
@@ -1024,7 +1026,7 @@ public  class ComplaintNewsPaperController {
                                 
                             }
                             //END UD-3702 2/4/2016 Added by J.Sarion - Check for previous COA Case
-                                
+
                                 //END: D-4285 1-15-2016 Added by Kristine Balaoing
                                 for(CaseSubWrapper cWrap: CSubWrapperList){
                                     Case_Subscription__c caseSub = new Case_Subscription__c();
@@ -1062,6 +1064,7 @@ public  class ComplaintNewsPaperController {
              
                                 }               
                             }
+
                             //START: D-1789 / 1/20/2015 /K. Tan/ Clearing Case Subscription List
                             Savepoint saveP = Database.setSavepoint();
                             try{
@@ -1176,13 +1179,15 @@ public  class ComplaintNewsPaperController {
                  
                 //START:D-3830 10/28/2015 Added by Manolo Valena
                 List<Usage__c> usageListWithoutZeroQ = new List<Usage__c>();
+                System.debug('cube ---------------------------- 06082016 : usageList ' + usageList);
                 for(Usage__c u : UsageHelper.filterAndUpdateUniqueUsages(usageList,false)) {
+                    System.debug('cube ---------------------------- 06082016 : u ' + u);
                     if(u.Quantity__c != null && u.Quantity__c != 0) {
                         usageListWithoutZeroQ.add(u);
                     }
                 }
                 //END:D-3830 10/28/2015 Added by Manolo Valena 
-                 
+                System.debug('cube ---------------------------- 06082016 : usageListWithoutZeroQ ' + usageListWithoutZeroQ);
                 //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                 //START:D-3830 10/28/2015 Added by Manolo Valena
                 List<Usage__c> newUsagesList = usageListWithoutZeroQ;
@@ -2033,14 +2038,20 @@ public  class ComplaintNewsPaperController {
         List<Zuora__Subscription__c> subsSecondList = new List<Zuora__Subscription__c>();
         Map<Id, Set<String>> subToPubCodeMap = new Map<Id, Set<String>>();
         Map<Id, Zuora__Subscription__c> mapSubToSubRec = new Map<Id, Zuora__Subscription__c>();
-        Map<Id, Case_Subscription__c> mapSubToCaseSubRec = new Map<Id, Case_Subscription__c>();
+        //START PD-0324 Gdelrosario : added new map
+        //Map<Id, Case_Subscription__c> mapSubToCaseSubRec = new Map<Id, Case_Subscription__c>();
+        Map<Id, Set<Id>> mapSubToSetCaseSubId = new Map<Id, Set<Id>>();
+        Map<Id, Case_Subscription__c> mapCaseSubIdToCaseSub = new Map<Id, Case_Subscription__c>();
+        //END PD-0324 Gdelrosario : added new map
         List<Zuora__SubscriptionProductCharge__c> zuoSubProdChargDiscountList = new List<Zuora__SubscriptionProductCharge__c>();
         Map<Id, List<Date>> mapSPCToDiscountRanges = new Map<Id, List<Date>>();
         Date compStartDate;
         Date compEndDate;
         noOfCopies = 0.00;
-        Map<id, UsageHelper.UsageParamWrapper> subscriptionId_usageParamWrapper = new Map<id, UsageHelper.UsageParamWrapper>();
-        Map<id, UsageHelper.UsageParamWrapper> subscriptionId_usageParamWrapperRep = new Map<id, UsageHelper.UsageParamWrapper>(); //START/END D-2976 Added by MGaelo 6/5/2015 created map for replacement usage
+        //START PD-0324 Gdelrosario : updated to list
+        Map<id, List<UsageHelper.UsageParamWrapper>> subscriptionId_usageParamWrapper = new Map<id, List<UsageHelper.UsageParamWrapper>>();
+        Map<id, List<UsageHelper.UsageParamWrapper>> subscriptionId_usageParamWrapperRep = new Map<id, List<UsageHelper.UsageParamWrapper>>(); //START/END D-2976 Added by MGaelo 6/5/2015 created map for replacement usage
+        //END PD-0324 Gdelrosario : updated to list
         //START UD-3258 17Nov15 AddedBy FrancisBenzon : var
         Map<Id, String> subID_subPubCodeMap = new Map<Id, String>();
         //END UD-3258 17Nov15 AddedBy FrancisBenzon : var
@@ -2049,7 +2060,13 @@ public  class ComplaintNewsPaperController {
         for(Case_Subscription__c cS : insertCaseSubsList){//Get subscriptions
             csSet.add(cS.Subscription__c);
             subsSet.add(cS.Subscription__c);
-            mapSubToCaseSubRec.put(cS.Subscription__c, cS);
+            //START PD-0324 Gdelrosario : assign id and values to map 
+            //mapSubToCaseSubRec.put(cS.Subscription__c, cS);
+            if(mapSubToSetCaseSubId.get(cS.Subscription__c) == null)
+                mapSubToSetCaseSubId.put(cS.Subscription__c, new Set<Id>());
+            mapSubToSetCaseSubId.get(cS.Subscription__c).add(cS.Id);
+            mapCaseSubIdToCaseSub.put(cS.Id, cS);
+            //END PD-0324 Gdelrosario : assign id and values to map 
         }
         
         //START UD-3258 17Nov15 AddedBy FrancisBenzon : add map values sub id and pubcode on sub
@@ -2162,170 +2179,223 @@ public  class ComplaintNewsPaperController {
         }
         
         for(Id subId : subToPubCodeMap.keySet()){
-            //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            Date replacementFrom;
-            Date replacementTo;
-            Date currDate;
-            Decimal replacementCopies = 0.00;
-            //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            subscriptionDiscount = 0.00;
-            Set<String> pubCodeSet = new Set<String>();
-            pubCodeSet = subToPubCodeMap.get(subId);
-            List<Zuora__SubscriptionProductCharge__c> spcDiscList = new List<Zuora__SubscriptionProductCharge__c>();
-            Map<Id, List<Date>> mapSubToDiscountRanges = new Map<Id, List<Date>>();
-            spcDiscList = mapSubIdToSPCDiscList.get(subId);
-            //Fritz catch null pointer
-            if(spcDiscList != null && !spcDiscList.isEmpty())
-            {
-                for(Zuora__SubscriptionProductCharge__c spcPerSub : spcDiscList){
-                
-                    if(!zSPCDiscountSet.contains(spcPerSub.Zuora__EffectiveStartDate__c)){
-                        zSPCDiscountSet.add(spcPerSub.Zuora__EffectiveStartDate__c);
-                        zSPCDiscountList.add(spcPerSub.Zuora__EffectiveStartDate__c);
+        //START PD-0324 Gdelrosario 06072016
+            for(Id caseSubId : mapSubToSetCaseSubId.get(subId)){
+                //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                Date replacementFrom;
+                Date replacementTo;
+                Date currDate;
+                Decimal replacementCopies = 0.00;
+                //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                subscriptionDiscount = 0.00;
+                Set<String> pubCodeSet = new Set<String>();
+                pubCodeSet = subToPubCodeMap.get(subId);
+                List<Zuora__SubscriptionProductCharge__c> spcDiscList = new List<Zuora__SubscriptionProductCharge__c>();
+                Map<Id, List<Date>> mapSubToDiscountRanges = new Map<Id, List<Date>>();
+                spcDiscList = mapSubIdToSPCDiscList.get(subId);
+                //Fritz catch null pointer
+                if(spcDiscList != null && !spcDiscList.isEmpty())
+                {
+                    for(Zuora__SubscriptionProductCharge__c spcPerSub : spcDiscList){
+                    
+                        if(!zSPCDiscountSet.contains(spcPerSub.Zuora__EffectiveStartDate__c)){
+                            zSPCDiscountSet.add(spcPerSub.Zuora__EffectiveStartDate__c);
+                            zSPCDiscountList.add(spcPerSub.Zuora__EffectiveStartDate__c);
+                        }
                     }
                 }
-            }
-            
-            totalCredit = 0.00;
-            mapSubUOMToPrices = computePrice(subId);
-            compStartDate = mapSubToCaseSubRec.get(subId).Complaint_From__c;
-            compEndDate = mapSubToCaseSubRec.get(subId).Complaint_To__c;
-            //START: D-2565 03/21/2015 Added by S.PULI 
-            //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            noOfCopies = mapSubToCaseSubRec.get(subId).Complaint_Copies__c;
-            //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            //END: D-2565 03/21/2015 Added by S.PULI 
-            
-            //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            system.debug('>>>>>pubCodeSet ' + pubCodeSet);
-            if (mapSubToCaseSubRec.get(subId).Replace_From__c != null && mapSubToCaseSubRec.get(subId).Replace_To__c != null) {
-                replacementFrom = mapSubToCaseSubRec.get(subId).Replace_From__c;
-                replacementTo = mapSubToCaseSubRec.get(subId).Replace_To__c;
-            }
-            system.debug('>>>>>pubCodeSet ' + pubCodeSet);
-            //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            
-            mapSPCToDiscountRanges = getDiscount(compStartDate,compEndDate);
-            
-            //START UD-2945 28-Sept-2015 Added By S.Puli - apply changes affected by UD-2992
-            //subscriptionDiscount = computeDiscount(pubCodeSet, mapSPCToDiscountRanges, mapSubToSubRec.get(subId));
-            //END UD-2945 28-Sept-2015 Added By S.Puli - apply changes affected by UD-2992
-            System.debug('DISCOUNT' + subscriptionDiscount);
-            system.debug('>>>>>pubCodeSet ' + pubCodeSet);
-            
-            for(String pubCode : pubCodeSet){
+                
+                totalCredit = 0.00;
+                mapSubUOMToPrices = computePrice(subId);
+                
+                //compStartDate = mapSubToCaseSubRec.get(subId).Complaint_From__c;
+                compStartDate = mapCaseSubIdToCaseSub.get(caseSubId).Complaint_From__c;
+                //compEndDate = mapSubToCaseSubRec.get(subId).Complaint_To__c;
+                compEndDate = mapCaseSubIdToCaseSub.get(caseSubId).Complaint_To__c;
+                //START: D-2565 03/21/2015 Added by S.PULI 
+                //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                //noOfCopies = mapSubToCaseSubRec.get(subId).Complaint_Copies__c;
+                noOfCopies = mapCaseSubIdToCaseSub.get(caseSubId).Complaint_Copies__c;
+             
+                //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                //END: D-2565 03/21/2015 Added by S.PULI 
+                
                 //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
                 system.debug('>>>>>pubCodeSet ' + pubCodeSet);
-                system.debug('>>>>>pubCode ' + pubCode);
-                for(currDate = compStartDate ; currDate <= compEndDate; currDate = currDate.addDays(1)){
-                    system.debug('>>>>>currDate ' + currDate);
-                    // UsageHelper.initialize(); // Start/End UD-2853 18Sep15 JohnD - commented out
-                    PublicationIssueWrapper pubWrapper = UsageHelper.IssueCalculation(pubCode, currDate, currDate, mapSubToSubRec.get(subId), Integer.valueOf(noOfCopies));
-                weekdayIssue = Decimal.valueOf(pubWrapper.weekday_no_of_copies);
-                SaturdayIssue = Decimal.valueOf(pubWrapper.sat_no_of_copies);
-                SundayIssue = Decimal.valueOf(pubWrapper.sun_no_of_copies);
+                /*
+                if (mapSubToCaseSubRec.get(subId).Replace_From__c != null && mapSubToCaseSubRec.get(subId).Replace_To__c != null) {
+                    replacementFrom = mapSubToCaseSubRec.get(subId).Replace_From__c;
+                    replacementTo = mapSubToCaseSubRec.get(subId).Replace_To__c;
+                }*/
+                if (mapCaseSubIdToCaseSub.get(caseSubId).Replace_From__c != null && mapCaseSubIdToCaseSub.get(caseSubId).Replace_To__c != null) {
+                    replacementFrom = mapCaseSubIdToCaseSub.get(caseSubId).Replace_From__c;
+                    replacementTo = mapCaseSubIdToCaseSub.get(caseSubId).Replace_To__c;
+                }
                 
-                System.debug('PUB WRAPPER' + pubWrapper);
-                creditWeekday = 0.00;
-                creditSaturday = 0.00;
-                creditSunday = 0.00;
-                    replacementCopies = 0.00;
+                system.debug('>>>>>pubCodeSet ' + pubCodeSet);
+                //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                
+                mapSPCToDiscountRanges = getDiscount(compStartDate,compEndDate);
+                
+                //START UD-2945 28-Sept-2015 Added By S.Puli - apply changes affected by UD-2992
+                //subscriptionDiscount = computeDiscount(pubCodeSet, mapSPCToDiscountRanges, mapSubToSubRec.get(subId));
+                //END UD-2945 28-Sept-2015 Added By S.Puli - apply changes affected by UD-2992
+                System.debug('DISCOUNT' + subscriptionDiscount);
+                system.debug('>>>>>pubCodeSet ' + pubCodeSet);
+                
+                for(String pubCode : pubCodeSet){
+                    //START UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                    system.debug('>>>>>pubCodeSet ' + pubCodeSet);
+                    system.debug('>>>>>pubCode ' + pubCode);
+                    for(currDate = compStartDate ; currDate <= compEndDate; currDate = currDate.addDays(1)){
+                        system.debug('>>>>>currDate ' + currDate);
+                        // UsageHelper.initialize(); // Start/End UD-2853 18Sep15 JohnD - commented out
+                        PublicationIssueWrapper pubWrapper = UsageHelper.IssueCalculation(pubCode, currDate, currDate, mapSubToSubRec.get(subId), Integer.valueOf(noOfCopies));
+                    weekdayIssue = Decimal.valueOf(pubWrapper.weekday_no_of_copies);
+                    SaturdayIssue = Decimal.valueOf(pubWrapper.sat_no_of_copies);
+                    SundayIssue = Decimal.valueOf(pubWrapper.sun_no_of_copies);
                     
-                    if (weekdayIssue > 0 || SaturdayIssue > 0 || SundayIssue > 0) {
-                        if (replacementFrom != null && replacementTo != null) {
-                            system.debug('>>>>>currDate >= replacementTo ' + currDate + ' ' + replacementTo);
-                            system.debug('>>>>>currDate <= replacementFrom ' + currDate + ' ' + replacementFrom);
-                            if (currDate <= replacementTo && currDate >= replacementFrom) {
-                                if (mapSubToCaseSubRec.get(subId).Replacement_Copies__c != null)
-                                    replacementCopies = mapSubToCaseSubRec.get(subId).Replacement_Copies__c;
-                                else
-                                    replacementCopies = 0.00;
+                    System.debug('PUB WRAPPER' + pubWrapper);
+                    creditWeekday = 0.00;
+                    creditSaturday = 0.00;
+                    creditSunday = 0.00;
+                        replacementCopies = 0.00;
+                        
+                        if (weekdayIssue > 0 || SaturdayIssue > 0 || SundayIssue > 0) {
+                            if (replacementFrom != null && replacementTo != null) {
+                                system.debug('>>>>>currDate >= replacementTo ' + currDate + ' ' + replacementTo);
+                                system.debug('>>>>>currDate <= replacementFrom ' + currDate + ' ' + replacementFrom);
+                                if (currDate <= replacementTo && currDate >= replacementFrom) {
+                                    /*if (mapSubToCaseSubRec.get(subId).Replacement_Copies__c != null)
+                                        replacementCopies = mapSubToCaseSubRec.get(subId).Replacement_Copies__c;
+                                    else
+                                        replacementCopies = 0.00;*/
+                                    if(mapCaseSubIdToCaseSub.get(caseSubId).Replacement_Copies__c != null)
+                                        replacementCopies = mapCaseSubIdToCaseSub.get(caseSubId).Replacement_Copies__c;
+                                    else
+                                        replacementCopies = 0.00;
+                                }
                             }
+                            else {
+                                replacementCopies = 0.00;
+                            }
+                            system.debug('>>>>>replacementCopies ' + replacementCopies);
+                            system.debug('>>>>>weekdayIssue ' + weekdayIssue);
+                            system.debug('>>>>>SaturdayIssue ' + SaturdayIssue);
+                            system.debug('>>>>>SundayIssue ' + SundayIssue);
+                            for(String uom : mapSubUOMToPrices.keySet()){
+                                if(uom == 'Credit Copy Weekday' && weekdayIssue != 0){
+                                    creditWeekday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
+                                    System.debug('WEEKDAY' + creditWeekday);
+                                }
+                                if(uom == 'Credit Copy Sat' && SaturdayIssue != 0){
+                                    creditSaturday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
+                                    System.debug('SATURDAY' + creditSaturday);
+                                }
+                                if(uom == 'Credit Copy Sun' && SundayIssue != 0){
+                                    creditSunday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
+                                    System.debug('SUNDAY' + creditSunday);
+                                }
+                            }
+                            totalCredit += (creditWeekday + creditSaturday + creditSunday) /*- subscriptionDiscount*/;
+                            System.debug('TOTAL CREDIT' + totalCredit + ':weekday' + creditWeekday + ':saturday' + creditSaturday + 'sunday' + creditSunday + 'discount' + subscriptionDiscount);
                         }
-                        else {
-                            replacementCopies = 0.00;
-                        }
-                        system.debug('>>>>>replacementCopies ' + replacementCopies);
-                        system.debug('>>>>>weekdayIssue ' + weekdayIssue);
-                        system.debug('>>>>>SaturdayIssue ' + SaturdayIssue);
-                        system.debug('>>>>>SundayIssue ' + SundayIssue);
-                        for(String uom : mapSubUOMToPrices.keySet()){
-                            if(uom == 'Credit Copy Weekday' && weekdayIssue != 0){
-                                creditWeekday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
-                                System.debug('WEEKDAY' + creditWeekday);
-                            }
-                            if(uom == 'Credit Copy Sat' && SaturdayIssue != 0){
-                                creditSaturday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
-                                System.debug('SATURDAY' + creditSaturday);
-                            }
-                            if(uom == 'Credit Copy Sun' && SundayIssue != 0){
-                                creditSunday = (mapSubUOMToPrices.get(uom) != null ? mapSubUOMToPrices.get(uom) : 0.00) * (noOfCopies - replacementCopies);
-                                System.debug('SUNDAY' + creditSunday);
-                            }
-                        }
-                        totalCredit += (creditWeekday + creditSaturday + creditSunday) /*- subscriptionDiscount*/;
-                        System.debug('TOTAL CREDIT' + totalCredit + ':weekday' + creditWeekday + ':saturday' + creditSaturday + 'sunday' + creditSunday + 'discount' + subscriptionDiscount);
                     }
                 }
+                //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
+                system.debug('>>>>>TOTALCREDIT ' + totalCredit);
+                mapSubToCredit.put(subId, (Math.abs(totalCredit)-subscriptionDiscount));
+                //mapSubToCaseSubRec.get(subId).Credit_Amount__c = Math.abs(totalCredit)- subscriptionDiscount;
+                mapCaseSubIdToCaseSub.get(caseSubId).Credit_Amount__c = Math.abs(totalCredit)- subscriptionDiscount;
             }
-            //END UD-0620 4/29/2015 Added by J. Sarion - Compute credit amount on a daily basis
-            system.debug('>>>>>TOTALCREDIT ' + totalCredit);
-            mapSubToCredit.put(subId, (Math.abs(totalCredit)-subscriptionDiscount));
-            mapSubToCaseSubRec.get(subId).Credit_Amount__c = Math.abs(totalCredit)- subscriptionDiscount;
+        //END PD-0324 Gdelrosario 06072016
         }
+        
         //START D-2643 3/27/2015 Added By C. Lin - change to upsert if no Id is specified yet.
-        if(mapSubToCaseSubRec.values().size() > 0){
-            upsert mapSubToCaseSubRec.values();
+        //START PD-0324 06062016 Gdelrosario
+        if(mapCaseSubIdToCaseSub.values().size() > 0){
+            upsert mapCaseSubIdToCaseSub.values();
         }
+        //END PD-0324 06062016 Gdelrosario
         //END D-2643 3/27/2015 Added By C. Lin
+        
         system.debug('subToPubCodeMap>>'+subToPubCodeMap);
-   
-        for(Id zSubId : mapSubToCaseSubRec.keySet()){
-            //START: D-2114 02-10-2015 Added by Marvin Gatchalian ... 
-                //START: D-1612 02-10-2015 Added by S.PULI - added for usage function
-                UsageHelper.UsageParamWrapper usageParamWrapper = new UsageHelper.UsageParamWrapper();
-                usageParamWrapper.subscriptionProductChargeUom = new set<string>{'Credit Copy Weekday', 'Credit Copy Sun', 'Credit Copy Sat'};
-                usageParamWrapper.subscriptionName = mapSubToSubRec.get(zSubId).Name;
-                usageParamWrapper.billingAccountNumber = mapSubToSubRec.get(zSubId).Zuora__CustomerAccount__r.Zuora__AccountNumber__c;
-                usageParamWrapper.frequency = mapSubToSubRec.get(zSubId).Frequency_1__c;
-                //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
-                //START: D-2884 05-18-2015 Added by MGB/S.Puli
-                usageParamWrapper.startDate = mapSubToCaseSubRec.get(zSubId).Complaint_From__c;
+        //START PD-0324 06062016 Gdelrosario
+        for(Id zSubId : mapSubToSetCaseSubId.keySet()){
+            for(Id caseSubId : mapSubToSetCaseSubId.get(zSubId)){
+                if(mapCaseSubIdToCaseSub.get(caseSubId).Credit_Amount__c > 0.00){
+                    //START: D-2114 02-10-2015 Added by Marvin Gatchalian ... 
+                    //START: D-1612 02-10-2015 Added by S.PULI - added for usage function
+                    UsageHelper.UsageParamWrapper usageParamWrapper = new UsageHelper.UsageParamWrapper();
+                    usageParamWrapper.subscriptionProductChargeUom = new set<string>{'Credit Copy Weekday', 'Credit Copy Sun', 'Credit Copy Sat'};
+                    usageParamWrapper.subscriptionName = mapSubToSubRec.get(zSubId).Name;
+                    usageParamWrapper.billingAccountNumber = mapSubToSubRec.get(zSubId).Zuora__CustomerAccount__r.Zuora__AccountNumber__c;
+                    usageParamWrapper.frequency = mapSubToSubRec.get(zSubId).Frequency_1__c;
+                    //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
+                    //START: D-2884 05-18-2015 Added by MGB/S.Puli
+                    //usageParamWrapper.startDate = mapSubToCaseSubRec.get(zSubId).Complaint_From__c;
+                    usageParamWrapper.startDate = mapCaseSubIdToCaseSub.get(caseSubId).Complaint_From__c;
 
-                //END: D-2884 05-18-2015 Added by MGB/S.Puli
-                //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
-                usageParamWrapper.endDate = mapSubToCaseSubRec.get(zSubId).Complaint_To__c;
-                usageParamWrapper.isPhd = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_d__c;
-                usageParamWrapper.isPhe = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_e__c;
-                //START UD-3202 11/5/15 AddedBy FrancisBenzon : put quantity specific per sub in loop 
-                usageParamWrapper.subscriptionQuantity = Integer.valueOf(mapSubToCaseSubRec.get(zSubId).Complaint_Copies__c); //ask sherwin the value to be inputted in this
-                //END UD-3202 11/5/15 AddedBy FrancisBenzon : put quantity specific per sub in loop 
+                    //END: D-2884 05-18-2015 Added by MGB/S.Puli
+                    //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
+                    //usageParamWrapper.endDate = mapSubToCaseSubRec.get(zSubId).Complaint_To__c;
+                    usageParamWrapper.endDate = mapCaseSubIdToCaseSub.get(caseSubId).Complaint_To__c;
+                    usageParamWrapper.isPhd = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_d__c;
+                    usageParamWrapper.isPhe = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_e__c;
+                    //START UD-3202 11/5/15 AddedBy FrancisBenzon : put quantity specific per sub in loop 
+                    //usageParamWrapper.subscriptionQuantity = Integer.valueOf(mapSubToCaseSubRec.get(zSubId).Complaint_Copies__c); //ask sherwin the value to be inputted in this
+                    usageParamWrapper.subscriptionQuantity = Integer.valueOf(mapCaseSubIdToCaseSub.get(caseSubId).Complaint_Copies__c); //ask sherwin the value to be inputted in this
+                    //END UD-3202 11/5/15 AddedBy FrancisBenzon : put quantity specific per sub in loop 
+                    
+                    //subscriptionId_usageParamWrapper.put(zSubId, usageParamWrapper);
+                    if(subscriptionId_usageParamWrapper.get(zSubId) == null){
+                        subscriptionId_usageParamWrapper.put(zSubId , new List<UsageHelper.UsageParamWrapper>());
+                    } 
+                    subscriptionId_usageParamWrapper.get(zSubId).add(usageParamWrapper);    
+                    
+                    
+                    //END: D-1612 02-10-2015 Added by S.PULI - added for usage function
+                    //END: D-2114 02-10-2015 Added by Marvin Gatchalian ... 
+                }
                 
-                subscriptionId_usageParamWrapper.put(zSubId, usageParamWrapper);
-                //END: D-1612 02-10-2015 Added by S.PULI - added for usage function
-            //END: D-2114 02-10-2015 Added by Marvin Gatchalian ... 
+            }
         }
+        //END PD-0324 06062016 Gdelrosario
         //End of Credit Amount Computation
         
         //START D-2976 Added by MGaelo 6/5/2015 Replacement Usage Qty
-        for(Id zSubId : mapSubToCaseSubRec.keySet()){
-            UsageHelper.UsageParamWrapper usageParamWrapperRep = new UsageHelper.UsageParamWrapper();
-            usageParamWrapperRep.subscriptionProductChargeUom = new set<string>{'Credit Copy Weekday', 'Credit Copy Sun', 'Credit Copy Sat'};
-            usageParamWrapperRep.subscriptionName = mapSubToSubRec.get(zSubId).Name;
-            usageParamWrapperRep.billingAccountNumber = mapSubToSubRec.get(zSubId).Zuora__CustomerAccount__r.Zuora__AccountNumber__c;
-            usageParamWrapperRep.frequency = mapSubToSubRec.get(zSubId).Frequency_1__c;
-            usageParamWrapperRep.startDate = mapSubToCaseSubRec.get(zSubId).Replace_From__c;
-            usageParamWrapperRep.endDate = mapSubToCaseSubRec.get(zSubId).Replace_To__c;
-            usageParamWrapperRep.isPhd = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_d__c;
-            usageParamWrapperRep.isPhe = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_e__c;
-            usageParamWrapperRep.subscriptionQuantity = Integer.valueOf(mapSubToCaseSubRec.get(zSubId).Replacement_Copies__c);
-            
-            subscriptionId_usageParamWrapperRep.put(zSubId, usageParamWrapperRep);
+        //START PD-0324 06062016 Gdelrosario
+        for(Id zSubId : mapSubToSetCaseSubId.keySet()){
+            for(Id caseSubId : mapSubToSetCaseSubId.get(zSubId)){
+                if(mapCaseSubIdToCaseSub.get(caseSubId).Credit_Amount__c > 0.00){
+                    
+                    UsageHelper.UsageParamWrapper usageParamWrapperRep = new UsageHelper.UsageParamWrapper();
+                    usageParamWrapperRep.subscriptionProductChargeUom = new set<string>{'Credit Copy Weekday', 'Credit Copy Sun', 'Credit Copy Sat'};
+                    usageParamWrapperRep.subscriptionName = mapSubToSubRec.get(zSubId).Name;
+                    usageParamWrapperRep.billingAccountNumber = mapSubToSubRec.get(zSubId).Zuora__CustomerAccount__r.Zuora__AccountNumber__c;
+                    usageParamWrapperRep.frequency = mapSubToSubRec.get(zSubId).Frequency_1__c;
+                    //usageParamWrapperRep.startDate = mapSubToCaseSubRec.get(zSubId).Replace_From__c;
+                    //usageParamWrapperRep.endDate = mapSubToCaseSubRec.get(zSubId).Replace_To__c;
+                    usageParamWrapperRep.startDate = mapCaseSubIdToCaseSub.get(caseSubId).Replace_From__c;
+                    usageParamWrapperRep.endDate = mapCaseSubIdToCaseSub.get(caseSubId).Replace_To__c;
+                    usageParamWrapperRep.isPhd = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_d__c;
+                    usageParamWrapperRep.isPhe = mapSubToSubRec.get(zSubId).Order_Line_Item_Number_1__r.Ph_e__c;
+                    //usageParamWrapperRep.subscriptionQuantity = Integer.valueOf(mapSubToCaseSubRec.get(zSubId).Replacement_Copies__c);
+                    usageParamWrapperRep.subscriptionQuantity = Integer.valueOf(mapCaseSubIdToCaseSub.get(caseSubId).Replacement_Copies__c);
+                    
+                    if(subscriptionId_usageParamWrapperRep.get(zSubId) == null){
+                        subscriptionId_usageParamWrapperRep.put(zSubId , new List<UsageHelper.UsageParamWrapper>());
+                    } 
+                    subscriptionId_usageParamWrapperRep.get(zSubId).add(usageParamWrapperRep);  
+                }                
+            }
         }
+        //END PD-0324 06062016 Gdelrosario
         //END D-2976 Added by MGaelo 6/5/2015 Replacement Usage Qty
         //START: D-2114 02-10-2015 Added by Marvin Gatchalian ... 
         //START: D-1612 02-10-2015 Added by S.PULI - added for usage function
         //system.debug('subscriptionId_usageParamWrapper>>'+subscriptionId_usageParamWrapper);
+        
         
         if(objcase.Status <> GlobalVariableClass.STATUS_CLOSED){//START/END: D-2565 03/21/2015 Added by S.PULI
         
@@ -2335,27 +2405,41 @@ public  class ComplaintNewsPaperController {
             //START D-2976 Added by MGaelo 6/5/2015 Replacement Usage Qty
             List<Usage__c> usageListTemp = new List<Usage__c>();
             List<Usage__c> usageListReplacement = new List<Usage__c>();
+        
             usageListTemp = UsageHelper.generateUsage(subscriptionId_usageParamWrapper); //START/END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
             usageListReplacement = UsageHelper.generateUsage(subscriptionId_usageParamWrapperRep);
+            system.debug('Johnxxxxx :: usageListTemp ' + usageListTemp);
+            system.debug('Johnxxxxx :: usageListReplacement ' + usageListReplacement);
             
             for(Usage__c usage : usageListTemp){
                 for(Usage__c us : usageListReplacement){
+                    System.debug('cube ------------------ 06082016 : START -------------- ||' );
+                    System.debug('cube ------------------ 06082016 : usage ' + usage);
+                    System.debug('cube ------------------ 06082016 : us ' + us);
                     if(usage.Subscription_Id__c != null && us.Subscription_Id__c != null){
                         if(usage.Subscription_Id__c == us.Subscription_Id__c){
                             if(usage.UOM__c != null && us.UOM__c != null){
-                                if(usage.UOM__c == us.UOM__c){
-                                    if(usage.Quantity__c == null){
-                                        usage.Quantity__c = 0;
+                                //START PD-0324 Gdelrosario 06092016
+                                if(usage.Start_Date__c <= us.Start_Date__c && usage.End_Date__c >= us.End_Date__c){
+                                    if(usage.UOM__c == us.UOM__c){
+                                        if(usage.Quantity__c == null){
+                                            usage.Quantity__c = 0;
+                                        }
+                                        
+                                        if(us.Quantity__c == null){
+                                            us.Quantity__c = 0;
+                                        }
+                                        System.debug('cube ------------------ 06082016 : us.Quantity__c ' + us.Quantity__c);
+                                        System.debug('cube ------------------ 06082016 : usage.Quantity__c ' + usage.Quantity__c);
+                                        usage.Quantity__c = usage.Quantity__c - us.Quantity__c;
+                                        System.debug('cube ------------------ 06082016 : usage.Quantity__c FINAL = ' + usage.Quantity__c);
                                     }
-                                    
-                                    if(us.Quantity__c == null){
-                                        us.Quantity__c = 0;
-                                    }
-                                    usage.Quantity__c = usage.Quantity__c - us.Quantity__c;
                                 }
+                                //END PD-0324 Gdelrosario 06092016                              
                             }
                         }
                     }
+                    System.debug('cube ------------------ 06082016 : END -------------- ||' );
                 }
             }
             usageList = usageListTemp;
@@ -2369,10 +2453,12 @@ public  class ComplaintNewsPaperController {
             //END: D-2565 03/21/2015 Added by S.PULI 
             //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
             //try{
+                System.debug('cube ------------------ 06082016 : usageList ' + usageListReplacement);
+                System.debug('cube ------------------ 06082016 : usageList ' + usageList);
                 Database.delete(usageToDeleteList,false);//START/END: D-2565 03/21/2015 Added by S.PULI
             //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                 //START 03/31/2015 D-2610 Kevin Evasco - REMOVED CODE
-
+        
             //END 03/31/2015 D-2610 Kevin Evasco - REMOVED CODE
         //END: D-1612 02-10-2015 Added by S.PULI - added for usage function
         //END: D-2114 02-10-2015 Added by Marvin Gatchalian ... */

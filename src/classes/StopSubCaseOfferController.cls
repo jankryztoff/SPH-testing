@@ -169,7 +169,7 @@ public with sharing class StopSubCaseOfferController{
                             //START: UD-3473 2/3/16 Added by Manolo Valena
               Offer_Promotion__c, Offer_Package__c, Add_On_Package__c, Route_to_Retention__c, Send_to_Retention__c, Offer_Package_Product_Family__c
                             //END: UD-3473 2/3/16 Added by Manolo Valena
-                            //END: UD-3473 1/29/16 Added by Manolo Valena
+                            //END: UD-3473 5/24/16 Added by Manolo Valena
               FROM Case
                             WHERE id =: caseId];
                             
@@ -412,6 +412,7 @@ public with sharing class StopSubCaseOfferController{
     }       
     
     public PageReference caseView(){
+        
         update existingCase;
         String retUrl = '/' + existingCase.id;
         PageReference pgRef = new PageReference(retUrl);

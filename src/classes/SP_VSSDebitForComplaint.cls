@@ -67,7 +67,13 @@ global class SP_VSSDebitForComplaint implements Database.Batchable<sObject>, Dat
      */
     global void execute(database.batchableContext bcTemp, list<Case> allScopes){  
         //START D-3653 19Nov15 AddedBy FrancisBenzon : logging mechanism for batch status
-        Logger logger = new Logger(SP_VSSDebitForComplaint.class.getName(), 'SP003', bcTemp.getJobID());
+        //START PD-0236 11May15 AddedBy VinceCanlas : Added a condition for logger call
+        Logger logger;
+        if(!test.IsRunningTest()){
+            logger = new Logger(SP_VSSDebitForComplaint.class.getName(), 'SP003', bcTemp.getJobID());
+        }
+        //END PD-0236 11May15 AddedBy VinceCanlas : Added a condition for logger call
+        
         Savepoint sp = Database.setSavepoint();        
         
         try 
@@ -111,7 +117,7 @@ global class SP_VSSDebitForComplaint implements Database.Batchable<sObject>, Dat
                                                             OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC) Order by LastmodifiedDate ASC])
             {        
                 if(!SubOldvendormap.containsKey(CaseSubs.Subscription__c)){
-                          SubOldvendormap.put(CaseSubs.Subscription__c,CaseSubs.Vendor_Code__c);
+                     SubOldvendormap.put(CaseSubs.Subscription__c,CaseSubs.Vendor_Code__c);
                 }                                 
             }
             

@@ -12,7 +12,7 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
      String query = '';    
      String interfaceName = '';
      List<String> fieldList = new List<String>();
-	 //START D-1882 05-Feb-2015 Added by Raviteja- Created new Integer to store the datapoolList size
+     //START D-1882 05-Feb-2015 Added by Raviteja- Created new Integer to store the datapoolList size
      global Integer datapoolListsize = 0;  
      //End D-1882 05-Feb-2015 Added by Raviteja
      
@@ -30,8 +30,8 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
     global Database.QueryLocator start(Database.BatchableContext BC){
         List<BA_INT_DATA_POOL__c> resultList = [SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = 'ESH1005DX'];
         delete resultList;  
-		
-		//START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Header record into BA_INT_DATA_POOL__c 
+        
+        //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Header record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolHRecord = new BA_INT_DATA_POOL__c();
         datapoolHRecord.name = interfaceName;
         datapoolHRecord.job_id__c = interfaceName;
@@ -41,9 +41,14 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
         datapoolHRecord.export_data__c = 'H,'+DateTime.now();        
         insert datapoolHRecord;    
         //End D-1882 05-Feb-2015 Added by Raviteja
-		
+        
         System.debug('*********************** inside start'+ this.query);
-        return Database.getQueryLocator(this.query);
+        try{
+            return Database.getQueryLocator(this.query);
+        }catch(Exception e){
+            system.debug(e);
+            return null;
+        }
     }
     
     /* @description Executes the business logic and populates BA_INT_DATA_POOL__c with new records based on the interface requirements.
@@ -96,7 +101,7 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
             datapoolList.add(datapoolRecord);
             System.debug('%%%%%%%%%%%%%%%%%%%%%'+datapoolRecord);
         }
-		//START D-1882 05-Feb-2015 Added by Raviteja - commented the code and moved to Finish method
+        //START D-1882 05-Feb-2015 Added by Raviteja - commented the code and moved to Finish method
         /*
         BA_INT_DATA_POOL__c datapoolTRecord = new BA_INT_DATA_POOL__c();
         datapoolTRecord.name = interfaceName;
@@ -106,13 +111,13 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
         datapoolTRecord.insert_time__c = DateTime.now(); 
         datapoolTRecord.export_data__c = 'T,'+(datapoolList.size()-1);
         datapoolList.add(datapoolTRecord);
-		*/
+        */
         //End D-1882 05-Feb-2015 Added by Raviteja
         
-		//START D-1882 05-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
+        //START D-1882 05-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
          datapoolListsize = datapoolList.size()+datapoolListsize;
         //End D-1882 05-Feb-2015 Added by Raviteja
-		
+        
         // Set the database savepoint. In case DML Operation fails, use this savepoint for rollback.  
         Savepoint savepointBeforeDML = Database.setSavepoint();
         try{
@@ -133,7 +138,7 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
      */ 
     global void finish(Database.BatchableContext BC)
     {
-		//START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
+        //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolTRecord = new BA_INT_DATA_POOL__c();
         datapoolTRecord.name = interfaceName;
         datapoolTRecord.job_id__c = interfaceName;
@@ -144,10 +149,10 @@ global class BT_AB_ESH1005DX_ESHOPGift implements Database.Batchable<sObject>,Da
         insert datapoolTRecord;
         //End D-1882 05-Feb-2015 Added by Raviteja
         
-		//start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
+        //start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
         BT_AT_BatchCalloutHandler calloutHandler = new BT_AT_BatchCalloutHandler(interfaceName);
         Database.executeBatch(calloutHandler);
-		//end Nitin/D-2087/6Feb2015
+        //end Nitin/D-2087/6Feb2015
         
 
     }

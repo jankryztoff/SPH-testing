@@ -1,6 +1,0 @@
-trigger AttachmentTrigger on Attachment (before delete){
-    String ErrorMsg = ConstantsSLB.getErrorMessage('AttachmentDeleteError')
-	for(Attachment att : trigger.old) {
-        att.addError(ErrorMsg);
-    } 
-}

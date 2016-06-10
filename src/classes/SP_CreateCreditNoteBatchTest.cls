@@ -5,17 +5,23 @@ Date: April 6, 2016
 */
 
 
-@isTest(seeAllData = true)
+@isTest
 public class SP_CreateCreditNoteBatchTest {
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createOther();     
+    }  
+        
     static testmethod void unitTest1() { 
         
         Account acct = TestDataFactory.createAccount(1, 'Vendor Subscriber')[0];
         acct.NRIC__c = 'T1234567R';
         insert acct;    
         
-       Address__c add = TestDataFactory.createAddress(1)[0];
-       add.Address_Unique_ID__c = '123152test';
-       insert add; 
+        Address__c add = TestDataFactory.createAddress(1)[0];
+        add.Address_Unique_ID__c = '123152test';
+        insert add; 
         
        Contact con = TestDataFactory.createContact(1)[0];
        con.AccountId = acct.Id;

@@ -37,39 +37,39 @@ global class StopSubscriptionButton{
                         SM_SubscriptionCancellationHelper.cancelSubscriptions(zSub_StopDate_Map, GlobalVariableClass.SUBJECT_STOP_SUBSCRIPTION);
                         
                         if (SM_SubscriptionCancellationHelper.isSuccess == false) {
-                        	result = SM_SubscriptionCancellationHelper.errorMessage;
-                        	
-                        	stopSubCase.Sub_Status__c = 'Zuora Issue - Subscription Cancellation';
-			                // Start D-2693 06Apr15 JohnD added to update the status of the Order
-                        	list<Order__c> orderList = new list<Order__c>();
-			                if (stopSubCase.Order__c != null) {
-			                	orderList = [select Id, Status__c from Order__c where Id = :stopSubCase.Order__c limit 1]; 
-			                	if (orderList != null && orderList.size() > 0) {
-			                		orderList[0].Status__c = GlobalVariableClass.SUB_STATUS_CLOSE;
-			                	}
-			                }
-			                // End D-2693 06Apr15 JohnD added to update the status of the Order 
-                        	
-                        	// Start D-2693 06Apr15 JohnD renamed e to e2
-                        	try {
-                        		update stopSubCase;
-                        		update orderList;
-                        	} catch (exception e2) {
-                        		ExceptionLogger.log(new list<exception>{ e2 } );
-                        	} 
-                        	// End D-2693 06Apr15 JohnD renamed e to e2
+                            result = SM_SubscriptionCancellationHelper.errorMessage;
+                            
+                            stopSubCase.Sub_Status__c = 'Zuora Issue - Subscription Cancellation';
+                            // Start D-2693 06Apr15 JohnD added to update the status of the Order
+                            list<Order__c> orderList = new list<Order__c>();
+                            if (stopSubCase.Order__c != null) {
+                                orderList = [select Id, Status__c from Order__c where Id = :stopSubCase.Order__c limit 1]; 
+                                if (orderList != null && orderList.size() > 0) {
+                                    orderList[0].Status__c = GlobalVariableClass.SUB_STATUS_CLOSE;
+                                }
+                            }
+                            // End D-2693 06Apr15 JohnD added to update the status of the Order 
+                            
+                            // Start D-2693 06Apr15 JohnD renamed e to e2
+                            try {
+                                update stopSubCase;
+                                update orderList;
+                            } catch (exception e2) {
+                                ExceptionLogger.log(new list<exception>{ e2 } );
+                            } 
+                            // End D-2693 06Apr15 JohnD renamed e to e2
                         }
                         // End D-2660 01Apr15 JohnD replaced method call and added error message
                     } catch (Exception e){
-                    	// Start D-2693 06Apr15 JohnD null pointer
-                    	
+                        // Start D-2693 06Apr15 JohnD null pointer
+                        
                         result = 'Error: ';
                         if (e.getMessage() != null) {
                         
                          result += (string)e.getMessage();
                         } else {
-                        	result += 'Unknown';
-                        	ExceptionLogger.log(new list<exception>{ e });
+                            result += 'Unknown';
+                            ExceptionLogger.log(new list<exception>{ e });
                         }
                         // End D-2693 06Apr15 JohnD null pointer
                     }

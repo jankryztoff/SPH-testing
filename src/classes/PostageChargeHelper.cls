@@ -65,9 +65,12 @@ public class PostageChargeHelper {
                  ORDER BY Product__c, Effective_Start_Date__c DESC])
             {
                 ID productID = zoneProduct.Product__c;
+                system.debug('\n\n ***Debug productID ********* ' + productID +'\n\n');
                 if(!mByProduct.containsKey(productID))
                     mByProduct.put(productID,zoneProduct.Postage_Charge__c);
             }
+           system.debug('\n\n ***Debug mByProduct ********* ' + mByProduct +'\n\n');
+           system.debug('\n\n ***Debug lstZProductIDs ********* ' + lstZProductIDs +'\n\n'); 
                       
         //Sum the Postage Charges of all products
             for(ID productID : lstZProductIDs)
@@ -125,10 +128,10 @@ public class PostageChargeHelper {
             if(itemObj.Addon_Package__c != NULL)
                 lstPackageID.add(itemObj.Addon_Package__c);
         }
-        
+        system.debug('******lstPackageID: '+lstPackageID);
         //Get Package ID to ZProduct ID Mapping
         Map<Id,List<Id>> mapPkgIdToProdIds = getPackageToProductsMap(lstPackageID);
-        
+        system.debug('******mapPkgIdToProdIds: '+mapPkgIdToProdIds);
         //Generate the product ID set
         Set<Id> setProdIDs = new Set<Id>();
         for(Id idPackage : mapPkgIdToProdIds.keySet())
@@ -136,10 +139,11 @@ public class PostageChargeHelper {
             for(Id idProd : mapPkgIdToProdIds.get(idPackage))
                 setProdIDs.add(idProd);
         }
-        
+        system.debug('*****setZones: '+setZones);
+        system.debug('*****setProdIDs: '+setProdIDs);
         //Get the Postage for each Zone and Product combination
         Map<String, Decimal> mapPostageCharges = getPostageCharges(setZones, setProdIDs);
-        
+        system.debug('*****mapPostageCharges: '+mapPostageCharges);
         //Sum Postage by Order Line Item
         for(Order_Line_Item__c itemObj : lstItems)
         {
@@ -157,6 +161,8 @@ public class PostageChargeHelper {
             for(Id tmpProdID : setPackProdIDs)
             {
                 String strKey = strZone.toUpperCase() + tmpProdID;
+                system.debug('****strKey'+strKey);
+                system.debug('****mapPostageCharges'+mapPostageCharges);
                 if(mapPostageCharges.containsKey(strKey))
                     itemPostageChargeAmt += mapPostageCharges.get(strKey);
                 else

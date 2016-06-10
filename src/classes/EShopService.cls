@@ -97,11 +97,11 @@ global with sharing class EShopService{
     private static Zuora__Subscription__c getSubscription(EShopRequest request){
         Account account = getAccount(request.subscriberId);
         Zuora__Subscription__c subscription = new Zuora__Subscription__c();
-        
-        subscription = [SELECT id, name, Vendor_Subscription_To_Convert_1__r.Temp_Stop_Count_Year_to_Date__c
+        //Start D-xxxx VPernicia: added Year_to_Date_Temp_Stop_Days__c
+        subscription = [SELECT id, name, Vendor_Subscription_To_Convert_1__r.Temp_Stop_Count_Year_to_Date__c, Year_to_Date_Temp_Stop_Days__c
                         FROM Zuora__Subscription__c 
                         WHERE id =: request.subscriptionId AND  Zuora__Account__c =: account.id];
-        
+        //End D-xxxx VPernicia: added Year_to_Date_Temp_Stop_Days__c
         return subscription;
     }
     

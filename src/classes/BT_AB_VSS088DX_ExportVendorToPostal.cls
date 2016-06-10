@@ -6,9 +6,9 @@
  * @description This class populates BA_INT_DATA_POOL__c for VSS088DX batch job. Used together with BT_AS_VSS088DX_ExportVendorToPostal Schedulable
  * 
  * History: 2014/08/26 Kevin Evasco Created Skeletal Apex Batchable
- * 			2014/09/18 Renino Niefes copy paste codes from CMI087DX 
- * 			2014/11/03 Renino Niefes updated the SOQL
- *			2015/03/11 Michael Francisco - updated to address D-2491
+ *          2014/09/18 Renino Niefes copy paste codes from CMI087DX 
+ *          2014/11/03 Renino Niefes updated the SOQL
+ *          2015/03/11 Michael Francisco - updated to address D-2491
  */
 
 global class BT_AB_VSS088DX_ExportVendorToPostal implements Database.Batchable<sObject>,Database.AllowsCallouts
@@ -25,12 +25,12 @@ global class BT_AB_VSS088DX_ExportVendorToPostal implements Database.Batchable<s
      */ 
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
-		// START D-2491 2015/03/11 Michael Francisco modified query to ensure full data dump         
+        // START D-2491 2015/03/11 Michael Francisco modified query to ensure full data dump         
         List<BA_INT_DATA_POOL__c> resultList = [SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = :interfaceId];
         delete resultList;        
         String query = 'SELECT Id, Vendor_Account__r.Vendor_Group__c, Vendor_Account__r.Vendor_Code__c, SingPost_Address__r.Name FROM Vendor_Allocation__c ';
         query += ' WHERE Status__c = \'Active\' ';
-		// END D-2491 2015/03/11 Michael Francisco 		
+        // END D-2491 2015/03/11 Michael Francisco      
         return Database.getQueryLocator(query);
     }
     
@@ -47,48 +47,48 @@ global class BT_AB_VSS088DX_ExportVendorToPostal implements Database.Batchable<s
         for(sObject record : scope)
         {                       
             Vendor_Allocation__c vendorAllocation = (Vendor_Allocation__c) record;
-			// START D-2491 2015/03/11 Michael Francisco			
+            // START D-2491 2015/03/11 Michael Francisco            
             String zValidationCode = '0';
-			
-			String zVendorGroup = vendorAllocation.Vendor_Account__r.Vendor_Group__c;
-			String zVendorCode = vendorAllocation.Vendor_Account__r.Vendor_Code__c;
-			String zPostalCode = vendorAllocation.SingPost_Address__r.Name;
-			
-			if (zVendorGroup == null || zVendorGroup.length() == 0) {
-				zVendorGroup = 'V';
-			} 
+            
+            String zVendorGroup = vendorAllocation.Vendor_Account__r.Vendor_Group__c;
+            String zVendorCode = vendorAllocation.Vendor_Account__r.Vendor_Code__c;
+            String zPostalCode = vendorAllocation.SingPost_Address__r.Name;
+            
+            if (zVendorGroup == null || zVendorGroup.length() == 0) {
+                zVendorGroup = 'V';
+            } 
 
-			if (zVendorCode != null && zVendorCode.length() > 0) {
-				zValidationCode += '0';
-			} else {
-				zValidationCode += '1';
-			}
-			
-			if (zPostalCode != null && zPostalCode.length() > 0) {
-				zValidationCode += '0';
-			} else {
-				zValidationCode += '1';
-			}
-			
+            if (zVendorCode != null && zVendorCode.length() > 0) {
+                zValidationCode += '0';
+            } else {
+                zValidationCode += '1';
+            }
+            
+            if (zPostalCode != null && zPostalCode.length() > 0) {
+                zValidationCode += '0';
+            } else {
+                zValidationCode += '1';
+            }
+            
             String exportData = '';     
             exportData += zVendorGroup + ',';
             exportData += zVendorCode + ',';
             exportData += zPostalCode;
-			if (Decimal.valueOf(zValidationCode) == 0) {
-				// Prepare Data Pool information here
-				BA_INT_DATA_POOL__c datapoolRecord = new BA_INT_DATA_POOL__c();
-				datapoolRecord.Name = interfaceId;
-				datapoolRecord.job_id__c = '1';
-				datapoolRecord.group_id__c = 'Detail';
-				datapoolRecord.run_for_date__c = Date.today();      
-				datapoolRecord.insert_time__c = DateTime.now(); 
-				datapoolRecord.export_data__c = exportData;
-				
-				datapoolList.add(datapoolRecord);
-			} else {
-				System.debug('ERROR:('+zValidationCode+') ID:['+record.Id+'] DATA:['+exportData+']');
-			}
-			// END D-2491 2015/03/11 Michael Francisco 			
+            if (Decimal.valueOf(zValidationCode) == 0) {
+                // Prepare Data Pool information here
+                BA_INT_DATA_POOL__c datapoolRecord = new BA_INT_DATA_POOL__c();
+                datapoolRecord.Name = interfaceId;
+                datapoolRecord.job_id__c = '1';
+                datapoolRecord.group_id__c = 'Detail';
+                datapoolRecord.run_for_date__c = Date.today();      
+                datapoolRecord.insert_time__c = DateTime.now(); 
+                datapoolRecord.export_data__c = exportData;
+                
+                datapoolList.add(datapoolRecord);
+            } else {
+                System.debug('ERROR:('+zValidationCode+') ID:['+record.Id+'] DATA:['+exportData+']');
+            }
+            // END D-2491 2015/03/11 Michael Francisco          
         }
         
         // Set the database savepoint. In case DML Operation fails, use this savepoint for rollback.  
@@ -124,6 +124,7 @@ global class BT_AB_VSS088DX_ExportVendorToPostal implements Database.Batchable<s
         serviceRequestVO.setJobStatus(0);
         serviceRequestVO.setJobID(interfaceId);
         serviceRequestVO.setJobDate(myDate);
+        System.debug('$$ BatchServiceRequestVO : ' + serviceRequestVO);
         System.debug('################ before');
         a1F.delegateBatchCall(serviceRequestVO);
         System.debug('################ after');        

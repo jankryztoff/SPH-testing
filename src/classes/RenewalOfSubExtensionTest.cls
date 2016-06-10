@@ -1,5 +1,13 @@
-@isTest (seeAllData= True)
+@isTest (seeAllData= False)
 private class RenewalOfSubExtensionTest{
+
+
+    @testSetup static void methodName() {
+            insert(CustomSettingsDataFactory.createKey_Id());
+            //insert(CustomSettingsDataFactory.createPlannerSched());
+            insert(CustomSettingsDataFactory.createOther());
+            insert(CustomSettingsDataFactory.createError_Messages());
+    } 
 
    static testMethod void test(){
         

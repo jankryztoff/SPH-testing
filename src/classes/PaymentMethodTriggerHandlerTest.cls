@@ -5,7 +5,7 @@
  * Requirement/Project Name: <SPH>
  */
 
-@isTest (SeeAllData = TRUE)
+@isTest
 private class PaymentMethodTriggerHandlerTest{ 
 
     static testMethod void unitTest(){

@@ -5,9 +5,7 @@
 /* Date Last Modified: 02/02/2014
 /**********************************************************************/
  
-@isTest (Seealldata = TRUE)
-
-        
+@isTest(seeAllData = true)        
 private class UpdateBatchNumberTest{
 
         
@@ -15,7 +13,14 @@ private class UpdateBatchNumberTest{
         /*This method is to test queryBillingAccount method in the base case
         /*Oject Account, Order, SingPost are Package, Case, PRomotion, Contact created
         /**************************************************************/
-        
+    
+     /*@testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        //insert CustomSettingsDataFactory.createOther(); 
+    }*/  
+    
   static testMethod void testBatchNumberUpdate(){
         /****************************** Test Data Creation ******************************/
         /*   Insert code statements that inserts Data                                   */

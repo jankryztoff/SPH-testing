@@ -20,6 +20,7 @@ public class SM_COSCreditBalanceTransfer {
     //START UD-3676 01/21/16 - bulkify method
     //public static void processBalanceTransfer(Id OrderId, String oldBillAcctId) {
     public static void processBalanceTransfer(Map<Id,String> mapOrderIdToOldBAId) {  
+    //system.assertequals(mapOrderIdToOldBAId, null);
     //END UD-3676 01/21/16 - bulkify method
         String newBillAcctId = ' ';
         Decimal oldAcctCreditBal = 0;
@@ -45,11 +46,13 @@ public class SM_COSCreditBalanceTransfer {
         catch(Zuora.zForceException ex) { 
             system.debug(GlobalVariableClass.ZUORA_ERROR+ex); 
         }
+        //system.assertequals(mapOrderIdToOldBAId, null);
         //START UD-3676 01/21/16 - bulkify query
         String queryStr = '';
         for(String oldBAId : mapOrderIdToOldBAId.values())
             queryStr += ' OR ID=\'' + oldBAId + '\'';
         queryStr = queryStr.substring(4);
+        //system.assertequals(queryStr, 'test');
         //END UD-3676 01/21/16 - bulkify query
         //ZOQL: query credit balance from the Billing Account of the old subscription
         Zuora.zApi.QueryRequest qr = new Zuora.zApi.QueryRequest();
@@ -60,11 +63,15 @@ public class SM_COSCreditBalanceTransfer {
         qo.caseSensitive = false;
         qr.queryOptions = qo;
         
+        System.debug('###DEBUG : ' + qr.zoql);
+
         Zuora.zApi.QueryResult queryResult = zApiInstance.zquery(qr);
         List<Zuora.zObject> zObjList = new List<Zuora.zObject>();
         if (queryResult.size > 0) {
             zObjList.addAll(queryResult.records);
         }
+
+        System.debug('###DEBUG : ' + zObjList);
         
         //START UD-3676 01/21/16 - bulkify
         if(zObjList.size() > 0) 
@@ -88,6 +95,8 @@ public class SM_COSCreditBalanceTransfer {
         newBillAcctId = quote.zqu__ZuoraAccountID__c;
         system.debug(':::NEWBILLINGACCT' + ' ' + newBillAcctId);
         */
+        //system.assertequals(mapOrderIdToOldBAId.size(),5);
+        //system.assertequals(1,2);
         if(mapOrderIdToOldBAId.size() > 0){
             for(zqu__Quote__c quoteRec : [SELECT zqu__ZuoraAccountID__c, Order_Line_Item_Number_1__r.Order__c FROM zqu__Quote__c WHERE Order_Line_Item_Number_1__r.Order__c IN:mapOrderIdToOldBAId.keySet() 
                                             AND Subscription_Type__c = 'Publication']){

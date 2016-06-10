@@ -36,6 +36,7 @@ global class SP_InvoiceRecordPatcher implements Database.Batchable<sObject>, Dat
             if((invoiceElement.ARMS_Interface_Timestamp__c == null && invoiceElement.ARMS_invoice_id__c != null && invoiceElement.Zuora__TotalAmount__c > 0))
                 invoiceElement.ARMS_Interface_Timestamp__c = invoiceElement.CreatedDate;                
             //END 26 October 2015 UD-3056 Kevin Evasco - ARMS Interface Timestamp patch
+            
             //Start UD-3253 29-Feb-2016 Added By S.Puli
             if(invoiceElement.Zuora__TotalAmount__c < 0 && invoiceElement.Is_CN_Processed__c == false){
                 invoiceElement.Is_CN_Processed__c = true;

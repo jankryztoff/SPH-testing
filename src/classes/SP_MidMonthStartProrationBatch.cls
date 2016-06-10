@@ -385,7 +385,7 @@ global class SP_MidMonthStartProrationBatch implements Database.Batchable<sObjec
                     // Start UD-1767 15Jul15 JohnD - logic for credit usage if subscription end date is in current month
                     // Start D-3741 19Oct15 JohnD - added expression to exclude subscription which start and end date are in the same month
                     //START: D-4269 1/20/16 Added by Manolo Valena - Removed as this logic is no longer needed.
-					/*if (sub.Zuora__SubscriptionEndDate__c != null && !isStartEndSameMonth && sub.Zuora__SubscriptionEndDate__c.monthsBetween(referenceDate) == 0) {
+                    /*if (sub.Zuora__SubscriptionEndDate__c != null && !isStartEndSameMonth && sub.Zuora__SubscriptionEndDate__c.monthsBetween(referenceDate) == 0) {
                     // End D-3741 19Oct15 JohnD - added expression to exclude subscription which start and end date are in the same month   
                         // credit usage is not applicable for normal expiry
                         if (sub.Zuora__TermSettingType__c == 'Evergreen' || (sub.Term_Length__c != null 
@@ -406,7 +406,7 @@ global class SP_MidMonthStartProrationBatch implements Database.Batchable<sObjec
                             createUsageFirst(sub, usageStartDate, usageEndDate, usageDate, usageType);
                         }
                     }*/
-					//END: D-4269 1/20/16 Added by Manolo Valena
+                    //END: D-4269 1/20/16 Added by Manolo Valena
                     // End UD-1767 15Jul15 JohnD - logic for credit usage if subscription end date is in current month
                     
                     //set usage date with respect to Subscription start date
@@ -433,7 +433,7 @@ global class SP_MidMonthStartProrationBatch implements Database.Batchable<sObjec
                         } else {
                             //START: D-4269 1/20/16 Added by Manolo Valena
                             usageEndDate = sub.Zuora__SubscriptionEndDate__c;
-							//END: D-4269 1/20/16 Added by Manolo Valena
+                            //END: D-4269 1/20/16 Added by Manolo Valena
                         }
                         // End D-3741 19Oct15 JohnD - added logic to where subscription end date is in the same month of start date
                         //START D-3617 09/29/2015 Added by J.Sarion - set usage Start Date to Subscription Start Date if Stop Request Date is earlier than Subscription Start Date
@@ -525,7 +525,7 @@ global class SP_MidMonthStartProrationBatch implements Database.Batchable<sObjec
             }
             
             for (Usage__c usage :usageSet) {
-				usage.Case__c = null;	// Start/End D-4470 08Apr16 JohnD 
+                usage.Case__c = null;   // Start/End D-4470 08Apr16 JohnD
                 usageList.add(usage);
             }
             
@@ -696,7 +696,8 @@ global class SP_MidMonthStartProrationBatch implements Database.Batchable<sObjec
                     usage.StopType__c = 'Expiry';
                 }
                 //END D-3944 11/23/2015 Added by J.Sarion - Set StopType to Expiry for Normal Expiry Cancellation
-                usage.Case__c = null;	// Start/End D-4470 05Apr16 JohnD
+                
+                usage.Case__c = null;   // Start/End D-4470 05Apr16 JohnD
             }
         }
         //END D-3290/D-3291 7/29/2015 Added by Manolo Valena

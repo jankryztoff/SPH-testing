@@ -101,7 +101,7 @@ public class BT_CO_Infoprint_Status_TriggerHandler implements TriggerHandlerInte
     }    
 
     public void afterUpdate(SObject oldSo, SObject so) {
-		//START 24 March 2016 D-4583 Kevin Evasco - Updating the Downloaded__c equals True in after update
+        //START 24 March 2016 D-4583 Kevin Evasco - Updating the Downloaded__c equals True in after update
         //START UD-3872 07-Mar-2016 Added by Raviteja  - Updating the Downloaded__c equals True in after update
         if(trigger.isUpdate){
         BT_CO_Infoprint_Status__c recordInfoprintstatus = (BT_CO_Infoprint_Status__c) so;
@@ -115,7 +115,7 @@ public class BT_CO_Infoprint_Status_TriggerHandler implements TriggerHandlerInte
          }
        }
        //End UD-3872 07-Mar-2016 Added by Raviteja      
-	   //END 24 March 2016 D-4583 Kevin Evasco - Updating the Downloaded__c equals True in after update
+       //END 24 March 2016 D-4583 Kevin Evasco - Updating the Downloaded__c equals True in after update
     }
 
     public void afterDelete(SObject so) {        

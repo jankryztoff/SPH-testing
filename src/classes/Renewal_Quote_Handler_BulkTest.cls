@@ -1,8 +1,14 @@
-@isTest(seeAllData = True)
+@isTest
 public class Renewal_Quote_Handler_BulkTest
 {
-    public static Key_Id__c acctRecType = [Select Id, Name, Id__c, Type__c FROM Key_Id__c WHERE NAME = 'Account_Direct Individual' LIMIT 1];
-    public static Key_Id__c contactRecType = [Select Id, Name, Id__c, Type__c FROM Key_Id__c WHERE NAME = 'Contact_Customer Contact' LIMIT 1];
+    //public static Key_Id__c acctRecType = [Select Id, Name, Id__c, Type__c FROM Key_Id__c WHERE NAME = 'Account_Direct Individual' LIMIT 1];
+    //public static Key_Id__c contactRecType = [Select Id, Name, Id__c, Type__c FROM Key_Id__c WHERE NAME = 'Contact_Customer Contact' LIMIT 1];
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+    }
     
     static testMethod void testOnOrdersPerMethod()
     {
@@ -20,7 +26,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         /*Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];      
@@ -59,7 +65,7 @@ public class Renewal_Quote_Handler_BulkTest
        
         Id account1Id = account1.Id;
         Contact contact1 = new Contact(FirstName = 'SPHFirst', LastName = 'SPHLast', AccountId = account1Id, 
-        RecordTypeId = contactRecType.Id__c, HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
+        RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact'), HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
         insert contact1;
         
         Zuora__Subscription__c subscription1 = new Zuora__Subscription__c(Name = 'BA-S00000001', Zuora__SubscriptionEndDate__c = dateToday, 
@@ -109,8 +115,8 @@ public class Renewal_Quote_Handler_BulkTest
         prdRatePlan.RatePlanType__c = 'Bill Plan';
         prdRatePlan.zqu__EffectiveStartDate__c= date.today();//
         prdRatePlan.zqu__EffectiveEndDate__c= date.today().addDays(30);//
-        //prdRatePlan.RatePlanCode__c = 'CHGPOS';
-        //prdRatePlan.zqu__Deleted__c = false;
+        prdRatePlan.RatePlanCode__c = 'CHGPOS';
+        prdRatePlan.zqu__Deleted__c = false;
         insert prdRatePlan;
                         
         zqu__ProductRatePlanCharge__c prdRatePlanCharge = TestDataFactory.createProductRatePlanCharge(1)[0];
@@ -258,7 +264,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         /*Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];      
@@ -299,7 +305,7 @@ public class Renewal_Quote_Handler_BulkTest
        
         Id account1Id = account1.Id;
         Contact contact1 = new Contact(FirstName = 'SPHFirst', LastName = 'SPHLast', AccountId = account1Id, 
-        RecordTypeId = contactRecType.Id__c, HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
+        RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact'), HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
         insert contact1;
         
         Zuora__Subscription__c subscription1 = new Zuora__Subscription__c(Name = 'BA-S00000001', Zuora__SubscriptionEndDate__c = dateToday, 
@@ -354,8 +360,8 @@ public class Renewal_Quote_Handler_BulkTest
         prdRatePlan.RatePlanType__c = 'Bill Plan';
         prdRatePlan.zqu__EffectiveStartDate__c= date.today();//
         prdRatePlan.zqu__EffectiveEndDate__c= date.today().addDays(30);//
-        //prdRatePlan.RatePlanCode__c = 'CHGPOS';
-        //prdRatePlan.zqu__Deleted__c = false;
+        prdRatePlan.RatePlanCode__c = 'CHGPOS';
+        prdRatePlan.zqu__Deleted__c = false;
         insert prdRatePlan;
                         
         zqu__ProductRatePlanCharge__c prdRatePlanCharge = TestDataFactory.createProductRatePlanCharge(1)[0];
@@ -478,7 +484,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];      
@@ -529,7 +535,7 @@ public class Renewal_Quote_Handler_BulkTest
         contact1.FirstName = 'SPHFirst';
         contact1.LastName = 'SPHLast';
         contact1.AccountId = account1Id;
-        //contact1.RecordTypeId = contactRecType.Id__c;
+        contact1.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
         contact1.HomePhone__c = '321324321434';
         contact1.Recipient_Indicator__c = true;
         contact1.Address__c =addressRec.Id;
@@ -718,7 +724,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];      
@@ -769,7 +775,7 @@ public class Renewal_Quote_Handler_BulkTest
         contact1.FirstName = 'SPHFirst';
         contact1.LastName = 'SPHLast';
         contact1.AccountId = account1Id;
-        //contact1.RecordTypeId = contactRecType.Id__c;
+        contact1.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
         contact1.HomePhone__c = '321324321434';
         contact1.Recipient_Indicator__c = true;
         contact1.Address__c =addressRec.Id;
@@ -958,7 +964,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];      
@@ -1029,7 +1035,7 @@ public class Renewal_Quote_Handler_BulkTest
         contact1.FirstName = 'SPHFirst';
         contact1.LastName = 'SPHLast';
         contact1.AccountId = account1Id;
-        //contact1.RecordTypeId = contactRecType.Id__c;
+        contact1.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
         contact1.HomePhone__c = '321324321434';
         contact1.Recipient_Indicator__c = true;
         contact1.Address__c =addressRec.Id;
@@ -1247,7 +1253,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<String, Set<id>> oliNameToQuoteId = new Map<String, Set<id>>();     
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
        
@@ -1269,7 +1275,7 @@ public class Renewal_Quote_Handler_BulkTest
        
         Id account1Id = account1.Id;
         Contact contact1 = new Contact(FirstName = 'SPHFirst', LastName = 'SPHLast', AccountId = account1Id, 
-        RecordTypeId = contactRecType.Id__c, HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
+        RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact'), HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
         insert contact1;
         
         Zuora__Subscription__c subscription1 = new Zuora__Subscription__c(Name = 'BA-S00000001', Zuora__SubscriptionEndDate__c = dateToday, 
@@ -1447,7 +1453,7 @@ public class Renewal_Quote_Handler_BulkTest
         Map<id, zqu__ProductRatePlanChargeTier__c> prcIdToPrpctMap = new Map<id, zqu__ProductRatePlanChargeTier__c>();
         
         
-        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = acctRecType.Id__c, Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
+        Account account1 = new Account(Name = 'SPHAccountTest', RecordTypeId = ConstantsSLB.getKeyId('Account_Direct Individual'), Status__c = 'Active', Active__c = true, Email__c = 'test@sample.com', SMS_Renewal_Notification__c = true, Mobile__c = '09321234567');
         insert account1;
        
         
@@ -1469,7 +1475,7 @@ public class Renewal_Quote_Handler_BulkTest
        
         Id account1Id = account1.Id;
         Contact contact1 = new Contact(FirstName = 'SPHFirst', LastName = 'SPHLast', AccountId = account1Id, 
-        RecordTypeId = contactRecType.Id__c, HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
+        RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact'), HomePhone__c = '321324321434',Recipient_Indicator__c = true);//, Address__c =addressRec.Id);
         insert contact1;
         
         Zuora__Subscription__c subscription1 = new Zuora__Subscription__c(Name = 'BA-S00000001', Zuora__SubscriptionEndDate__c = dateToday, 

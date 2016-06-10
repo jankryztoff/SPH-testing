@@ -222,9 +222,9 @@ global class BatchCOADeliveryCharge implements Database.Batchable<sObject>, Data
         if(!lstLCdelSubs.isEmpty())
             lstAmendReqs.addAll(DeliveryChargeHelper.createCODCAmendmentReqs(lstLCdelSubs,deliveryRatePlan_Landed.Name,deliveryRatePlan_Apartment.zqu__ZuoraId__c));        
            
-		//START D-3791 LISEN 21-Oct-2015 - Fix Log BatchCode
+        //START D-3791 LISEN 21-Oct-2015 - Fix Log BatchCode
         Logger logger = new Logger(BatchCOADeliveryCharge.class.getName(),'SP050'); //START END D-1011 MD-28 Dags 18/06/15        
-		//END D-3791 LISEN 21-Oct-2015 - Fix Log BatchCode
+        //END D-3791 LISEN 21-Oct-2015 - Fix Log BatchCode
         if(!lstAmendReqs.isEmpty()){    
             Zuora.zApi zuorApi = new Zuora.zApi();
             //START D-3268 Modified By C.I.Salas - Test Coverage
@@ -238,15 +238,15 @@ global class BatchCOADeliveryCharge implements Database.Batchable<sObject>, Data
             {
                 Zuora.zApi.AmendResult amendResult = zuorApi.zamend(new List<Zuora.zApi.AmendRequest>{amendRequest});
                 //START D-3791 LISEN 21-Oct-2015 - Added filter to prevent log when Zuora sync is successful
-				//START D-3854 11/2/2015 Added By C. Lin - Add brackets to place logger.log inside the if statement
+                //START D-3854 11/2/2015 Added By C. Lin - Add brackets to place logger.log inside the if statement
                 if(!amendResult.success && amendResult.errors != null){
                     System.debug(Logginglevel.ERROR, System.Label.ERR_CODC_AMEND + ' : ' + amendResult);
-					logger.log(false,'' + amendResult); //START END D-1011 MD-28 Dags 18/06/15
-				}
-				//END D-3854 11/2/2015 Added By C. Lin
+                    logger.log(false,'' + amendResult); //START END D-1011 MD-28 Dags 18/06/15
+                }
+                //END D-3854 11/2/2015 Added By C. Lin
                 //END D-3791 LISEN 21-Oct-2015 - Added filter to prevent log when Zuora sync is successful
             }
-			Logger.save(); //START END D-1011 MD-28 Dags 18/06/15
+            Logger.save(); //START END D-1011 MD-28 Dags 18/06/15
         }
     }
     

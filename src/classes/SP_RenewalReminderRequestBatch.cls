@@ -37,6 +37,7 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
     String batchMode;
     String batchCodeFinal;
     Boolean isAdhoc = false;
+    
     Boolean isApexJobSuccessful = true;     
     
     String evergreen = GlobalVariableClass.EVERGREEN;
@@ -44,8 +45,10 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
     String both = GlobalVariableClass.REFERENCE_BOTH;
     String email = GlobalVariableClass.REFERENCE_EMAIL;
     String active = GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE;
+    String futureActive = 'Future Active'; //START END PD-0204 17May2016 Added By C. Lin - Use Status Formula in getting Subscriptions
     String publication = GlobalVariableClass.SUBSCRIPTION_TYPE_PUBLICATION;      
     
+    //Normal Run via Control M/ this can also be adhoc if you input a different date in batchRunDate
     global SP_RenewalReminderRequestBatch(String letterType, Integer daysBeforeExpiration, Date batchRunDate, Integer batchCount, String sessionId, String batchCodeParam)
     {
         this.letterType = letterType;   
@@ -64,6 +67,7 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         {
             this.publicationType = 'N';
         }
+
         this.batchCount = batchCount;
         this.sessionId = sessionId;
         
@@ -73,10 +77,11 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
             refDate = System.today();
         }
         
-        if(batchRunDate!= System.today()){
+        if(batchRunDate != System.today()){
             isAdhoc = true;
+            
         }
-        
+
         //START END PD-0146 Gdelrosario : added variable 
         adhocBatchRunDate = batchRunDate;
         //END PD-0146 Gdelrosario : added variable 
@@ -84,9 +89,12 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         batchCodeFinal = batchCodeParam;
     }
     
+    //Recovery via Subscription ID bypasses the criteria
     global SP_RenewalReminderRequestBatch(String letterType, Integer daysBeforeExpiration, Set<Id> subsIds, Date batchRunDate, Integer batchCount, String sessionId, String batchCodeParam)
     {
+
         this.letterType = letterType;   
+
         if(daysBeforeExpiration == Null){       
             this.expirationDate = batchRunDate.addDays(0);
         }else{
@@ -101,6 +109,7 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         {
             this.publicationType = 'N';
         }
+
         this.batchCount = batchCount;
         this.sessionId = sessionId;
         batchIds.addAll(subsIds);
@@ -109,16 +118,17 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         batchMode = 'Y';
         batchCodeFinal = batchCodeParam;
     }
+
     
     global Database.QueryLocator start(Database.BatchableContext bc)
     {
-		//START PD-0210 18May2016 Added By C. Lin - Exclude old Subscription With Renewal Case
+        //START PD-0210 18May2016 Added By C. Lin - Exclude old Subscription With Renewal Case
         List<Zuora__Subscription__c> subsList = new List<Zuora__Subscription__c>();
         List<Case> caseList = new List<Case>();
         Set<Id> subIdSet = new Set<Id>();
         Set<Id> subIdWithRenewalCaseSet = new Set<Id>();
         //END PD-0210 18May2016 Added By C. Lin
-		
+        
         if(isAdhoc){
             BatchCode = batchCodeFinal;
         }else {      
@@ -132,47 +142,46 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         String query = '';
         
             if(batchMode == 'N'){ //START END PD-0146 Gdelrosario : change the condition to batchMode instead of adhoc
-            //START D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
-            if(BatchCode == 'SP022'){
-                 EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',true));
-                 subProdType = 'Magazine';   
-                 //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
-				 //flagStr = 'AND (is1stPDFGenerated__c = FALSE ';
-				 //flagStr += 'OR is1stNotifEmailSent__c = FALSE)';
-				 flagStr = 'AND ((is1stPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
-				 flagStr += 'OR (is1stNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
-				 //END PD-0147 13May2016 Added By C. Lin
-            }else if(BatchCode == 'SP023'){
-                 EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',false));
-                 subProdType = 'Magazine';
-                 //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
-				 //flagStr = 'AND (is2ndPDFGenerated__c = FALSE ';
-				 //flagStr += 'OR is2ndNotifEmailSent__c = FALSE)';
-				 flagStr = 'AND ((is2ndPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
-				 flagStr += 'OR (is2ndNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
-				 //END PD-0147 13May2016 Added By C. Lin
-            }else if(BatchCode == 'SP024'){
-                 EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',true));
-                 subProdType = 'Newspaper';   
-                 //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
-				 //flagStr = 'AND (is1stPDFGenerated__c = FALSE ';
-				 //flagStr += 'OR is1stNotifEmailSent__c = FALSE)';
-				 flagStr = 'AND ((is1stPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
-				 flagStr += 'OR (is1stNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
-				 //END PD-0147 13May2016 Added By C. Lin
-            }else if(BatchCode == 'SP025'){
-                 EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',false));
-                 subProdType = 'Newspaper';
-                 //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
-				 //flagStr = 'AND (is2ndPDFGenerated__c = FALSE ';
-				 //flagStr += 'OR is2ndNotifEmailSent__c = FALSE)';
-				 flagStr = 'AND ((is2ndPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
-				 flagStr += 'OR (is2ndNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
-				 //END PD-0147 13May2016 Added By C. Lin
+                //START D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
+                if(BatchCode == 'SP022'){
+                     EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',true));
+                     subProdType = 'Magazine';   
+                     //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
+                     //flagStr = 'AND (is1stPDFGenerated__c = FALSE ';
+                     //flagStr += 'OR is1stNotifEmailSent__c = FALSE)';
+                     flagStr = 'AND ((is1stPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
+                     flagStr += 'OR (is1stNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
+                     //END PD-0147 13May2016 Added By C. Lin
+                }else if(BatchCode == 'SP023'){
+                     EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',false));
+                     subProdType = 'Magazine';
+                     //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
+                     //flagStr = 'AND (is2ndPDFGenerated__c = FALSE ';
+                     //flagStr += 'OR is2ndNotifEmailSent__c = FALSE)';
+                     flagStr = 'AND ((is2ndPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
+                     flagStr += 'OR (is2ndNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
+                     //END PD-0147 13May2016 Added By C. Lin
+                }else if(BatchCode == 'SP024'){
+                     EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',true));
+                     subProdType = 'Newspaper';   
+                     //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
+                     //flagStr = 'AND (is1stPDFGenerated__c = FALSE ';
+                     //flagStr += 'OR is1stNotifEmailSent__c = FALSE)';
+                     flagStr = 'AND ((is1stPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
+                     flagStr += 'OR (is1stNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
+                     //END PD-0147 13May2016 Added By C. Lin
+                }else if(BatchCode == 'SP025'){
+                     EndDate   = refDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',false));
+                     subProdType = 'Newspaper';
+                     //START PD-0147 13May2016 Added By C. Lin - Prevent Duplicate
+                     //flagStr = 'AND (is2ndPDFGenerated__c = FALSE ';
+                     //flagStr += 'OR is2ndNotifEmailSent__c = FALSE)';
+                     flagStr = 'AND ((is2ndPDFGenerated__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:hardcopy, :both)) ';
+                     flagStr += 'OR (is2ndNotifEmailSent__c = FALSE AND Zuora__Account__r.Renewal_Letter__c IN (:email, :both)))';
+                     //END PD-0147 13May2016 Added By C. Lin
+                }
+                //END D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
             }
-            //END D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
-        }
-        
         
         query += 'SELECT Id, Order_Line_Item_Number_1__c,';
         query += 'is1stPDFGenerated__c, '; 
@@ -191,20 +200,20 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         if(batchMode == 'N'){ 
             query += 'WHERE Zuora__SubscriptionEndDate__c = :EndDate ';
             query += 'AND Zuora__TermSettingType__c !=: evergreen ';
-			//START PD-0210 18May2016 Added By C. Lin - Remove futureActive
+            //START PD-0210 18May2016 Added By C. Lin - Remove futureActive
             query += 'AND Status_Formula__c =: active '; //START END PD-0204 17May2016 Added By C. Lin - Use Status Formula in getting Subscriptions
             //END PD-0210 18May2016 Added By C. Lin
-			//START PD-0120 23May2016 Added By C. Lin - Revert back to consider Supressed_Renewal_and_Reminder_Letter_1__c
+            //START PD-0120 23May2016 Added By C. Lin - Revert back to consider Supressed_Renewal_and_Reminder_Letter_1__c
             query += 'AND Zuora__AutoRenew__c = FALSE AND Supressed_Renewal_and_Reminder_Letter_1__c = FALSE '; //START-END : D-4135 12/18/2015
-			//END PD-0120 23May2016 Added By C. Lin
+            //END PD-0120 23May2016 Added By C. Lin
             query += 'AND (Zuora__Account__r.Renewal_Letter__c =: hardcopy ';
             query += 'OR Zuora__Account__r.Renewal_Letter__c =: email ';
             query += 'OR Zuora__Account__r.Renewal_Letter__c =: both) ';
             query += 'AND Main_Package_Product_Sub_Type_Mapping__c =: subProdType ';
             query += flagStr;
             query += 'AND Subscription_Type_1__c = :publication';
-			
-			//START PD-0210 18May2016 Added By C. Lin - Exclude old Subscription With Renewal Case
+            
+            //START PD-0210 18May2016 Added By C. Lin - Exclude old Subscription With Renewal Case
             subsList = Database.query(query);
             
             if(!subsList.isEmpty()){
@@ -235,11 +244,14 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
         
         System.debug('Query String: ' + query);
         return Database.getQueryLocator(query);
+        
     }
     
     global void execute(Database.BatchableContext BC, List<Zuora__Subscription__c> scope)
     {   
-         
+
+        System.debug('execute start =========================================================================>');
+        System.debug('scope :' + scope);
         Logger logger;
         if(!Test.isRunningTest()) {  
             logger = new Logger (SP_RenewalReminderRequestBatch.class.getName(), BatchCode, BC.getJobID());
@@ -266,7 +278,9 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
             
             for(Zuora__Subscription__c batchObject : scope)
             {
-                subscriptionIdSet.add(batchObject.Id);      
+                
+                subscriptionIdSet.add(batchObject.Id); 
+
                 productCodeSet.add(batchObject.Product_Code__c);
                 packageIdSet.add(batchObject.Main_Package_1__c);
                 billingAccountIdSet.add(batchObject.Zuora__CustomerAccount__c);
@@ -403,23 +417,23 @@ global class SP_RenewalReminderRequestBatch implements Database.Batchable<sObjec
                     letterPrintRequest.Status_Email__c = 'Suppressed';
                 else if(batchObject.Zuora__Account__r.Renewal_Letter__c == email)
                     letterPrintRequest.Status__c = 'Suppressed';    
-				
-				//START PD-0147 12May2016 Added By C. Lin - Bypass is1stPDFGenerated__c, is2ndPDFGenerated__c for AdHoc SubId
-                if(batchMode == 'N'){
-					if(BatchCode == 'SP022' || BatchCode == 'SP024'){
-						if(batchObject.is1stPDFGenerated__c)
-							letterPrintRequest.Status__c = 'Suppressed - PDF Generated';
-						if(batchObject.is1stNotifEmailSent__c)                                  
-							letterPrintRequest.Status_Email__c = 'Suppressed - Email Sent';
-					}else if(BatchCode == 'SP023' || BatchCode == 'SP025'){
-						if(batchObject.is2ndPDFGenerated__c)
-							letterPrintRequest.Status__c = 'Suppressed - PDF Generated';
-						if(batchObject.is2ndNotifEmailSent__c)                                  
-							letterPrintRequest.Status_Email__c = 'Suppressed - Email Sent';
-					}           
-				}
-                //END PD-0147 12May2016 Added By C. Lin
                 
+                //START PD-0147 12May2016 Added By C. Lin - Bypass is1stPDFGenerated__c, is2ndPDFGenerated__c for AdHoc SubId
+                if(batchMode == 'N'){
+                    if(BatchCode == 'SP022' || BatchCode == 'SP024'){
+                        if(batchObject.is1stPDFGenerated__c)
+                            letterPrintRequest.Status__c = 'Suppressed - PDF Generated';
+                        if(batchObject.is1stNotifEmailSent__c)                                  
+                            letterPrintRequest.Status_Email__c = 'Suppressed - Email Sent';
+                    }else if(BatchCode == 'SP023' || BatchCode == 'SP025'){
+                        if(batchObject.is2ndPDFGenerated__c)
+                            letterPrintRequest.Status__c = 'Suppressed - PDF Generated';
+                        if(batchObject.is2ndNotifEmailSent__c)                                  
+                            letterPrintRequest.Status_Email__c = 'Suppressed - Email Sent';
+                    }      
+                }
+                //END PD-0147 12May2016 Added By C. Lin
+
                 letterPrintRequests.add(letterPrintRequest);   
             }
             if(letterPrintRequests.size() > 0)

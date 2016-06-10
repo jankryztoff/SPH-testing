@@ -6,5 +6,10 @@
         <minorNumber>80</minorNumber>
         <namespace>Zuora</namespace>
     </packageVersions>
+    <packageVersions>
+        <majorNumber>6</majorNumber>
+        <minorNumber>1</minorNumber>
+        <namespace>zqu</namespace>
+    </packageVersions>
     <status>Active</status>
 </ApexClass>

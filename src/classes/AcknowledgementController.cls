@@ -160,7 +160,7 @@ public class AcknowledgementController {
     public Map<Id, Map<String, String>> recIdRecAddressMap {get; set;} // START-END : UD-2286 8/14/2015 Alyana Navarro
     public String firstRecipient {get; set;}
     // END : UD-2178 8/7/2015 Alyana Navarro
-    public void generateAcknowledgementController() {   
+    public void generateAcknowledgementController() { 
         //START UD-2328 08/26/15 RReyes
     //START D-3599 10/06/2015 added by Jason A.
         DateTime dateFrom;
@@ -310,9 +310,9 @@ public class AcknowledgementController {
             list<Zuora__Subscription__c> newSubscriptionList = new list<Zuora__Subscription__c>();                            
             for(Zuora__Subscription__c subscription : SubscriptionList){
             // START : UD-2020 8/13/2015 Alyana Navarro
-				//START PD-0186 24May2016 Added By C. Lin - Update condition to exclude subscriptions with deleted status
+                //START PD-0186 24May2016 Added By C. Lin - Update condition to exclude subscriptions with deleted status
                 if(subscription.Zuora__SubscriptionEndDate__c > subscription.Zuora__SubscriptionStartDate__c || (subscription.Zuora__TermSettingType__c == 'EVERGREEN' && subscription.Zuora__SubscriptionEndDate__c == null)){ 
-				//END PD-0186 24May2016 Added By C. Lin
+                //END PD-0186 24May2016 Added By C. Lin
             //START: D-3807 10/22 added by Jason A.
                     if(subscription.Zuora__TermSettingType__c == 'EVERGREEN'){
                         subscriptionIdSet.add(subscription.id);
@@ -639,18 +639,18 @@ public class AcknowledgementController {
                                         intSubCharges += Subscription.Subscription_Charge__c;
                                     }
                                 } else { 
-                                for (Zuora__Subscription__c zuoraSubs: mapOrderLineItem.get(Subscription.Order_Line_Item_Number_1__c)){
+                                    for (Zuora__Subscription__c zuoraSubs: mapOrderLineItem.get(Subscription.Order_Line_Item_Number_1__c)){
                                         if (zuoraSubs.Main_Package_1__r.Package_Type__c != GlobalVariableClass.PACKAGETYPE_ADDON) {
-                                    if (zuoraSubs.Contact__r.Address__r.RecordTypeId == ConstantsSLB.getKeyId('Address_Airline') && zuoraSubs.Main_Package_1__r.GST_Exclusive__c == true) {
-                                        Other__c gstSetting = Other__c.getInstance('GST');
-                                        
-                                        intSubCharges += zuoraSubs.Subscription_Charge__c + (zuoraSubs.Subscription_Charge__c * (Decimal.ValueOf(gstSetting.Value__c) / 100));
-                                    } else {
-                                        intSubCharges += zuoraSubs.Subscription_Charge__c;
+                                            if (zuoraSubs.Contact__r.Address__r.RecordTypeId == ConstantsSLB.getKeyId('Address_Airline') && zuoraSubs.Main_Package_1__r.GST_Exclusive__c == true) {
+                                                Other__c gstSetting = Other__c.getInstance('GST');
+                                                
+                                                intSubCharges += zuoraSubs.Subscription_Charge__c + (zuoraSubs.Subscription_Charge__c * (Decimal.ValueOf(gstSetting.Value__c) / 100));
+                                            } else {
+                                                intSubCharges += zuoraSubs.Subscription_Charge__c;
+                                            }
+                                        }
                                     }
-                                }
-                                    }
-                                subsElement.subChrg += String.ValueOf(intSubCharges);
+                                    subsElement.subChrg += String.ValueOf(intSubCharges);
                                 }
                                 //End UD-3758 VPernicia 2/2/16: Add-On
                                 //End UD-2882 VPernicia 11/24/15: GST exclusive for Airline

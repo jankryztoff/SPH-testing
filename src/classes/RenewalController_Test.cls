@@ -6,9 +6,15 @@
 @Version <1.0>
 @reference <none>
 */
-@isTest (SeeAllData = true)
+@isTest
 private class RenewalController_Test
 {
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+    }  
+
 
     static List<Zuora__Subscription__c> zSubs = null;
     

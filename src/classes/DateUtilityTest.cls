@@ -56,8 +56,13 @@ public class DateUtilityTest {
             System.assertEquals(true, DateUtility.isWorkingDay('Monday'));
             System.assertEquals(false, DateUtility.isWorkingDay('Saturday'));
             
-            System.assertEquals('09/27/2014', DateUtility.convertDateToString(Date.newInstance(2014,09,27)));
-            System.assertEquals('11/09/2014', DateUtility.convertDateToString(Date.newInstance(2014,11,09)));
+            //Nitin Khanna : I-0439 - PD-0522 : changing the date format to be dd/mm/yyyy for AGD description : start
+            //System.assertEquals('09/27/2014', DateUtility.convertDateToString(Date.newInstance(2014,09,27)));
+            //System.assertEquals('11/09/2014', DateUtility.convertDateToString(Date.newInstance(2014,11,09)));  
+              System.assertEquals('27/09/2014', DateUtility.convertDateToString(Date.newInstance(2014,09,27)));  
+              System.assertEquals('09/11/2014', DateUtility.convertDateToString(Date.newInstance(2014,11,09)));
+            //Nitin Khanna : I-0439 - PD-0522 : changing the date format to be dd/mm/yyyy for AGD description : end
+            
             
             System.assertEquals(DateUtility.dayInWeekEEE(Date.newInstance(2015,06,25)), 'Wed');
             System.assertEquals(DateUtility.dayInWeekEEEE(Date.newInstance(2015,06,25)), 'Wednesday');

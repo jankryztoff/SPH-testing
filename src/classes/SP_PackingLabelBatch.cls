@@ -18,8 +18,7 @@ global class SP_PackingLabelBatch implements Database.Batchable<sObject>, Databa
     global Boolean isSuccess = True; //START/END D-4583 24-Mar-2016 Added by Raviteja - variable for job status 
     global Date ovdFromDate = Date.today();   
     global Map<Id,Set<Date>> mapPubIssueDate = New Map<Id,Set<Date>>();            
-
-	global Set<id> subscriptionIDs = new Set<Id>(); // START-END I-0269 - Raviteja - 23May2016 - implemeting the logic for Subscriptions adhoc run
+    global Set<id> subscriptionIDs = new Set<Id>(); // START-END I-0269 - Raviteja - 23May2016 - implemeting the logic for Subscriptions adhoc run
     
     global SP_PackingLabelBatch(){}
     
@@ -39,13 +38,14 @@ global class SP_PackingLabelBatch implements Database.Batchable<sObject>, Databa
       overrideFlg = true;
     }
    
-	// START I-0269 - Raviteja - 23May2016 - implemeting the logic for Subscriptions adhoc run
+    // START I-0269 - Raviteja - 23May2016 - implemeting the logic for Subscriptions adhoc run
     global SP_PackingLabelBatch(Set<id> subIDs, Date fromDate){        
         subscriptionIDs.addAll(subIDs);
         overrideFlg = true;
         ovdFromDate = fromDate;    
     }
     // END I-0269 - Raviteja - 23May2016 
+    
     global Database.QueryLocator start(Database.BatchableContext BC) {             
         
         String query = 'SELECT Id, Name, qty__c, Product_Code__c, Vendor_1__c, Vendor_1__r.Vendor_Code__c, Vendor_1__r.Vendor_Group__c, ';
@@ -91,8 +91,8 @@ global class SP_PackingLabelBatch implements Database.Batchable<sObject>, Databa
         query       += ' Delivered_By_1__c, Sponsor_1__c, Other_PaymentMethod_1__c, Ph_d__c, Ph_e__c, Frequency_1__c,Zuora__Account__C ';       
         query       += ' FROM Zuora__Subscription__c WHERE Subscription_Type__c  = \'Publication\' and Delivered_By_1__c IN (\'Mailing Agent\') ';        
         query       += ' AND (Zuora__SubscriptionEndDate__c > :ovdFromDate OR Zuora__SubscriptionEndDate__c = NULL) ';                       
-        query       += ' AND Vendor_1__c != NULL';  
-		
+        query       += ' AND Vendor_1__c != NULL';     
+        
         // START I-0269 - Raviteja - 23May2016 - implemeting the logic for Subscriptions adhoc run
         if(!subscriptionIDs.isEmpty()){
             query       += ' AND Id IN :subscriptionIDs ';
@@ -476,10 +476,10 @@ global class SP_PackingLabelBatch implements Database.Batchable<sObject>, Databa
         {
             List<Database.SaveResult > saveResults = Database.insert(lstPLBData, false); 
             for(Database.SaveResult result : saveResults) {
-                // START I-0269 - PD-0104  - Raviteja - 09May2016 - Log the failed reasons
+                 // START I-0269 - PD-0104 - Raviteja - 09May2016 - Log the failed reasons
                 if(!result.isSuccess()){
-                     System.debug(Logginglevel.WARN, 'Insert Packing Label Batch Failed: ' + result);
-                     List<Database.Error> err = result.getErrors();
+                        System.debug(Logginglevel.WARN, 'Insert Packing Label Batch Failed: ' + result);                        
+                        List<Database.Error> err = result.getErrors();
                         Logger logger = new Logger('SP_PackingLabelBatch','SP060',BC.getJobId());                
                         logger.log(False,err[0].getMessage(),result.getId()); 
                         logger.save();
@@ -575,7 +575,7 @@ global class SP_PackingLabelBatch implements Database.Batchable<sObject>, Databa
                 //plbRec.Vendor_Group__c = coaRec.vendorGroup;   
                  plbRec.Vendor_Group__c = (coaRec.vendorGroup == null) ? 'V' : coaRec.vendorGroup; 
                 // END I-0269 - Raviteja - 23May2016 - Assigning Vendor Group as 'V'
-                                
+                
                 plbRec.Postal_Zone__c = coaRec.addressAssignmentRecord.Address__r.Postal_Sector__c;
                 
                 plbRec.Airline_City_Code__c = coaRec.addressAssignmentRecord.Address__r.City__r.Name;

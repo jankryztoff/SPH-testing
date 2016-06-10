@@ -55,7 +55,7 @@ public class SP_CreditBalanceAdjLessThanZeroSATest {
                    }
         }
     
-  static testmethod void test2() {
+	static testmethod void test2() {
            
                    try{
                    Test.setMock(WebServiceMock.class, new zLoginMock());

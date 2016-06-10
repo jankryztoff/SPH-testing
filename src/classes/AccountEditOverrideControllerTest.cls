@@ -1,6 +1,6 @@
 @isTest(seeAllData = TRUE)
 public class AccountEditOverrideControllerTest {
-    /** test jkrc
+    /**
      * Class Name: ContactNewOverrideControllerTest
      * @author: Jeffrey B. Teves
      * Date: 

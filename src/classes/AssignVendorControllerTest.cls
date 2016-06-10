@@ -7,8 +7,16 @@
      * 
      */
 
-@isTest(seeAllData = TRUE)
+@isTest
 public class AssignVendorControllerTest {
+ 
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+    }
  
     static testMethod void testAssignVendorController(){
 

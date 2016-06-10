@@ -58,9 +58,9 @@ global class BT_AB_SMS104DX_SMSBulkOutboundFile implements Database.Batchable<sO
         List<SMS_Outbound__c> smsFailedRecords = new List<SMS_Outbound__c>();
         List<SMS_Outbound__c> smsProcessedRecords = new List<SMS_Outbound__c>();
         
-		//PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : Start
+        //PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : Start
         //String zValidationCode = '0';
-		//PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : End
+        //PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : End
         
         //START 02 February 2016 D-4378 Kevin Evasco - Remove invalid characters 
         String invalidCharacterSet = ConstantsSLB.getKeyId('SMS104DX Invalid characters');
@@ -70,9 +70,10 @@ global class BT_AB_SMS104DX_SMSBulkOutboundFile implements Database.Batchable<sO
         // Validate SMS records ...
         for (sObject record : scope)
         {
-			//PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : Start
-			String zValidationCode = '0';
-			//PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : End
+            //PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : Start
+            String zValidationCode = '0';
+            //PD-0123 - 09May2016 - Nitin Khanna : SMS delivery of stale messages : End
+            
             SMS_Outbound__c sms_record = (SMS_Outbound__c) record;
             if (sms_record != null) {
                 

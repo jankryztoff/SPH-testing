@@ -1,5 +1,11 @@
-@isTest(seeAllData = true)
+@isTest
 private class RefundComputationTest2{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+    }
 
     static testmethod void unitTest(){
     
@@ -12,7 +18,7 @@ private class RefundComputationTest2{
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standardOP43@test.com'
         );
         
         System.runAs(u){    
@@ -182,7 +188,7 @@ private class RefundComputationTest2{
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standardJK72@test.com'
         );
         
         System.runAs(u){    
@@ -364,7 +370,7 @@ private class RefundComputationTest2{
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standardYU12@test.com'
         );
         
         System.runAs(u){    

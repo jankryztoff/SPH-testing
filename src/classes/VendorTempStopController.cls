@@ -70,7 +70,7 @@ public class VendorTempStopController {
     Map<Id,SubscriptionWrapper> pubDates = new Map<Id,SubscriptionWrapper>();
     //End: UD-1191/1192 05/15/2015 James
     Id parentCaseId;//START/END UD-3293 11/25/15 RReyes 
-	//START PD-0001 03May2016 Added By C. Lin - Bypass Migrated Data for Overlapping Validation
+    //START PD-0001 03May2016 Added By C. Lin - Bypass Migrated Data for Overlapping Validation
     Map<Id, Vendor_Temp_Stop__c> vtsIdToVtsMap = new Map<Id, Vendor_Temp_Stop__c>();
     //END PD-0001 03May2016 Added By C. Lin
     // ------------  Subscription Wrapper  ------------ //
@@ -297,10 +297,11 @@ public class VendorTempStopController {
                             if((vUpd.Temp_Stop__r.Temp_Stop_Status__c == globalvariableclass.TS_STATUS_ONGOING || vUpd.Temp_Stop__r.Temp_Stop_Status__c == globalvariableclass.TS_STATUS_NOTSTARTED) ) {
                                 vUpd.Temp_Stop__r.Pop_Start__c = subToPubEarliestMap.get(vUpd.Subscription_Vendor__r.Id);
                                 vToUpdate.add(vUpd);
-								
-								//START PD-0001 03May2016 Added By C. Lin - Bypass Migrated Data for Overlapping Validation
+                                
+                                //START PD-0001 03May2016 Added By C. Lin - Bypass Migrated Data for Overlapping Validation
                                 vtsIdToVtsMap.put(vUpd.Id, vUpd);
                                 //END PD-0001 03May2016 Added By C. Lin
+                                
                             }  
                     }
                         

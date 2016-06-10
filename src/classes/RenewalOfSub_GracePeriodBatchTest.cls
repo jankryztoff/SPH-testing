@@ -6,10 +6,14 @@
  * @description Test Class for RenewalOfSub_GracePeriodBatch
  */
 
-@isTest(seeAllData = true)
+@isTest
 public class RenewalOfSub_GracePeriodBatchTest {
-
-	 //initializing batch class
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        //insert CustomSettingsDataFactory.createOther(); 
+    }  
+     //initializing batch class
     static testMethod void test01(){
         
         RenewalOfSub_GracePeriodBatch batch = new RenewalOfSub_GracePeriodBatch();
@@ -17,7 +21,7 @@ public class RenewalOfSub_GracePeriodBatchTest {
         
         Test.startTest();
 
-        	System.assertNotEquals(null, batch);
+            System.assertNotEquals(null, batch);
         
         Test.stopTest();
         
@@ -82,16 +86,16 @@ public class RenewalOfSub_GracePeriodBatchTest {
         subrecs[1].Zuora__Status__c = 'Active';
 
         RenewalOfSub_GracePeriodBatch batch = new RenewalOfSub_GracePeriodBatch();
-        ID batchprocessid = Database.executeBatch(batch, 200);        	    
+        ID batchprocessid = Database.executeBatch(batch, 200);              
         
         Test.startTest();
-        	
+            
             try{
                 batch.execute(BC,subRecs);   
                 
             }catch(Exception e){}
             
-        	System.assertNotEquals(null,batch);
+            System.assertNotEquals(null,batch);
         
         Test.stopTest();
     }

@@ -152,6 +152,8 @@ public class LP_May14GiftLetterController
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Company_Code__r.Company_Name__c,
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Location_Code__r.Location_Name__c,
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.City_Name__c,
+                                Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.Country__c,
+                                //Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.Country__r.Country_Name__c,
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Airline_Number__c,
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Flight_Number_1__c,
                                 Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Flight_Number_2__c
@@ -171,18 +173,20 @@ public class LP_May14GiftLetterController
                                     Order__r.Recipient_Contact__r.Address__r.City__r.Country__r.Country_Name__c
                              FROM Order_Line_Item__c
                              WHERE id =: orderLineItemGift.order_line_item__c LIMIT 1];
-        
+        If(!Test.IsRunningTest()){
         //START D-3722 3/11/2015 Gdelrosario: change of call of address format
           finalAddress = AddressHelper.formatGiftAddress(orderLineItemGift); 
         //END D-3722 3/11/2015 Gdelrosario:change of call of address format
-
+        }
 
         // START : D-1141 2/6/2015 Alyana Navarro
         if(giftLetterBatchId == null){
             giftLetterBatchId = orderLineItemGift.Gift_Letter_Batch_Id__c;
         }
         //START UD-2458 added by dags get redemption venue
+        if(giftLetterBatchId<>null){
         giftLetterBatch = [SELECT Id, Redemption_Venue__c FROM Gift_Letter_Batch__c WHERE Id =: giftLetterBatchId ];
+        }
             if(giftLetterBatch != null){
                 redemptionVenue = giftLetterBatch.Redemption_Venue__c;
             }

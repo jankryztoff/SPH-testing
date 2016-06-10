@@ -95,7 +95,7 @@ public class CreditNoteController{
             
             
             //Query Credit Note Item
-			//Start UD-2549 18-Mar-2016 Added By S.Puli - requirement for credit note CR
+            //Start UD-2549 18-Mar-2016 Added By S.Puli - requirement for credit note CR
             creditNoteItemList = [SELECT Id,Amt_After_Tax__c,Name,Amt_Before_Tax__c,Credit_Note__c,Invoice__c,Invoice_Date__c,Tax_Amt__c,Tax_Exempt_Amt__c,
                                     Tax_Rate__c,Invoice__r.Name, Invoice__r.ARMS_Invoice_ID__c 
                                     FROM Credit_Note_Item__c 
@@ -173,14 +173,14 @@ public class CreditNoteController{
             for(Credit_Note_Item__c cni : creditNoteItemList){
                 
                 creditNoteWrapper = new CreditNoteWrapper();
-                //creditNoteWrapper.invoiceId = null;                            
-				//Start UD-2549 18-Mar-2016 Added By S.Puli - requirement for credit note CR
+                //creditNoteWrapper.invoiceId = null; 
+                //Start UD-2549 18-Mar-2016 Added By S.Puli - requirement for credit note CR
                 if(cni.Invoice__r.ARMS_Invoice_ID__c <> null){
-					creditNoteWrapper.invoiceName = cni.Invoice__r.ARMS_Invoice_ID__c;
-				}else{
-					creditNoteWrapper.invoiceName = cni.Invoice__r.Name;
-				}
-				//End UD-2549 18-Mar-2016 Added By S.Puli
+                    creditNoteWrapper.invoiceName = cni.Invoice__r.ARMS_Invoice_ID__c;
+                }else{
+                    creditNoteWrapper.invoiceName = cni.Invoice__r.Name;
+                }
+                //End UD-2549 18-Mar-2016 Added By S.Puli
                 creditNoteWrapper.invoiceDate = cni.Invoice_Date__c;
                 //creditNoteWrapper.publication = creditNote.Publication__c;
                 creditNoteWrapper.credGSTAmount = cni.Tax_Amt__c;//Decimal.valueOf(cni.Tax_Amt__c);

@@ -678,6 +678,7 @@ global with sharing class NewSubscriptionService {
             }
             catch(Exception e)
             {          
+                System.debug('problem' + e.getMessage());        
                 response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
                 response.error_code = 'EXES0014';
                 response.error_message += OnlineExceptions.getErrorMessage('EXES0014');
@@ -1210,8 +1211,10 @@ global with sharing class NewSubscriptionService {
                 asia1Subscription.Asia1__c = asia1.Id;
                 asia1Subscription.Order_Line_Item__c = orderLineItemIdElem; 
                 //START 06022016 PD-0250 Topher Camilon - Asia1 Subscription Activation
-                //asia1Subscription.Status__c = GlobalVariableClass.ASIA1_SUBSCRIPTION_STATUS_DISABLED;                               
-                asia1Subscription.Status__c = GlobalVariableClass.ASIA1_SUBSCRIPITON_STATUS_ENABLED;
+                //START 06072016 PD-0249 Topher Camilon - Asia1 No Service Flag Disabled
+                asia1Subscription.Status__c = GlobalVariableClass.ASIA1_SUBSCRIPTION_STATUS_DISABLED;     
+                //END 06072016 PD-0249 Topher Camilon - Asia1 No Service Flag Disabled                          
+                //asia1Subscription.Status__c = GlobalVariableClass.ASIA1_SUBSCRIPITON_STATUS_ENABLED;
                 //END 06022016 PD-0250 Topher Camilon - Asia1 Subscription Activation
                 asia1SubscriptionList.add(asia1Subscription);
             }
@@ -1356,6 +1359,8 @@ global with sharing class NewSubscriptionService {
         //End Added by FrancisBenzon : Added isNewspaper and isMagazine on query
         for(Package_Item__c packageItem : packageItemList)
         {
+        system.debug('>>>>>CHA packageItem.Package__r.Billing_Type__c  ' + packageItem.Package__r.Billing_Type__c );
+system.debug('>>>>>CHA packageItem.Billing_Type__c ' + packageItem.Billing_Type__c);
             if(packageItem.Package__r.Billing_Type__c == packageItem.Billing_Type__c)
             {
                 List<Package_Item__c> packageItemTempList = package_packageItemMap.get(packageItem.Package__r.Id);
@@ -1364,7 +1369,9 @@ global with sharing class NewSubscriptionService {
                     packageItemTempList = new List<Package_Item__c>();
                 }
                 packageItemTempList.add(packageItem);
-                
+                system.debug('>>>>>CHA packageItem ' + packageItem);
+system.debug('>>>>>CHA packageItem.Package__r.Id ' + packageItem.Package__r.Id);
+system.debug('>>>>>CHA packageItemTempList ' + packageItemTempList);
                 package_packageItemMap.put(packageItem.Package__r.Id, packageItemTempList);            
                 productRatePlanIdSet.add(packageItem.Product_Rate_Plan__r.Id);
             }
@@ -1557,6 +1564,9 @@ global with sharing class NewSubscriptionService {
         } catch (exception e){
           pubDeliveredBy = null;
         }
+        system.debug('>>>>>CHA recipientContact.Address__r.RecordTypeId ' + recipientContact.Address__r.RecordTypeId);
+        system.debug('>>>>>CHA pubDeliveredBy ' + pubDeliveredBy);
+        system.debug('>>>>>CHA DirectSubDelMethod ' + DirectSubDelMethod);
         if(recipientContact.Address__r.RecordTypeId != ConstantsSLB.getkeyid('Address_Local'))
         {
           orderLineItemRecord.Delivered_By__c = 'Mailing Agent';
@@ -1567,6 +1577,8 @@ global with sharing class NewSubscriptionService {
         }
         else if(recipientContact.Address__r.RecordTypeId == ConstantsSLB.getkeyid('Address_Local')&& (pubDeliveredBy == null || pubDeliveredBy == DirectSubDelMethod))
         { 
+            system.debug('>>>>>CHA objpackageItem.Is_Magazine__c ' + objpackageItem.Is_Magazine__c);
+            system.debug('>>>>>CHA orderLineItemRecord.Delivered_By__c ' + orderLineItemRecord.Delivered_By__c);
           //Start D-3151 23-June-2015 Added by Raviteja - updating the if conidition logic for All-in-One Package       
           if((objpackageItem.Is_Newspaper__c == true && objpackageItem.Is_Print__c == True && (orderLineItemRecord.Delivered_By__c == Null || orderLineItemRecord.Delivered_By__c == 'None')) 
               || (objpackageItem.Is_Newspaper__c == true && objpackageItem.Is_All_In_One__c == True && (orderLineItemRecord.Delivered_By__c == Null || orderLineItemRecord.Delivered_By__c == 'None')))           
@@ -1589,6 +1601,7 @@ global with sharing class NewSubscriptionService {
         {
           orderLineItemRecord.Delivered_By__c = pubDeliveredBy;
           orderLineItemRecord.Direct_Sub_Delivery_Method__c = pubDeliveredBy; 
+          system.debug('>>>>>CHA pubDeliveredBy ' + pubDeliveredBy);
           if(pubDeliveredBy == 'Vendor')
           {
             //parentOrder.Delivery_Charge__c = ConstantsSLB.getSubscriberCharge(addressTypeDeliveryChargeType); //START/END 26 September 2015 UD-2860 - Use the value from SM_SubscriptionHelper subscriber charge
@@ -1600,7 +1613,7 @@ global with sharing class NewSubscriptionService {
             hasPostageCharge = true; 
           }
         }       
-        
+        system.debug('>>>>>CHA orderLineItemRecord.Delivered_By__c ' + orderLineItemRecord.Delivered_By__c);
         if(orderLineItemRecord.Delivered_By__c == null){
             orderLineItemRecord.Delivered_By__c = 'None';
             orderLineItemRecord.Direct_Sub_Delivery_Method__c = pubDeliveredBy;
@@ -1659,7 +1672,11 @@ global with sharing class NewSubscriptionService {
                     orderLineItemRecord.Add_On_Package_Product_Sub_Type__c = packageMap.get(pckIdAddon).Package_Sub_Type__c;
                     orderLineItemRecord.Add_On_Package_Subscription_Rate__c = subscriptionRateMap.get(pckIdAddon);
                 }
-                
+                system.debug('>>>>>CHA pckId ' + pckId);
+system.debug('>>>>>CHA package_packageItemMap.get(pckId) ' + package_packageItemMap.get(pckId));
+system.debug('>>>>>CHA package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id ' + package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id);
+system.debug('>>>>>CHA productRatePlanMap.get(package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id) ' + productRatePlanMap.get(package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id));
+system.debug('>>>>>CHA productRatePlanMap.get(package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id).SubscriptionFrequency__c ' + productRatePlanMap.get(package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id).SubscriptionFrequency__c);
                 String subscriptionFrequencyNum = productRatePlanMap.get(package_packageItemMap.get(pckId)[0].Product_Rate_Plan__r.Id).SubscriptionFrequency__c;
                 String subscriptionFrequencyText;
                 
@@ -1745,6 +1762,7 @@ global with sharing class NewSubscriptionService {
     update parentOrdList;
         //END: D-1591, D-1883 01/22/2015 Added by S.Puli, FrancisBenzon
         //Start Added By FrancisBenzon Postage Charge Subscription : Calculation of Postage Charge
+        system.debug('>>>>>CHA hasPostageCharge ' + hasPostageCharge);
         if(hasPostageCharge) {
             for(Order_Line_Item__c oli : orderLineItemRecordsList) {
                 oli.Postage_Charge__c = PostageChargeHelper.getPostageChargeForLineItem(parentOrder.Recipient_Contact__c, oli);

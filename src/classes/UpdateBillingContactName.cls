@@ -1,23 +1,15 @@
-public with sharing class UpdateBillingContactName {
-    
-    
-    public String getResponse() {
-        return response;
-    }
-   
 // Author: Krithika D
 // Date: 11/11/2014
 // Defect/CR no:
 // Logic: 
 // 
 //
-// Update:
-// Update by:
-// Update date:
-// Defect/CR no:
-// Update reason:
-//      High-Level: 
-//      Detailed:   
+
+public with sharing class UpdateBillingContactName {
+    
+    public String getResponse() {
+        return response;
+    }
     
     String returnUrl;
     String billingAccountId;
@@ -25,8 +17,18 @@ public with sharing class UpdateBillingContactName {
     public String response { get; set; }
     public static Boolean isTrue = true; /* START PD-0174 23-MAY-2016 KTUMANENG Added "else if condition for SUCCESS and ERROR response" to cover ERROR condition in test class*/
     
-    
-
+    /**********************************************************
+     * REVISON(s)
+     * Update by                : Kingsley Tumaneng
+     * Update date              : MAY 23, 2016
+     * Defect/CR no             : 
+     * Update reason            
+     *      High-Level          : 
+     *      Detailed            : Added else if condition
+     *                            and a public boolean variable
+     *                            so that the test class can 
+     *                            cover up the else in for loop
+    **********************************************************/
     @future (callout=true)
     public static void updateZuoraBillingContact(string FirstName,string Lastname, string ContactID){
     
@@ -59,7 +61,6 @@ public with sharing class UpdateBillingContactName {
                         results = zApiInstance.zupdate(objs);
                         //system.debug('>>>>>>>222' + objs);
                     }
-                    
                               
                     /* START PD-0174 23-MAY-2016 KTUMANENG Added "else if condition for SUCCESS and ERROR response" to cover ERROR condition in test class*/
                     else if(isTrue){
@@ -114,7 +115,6 @@ public with sharing class UpdateBillingContactName {
             catch (Zuora.zRemoteException ex) {  
                 if ('INVALID_FIELD' == ex.code) {  
                 } 
-                
             } 
             
             catch (Zuora.zAPIException ex) {  
@@ -126,7 +126,21 @@ public with sharing class UpdateBillingContactName {
             }
 
         }
-        @future (callout=true)
+     
+
+    /**********************************************************
+     * REVISON(s)
+     * Update by                : Kingsley Tumaneng
+     * Update date              : MAY 23, 2016
+     * Defect/CR no             : 
+     * Update reason            
+     *      High-Level          : 
+     *      Detailed            : Added else if condition
+     *                            and a public boolean variable
+     *                            so that the test class can 
+     *                            cover up the else in for loop
+    **********************************************************/   
+    @future (callout=true)
     public static void updateZuoraBillingAccount(string Name, string BillingaccntID){
     
     //Log in to Zuora
@@ -213,7 +227,6 @@ public with sharing class UpdateBillingContactName {
             catch (Zuora.zRemoteException ex) {  
                 if ('INVALID_FIELD' == ex.code) {  
                 } 
-                
             } 
             
             catch (Zuora.zAPIException ex) {  

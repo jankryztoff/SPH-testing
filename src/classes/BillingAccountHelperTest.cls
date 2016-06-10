@@ -6,7 +6,7 @@
      */    
 
 
-@isTest (SeeAllData = true)
+@isTest 
 private class BillingAccountHelperTest {
     
    /*  Description of the purpose of the classthe method. 
@@ -20,6 +20,16 @@ private class BillingAccountHelperTest {
     *
     * code taken from SM_ChangeOfSubscriptionEntryContTest (test data)
     */
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createMASS_CONFIG();
+    }
+    
   
     static testmethod void testupdateBillingAccountPaymentInfo_01(){
         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];

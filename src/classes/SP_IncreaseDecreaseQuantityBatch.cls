@@ -124,12 +124,12 @@ global class SP_IncreaseDecreaseQuantityBatch implements Database.Batchable<sObj
                         if(mapPubCodeToPublication.containsKey(pRpCharge.PublicationCode__c)) {
                             Publication__c pub = mapPubCodeToPublication.get(pRpCharge.PublicationCode__c);
                             String subfreq = refundComputation.convertSubFreq(mapPubCodeToPublication.get(pRpCharge.PublicationCode__c), new zqu__ProductRatePlan__c(SubscriptionFrequency__c = pRpCharge.zqu__ProductRatePlan__r.SubscriptionFrequency__c));
-							//START: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration
+                            //START: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration
 
                             if (mapPubCodeToDoW.get(pRpCharge.PublicationCode__c) == null) {
                                 mapPubCodeToDoW.put(pRpCharge.PublicationCode__c, new Map<String, Integer>());
                             }
-							//END: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration         
+                            //END: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration         
 
                             /*                            
                             Logic that converts Subscription Frequency to Published Days                               
@@ -176,49 +176,49 @@ global class SP_IncreaseDecreaseQuantityBatch implements Database.Batchable<sObj
                                     dayOfWeek = ((DateTime)effectiveStartDate).format('EEEE');            
                                     if(mapPubCodeToDoW.get(pub.Publication_Code__c).containsKey(dayOfWeek)) {
                                         //START: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration
-										if (mapPubCodeToDoWCopy.get(pub.Publication_Code__c) == null) {
-											mapPubCodeToDoWCopy.put(pub.Publication_Code__c, new Map<String, Integer>());
-										}
+                                        if (mapPubCodeToDoWCopy.get(pub.Publication_Code__c) == null) {
+                                            mapPubCodeToDoWCopy.put(pub.Publication_Code__c, new Map<String, Integer>());
+                                        }
 
-										// Start: D- 0462 / 1-8-2015 / K. Tan / DOW Modification Counter
-										
+                                        // Start: D- 0462 / 1-8-2015 / K. Tan / DOW Modification Counter
+                                        
                                         if(dayOfWeek == 'Monday' || dayOfWeek == 'Tuesday' || dayOfWeek == 'Wednesday' || dayOfWeek == 'Thursday' || dayOfWeek == 'Friday'){
-											Integer count;
-											if(mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey('Weekday')) {
-												count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get('Weekday') + Integer.valueOf(spc.Zuora__Quantity__c);
-											}
-											else {
-												count = Integer.valueOf(spc.Zuora__Quantity__c);
-											}
-											system.debug(count);
-											system.debug(mapPubCodeToDoWCopy.get(pub.Publication_Code__c));
-											mapPubCodeToDoWCopy.get(pub.Publication_Code__c).put('Weekday', count);
-											system.debug(count);
-	
+                                            Integer count;
+                                            if(mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey('Weekday')) {
+                                                count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get('Weekday') + Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
+                                            else {
+                                                count = Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
+                                            system.debug(count);
+                                            system.debug(mapPubCodeToDoWCopy.get(pub.Publication_Code__c));
+                                            mapPubCodeToDoWCopy.get(pub.Publication_Code__c).put('Weekday', count);
+                                            system.debug(count);
+    
                                         }
                                         if(dayOfWeek == 'Saturday'){
-											Integer count;
-											if(mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey(dayOfWeek)) {
-												count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get(dayOfWeek) + Integer.valueOf(spc.Zuora__Quantity__c);
-											}
-											else {
-												count = Integer.valueOf(spc.Zuora__Quantity__c);
-											}
+                                            Integer count;
+                                            if(mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey(dayOfWeek)) {
+                                                count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get(dayOfWeek) + Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
+                                            else {
+                                                count = Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
                                             mapPubCodeToDoWCopy.get(pub.Publication_Code__c).put('Saturday', count);
                                         }
                                         if(dayOfWeek == 'Sunday'){
-											Integer count;
-											if (mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey(dayOfWeek)) {
-												count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get(dayOfWeek) + Integer.valueOf(spc.Zuora__Quantity__c);
-											}
-											else {
-												count = Integer.valueOf(spc.Zuora__Quantity__c);
-											}
+                                            Integer count;
+                                            if (mapPubCodeToDoWCopy.get(pub.Publication_Code__c).containsKey(dayOfWeek)) {
+                                                count = mapPubCodeToDoWCopy.get(pub.Publication_Code__c).get(dayOfWeek) + Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
+                                            else {
+                                                count = Integer.valueOf(spc.Zuora__Quantity__c);
+                                            }
                                             mapPubCodeToDoWCopy.get(pub.Publication_Code__c).put('Sunday', count);
-										// End: D- 0462 / 1-8-2015 / K. Tan / DOW Modification Counter
+                                        // End: D- 0462 / 1-8-2015 / K. Tan / DOW Modification Counter
 
                                         //END: New PC Implementation 12/12/2014 Modified by Karl Tan - modified code according new PC configuration
-										}
+                                        }
                                     }
                                 }
                             }   

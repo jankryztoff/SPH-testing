@@ -22,11 +22,11 @@ public class BundlePackageOneBundleDiscountClass
         }
         //START: Code Review 02/18/2015 - Added by Kristine Campang
         if(packageIds != null){
-			packagesMap = new Map<Id, Package__c>([Select Id, Name, Package_Type__c, Package_Sub_Type__c from Package__c where Id in :packageIds]);
-		}
-		if(basePackageItemIds !=null){
-			basePackageItemsMap = new Map<Id, Package_Item__c>([Select Id, Name, Bundle_Item_No__c from Package_Item__c where Id in :basePackageItemIds]);
-		}
+            packagesMap = new Map<Id, Package__c>([Select Id, Name, Package_Type__c, Package_Sub_Type__c from Package__c where Id in :packageIds]);
+        }
+        if(basePackageItemIds !=null){
+            basePackageItemsMap = new Map<Id, Package_Item__c>([Select Id, Name, Bundle_Item_No__c from Package_Item__c where Id in :basePackageItemIds]);
+        }
         //END: Code Review 02/18/2015 - Added by Kristine Campang
         for(Package_Item__c packageItems : newPackageItems)
         {
@@ -88,7 +88,7 @@ public class BundlePackageOneBundleDiscountClass
                     }
                 }
             }
-	//END: Code Review 02/18/2015 Added by Kristine Campang
+    //END: Code Review 02/18/2015 Added by Kristine Campang
         }
     }
 }

@@ -1,4 +1,4 @@
-@isTest(seeAllData = TRUE)
+@isTest
 public class ContactNewOverrideControllerTest {
     /**
      * Class Name: ContactNewOverrideControllerTest
@@ -8,7 +8,16 @@ public class ContactNewOverrideControllerTest {
      * @description Test Class for ContactNewOverrideController
      * 
      */
-    
+     
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createMASS_CONFIG();
+    } 
+     
     static Account acc;
     static User cso;
     

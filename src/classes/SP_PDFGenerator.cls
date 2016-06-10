@@ -11,12 +11,12 @@
  *  History: 02/10/15 D-2101 Kevin Evasco - Updated to enable letter printing for CSO.
  */
  
- /*
-  *History: 20-July-2015 D-3258 Added By S.Puli - Retrofit changes from UAT to DV1 and SIT
+ /* 
+  * History: 20-July-2015 D-3258 Added By S.Puli - Retrofit changes from UAT to DV1 and SIT
   * History: 08-Mar-2016 UD-3253 Added By S.Puli - Changes for Credit Note Change Request
   *
   */
- 
+  
  
  
 //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
@@ -48,7 +48,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         Map<Id,String> recordID_filename_map = new Map<Id,String>();
         Map<String, String> packLabelRecId_AttachmentID_Map = new Map<String, String>(); // START-END : D-2873 5/18/2015 Alyana Navarro
         Map<String, Contact> recordId_contact_map = new Map<String, Contact>(); //START/END 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format
-		
+        
         String sfidPrefix = 'SFID'; //START/END 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format
         // START : D-2013 3/17/2015 Alyana Navarro
         List<Account> mailingAgentAccountList = new List<Account>();
@@ -97,8 +97,8 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         {
             IDSet.add(parentId);            
         }
-		
-		recordId_contact_map = getRecordIdToContactMap(IDSet, templateName); //START/END 18 February 2016 NCR015-6 Kevin Evasco - Record Id to Contact Map
+        
+        recordId_contact_map = getRecordIdToContactMap(IDSet, templateName); //START/END 18 February 2016 NCR015-6 Kevin Evasco - Record Id to Contact Map
         
         // START : UD-2634 9/10/2015 Alyana Navarro
         //START D-3952 Gdelrosario 19/11/15 : change variable to paymentids
@@ -118,7 +118,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         //Map<Id, Id> invoiceIdBillAccountIdMap = new Map<Id, Id>(); - Remove
         Map<Id, Credit_Note__c> creditNoteMap = new Map<Id, Credit_Note__c>();
         if(templateName == SP_GenerateLetterPrintBatch.creditNotes){            
-		//Start UD-3253 Added by S.Puli - Credit Note CR
+        //Start UD-3253 Added by S.Puli - Credit Note CR
             //invoiceList = [SELECT id, name, Zuora__BillingAccount__c FROM Zuora__ZInvoice__c WHERE id IN: IDSet];
             
             //for(Zuora__ZInvoice__c invoice : invoiceList){
@@ -127,7 +127,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
             //START UD-3055 08-Oct-2015 Added by S.Puli
             creditNoteMap = new Map<Id, Credit_Note__c>([SELECT id, name, Billing_Account__c, Document_Date__c FROM Credit_Note__c WHERE id IN: IDSet]);
             //END UD-3055 08-Oct-2015 Added by S.Puli
-		//End UD-3253 Added by S.Puli - Credit Note CR
+        //End UD-3253 Added by S.Puli - Credit Note CR
         }
         // END : UD-1421 6/4/2015 Alyana Navarro
         // END : UD-1419 7/17/2015 Alyana Navarro
@@ -208,7 +208,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         //End UD-3207 01-Apr-2016 Added By S.Puli
         if(templateName == SP_GenerateLetterPrintBatch.creditNotes) {
             // START : UD-1419 7/21/2015 Alyana Navarro
-		//Start UD-3253 Added by S.Puli - Credit Note CR
+        //Start UD-3253 Added by S.Puli - Credit Note CR
             for(Credit_Note__c creditNoteRec :[SELECT Id, Credit_Note_Number__c, ARMS_Number__c FROM Credit_Note__c WHERE Id IN :IDSet]) 
             {
                 if(creditNoteRec.ARMS_Number__c <> null){
@@ -218,12 +218,12 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 }
             }
             // END : UD-1419 7/21/2015 Alyana Navarro
-		//End UD-3253 Added by S.Puli - Credit Note CR
+        //End UD-3253 Added by S.Puli - Credit Note CR
         }
 
         //END UD-1421 01-July-2015 Kevin Evasco - PDF Filename should display Credit Note Number for Credit Notes.
         //END UD-1828 16-July-2015 Added by S.Puli- Change Credit_Note_Number__c from Number to Text  
-		//START D-4594 01April2016 Added By C. Lin
+        //START D-4594 01April2016 Added By C. Lin
         /*if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
                 templateName == SP_GenerateLetterPrintBatch.magazineInternalWrapper || 
                 templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionReportHardCopy || 
@@ -243,28 +243,28 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 PageReference ref;
                 //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
                 // START : D-2013 3/20/2015 Alyana Navarro
-                String fileName = '';				
-				//START 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format to enable sortin in the on-premise
-				String sfidSuffix = '';
-				
-				if(SP_GenerateLetterPrintBatch.letterCodeMap.containsKey(templateName)) {
-					filename += SP_GenerateLetterPrintBatch.letterCodeMap.get(templateName) + '_';
-				} else {
-					filename += templateName + '_';
-				}
-				
-				Contact billingContact = recordId_contact_map.get(parentId);
-				
-				if(billingContact != null) {
-				filename += billingContact.Address__r.Country__r.Code__c + '_';
-				
-				if(billingContact.Address__r.Country__r.Code__c == 'SG')
-					filename += billingContact.Address__r.Postal_Code_Text__c + '_';
-				
-				filename += billingContact.Account.Account_Auto_Number__c + '_';
-				}
-				
-				
+                String fileName = '';               
+                //START 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format to enable sortin in the on-premise
+                String sfidSuffix = '';
+                
+                if(SP_GenerateLetterPrintBatch.letterCodeMap.containsKey(templateName)) {
+                    filename += SP_GenerateLetterPrintBatch.letterCodeMap.get(templateName) + '_';
+                } else {
+                    filename += templateName + '_';
+                }
+                
+                Contact billingContact = recordId_contact_map.get(parentId);
+                
+                if(billingContact != null) {
+                filename += billingContact.Address__r.Country__r.Code__c + '_';
+                
+                if(billingContact.Address__r.Country__r.Code__c == 'SG')
+                    filename += billingContact.Address__r.Postal_Code_Text__c + '_';
+                
+                filename += billingContact.Account.Account_Auto_Number__c + '_';
+                }
+                
+                
                 if(mailingNumberMailingIdMap.containsKey(parentId)){
                     sfidSuffix += sfidPrefix + mailingNumberMailingIdMap.get(parentId);
                 } else {
@@ -272,8 +272,8 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 }
                 // END : D-2013 3/20/2015 Alyana Navarro
                 //END: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.                
-				//END 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format to enable sortin in the on-premise
-				
+                //END 18 February 2016 NCR015-6 Kevin Evasco - New Filename Format to enable sortin in the on-premise
+                
                 String attachToID = parentId;
                 if(templateName == SP_GenerateLetterPrintBatch.acknowledgmentLetter)
                 {
@@ -305,8 +305,8 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 {
                     ref = Page.LP_IPPLetter;
                 }
-                //START:D-2218 2/13/15 Added by Manolo Vale?a - Added new conditions that will be used by the new templates that will be created soon.
-                //START: 20/03/2015 Added by Jean Cari?o for MD42
+                //START:D-2218 2/13/15 Added by Manolo Vale�a - Added new conditions that will be used by the new templates that will be created soon.
+                //START: 20/03/2015 Added by Jean Cari�o for MD42
                 else if(templateName == SP_GenerateLetterPrintBatch.giftPremiumChina)
                 {
                     ref = Page.LP_HappyCallLetterChinese;
@@ -316,7 +316,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                     ref = Page.LP_HappyCallLetter;
                 }
                 //END
-                //END:D-2218 2/13/15 Added by Manolo Vale?a
+                //END:D-2218 2/13/15 Added by Manolo Vale�a
                 else if(templateName == SP_GenerateLetterPrintBatch.creditCardFailureNotification)
                 {
                     ref = Page.LP_CreditCardFailure;
@@ -348,9 +348,9 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                     }
                 }
                 // END : D-2930 5/14/2015 Alyana Navarro
-				// START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
-				/*
-				
+                // START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                /*
+                
                 //END 22 November 2015 UD-2535 Kevin Evasco - Get Language from LPR
                 else if(templateName == SP_GenerateLetterPrintBatch.packingLabelLetter)
                 {
@@ -387,10 +387,10 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                         ref = Page.AirlineSubscriptions; // START-END : D-2591 3/24/2015 Alyana Navarro - Change from ReportHardCopy to AirlineSubscriptions
                     }
                 }
-				
-				*/
-				// END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
-				
+                
+                */
+                // END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                
                 else if(templateName == SP_GenerateLetterPrintBatch.creditNotes)
                 {
                     //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.    
@@ -403,7 +403,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 }
                 // END : UD-2634 9/10/2015 Alyana Navarro
                 
-				//START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
+                //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
                 //START D-4594 01April2016 Added By C. Lin
                 /*if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
                 templateName == SP_GenerateLetterPrintBatch.magazineInternalWrapper || 
@@ -417,12 +417,12 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                     ref.getParameters().put('id', parentId);     
                     // START : D-2013 3/20/2015 Alyana Navarro - Added condition for Overseas Newspaper Report hard Copy
                     //START D-4594 01April2016 Added By C. Lin
-					/*if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperReportHardCopy){                        
+                    /*if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperReportHardCopy){                        
                         attachToID = mailingNumberMailingIdMap.get(parentId);
                     } else {*/
                         attachToID = childParentMap.get(parentId);
                     //}
-					//END D-4594 01April2016 Added By C. Lin
+                    //END D-4594 01April2016 Added By C. Lin
                     // END : D-2013 3/20/2015 Alyana Navarro
                 }
                 //END: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename. 
@@ -458,20 +458,20 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 }
                 // END : UD-2634 9/10/2015 Alyana Navarro
         //START: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery
-				// START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
-				/*
+                // START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                /*
                 else if(templateName == SP_GenerateLetterPrintBatch.packingLabelLetter)
                 {
                     ref.getParameters().put('id', parentId);
                     ref.getParameters().put('issueDate', String.valueOf(generationFrom));    //Tine's change!
                 }
-				*/
-				// END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                */
+                // END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
                 else{
                     ref.getParameters().put('id', parentId);
                 }
         //END: D-3672 11/13/2015 Added by Kristine Balaoing
-				//START D-4594 01April2016 Added By C. Lin
+                //START D-4594 01April2016 Added By C. Lin
                 Blob b;
                 if(Test.isRunningTest()){
                     b = Blob.valueOf('Unit Test');
@@ -481,7 +481,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 //END D-4594 01April2016 Added By C. Lin
                 
                 //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
-		//Start UD-3253 Added by S.Puli - Credit Note CR
+        //Start UD-3253 Added by S.Puli - Credit Note CR
                 if(templateName == SP_GenerateLetterPrintBatch.creditNotes)
                 {
                     fileName += sfidSuffix + '_' + invoiceAndCreditNoteNumberMap.get(parentId) + '_';
@@ -514,7 +514,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                 else {                    
                     fileName += convertDateToString(Date.Today()) + '_' + sfidSuffix + '.pdf';
                 }
-		//End UD-3253 Added by S.Puli - Credit Note CR
+        //End UD-3253 Added by S.Puli - Credit Note CR
                 //END UD-3055 08-Oct-2015 Added by S.Puli
                 //END UD-1514 10-June-2015 Kevin Evasco - Fixed filename for credit notes and invoice
                 
@@ -563,16 +563,16 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
             {
                 errorMessage = ''; //START-END: UD-3505 01-08-2015 added by Jason A
                 Attachment attachmentRecord = attList.get(i);
-				//START 19 February 2016 NCR015-6 Kevin Evasco - New Filename Format
+                //START 19 February 2016 NCR015-6 Kevin Evasco - New Filename Format
                 String attachmentName = attachmentRecord.Name;
-				Integer startIndex = attachmentName.indexOf(sfidPrefix) + sfidPrefix.length();
-				Integer endIndex = startIndex + 15;
+                Integer startIndex = attachmentName.indexOf(sfidPrefix) + sfidPrefix.length();
+                Integer endIndex = startIndex + 15;
                 Id recordId = (Id)attachmentName.substring(startIndex, endIndex);
-				//END 19 February 2016 NCR015-6 Kevin Evasco - New Filename Format
+                //END 19 February 2016 NCR015-6 Kevin Evasco - New Filename Format
             // START : D-2873 5/19/2015 Alyana Navarro  
                 String letterSubType;
-				//START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
-				/*
+                //START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                /*
                 if(templateName == SP_GenerateLetterPrintBatch.packingLabelLetter){
                     if(letterSubTypeMap.containsKey(attachmentRecord.ParentId)){
                         if(parentIdCounterMap.containsKey(attachmentRecord.ParentId)) {
@@ -585,8 +585,8 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                         }
                     }
                 }
-				*/
-				//END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+                */
+                //END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
             // END : D-2873 5/19/2015 Alyana Navarro
                 //START: UD-3505 01-08-2015 added by Jason A
                 if (!saveResults.get(i).isSuccess())
@@ -599,7 +599,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                         System.debug('Fields that affected this error: ' + err.getFields());
                     }
                     
-					//START D-4594 01April2016 Added By C. Lin
+                    //START D-4594 01April2016 Added By C. Lin
                     /*if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
                         templateName == SP_GenerateLetterPrintBatch.magazineInternalWrapper || 
                         templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionReportHardCopy || 
@@ -633,7 +633,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                     //END D-2116 03/19/2015 Added by S.Puli
                     // START : D-2873 5/19/2015 Alyana Navarro - Remove commented out code.
                     /*//START D-4594  01April2016 Added By C. Lin
-					if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
+                    if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
                         templateName == SP_GenerateLetterPrintBatch.magazineInternalWrapper ||                         
                         /*templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionReportHardCopy || 
                         templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionWrapper ||*/
@@ -645,7 +645,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                         validRecordsIDSet.add(recordId);
                         packLabelRecId_AttachmentID_Map.put(attachmentRecord.ParentId + '-' + letterSubType, (String)attachmentRecord.Id); // START-END : D-2873 5/18/2015 Alyana Navarro                                           
                     } else { //END D-4594 01April2016 Added By C. Lin*/
-            // END : D-2873 5/19/2015 Alyana Navarro
+                    // END : D-2873 5/19/2015 Alyana Navarro
                         validRecordsIDSet.add(attachmentRecord.ParentId);
                         recordID_attachmentID_map.put(recordId, (String)attachmentRecord.Id);
                     //} //START END D-4594 01April2016 Added By C. Lin
@@ -672,9 +672,9 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
                     for(Zuora__Subscription__c subRec : subsAckList){
                         if(subRec.Zuora__CustomerAccount__c == bac.Id && (subRec.CreatedDate > dateFrom && subRec.CreatedDate <= dateTo)){//START /END UD-2328 08/26/15 RReyes - replaced DTL_Date__c condition with CreatedDate
                             //START PD-0186 24May2016 Added By C. Lin - Update condition to exclude subscriptions with deleted status
-							if(subRec.Zuora__SubscriptionEndDate__c > subRec.Zuora__SubscriptionStartDate__c || (subRec.Zuora__TermSettingType__c == 'EVERGREEN' && subRec.Zuora__SubscriptionEndDate__c == null)){ //START - END: D-3807 10/22 added by Jason A.
-							//END PD-0186 24May2016 Added By C. Lin
-								subRec.Acknowledgement_Letter__c = URL.getSalesforceBaseUrl().toExternalForm()  + '/servlet/servlet.FileDownload?file=' + attachNameToId_MAP.get(fileToAttachId_MAP.get(bac.Id));
+                            if(subRec.Zuora__SubscriptionEndDate__c > subRec.Zuora__SubscriptionStartDate__c || (subRec.Zuora__TermSettingType__c == 'EVERGREEN' && subRec.Zuora__SubscriptionEndDate__c == null)){ //START - END: D-3807 10/22 added by Jason A.
+                            //END PD-0186 24May2016 Added By C. Lin
+                                subRec.Acknowledgement_Letter__c = URL.getSalesforceBaseUrl().toExternalForm()  + '/servlet/servlet.FileDownload?file=' + attachNameToId_MAP.get(fileToAttachId_MAP.get(bac.Id));
                                 subsAckListUpdated.add(subRec);
                             }
             //END UD-2286 11-Aug-2015 Added By S.Puli
@@ -719,9 +719,9 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
     //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
     public static void populateChildParentMap(Set<String> IDSet, String templateName, Map<Id,Id> childParentMap)
     {
-		//START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
+        //START 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
         /*//START D-4594 01April2016 Added By C. Lin
-		if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
+        if(templateName == SP_GenerateLetterPrintBatch.overseasNewspaperWrapper || 
                 templateName == SP_GenerateLetterPrintBatch.magazineInternalWrapper || 
                 templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionReportHardCopy || 
                 templateName == SP_GenerateLetterPrintBatch.airlineSubscriptionWrapper )
@@ -752,7 +752,7 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         //END 17 February 2016 NCR015-6 Kevin Evasco - Removed packing label code
         //START: 01/14/15 D-1716 Kevin Evasco - Updated to include date of generation and invoice/credit note # in the filename.
         else //END D-4594 01April2016 Added By C. Lin */
-		if(templateName == SP_GenerateLetterPrintBatch.invoiceLetter)
+        if(templateName == SP_GenerateLetterPrintBatch.invoiceLetter)
         {
             //START: Code Review Implementation 2/17/2015 KLorica - Added NULL check    
             if (IDSet.size() > 0) {
@@ -805,28 +805,28 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
         return dateString;
     }
     //START UD-1514 10-June-2015 Kevin Evasco - Fixed filename for credit notes and invoice
-	
-	//START 18 February 2016 NCR015-6 Kevin Evasco - Map of LPR Record Id to Billing Contact (Letter Recipient)
-	public static Map<String,Contact> getRecordIdToContactMap(Set<String> recordIdSetParam, String templateName) {
+    
+    //START 18 February 2016 NCR015-6 Kevin Evasco - Map of LPR Record Id to Billing Contact (Letter Recipient)
+    public static Map<String,Contact> getRecordIdToContactMap(Set<String> recordIdSetParam, String templateName) {
 
-		Map<String,Contact> parentIdToContactMap = new Map<String,Contact>();	
-		Map<String, Id> recordId_billingContactId = new Map<String, Id>();	
-		
-		Set<Id> billingContactIdSet = new Set<Id>();
-		
-		if(templateName == SP_GenerateLetterPrintBatch.acknowledgmentLetter){
-			List<Zuora__CustomerAccount__c> baList = [SELECT Id, Billing_Contact__c FROM Zuora__CustomerAccount__c WHERE Id IN :recordIdSetParam];
-			for(Zuora__CustomerAccount__c baElem : baList) {
-				billingContactIdSet.add(baElem.Billing_Contact__c);
-				recordId_billingContactId.put(baElem.Id, baElem.Billing_Contact__c);
-			}
-			
-		} else if(templateName == SP_GenerateLetterPrintBatch.invoiceLetter){
-			List<Zuora__ZInvoice__c> invoiceList = [SELECT Id, Zuora__BillingAccount__r.Billing_Contact__c FROM Zuora__ZInvoice__c WHERE Id IN :recordIdSetParam];
-			for(Zuora__ZInvoice__c invoiceElem : invoiceList) {
-				billingContactIdSet.add(invoiceElem.Zuora__BillingAccount__r.Billing_Contact__c);
-				recordId_billingContactId.put(invoiceElem.Id, invoiceElem.Zuora__BillingAccount__r.Billing_Contact__c);
-			}	
+        Map<String,Contact> parentIdToContactMap = new Map<String,Contact>();   
+        Map<String, Id> recordId_billingContactId = new Map<String, Id>();  
+        
+        Set<Id> billingContactIdSet = new Set<Id>();
+        
+        if(templateName == SP_GenerateLetterPrintBatch.acknowledgmentLetter){
+            List<Zuora__CustomerAccount__c> baList = [SELECT Id, Billing_Contact__c FROM Zuora__CustomerAccount__c WHERE Id IN :recordIdSetParam];
+            for(Zuora__CustomerAccount__c baElem : baList) {
+                billingContactIdSet.add(baElem.Billing_Contact__c);
+                recordId_billingContactId.put(baElem.Id, baElem.Billing_Contact__c);
+            }
+            
+        } else if(templateName == SP_GenerateLetterPrintBatch.invoiceLetter){
+            List<Zuora__ZInvoice__c> invoiceList = [SELECT Id, Zuora__BillingAccount__r.Billing_Contact__c FROM Zuora__ZInvoice__c WHERE Id IN :recordIdSetParam];
+            for(Zuora__ZInvoice__c invoiceElem : invoiceList) {
+                billingContactIdSet.add(invoiceElem.Zuora__BillingAccount__r.Billing_Contact__c);
+                recordId_billingContactId.put(invoiceElem.Id, invoiceElem.Zuora__BillingAccount__r.Billing_Contact__c);
+            }   
         //Start UD-3207 01-Apr-2016 Added By S.Puli    
         } else if(templateName == SP_GenerateLetterPrintBatch.dailyInvLetter){
             List<Daily_Invoice__c> dailyInvoiceList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM Daily_Invoice__c WHERE Id IN :recordIdSetParam];
@@ -837,56 +837,56 @@ global without sharing class SP_PDFGenerator //START/END 02/10/15 D-2101 Kevin E
             
         } else if(templateName == SP_GenerateLetterPrintBatch.creditNotes){
         //END UD-3207 01-Apr-2016 Added By S.Puli
-			List<Credit_Note__c> creditNoteList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM Credit_Note__c WHERE Id IN :recordIdSetParam];
-			for(Credit_Note__c creditNoteElem : creditNoteList) {
-				billingContactIdSet.add(creditNoteElem.Billing_Account__r.Billing_Contact__c);
-				recordId_billingContactId.put(creditNoteElem.Id, creditNoteElem.Billing_Account__r.Billing_Contact__c);
-			}
-			
-		} else if(templateName == SP_GenerateLetterPrintBatch.creditCardFailureNotification){
-			List<External_Payment__c> externalPaymentList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM External_Payment__c WHERE Id IN :recordIdSetParam];
-			for(External_Payment__c externalPaymentElem : externalPaymentList) {
-				billingContactIdSet.add(externalPaymentElem.Billing_Account__r.Billing_Contact__c);
-				recordId_billingContactId.put(externalPaymentElem.Id, externalPaymentElem.Billing_Account__r.Billing_Contact__c);
-			}
-			
-		} else if(	templateName == SP_GenerateLetterPrintBatch.firstRenewalReminderForNewspaper ||
-					templateName == SP_GenerateLetterPrintBatch.secondRenewalReminderForNewspaper ||
-					templateName == SP_GenerateLetterPrintBatch.firstRenewalReminderForMagazine ||
-					templateName == SP_GenerateLetterPrintBatch.secondRenewalReminderForMagazine) {
-			List<Letter_Print_Request__c> lprList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM Letter_Print_Request__c WHERE Id IN :recordIdSetParam];
-			for(Letter_Print_Request__c lprElem : lprList) {
-				billingContactIdSet.add(lprElem.Billing_Account__r.Billing_Contact__c);
-				recordId_billingContactId.put(lprElem.Id, lprElem.Billing_Account__r.Billing_Contact__c);
-			}
-			
-		} else if(	templateName == SP_GenerateLetterPrintBatch.giftLetter ||
-					templateName == SP_GenerateLetterPrintBatch.subscriptionLetter ||
-					templateName == SP_GenerateLetterPrintBatch.giftRenewalLetter ||
-					templateName == SP_GenerateLetterPrintBatch.giftRedemptionLetter ||
-					templateName == SP_GenerateLetterPrintBatch.giftPremiumChina ||
-					templateName == SP_GenerateLetterPrintBatch.giftPremiumEnglish ) {
-			List<Order_Line_Item_Gift__c> oligList = [SELECT Id, Order_Line_Item__r.Order__r.Billing_Contact__c FROM Order_Line_Item_Gift__c WHERE Id IN :recordIdSetParam];
-			for(Order_Line_Item_Gift__c oligElem : oligList) {
-				billingContactIdSet.add(oligElem.Order_Line_Item__r.Order__r.Billing_Contact__c);
-				recordId_billingContactId.put(oligElem.Id, oligElem.Order_Line_Item__r.Order__r.Billing_Contact__c);
-			}
-		}
-		
-		List<Contact> contactList = [SELECT Id, Address__r.Country__r.Code__c, Address__r.Postal_Code_Text__c, Account.Account_Auto_Number__c FROM Contact WHERE Id IN :billingContactIdSet];
-		Map<Id,Contact> contactMap = new Map<Id,Contact> (contactList);
-		
-		for(String recordId : recordIdSetParam) {
-			String billingContactId;		
-			if(recordId_billingContactId.containsKey(recordId)){
-				billingContactId = recordId_billingContactId.get(recordId);			
-				if(contactMap.containsKey(billingContactId)){				
-					parentIdToContactMap.put(recordId,contactMap.get(billingContactId));
-				}
-			}
-		}
-		
-		return parentIdToContactMap;
-	}
-	//END 18 February 2016 NCR015-6 Kevin Evasco - Map of LPR Record Id to Billing Contact (Letter Recipient)
+            List<Credit_Note__c> creditNoteList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM Credit_Note__c WHERE Id IN :recordIdSetParam];
+            for(Credit_Note__c creditNoteElem : creditNoteList) {
+                billingContactIdSet.add(creditNoteElem.Billing_Account__r.Billing_Contact__c);
+                recordId_billingContactId.put(creditNoteElem.Id, creditNoteElem.Billing_Account__r.Billing_Contact__c);
+            }
+            
+        } else if(templateName == SP_GenerateLetterPrintBatch.creditCardFailureNotification){
+            List<External_Payment__c> externalPaymentList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM External_Payment__c WHERE Id IN :recordIdSetParam];
+            for(External_Payment__c externalPaymentElem : externalPaymentList) {
+                billingContactIdSet.add(externalPaymentElem.Billing_Account__r.Billing_Contact__c);
+                recordId_billingContactId.put(externalPaymentElem.Id, externalPaymentElem.Billing_Account__r.Billing_Contact__c);
+            }
+            
+        } else if(  templateName == SP_GenerateLetterPrintBatch.firstRenewalReminderForNewspaper ||
+                    templateName == SP_GenerateLetterPrintBatch.secondRenewalReminderForNewspaper ||
+                    templateName == SP_GenerateLetterPrintBatch.firstRenewalReminderForMagazine ||
+                    templateName == SP_GenerateLetterPrintBatch.secondRenewalReminderForMagazine) {
+            List<Letter_Print_Request__c> lprList = [SELECT Id, Billing_Account__r.Billing_Contact__c FROM Letter_Print_Request__c WHERE Id IN :recordIdSetParam];
+            for(Letter_Print_Request__c lprElem : lprList) {
+                billingContactIdSet.add(lprElem.Billing_Account__r.Billing_Contact__c);
+                recordId_billingContactId.put(lprElem.Id, lprElem.Billing_Account__r.Billing_Contact__c);
+            }
+            
+        } else if(  templateName == SP_GenerateLetterPrintBatch.giftLetter ||
+                    templateName == SP_GenerateLetterPrintBatch.subscriptionLetter ||
+                    templateName == SP_GenerateLetterPrintBatch.giftRenewalLetter ||
+                    templateName == SP_GenerateLetterPrintBatch.giftRedemptionLetter ||
+                    templateName == SP_GenerateLetterPrintBatch.giftPremiumChina ||
+                    templateName == SP_GenerateLetterPrintBatch.giftPremiumEnglish ) {
+            List<Order_Line_Item_Gift__c> oligList = [SELECT Id, Order_Line_Item__r.Order__r.Billing_Contact__c FROM Order_Line_Item_Gift__c WHERE Id IN :recordIdSetParam];
+            for(Order_Line_Item_Gift__c oligElem : oligList) {
+                billingContactIdSet.add(oligElem.Order_Line_Item__r.Order__r.Billing_Contact__c);
+                recordId_billingContactId.put(oligElem.Id, oligElem.Order_Line_Item__r.Order__r.Billing_Contact__c);
+            }
+        }
+        
+        List<Contact> contactList = [SELECT Id, Address__r.Country__r.Code__c, Address__r.Postal_Code_Text__c, Account.Account_Auto_Number__c FROM Contact WHERE Id IN :billingContactIdSet];
+        Map<Id,Contact> contactMap = new Map<Id,Contact> (contactList);
+        
+        for(String recordId : recordIdSetParam) {
+            String billingContactId;        
+            if(recordId_billingContactId.containsKey(recordId)){
+                billingContactId = recordId_billingContactId.get(recordId);         
+                if(contactMap.containsKey(billingContactId)){               
+                    parentIdToContactMap.put(recordId,contactMap.get(billingContactId));
+                }
+            }
+        }
+        
+        return parentIdToContactMap;
+    }
+    //END 18 February 2016 NCR015-6 Kevin Evasco - Map of LPR Record Id to Billing Contact (Letter Recipient)
 }

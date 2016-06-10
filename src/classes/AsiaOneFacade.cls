@@ -16,7 +16,6 @@ public class AsiaOneFacade{
 
         try
         { 
-            
             res = http.send(req); 
             if(res.getStatusCode() == 200)
             {                 

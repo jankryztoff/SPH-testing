@@ -16,15 +16,15 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
      global Integer datapoolListsize = 0;  
      //End D-1882 05-Feb-2015 Added by Raviteja
      public BT_AB_ESH1003DX_ESHOPPackage(String interfaceName){
-	 //START D-2372 09-Mar-2015 Added by Raviteja- To fix the - Failed. Getting an exit code 23 issue : Required fields are missing: [job_id__c]: [job_id__c]  
+     //START D-2372 09-Mar-2015 Added by Raviteja- To fix the - Failed. Getting an exit code 23 issue : Required fields are missing: [job_id__c]: [job_id__c]  
      this.interfaceName = interfaceName;
      //End D-2372 09-Mar-2015 Added by Raviteja
-	 //START D-2372 05-Mar-2015 Added by Joban - Modified the string query	
+     //START D-2372 05-Mar-2015 Added by Joban - Modified the string query  
         this.query = 'select Package__r.Package_Code__c,Product_Rate_Plan__r.zqu__ZProduct__c,Package__r.name,package__r.Subscription_Period__c,'+
-					'Product_Rate_Plan__r.zqu__Description__c,package__r.Package_Type__c,package__r.Effective_Start_Date__c,package__r.Effective_End_Date__c,'+
-					'createddate,createdby.name,lastmodifieddate,lastmodifiedby.name,Product_Rate_Plan__r.SubscriptionFrequency__c,Package__r.Channel_E_shop_public__c,'+
-					'Package__r.Channel_E_shop_overseas__c,Package__r.Channel_E_shop_private__c,Package__r.Channel_Direct__c,package__r.Sequence__c,'+
-					'package__r.Package_Price__c,Product_Rate_Plan__r.BillingType__c,Product_Rate_Plan__r.BillingPeriod__c from Package_Item__c';
+                    'Product_Rate_Plan__r.zqu__Description__c,package__r.Package_Type__c,package__r.Effective_Start_Date__c,package__r.Effective_End_Date__c,'+
+                    'createddate,createdby.name,lastmodifieddate,lastmodifiedby.name,Product_Rate_Plan__r.SubscriptionFrequency__c,Package__r.Channel_E_shop_public__c,'+
+                    'Package__r.Channel_E_shop_overseas__c,Package__r.Channel_E_shop_private__c,Package__r.Channel_Direct__c,package__r.Sequence__c,'+
+                    'package__r.Package_Price__c,Product_Rate_Plan__r.BillingType__c,Product_Rate_Plan__r.BillingPeriod__c from Package_Item__c';
      }
     //End D-2372 05-Mar-2015 Added by Joban
     /* @description 
@@ -36,7 +36,7 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
         List<BA_INT_DATA_POOL__c> resultList = [SELECT Id FROM BA_INT_DATA_POOL__c WHERE Name = 'ESH1003DX'];
         delete resultList;  
         //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Header record into BA_INT_DATA_POOL__c
-	    BA_INT_DATA_POOL__c datapoolHRecord = new BA_INT_DATA_POOL__c();
+        BA_INT_DATA_POOL__c datapoolHRecord = new BA_INT_DATA_POOL__c();
         datapoolHRecord.name = interfaceName;
         datapoolHRecord.job_id__c = interfaceName;
         datapoolHRecord.group_id__c = 'Master';
@@ -77,7 +77,7 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
             Package_Item__c prodPubRec = (Package_Item__c)record;
             
             String exportData = '';
-			//START D-2372 05-Mar-2015 Added by Joban - Modified the string used for generating csv
+            //START D-2372 05-Mar-2015 Added by Joban - Modified the string used for generating csv
             exportData += prodPubRec.Package__r.Package_Code__c + ',';
             exportData += prodPubRec.Product_Rate_Plan__r.zqu__ZProduct__c + ',';
             exportData += prodPubRec.Package__r.name + ',';
@@ -96,12 +96,12 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
             exportData += prodPubRec.Package__r.Channel_E_shop_private__c + ',';
             exportData += prodPubRec.Package__r.Channel_Direct__c + ',';
             exportData += prodPubRec.Package__r.Sequence__c + ',';
-			exportData += prodPubRec.Package__r.Package_Price__c + ','; 
-			exportData += prodPubRec.Product_Rate_Plan__r.BillingType__c + ',';
-			exportData += prodPubRec.Product_Rate_Plan__r.BillingPeriod__c + ',';
+            exportData += prodPubRec.Package__r.Package_Price__c + ','; 
+            exportData += prodPubRec.Product_Rate_Plan__r.BillingType__c + ',';
+            exportData += prodPubRec.Product_Rate_Plan__r.BillingPeriod__c + ',';
             
-			//END D-2372 05-Mar-2015 Added by Joban
-			
+            //END D-2372 05-Mar-2015 Added by Joban
+            
             BA_INT_DATA_POOL__c datapoolRecord = new BA_INT_DATA_POOL__c();
             datapoolRecord.name = interfaceName;
             datapoolRecord.job_id__c = interfaceName;
@@ -125,8 +125,8 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
         datapoolList.add(datapoolTRecord);        
         */
         //End D-1882 05-Feb-2015 Added by Raviteja
-		
-		 //START D-1882 05-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
+        
+         //START D-1882 05-Feb-2015 Added by Raviteja - Calculating the datapoolList size 
          datapoolListsize = datapoolList.size()+datapoolListsize;
          //End D-1882 05-Feb-2015 Added by Raviteja
         
@@ -150,7 +150,7 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
      */ 
     global void finish(Database.BatchableContext BC)
     {   
-	    //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
+        //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolTRecord = new BA_INT_DATA_POOL__c();
         datapoolTRecord.name = interfaceName;
         datapoolTRecord.job_id__c = interfaceName;
@@ -161,9 +161,9 @@ global class BT_AB_ESH1003DX_ESHOPPackage implements Database.Batchable<sObject>
         insert datapoolTRecord;
         //End D-1882 05-Feb-2015 Added by Raviteja
         
-		//start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
+        //start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
         BT_AT_BatchCalloutHandler calloutHandler = new BT_AT_BatchCalloutHandler(interfaceName);
         Database.executeBatch(calloutHandler);
-		//End Nitin/D-2087/6Feb2015
+        //End Nitin/D-2087/6Feb2015
     }
 }

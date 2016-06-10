@@ -161,7 +161,7 @@
         Date curDate;
         if(tempToSubsIds_MAP.size()>0 && subsIdSet.size()>0){
             checkSubsWithCoa_LIST = [Select Id,Subscription_Vendor__c,Case__c,Case_Record_Type__c, Case__r.Change_of_Address_Type__c,Case__r.Sub_Status__c, Case__r.Effective_Date__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :subsIdSet AND Case__r.RecordTypeId = :ConstantsSLB.getKeyId('Case_Change in Address') AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_WAITING_FOR_COA_APPROVAL AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_COA_REJECTED];
-        
+
             if(checkSubsWithCoa_LIST.size()>0){
                 for(Id temp : tempToSubsIds_MAP.keySet()){
                     for(Id subId : tempToSubsIds_MAP.get(temp)){

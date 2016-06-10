@@ -1,6 +1,6 @@
 @isTest
 private class SP_PDFGeneratorTest2 {
-    /*
+    
     static testMethod void testCreditNote() {
         List<Other__c> otherList = new List<Other__c>{
             new Other__c(Name='DTL', Value__c='23:59')
@@ -852,5 +852,5 @@ private class SP_PDFGeneratorTest2 {
         }
         catch(Exception e){}
     }
-*/
+
 }

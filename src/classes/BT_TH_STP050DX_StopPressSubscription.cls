@@ -9,6 +9,7 @@
  * History: 05/26/2015 UD-1310 Kevin Evasco - Changed payment mode from Credit Card / Cash to eNets
  * History: 06/19/2015 D-3033 Kevin Evasco - Compilation of hotfixes
  * History: 11/26/2015 D-3993 Renino Niefes - Related to D-3911. Remove Account.Phone from the code.  It shouldn't be populated.
+ * History: 05/12/2016 PD-0174 Erika Hidalgo - Commented out unused string to integer conversion.
  */
 
 public class BT_TH_STP050DX_StopPressSubscription 
@@ -102,6 +103,7 @@ public class BT_TH_STP050DX_StopPressSubscription
             if(isValid) {
                 getPackage();
             }
+
             //START 12 October 2015 UD-3075 Kevin Evasco - Get base package item
             if(isValid) {
                 getBasePackageItem();
@@ -120,6 +122,7 @@ public class BT_TH_STP050DX_StopPressSubscription
                 }
             }
             */
+
             if(isValid) {
                 orderNumber = getOrderNumber(so.online_order_num__c);               
                 if(orderNumber == null) {
@@ -462,9 +465,9 @@ public class BT_TH_STP050DX_StopPressSubscription
         {
             Integer.valueOf(so.subscriber_home_tel_number__c);
             accountRecord.Telephone_Residence__c = so.subscriber_home_tel_number__c;
-			//Start D-3993 2015-11-26 Renz Remove Account.Phone field from being populated.
+            //Start D-3993 2015-11-26 Renz Remove Account.Phone field from being populated.
             //accountRecord.Phone = so.subscriber_home_tel_number__c; //START 14 October 2015 UD-3008 Kevin Evasco - Home Phone Assignment
-			//End D-3993 2015-11-26 Renz
+            //End D-3993 2015-11-26 Renz
         }
         catch(Exception e)
         {
@@ -483,7 +486,7 @@ public class BT_TH_STP050DX_StopPressSubscription
         }
         try
         {
-            Integer.valueOf(so.subscriber_office_ext_number__c);
+           Integer.valueOf(so.subscriber_office_ext_number__c);
             accountRecord.Office_Extension__c = so.subscriber_office_ext_number__c;
         }
         catch(Exception e)
@@ -750,6 +753,7 @@ public class BT_TH_STP050DX_StopPressSubscription
         {       
             isValid = false;
             validationDetails += 'Postal Code ' + postalCode + ' does not exist. ';
+           
         }
         
         return singpostAddressRecord;
@@ -882,8 +886,9 @@ public class BT_TH_STP050DX_StopPressSubscription
     
     //START 12 October 2015 UD-3075 Kevin Evasco - Get base package item
     public static void getBasePackageItem() {
-        List<Package_Item__c> basePackageItemList = [SELECT Id, Product_Rate_Plan__r.Product_Code__c FROM Package_Item__c WHERE Package__c = :packageRecord.Id AND RecordTypeID = :ConstantsSLB.getKeyID('Package Item_Base Product') AND Product_Rate_Plan__r.Product_Code__c != NULL];
         
+        List<Package_Item__c> basePackageItemList = [SELECT Id, Product_Rate_Plan__r.Product_Code__c, RecordTypeID FROM Package_Item__c WHERE Package__c = :packageRecord.Id AND RecordTypeID =:ConstantsSLB.getKeyID('Package Item_Base Product') AND Product_Rate_Plan__r.Product_Code__c != NULL];
+
         if(!basePackageItemList.isEmpty()){
             basePackageItemRecord = basePackageItemList.get(0);
         }
@@ -892,6 +897,7 @@ public class BT_TH_STP050DX_StopPressSubscription
             isValid = false;
             validationDetails += 'Package does not have a base package item or missing product code. ';
         }
+
     }
     //END 12 October 2015 UD-3075 Kevin Evasco - Get base package item
     

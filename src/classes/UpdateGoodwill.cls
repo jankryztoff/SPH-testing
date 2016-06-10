@@ -1,10 +1,3 @@
-public with sharing class UpdateGoodwill {
-    
-    
-    public String getResponse() {
-        return response;
-    }
-   
 // Author: Marvin Gatchalian
 // Date: 10/20/2014
 // Defect/CR no:
@@ -12,13 +5,13 @@ public with sharing class UpdateGoodwill {
 //      High-Level: Update the Zuora Account Good Will field
 //      Detailed:   update good will field after approval of case
 //
-// Update:
-// Update by:
-// Update date:
-// Defect/CR no:
-// Update reason:
-//      High-Level: 
-//      Detailed:   
+
+
+public with sharing class UpdateGoodwill {
+    
+    public String getResponse() {
+        return response;
+    }
     
     String returnUrl;
     String billingAccountId;
@@ -26,8 +19,19 @@ public with sharing class UpdateGoodwill {
     public String response { get; set; }
     public static Boolean isTrue = true; //START PD-0174 23-MAY-2016 KTUMANENG Added "else if condition for SUCCESS and ERROR response" to cover ERROR condition in test class
     
-    
 
+    /**********************************************************
+     * REVISON(s)
+     * Update by                : Kingsley Tumaneng
+     * Update date              : MAY 23, 2016
+     * Defect/CR no             : 
+     * Update reason            
+     *      High-Level          : 
+     *      Detailed            : Added else if condition
+     *                            and a public boolean variable
+     *                            so that the test class can 
+     *                            cover up the else in for loop
+    **********************************************************/
     @future (callout=true)
     public static void updateZuoraGoodWillCall(string goodwillValue, string billingAccountId){
     
@@ -51,15 +55,16 @@ public with sharing class UpdateGoodwill {
         Zuora.zObject rec = new Zuora.zObject('Account');
         rec.setValue('Id', billingAccountId);
         rec.setValue('Goodwill_Amount__c', goodwillValue);
-            
             try {
                 List<Zuora.zObject> objs = new List<Zuora.zObject> {rec};
-                List<Zuora.zApi.SaveResult> results;
+                system.debug('***objs = ' + objs);
+                List<Zuora.zApi.SaveResult> results = new List<Zuora.zApi.SaveResult>();
+
                     if(!Test.isRunningTest()){
                         results = zApiInstance.zupdate(objs);
-                        //system.debug('>>>>>>>222' + objs);
+                        system.debug('>>>>>>>222' + objs);
                     }
-                    
+
                     /* START PD-0174 23-MAY-2016 KTUMANENG Added "else if condition for SUCCESS and ERROR response" to cover ERROR condition in test class*/
                     else if(isTrue){
                         results                         = new List<Zuora.zApi.SaveResult>() ;
@@ -110,11 +115,10 @@ public with sharing class UpdateGoodwill {
             catch (Zuora.zRemoteException ex) {  
                 if ('INVALID_FIELD' == ex.code) {  
                 } 
-                
             } 
             
             catch (Zuora.zAPIException ex) {  
-                ex.getMessage();  
+                system.debug('***zAPIException = ' + ex.getMessage());  
             }
             
             catch (Zuora.zForceException ex) {

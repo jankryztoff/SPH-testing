@@ -8,8 +8,19 @@
  *Modified Date <2/5/2015>
  */
 
-@isTest(seeAllData = True)
+@isTest
 global class DeliveryChargeCheckTest{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createMASS_CONFIG();
+        insert CustomSettingsDataFactory.createError_Messages();
+    }
+    
     
     static testMethod void testDeliveryChargeCheck(){
     

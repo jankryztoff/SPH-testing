@@ -150,7 +150,7 @@
                  ContactId, Contact.FirstName, Contact.LastName, Contact.Phone, Subscription_Name__r.Recipient_Contact__r.HomePhone__c,
                  Subscription_Name__r.Recipient_Contact__r.Phone, Subscription_Name__r.Recipient_Contact__r.Mobile_Number__c,
                  Subscription_Name__r.Recipient_Contact__r.Mobile_Number_2__c, Subscription_Name__r.Recipient_Contact__r.Office_Number__c, 
-                 Subscription_Name__r.Qty__c, Subscription_Name__r.Name, Subscription_Name__r.Status_formula__c, Subscription_Name__r.Recipient_Contact__r.FirstName, Subscription_Name__r.Recipient_Contact__r.LastName //UD-3952 Kristine Campang
+                 Subscription_Name__r.Qty__c, Subscription_Name__r.Name, Subscription_Name__r.Status_formula__c, Subscription_Name__r.Recipient_Contact__r.FirstName, Subscription_Name__r.Recipient_Contact__r.LastName
                 FROM Case 
                 WHERE Id = :ApexPages.currentPage().getParameters().get('caseId')]; //gets case Record from Page
             // End UD-3391 02Mar16 JohnD - added Subscription_Name__r.Name, Subscription_Name__r.Status_formula__c fields

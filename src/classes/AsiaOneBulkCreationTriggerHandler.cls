@@ -73,6 +73,7 @@ public class AsiaOneBulkCreationTriggerHandler {
     // Start UD-3401 11Jan16 JohnD - improved logic            
             Asia1__c asia1Rec;
             // Start UD-3329 30Nov15 JohnD - added logic for existing ldapid
+
             if (!existingLdapId_asia1.keySet().contains(tempRec.User_ID_LDAP_ID__c)) {  
                 
                 if (ldapId_newAsia1.get(tempRec.User_ID_LDAP_ID__c) == null) {
@@ -198,8 +199,7 @@ public class AsiaOneBulkCreationTriggerHandler {
                     // Start UD-3401 23Dec15 JohnD
                     asia1IdSetLevel1.add(asia1Id);
                     if (batchCounter == MAX_ASIA1_LEVEL_1 || counter == totalAsia1) {
-                        
-                        System.enqueueJob(new BulkAsiaOneSignUpLevel1Queueable(asia1IdSetLevel1));
+						System.enqueueJob(new BulkAsiaOneSignUpLevel1Queueable(asia1IdSetLevel1));
                         asia1IdSetLevel1 = new set<id>();
                         batchCounter = 0;
                     }
@@ -234,13 +234,12 @@ public class AsiaOneBulkCreationTriggerHandler {
                     paramList.add(serviceFlagParam);
                     
                     if (batchCounter == MAX_ASIA1_LEVEL_1 || counter == totalAsia1) {
-                        
-                        System.enqueueJob(new BulkServiceFlagActivationLevel1Queueable(paramList));
+						System.enqueueJob(new BulkServiceFlagActivationLevel1Queueable(paramList));
                         paramList = new list<ServiceFlagActivationParamWrapper>();
                         batchCounter = 0;
                     }
                     
-                    batchCounter++;
+                    batchCounter++; 
                     counter++;
                     
                     //AsiaOneServicesController.enableServicesFuture(ro.get(REQUEST_FIELD_NAME_LDAP_ID), ro.get(REQUEST_FIELD_NAME_SERVICE_FLAGS), asia1SubscriptionIdSet, ro.get(REQUEST_FIELD_NAME_SUBSCRIPTION_ID));
@@ -253,9 +252,10 @@ public class AsiaOneBulkCreationTriggerHandler {
         }       
     }
     
+    // Start PD-0236 Bea Rillorta: Add testVisible to manually call in the test class
     @future (callout=true)
-    private static void apiSignUp(id asia1IdParam) {
-        
+    @TestVisible private static void apiSignUp(id asia1IdParam) {
+    // End PD-0236 Bea Rillorta: Add testVisible to manually call in the test class
         string serviceFlags = '';
         Map<String, String> sReqVO = new Map<String, String>();
         string status;
@@ -266,7 +266,7 @@ public class AsiaOneBulkCreationTriggerHandler {
                 Subscription__r.Recipient_Contact__r.Mobile_Number__c, Subscription__r.Recipient_Contact__r.HomePhone__c, 
                 Subscription__r.Recipient_Contact__r.Office_Number__c from Asia1_Subscription__c 
                 where Asia1__c = :asia1IdParam];
-        
+
         for (Asia1_Subscription__c asia1Subscription : asia1SubscriptionList) {
                     
             if (serviceFlags != '') {

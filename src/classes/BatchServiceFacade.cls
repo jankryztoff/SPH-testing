@@ -22,7 +22,7 @@ public class BatchServiceFacade{
         req.setHeader('content-type','application/json');
         req.setBody(JSONString);
 
-		//START D-3810 23-Oct-2015 LISEN - add log if callout failed
+        //START D-3810 23-Oct-2015 LISEN - add log if callout failed
         Logger logger = new Logger(LoggerTest.class.getName(), requestVO.getJobId());
         try
         { 
@@ -46,14 +46,14 @@ public class BatchServiceFacade{
         }
         catch(Exception e)
         { 
-        	// Start D-3478 28Sep15 JohnD - added log
-        	logger.log(e);
+            // Start D-3478 28Sep15 JohnD - added log
+            logger.log(e);
             // System.debug('Error:'+e); // commented out
             // End D-3478 28Sep15 JohnD - added log
         }finally{
-			logger.save();
-		}
-		//END D-3810 23-Oct-2015 LISEN - add log if callout failed
+            logger.save();
+        }
+        //END D-3810 23-Oct-2015 LISEN - add log if callout failed
         return batchSvcResp;//START-END 2/10/2014 D-2153 Added by Krithika D
     }
 }

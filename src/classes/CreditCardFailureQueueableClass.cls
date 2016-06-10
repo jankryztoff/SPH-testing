@@ -11,6 +11,9 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
     
     //Lists
     List<Usage__c> usageList = new List<Usage__c>();
+    List<Usage__c> usageToCloneList = new List<Usage__c>(); //START-END PD-0291 5/31/2016 Added by J.Sarion
+    List<Usage__c> usageCloneList = new List<Usage__c>(); //START-END PD-0291 5/31/2016 Added by J.Sarion
+    List<Usage__c> usageToDeleteList = new List<Usage__c>(); //START-END PD-0506 6/10/2016 Added by J.Sarion
     
     //Maps
     Map<String, String> subZuoraIdToUomTypeMap = new Map<String, String>();
@@ -23,13 +26,20 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
     
     //Sets
     public Set<Id> billAccIdSet {get;set;}
-    
+    public Set<String> usageTypeSet = new Set<String>{'Adjustment', 'Goodwill', 'NonDelivery', 'Tstop', 'PostageCharge', 'DeliveryCharge'}; //START-END PD-0291 5/31/2016 Added by J.Sarion - usage type to be cloned
+    //Start PD-0039 5-17-2016 added by Jason A. 
+    public static Integer DelSubQty;
+    public static List<Zuora__Subscription__c> zuoSubDel = new List<Zuora__Subscription__c>();
+    public static List<Zuora__SubscriptionProductCharge__c> zuoProdChargeDel = new List<Zuora__SubscriptionProductCharge__c>();
+    //End PD-0039 5-17-2016 added by Jason A. 
     public Boolean isBillRun = boolean.valueOf(ConstantsSLB.getKeyId('BILL_RUN_TESTING').toLowerCase());//START-END UD-2549 4/3/2016 Added By J.Sarion - Set Bill Run boolean
     //START UD-2549 4/8/2016 Added by J.Sarion - Set PStop Testing Date
     Date_Configuration__c dateConfig = Date_Configuration__c.getInstance('PAYMENT_FAILURE_TEST_PSTOP_DATE');
     public Date testingPSTOPDate = dateConfig.Date__c;
     //END UD-2549 4/8/2016 Added by J.Sarion - Set PStop Testing Date
-    
+    //Start PD-0039 5-17-2016 added by Jason A.    
+    Date firstdateofmonth = date.today().toStartofMonth();
+        //End PD-0039 5-17-2016 added by Jason A.
     public CreditCardFailureQueueableClass(Set<Id> billAccIds) {
         this.billAccIdSet = billAccIds;
     }
@@ -65,6 +75,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         Map<String, Set<String>> invIdToIliIdSetMap = new Map<String, Set<String>>();
         Map<String, List<Zuora.ZObject>> invIdToTaxListMap = new Map<String, List<Zuora.ZObject>>();
         //END D-4672 4/15/2016 Added by J.Sarion
+        Map<String, String> subNameToSubZuoraIdMap = new Map<String, String>(); //START-END PD-0291 6/2/2016 Added J.Sarion
         
         //Sets
         Set<Id> contactIdSet = new Set<Id>();
@@ -81,6 +92,8 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         Set<String> recPrepaidInvoiceSet = new Set<String>();
         Set<String> invoiceItemIdSet = new Set<String>();
         //END UD-2549 4/5/2016 Added  by J.Sarion
+        Set<String> cancelledSubZuoraIdSet = new Set<String>(); //START-END PD-0506 6/9/2016 Added by J.Sarion
+        Set<String> cancelledSubNameSet = new Set<String>(); //START-END PD-0506 6/9/2016 Added by J.Sarion
         
         //Lists
         List<Contact> contactList = new List<Contact>();
@@ -113,8 +126,12 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         List<Map<String, Object>> invItemAdjustmentMapList = new List<Map<String, Object>>();
         List<Map<String, Object>> cancelPaymentMapList = new List<Map<String, Object>>();
         //END UD-2549 4/5/2016 Added by J.Sarion
-        List<Map<String, Object>> taxItemAdjustmentMapList = new List<Map<String, Object>>(); //START-END UD-2549 4/9/2016 Added by J.Sarion 
+        List<Map<String, Object>> taxItemAdjustmentMapList = new List<Map<String, Object>>(); //START-END UD-2549 4/9/2016 Added by J.Sarion
+        List<Zuora.zObject> subZuoraList = new List<Zuora.zObject>();
         
+        //Start PD-0039 5-17-2016 added by Jason A.
+        Map<id,Zuora__SubscriptionProductCharge__c> zuoSubDelMap = new Map<id,Zuora__SubscriptionProductCharge__c>();
+        //End PD-0039 5-17-2016 added by Jason A.
         //Variables
         String queryStr = '';
         String zoqlString = '';
@@ -123,14 +140,29 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         //START UD-2549 3/23/2016 Added by J.Sarion - added logger
         Logger logger = new Logger(CreditCardFailureQueueableClass.class.getName());
         
+        //START PD-0506 6/10/2016 Added by J.Sarion - set reference date
+        Date referenceLastStartDate = date.today().addMonths(-1).toStartOfMonth();
+        Date referenceLastEndDate;
+        Date referenceStartDate = date.today().toStartOfMonth();
+        Date referenceEndDate;
+        
+        if(isBillRun) {
+            referenceLastStartDate = testingPSTOPDate.addMonths(-1).toStartOfMonth();
+            referenceStartDate = testingPSTOPDate.toStartOfMonth();
+        }
+        referenceLastEndDate = referenceLastStartDate.addMonths(1).addDays(-1);
+        referenceEndDate = referenceLastStartDate.addMonths(1).addDays(-1);
+        //END PD-0506 6/10/2016 Added by J.Sarion - set reference date
+        
         try {
             ZuoraCallOut zCallout = new ZuoraCallOut();
             
             system.debug('>>>>>billAccIdSet ' + billAccIdSet);
-            billAccList = [SELECT Id, Name, Zuora__BillCycleDay__c, Zuora__Currency__c, Zuora__PaymentTerm__c, Zuora__Account__c, Billing_Type__c, Other_PaymentMethod__c, 
-                                Zuora__Zuora_Id__c, Billing_Contact__c, Zuora__Default_Payment_Method__r.Zuora__NumConsecutiveFailures__c, (SELECT Id, Name, Zuora__Zuora_Id__c FROM Zuora__Subscriptions__r WHERE Zuora__Status__c = 'Active') 
+            //START PD-0506 6/9/2016 Added by J.Sarion - get all subscriptions
+            billAccList = [SELECT Id, Name, Zuora__BillCycleDay__c, Zuora__Currency__c, Zuora__PaymentTerm__c, Zuora__Account__c, Billing_Type__c, Other_PaymentMethod__c, Zuora__Zuora_Id__c, Billing_Contact__c, Zuora__Default_Payment_Method__r.Zuora__NumConsecutiveFailures__c, (SELECT Id, Name, Zuora__Zuora_Id__c FROM Zuora__Subscriptions__r) 
                            FROM Zuora__CustomerAccount__c 
                            WHERE ID IN: billAccIdSet AND Billing_Type__c != 'Full Prepaid']; //START-END UD-2549 3/15/2016 Added by J.Sarion - Added checking for Billing Type
+            //END PD-0506 6/9/2016 Added by J.Sarion - get all subscriptions
             system.debug('>>>>>billAccList ' + billAccList);
             for(Zuora__CustomerAccount__c billAcc :billAccList) {
                 contactIdSet.add(billAcc.Billing_Contact__c);
@@ -140,46 +172,144 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 for(Zuora__Subscription__c sub :billAcc.Zuora__Subscriptions__r) {
                     subIdSet.add(sub.Id); //START-END UD-2549 3/15/2016 Added by J.Sarion - set map zuora Id to sub
                     subZuoraIdToSubNameMap.put(sub.Zuora__Zuora_Id__c, sub.Name);
+                    //START PD-0506 6/9/2016 Added by J.Sarion - commented out
+                    /*
                     if(oldZuoraIdToSubIdSetMap.containsKey(billAcc.Zuora__Zuora_Id__c)) {
                         oldZuoraIdToSubIdSetMap.get(billAcc.Zuora__Zuora_Id__c).add(sub.Zuora__Zuora_Id__c);
                     }
                     else {
                         oldZuoraIdToSubIdSetMap.put(billAcc.Zuora__Zuora_Id__c, new Set<String> {sub.Zuora__Zuora_Id__c});
                     }
+                    */
+                    //END PD-0506 6/9/2016 Added by J.Sarion - commented out
                 }
             }
             
             //START UD-2549 3/15/2016 Added by J.Sarion - set map zuora id to sub
+            //Start PD-0039 5-17-2016 added by Jason A.
             if(!subIdSet.isEmpty()) {
-                subList = [SELECT Id, Name, Zuora__Account__c, Product_Code__c, Main_Package_1__c, Zuora__Zuora_Id__c, Billing_Type__c, Delivered_By__c, 
-                                Zuora__SubscriptionEndDate__c, Main_Package_1__r.Package_Type__c, Subscriber_Contact__c, Zuora__CustomerAccount__c, Zuora__CustomerAccount__r.Zuora__DefaultPaymentMethod__c, Subscription_Type_1__c, Order_Line_Item_Number_1__c, Zuora__SubscriptionStartDate__c, (SELECT Id, PublicationCode__c FROM Zuora__Subscription_Product_Charges__r WHERE Zuora__Subscription__r.Subscription_Type_1__c = 'Publication') 
+                //START PD-0506 5/9/2016 Added by J.Sarion - delete amended subscriptions
+                //START PD-0291 6/6/2016 Added by J.Sarion - updated query
+                subList = [SELECT Id, Name, Zuora__Account__c, Product_Code__c, Main_Package_1__c, Delivered_By__c, Main_Package_1__r.Package_Type__c, 
+                                  Subscriber_Contact__c, Zuora__CustomerAccount__c, Zuora__CustomerAccount__r.Zuora__DefaultPaymentMethod__c, Zuora__CustomerAccount__r.Zuora__Zuora_Id__c, Order_Line_Item_Number_1__c, Zuora__CustomerAccount__r.Zuora__AccountNumber__c, Frequency_1__c, Grace_End_Date__c, Zuora__Status__c, Zuora__SubscriptionStartDate__c, Subscription_Type_1__c, Zuora__SubscriptionEndDate__c, Number_of_Copies__c, Billing_Type__c, Grace_Period_Subscription__c, Grace_Days__c, Order_Line_Item_Number_1__r.Main_Package_Frequency__c, Order_Line_Item_Number_1__r.Ph_e__c, Order_Line_Item_Number_1__r.Ph_d__c, Zuora__TermSettingType__c, Term_Length__c, Zuora__Zuora_Id__c, (SELECT Zuora__Quantity__c, Zuora__RatePlanName__c, Name,Id, Zuora__ProductSKU__c, Zuora__ChargeNumber__c, Zuora__UOM__c, Zuora__Type__c, Zuora__Subscription__c, PublicationCode__c, Zuora__Subscription__r.Zuora__Zuora_Id__c, Zuora__Subscription__r.Billing_Type__c FROM Zuora__Subscription_Product_Charges__r)
+                                //WHERE Zuora__Subscription__r.Subscription_Type_1__c = 'Publication')
                            FROM Zuora__Subscription__c 
                            WHERE Id IN :subIdSet]; //START-END UD-2549 3/29/2016 Added by J.Sarion
-                           
+                system.debug('>>>>>subList' + subList);
+                //END PD-0291 6/6/2016 Added by J.Sarion - updated query
+            //End PD-0039 5-17-2016 added by Jason A.
+    
                 for(Zuora__Subscription__c sub :subList) {
+                    if(sub.Zuora__Status__c == GlobalVariableClass.STATUS_CANCELLED) {
+                        cancelledSubZuoraIdSet.add(sub.Zuora__Zuora_Id__c);
+                        cancelledSubNameSet.add(sub.Name);
+                    }
+                }
+                system.debug('>>>>>cancelledSubZuoraIdSet' + cancelledSubZuoraIdSet);
+                system.debug('>>>>>cancelledSubNameSet' + cancelledSubNameSet);
+                logger.log(false, 'cancelledSubZuoraIdSet ' + cancelledSubZuoraIdSet);
+                logger.log(false, 'cancelledSubNameSet ' + cancelledSubNameSet);
+                if(!cancelledSubZuoraIdSet.isEmpty()) {
+                    resultMapList =  new List<Map<String, String>>();
+                    resultMapList = zCallOut.deleteZObjects(cancelledSubZuoraIdSet, 'Subscription');
+                    for(Map<String, String> resultMap :resultMapList) {
+                        system.debug('>>>>>resultMap' + resultMap);
+                        if(resultMap.get('Status') != 'Success') {
+                            logger.log(false, 'Subscription deletion failed: ' + resultMap.get('Message'));
+                        }
+                    }
+                }
+                
+                queryStr = '';
+                zoqlString = '';
+                
+                for(String subName :cancelledSubNameSet) {
+                    queryStr += ' OR Name=\'' + subName + '\'';
+                }
+           
+                if(queryStr != '') {
+                    queryStr = queryStr.substring(4);
+                    zoqlString = 'SELECT Id, Name FROM Subscription Where ' + queryStr ;
+                    subZuoraList = zCallout.bulkQueryZObjects(zoqlString);
+                }
+                system.debug('>>>>>subZuoraList' + subZuoraList);
+                logger.log(false, 'subZuoraList ' + subZuoraList);
+                if(!subZuoraList.isEmpty()) {
+                    for(Zuora.zObject zobj :subZuoraList) {
+                        subNameToSubZuoraIdMap.put(string.valueOf(zobj.getValue('Name')), string.valueOf(zobj.getValue('Id')));
+                    }
+                }
+                
+                if(!cancelledSubNameSet.isEmpty()) {
+                    usageToDeleteList = [SELECT Id FROM Usage__c WHERE Subscription_Id__c IN :cancelledSubNameSet AND StopType__c = 'Pstop' AND Start_Date__c >= :referenceStartDate AND Start_Date__c <= :referenceEndDate];
+                
+                    if(!usageToDeleteList.isEmpty()) {
+                        try{
+                            database.delete(usageList, false) ;
+                        }
+                        catch(Exception e) {
+                            system.debug('>>>>>error ' + e);
+                            logger.log(e);
+                        }
+                    }
+                }
+                
+                //END PD-0506 5/9/2016 Added by J.Sarion - delete amended subscriptions
+                logger.log(false, 'subNameToSubZuoraIdMap ' + subNameToSubZuoraIdMap);
+                for(Zuora__Subscription__c sub :subList) {
+                    //START PD-0506 6/9/2016 Added by J.Sarion - check if previously cancelled
                     Set<String> pubCodeSet = new Set<String>();
+                    String zuoraId = sub.Zuora__Zuora_Id__c;
                     
                     subNameSet.add(sub.Name);
                     //subZuoraIdToSubMap.put(sub.Zuora__Zuora_Id__c, sub);
+                    if(subNameToSubZuoraIdMap.containsKey(sub.Name)) {
+                        zuoraId = subNameToSubZuoraIdMap.get(sub.Name);
+                        sub.Zuora__Zuora_Id__c = zuoraId;
+                    }
                     
+                    subNameToSubZuoraIdMap.put(sub.Name, zuoraId); //START-END PD-0291 6/2/2016 Added by J.Sarion
+                    
+                    //START PD-0291 6/6/2016 Added by J.Sarion - for publication only
                     if(sub.Subscription_Type_1__c == 'Publication') {
                         subForCaseCreationList.add(sub); //START-END UD-2549 3/29/2016 Added by J.Sarion
-                        oliIdToPubIdMap.put(sub.Order_Line_Item_Number_1__c, sub.Zuora__Zuora_Id__c);
-                    }
+                        oliIdToPubIdMap.put(sub.Order_Line_Item_Number_1__c, zuoraId);
                     
-                    for(Zuora__SubscriptionProductCharge__c spc :sub.Zuora__Subscription_Product_Charges__r) {
-                        if(spc.PublicationCode__c != null) {
-                            pubCodeSet.add(spc.PublicationCode__c);
-                            allPubCodeSet.add(spc.PublicationCode__c);
+                    
+                        for(Zuora__SubscriptionProductCharge__c spc :sub.Zuora__Subscription_Product_Charges__r) {
+                            if(spc.PublicationCode__c != null) {
+                                pubCodeSet.add(spc.PublicationCode__c);
+                                allPubCodeSet.add(spc.PublicationCode__c);
+                            }
+                            
+                            //START PD-0506 6/9/2016 Added by J.Sarion - set spc identifier to spc
+                            if(spc.Zuora__Subscription__r.Billing_Type__c == 'Recurring Prepaid') {
+                                spcIdentifierToSpcMap.put(generateSpcIndentifierKey(zuoraId, spc.Zuora__UOM__c, spc.PublicationCode__c), spc);
+                            }
+                            else if(spc.Zuora__Subscription__r.Billing_Type__c == 'Recurring Postpaid') {
+                                spcIdentifierToSpcMap.put(generateSpcIndentifierKey(zuoraId, spc.Zuora__UOM__c, spc.PublicationCode__c), spc);
+                            }
+                            //END PD-0506 6/9/2016 Added by J.Sarion - set spc identifier to spc
                         }
+                        
+                        pubCodeSet.remove(null);
+                        subZuoraIdToPubCodeSetMap.put(zuoraId, new Set<String>(pubCodeSet));
+                    }
+                    //END PD-0291 6/6/2016 Added by J.Sarion - for publication only
+                    
+                    if(oldZuoraIdToSubIdSetMap.containsKey(sub.Zuora__CustomerAccount__r.Zuora__Zuora_Id__c)) {
+                        oldZuoraIdToSubIdSetMap.get(sub.Zuora__CustomerAccount__r.Zuora__Zuora_Id__c).add(zuoraId);
+                    }
+                    else {
+                        oldZuoraIdToSubIdSetMap.put(sub.Zuora__CustomerAccount__r.Zuora__Zuora_Id__c, new Set<String> {zuoraId});
                     }
                     
-                    pubCodeSet.remove(null);
-                    subZuoraIdToPubCodeSetMap.put(sub.Zuora__Zuora_Id__c, new Set<String>(pubCodeSet));
+                    //END PD-0506 6/9/2016 Added by J.Sarion - check if previously cancelled
                 }
             }
             system.debug('>>>>>subZuoraIdToPubCodeSetMap ' + subZuoraIdToPubCodeSetMap);
             system.debug('>>>>>allPubCodeSet ' + allPubCodeSet);
+            system.debug('>>>>>subZuoraList' + subZuoraList);
             if(!allPubCodeSet.isEmpty()) {
                 pubList = [SELECT Id, Earliest_Start_Date__c, Publication_Code__c 
                            FROM Publication__c 
@@ -221,6 +351,8 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                     
                 }
             }
+            system.debug('>>>>>cancelledSubZuoraIdSet' + cancelledSubZuoraIdSet);
+            system.debug('>>>>>cancelledSubNameSet' + cancelledSubNameSet);
             
             //START UD-2549 4/8/2016 Added by J.Sarion - commented out
             /*
@@ -241,6 +373,11 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                               WHERE Order_Line_Item_Number_1__c IN :oliIdToPubIdMap.keySet() AND Subscription_Type_1__c != 'Publication'];
                               
                 for(Zuora__Subscription__c sub :subDelList) {
+                    //START PD-0506 6/10/2016 Added by J.Sarion - Set new zuora Id
+                    if(subNameToSubZuoraIdMap.containsKey(sub.Name)) {
+                        sub.Zuora__Zuora_Id__c = subNameToSubZuoraIdMap.get(sub.Name);
+                    }
+                    //END PD-0506 6/10/2016 Added by J.Sarion - Set new zuora Id
                     if(subZuoraIdToEarliestDateMap.containsKey(oliIdToPubIdMap.get(sub.Order_Line_Item_Number_1__c))) {
                         subZuoraIdToEarliestDateMap.put(sub.Zuora__Zuora_Id__c, subZuoraIdToEarliestDateMap.get(oliIdToPubIdMap.get(sub.Order_Line_Item_Number_1__c)));
                     }
@@ -255,19 +392,22 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
             for(String subName :subNameSet) {
                 queryStr += ' OR SubscriptionNumber=\'' + subName + '\'';
             }
-            
+            //Start PD-0039 5-17-2016 added by Jason A.            
             if(queryStr != '') {
                 queryStr = queryStr.substring(4);
-                queryStr += ' AND ChargeAmount > 0';
-                zoqlString = 'SELECT Id, SubscriptionId, InvoiceId FROM InvoiceItem Where ' + queryStr;
-                
+                //queryStr = '(' + queryStr + ')';
+                //queryStr += ' AND ChargeAmount > 0';
+                zoqlString = 'SELECT Id, SubscriptionId, ChargeAmount, InvoiceId FROM InvoiceItem Where ' + queryStr ;
                 invoiceLineItemList = zCallout.bulkQueryZObjects(zoqlString); //START-END UD-2549 3/15/2016 Added by J.Sarion - added params
             }
 
             system.debug('>>>>>invoiceLineItemList ' + invoiceLineItemList);
             if(!invoiceLineItemList.isEmpty()) {
                 for(Zuora.zObject zobj :invoiceLineItemList) {
-                    invoiceZuoraIdSet.add((String) zobj.getValue('InvoiceId'));
+                    if(zobj.getValue('ChargeAmount') != null &&(decimal) zobj.getValue('ChargeAmount') > 0){
+                        invoiceZuoraIdSet.add((String) zobj.getValue('InvoiceId'));
+                    }
+            //End PD-0039 5-17-2016 added by Jason A.
                 }
             }
             system.debug('>>>>>invoiceZuoraIdSet ' + invoiceZuoraIdSet);
@@ -277,10 +417,8 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                                     Is_CN_Processed__c, CreatedDate, Zuora__BillingAccount__r.Billing_Type__c, (SELECT Zuora__Payment__r.Zuora__EXT_ID__c, Zuora__Payment__r.Zuora__Type__c FROM Zuora__PaymentInvoices__r WHERE Zuora__Payment__r.Zuora__Status__c = 'Processed') 
                                FROM Zuora__ZInvoice__c 
                                WHERE Zuora__Zuora_Id__c IN :invoiceZuoraIdSet];
-                               
                 for(Zuora__ZInvoice__c inv :invoiceList) {
                     invIdToAmountMap.put(inv.Zuora__Zuora_Id__c, inv.Zuora__TotalAmount__c); //START-END D-4672 4/15/2016 Added by J.Sarion - Set Invoice Id to Total Amount
-                    
                     if(billAccZuoraIdToInvMap.containsKey(inv.Zuora__BillingAccount__r.Zuora__Zuora_Id__c)) {
                         if(billAccZuoraIdToInvMap.get(inv.Zuora__BillingAccount__r.Zuora__Zuora_Id__c).CreatedDate < inv.CreatedDate) {
                             billAccZuoraIdToInvMap.put(inv.Zuora__BillingAccount__r.Zuora__Zuora_Id__c, inv);
@@ -559,7 +697,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Credit Balance adjustment failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -571,7 +709,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Payment Cancellation failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -599,7 +737,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Invoice Item adjustment failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -611,7 +749,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Unpost Invoice failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -622,7 +760,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Invoice Cancellation failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -701,7 +839,6 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
             system.debug('>>>>>invBAMapList ' + invBAMapList);
             if(!invBAMapList.isEmpty()) {
                 resultMapList = zCallout.loadZObjects(invBAMapList, 'Account');
-                
                 x = 0;
                 for(Map<String, String> resultMap :resultMapList) {         
                     if(billAccZuoraIdToContactMap.containsKey(oldBAZuoraIdList[x])) {
@@ -712,7 +849,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                         amendmentTransferMapList.addAll(createTransferAmendments(oldZuoraIdToSubIdSetMap.get(oldBAZuoraIdList[x]), resultMap.get('Id')));
                     }
                     else if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Invoice BA creation failed: ' + resultMap.get('Message'));
                     }
                     
                     x++;
@@ -730,7 +867,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                         activateAccountMapList.add(activateAccount(resultMapList[x].get('Id'), resultMap.get('Id'), billAccZuoraIdToBillAccMap.get(oldBAZuoraIdList[x]).Zuora__Account__c));
                     }
                     else if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Contact creation failed: ' + resultMap.get('Message'));
                     }
                     
                     x++; //START-END UD-2549 3/15/2016 Added by J.Sarion - counter
@@ -746,7 +883,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Account activation failed: ' + resultMap.get('Message'));
                     }
                 }
             }
@@ -778,7 +915,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                         }
                     }
                     else if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Subscription transfer error: ' + resultMap.get('Message')); //START-END PD-0293 6/9/2016 Added by J.Sarion
                     }
                     x++;
                 }
@@ -800,13 +937,60 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                         subNameToAccountNumberMap.put(subName, billAccZuoraIdToNumberMap.get(subNameToNewBAMap.get(subName)));
                     }
                 }
+                
+                //START PD-0291 5/31/2016 Added by J.Sarion - clone all previous month usages
+                if(!subNameToAccountNumberMap.isEmpty()) {
+                    //START PD-0506 6/10/2016 Added by J.Sarion - commented out
+                    /*
+                    Date referenceLastStartDate = date.today().addMonths(-1).toStartOfMonth();
+                    Date referenceLastEndDate;
+                    
+                    if(isBillRun) {
+                        referenceLastStartDate = testingPSTOPDate.addMonths(-1).toStartOfMonth();
+                    }
+                    referenceLastEndDate = referenceLastStartDate.addMonths(1).addDays(-1);
+                    */
+                    //END PD-0506 6/10/2016 Added by J.Sarion - commented out
+                    usageToCloneList = [SELECT Account_Id__c, Case__c, Date_Added__c, End_Date__c, Publication_Code__c, Quantity__c, Rate_Plan_Charge_Id__c, 
+                                                StopType__c, Subscription_Id__c, Subscription_Temp_Stop__c, UOM__c, Usage_Type__c 
+                                        FROM Usage__c 
+                                        WHERE Usage_Type__c IN :usageTypeSet AND Start_Date__c >= :referenceLastStartDate AND Start_Date__c <= :referenceLastEndDate AND Subscription_Id__c IN :subNameSet];
+                    system.debug('>>>>>usageToCloneList ' + usageToCloneList.size());
+                    system.debug('>>>>>referenceLastStartDate ' + referenceLastStartDate);
+                    system.debug('>>>>>referenceLastEndDate ' + referenceLastEndDate);
+                    for(Usage__c usage :usageToCloneList) {
+                        system.debug('>>>>>subNameToAccountNumberMap ' + subNameToAccountNumberMap.containsKey(usage.Subscription_Id__c));
+                        if(subNameToAccountNumberMap.containsKey(usage.Subscription_Id__c)) {
+                            Usage__c usageClone = new Usage__c();
+                            usageClone = usage;
+                            usageClone.Id = null;
+                            usageClone.End_Date__c = null;
+                            if(subNameToSubZuoraIdMap.containsKey(usage.Subscription_Id__c)) {
+                                if(subZuoraIdToEarliestDateMap.containsKey(subNameToSubZuoraIdMap.get(usage.Subscription_Id__c))) {
+                                    usageClone.End_Date__c = subZuoraIdToEarliestDateMap.get(subNameToSubZuoraIdMap.get(usage.Subscription_Id__c));
+                                }
+                            }
+                            usageClone.Start_Date__c = referenceLastStartDate.addMonths(1);
+                            usageClone.Status__c = 'New';
+                            usageClone.Account_Id__c = subNameToAccountNumberMap.get(usage.Subscription_Id__c);
+                            //START PD-0293 6/8/2016 Added by J.Sarion - update stop type to cc
+                            if(usage.StopType__c != null) {
+                                usageClone.StopType__c = usage.StopType__c + ' CC';
+                            }
+                            //END PD-0293 6/8/2016 Added by J.Sarion - update stop type to cc
+                            usageCloneList.add(usageClone);
+                            system.debug('>>>>>usageClone ' + usageClone);
+                        }
+                    }
+                }
+                //END PD-0291 5/31/2016 Added by J.Sarion - clone all previous month usages
             }
             system.debug('>>>>>subNameToAccountNumberMap ' + subNameToAccountNumberMap);
             system.debug('>>>>>subNameToNewBAMap ' + subNameToNewBAMap);
             if(!subZuoraIdToEarliestDateMap.isEmpty()) {
                 subZuoraIdToAdminChargeMap = AdminFeeComputation.computeAdminChargeBulk(subZuoraIdToEarliestDateMap);
                 system.debug('>>>>>subZuoraIdToEarliestDateMap ' + subZuoraIdToEarliestDateMap);
-                usageDataPrep(subZuoraIdToEarliestDateMap2); //START-END UD-2549 4/3/2016 Added by J.Sarion
+                usageDataPrep(subZuoraIdToEarliestDateMap2, subList);  //START PD-0291 6/6/2016 Added by J.Sarion - updated query
             
                 if(!subZuoraIdToAdminChargeMap.isEmpty()) {
                     AdminCharge_Amendment adminChargeCall = new AdminCharge_Amendment();
@@ -819,13 +1003,71 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                         system.debug('>>>>>resultMapList ' + resultMapList);
                         for(Map<String, String> resultMap :resultMapList) {
                             if(resultMap.get('Status') != 'Success') {
-                                logger.log(false, resultMap.get('Message'));
+                                logger.log(false, 'Admin charge amendment failed: '+ resultMap.get('Message'));
                             }
                         }
                     }
                 }
             }
-            
+            //Start PD-0039 5-17-2016 added by Jason A.  
+            //START PD-0506 6/9/2016 Added by J.Sarion - commented out
+            /*
+            if(!oliIdToPubIdMap.isEmpty()) {
+                //START PD-0268 05/31/2016 Added by J.Sarion - Create usage to Delivery/Postage that was charged in the Invoice
+                zuoSubDel = [SELECT Id, Name, Subscription_Type_1__c, Zuora__CustomerAccount__c, Recipient_Contact__r.Address__r.Name, Zuora__Zuora_ID__c, Term_Length__c, Zuora__CustomerAccount__r.Zuora__AccountNumber__c, Billing_Type__c, Zuora__SubscriptionEndDate__c, Zuora__SubscriptionStartDate__c, Zuora__TermSettingType__c FROM Zuora__Subscription__c WHERE (Subscription_Type_1__c =: GlobalVariableClass.SUBSCRIPTION_TYPE_DELIVERY OR Subscription_Type_1__c =: GlobalVariableClass.SUBSCRIPTION_TYPE_POSTAGE) AND Order_Line_Item_Number_1__c IN :oliIdToPubIdMap.keySet() AND Zuora__Zuora_Id__c IN :iliZuoraIdToSubZuoraIdMap.values()];
+                //END PD-0268 05/31/2016 Added by J.Sarion - Create usage to Delivery/Postage that was charged in the Invoice
+                system.debug('>>>zuoSubDel' + zuoSubDel);
+                if(zuoSubDel.size() > 0){
+                //START PD-0292 5/31/2016 Added by J.Sarion - Added UOM: Postage Charge
+                //START D-4273 1//18/2016 Added by J.Sarion - Added Subscription Subscription Type
+                zuoProdChargeDel = [SELECT Id, Zuora__Price__c, Zuora__UOM__c, Zuora__Subscription__c, Zuora__Subscription__r.Subscription_Type_1__c, Zuora__ChargeNumber__c, PublicationCode__c FROM Zuora__SubscriptionProductCharge__c WHERE Zuora__Subscription__c IN :zuoSubDel AND Zuora__UOM__c IN ('HDB', 'LANDED', 'APT', 'Postage Charge')];  
+                //END D-4273 1//18/2016 Added by J.Sarion - Added Subscription Subscription Type
+                //END PD-0292 5/31/2016 Added by J.Sarion - Added UOM: Postage Charge
+                system.debug('>>>zuoProdChargeDel' + zuoProdChargeDel);
+                    for(Zuora__SubscriptionProductCharge__c subDeliveryCharge : zuoProdChargeDel){
+                        zuoSubDelMap.put(subDeliveryCharge.Zuora__Subscription__c, subDeliveryCharge );
+                        spcIdentifierToSpcMap.put(subDeliveryCharge.Zuora__Subscription__c + ' ' + subDeliveryCharge.Zuora__UOM__c, subDeliveryCharge);
+                        system.debug('>>>>>DEL ' + subDeliveryCharge.Zuora__Subscription__c + ' ' + subDeliveryCharge.Zuora__UOM__c);
+                    }
+                }
+
+
+                //START PD-0268 6/2/2016 Added by J.Sarion - Commented out. Will be handled by PD-0291
+                for(Zuora__Subscription__c SubDel: zuoSubDel) {
+                    Date StopDateDelPost = subZuoraIdToEarliestDateMap.get(SubDel.Zuora__Zuora_Id__c);
+                    try {
+                        system.debug('>>>>>subDel: ' + subDel.Subscription_Type_1__c);
+                        system.debug('>>>>>zuoSubDelMap: ' + zuoSubDelMap.containskey(SubDel.id));
+                        if(zuoSubDelMap.containskey(SubDel.id)){
+                            if(zuoSubDelMap != null && SubDel != null && zuoSubDelMap.get(SubDel.id).Zuora__UOM__c != null)
+                            {
+                                system.debug('>>>>>SubDel.Subscription_Type_1__c' + SubDel.Subscription_Type_1__c);
+                                if(SubDel.Billing_Type__c == GlobalVariableClass.RECURRING_POSTPAID && SubDel.Zuora__SubscriptionStartDate__c.day() == 1 ){
+                                    DelSubQty = 2;
+                                    createUsagePrep(SubDel, DelSubQty, zuoSubDelMap.get(SubDel.id).Zuora__UOM__c, StopDateDelPost , null);
+                                }
+                                else if(SubDel.Billing_Type__c == GlobalVariableClass.RECURRING_POSTPAID && SubDel.Zuora__SubscriptionStartDate__c.day() > 1 ){
+                                    DelSubQty = 1;
+                                    createUsagePrep(SubDel, DelSubQty, zuoSubDelMap.get(SubDel.id).Zuora__UOM__c, StopDateDelPost , null);
+                                }
+                                else{
+                                    if(SubDel.Billing_Type__c == 'Recurring Prepaid'){
+                                        DelSubQty = 1;
+                                        createUsagePrep(SubDel, DelSubQty, zuoSubDelMap.get(SubDel.id).Zuora__UOM__c, StopDateDelPost , null);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e){
+                        //exceptionList.add(E);
+                        system.debug('>>>Error' + e);
+                    }   
+                }
+                //END PD-0268 6/2/2016 Added by J.Sarion - Commented out. Will be handled by PD-0291
+            }
+            */
+            //END PD-0506 6/9/2016 Added by J.Sarion - commented out
+            //End PD-0039 5-17-2016 added by Jason A.            
             if(!amendmentCancelMapList.isEmpty()) {
                 resultMapList = new List<Map<String, String>>();
                 
@@ -833,14 +1075,14 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 system.debug('>>>>>resultMapList ' + resultMapList);
                 for(Map<String, String> resultMap :resultMapList) {
                     if(resultMap.get('Status') != 'Success') {
-                        logger.log(false, resultMap.get('Message'));
+                        logger.log(false, 'Subscription Cancellation failed: ' + resultMap.get('Message'));
                     }
                 }
             }
             
             if(!usageList.isEmpty()) {
                 try{
-                    database.insert(usageList, false);
+                    insert usageList;
                 }
                 catch(Exception e) {
                     system.debug('>>>>>error ' + e);
@@ -848,6 +1090,18 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 }
                 
             }
+            //START PD-0291 6/2/2016 Added by J.Sarion - Insrt cloned usages
+            if(!usageCloneList.isEmpty()) {
+                try{
+                    insert usageCloneList;
+                }
+                catch(Exception e) {
+                    system.debug('>>>>>error ' + e);
+                    logger.log(e);
+                }
+                
+            }
+            //END PD-0291 6/2/2016 Added by J.Sarion - Insrt cloned usages
             
             if(!updatedInvoiceList.isEmpty()) {
                 try{
@@ -1061,7 +1315,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         return activateBillAccMap;
     }
     
-    public void usageDataPrep(Map<String, Date> subZuoraIdToStopDate) {
+    public void usageDataPrep(Map<String, Date> subZuoraIdToStopDate, List<Zuora__Subscription__c> subList) { //START-END PD-0291 6/6/2016 Added by J.Sarion - added parameter
         //Variables
         final String COPY_USAGE = 'Copy';
         final String ISSUE_USAGE = 'Issue';
@@ -1071,27 +1325,33 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         system.debug('>>>>>subZuoraIdToStopDate ' + subZuoraIdToStopDate);
         //Lists
         List<Zuora__SubscriptionProductCharge__c> spcList = new List<Zuora__SubscriptionProductCharge__c>();
-        List<Zuora__Subscription__c> subList = new List<Zuora__Subscription__c>();
+        //List<Zuora__Subscription__c> subList = new List<Zuora__Subscription__c>(); //START-END PD-0291 6/6/2016 Added by J.Sarion - commented out
         
         //Sets
         Set<Usage__c> usageSet = new Set<Usage__c>();
         
         UsageHelper.initialize();
-        
-        subList = [SELECT Id, Name, Zuora__CustomerAccount__r.Zuora__AccountNumber__c,Frequency_1__c, Grace_End_Date__c, Zuora__Status__c, Zuora__SubscriptionStartDate__c, 
+        //Start PD-0039 5-17-2016 added by Jason A.
+        //START PD-0291 6/6/2016 Added by J.Sarion - Commented out
+        /*subList = [SELECT Id, Name, Zuora__CustomerAccount__r.Zuora__AccountNumber__c,Frequency_1__c, Grace_End_Date__c, Zuora__Status__c, Zuora__SubscriptionStartDate__c, Subscription_Type_1__c,
                         Zuora__SubscriptionEndDate__c, Number_of_Copies__c, Billing_Type__c, Grace_Period_Subscription__c, Grace_Days__c, 
                         Order_Line_Item_Number_1__r.Main_Package_Frequency__c, Order_Line_Item_Number_1__r.Ph_e__c, Order_Line_Item_Number_1__r.Ph_d__c, 
                         Zuora__TermSettingType__c, Term_Length__c, Zuora__Zuora_Id__c 
                    FROM Zuora__Subscription__c 
-                   WHERE Zuora__Zuora_Id__c IN :subZuoraIdToStopDate.keySet() AND Subscription_Type_1__c = 'Publication'];
+                   WHERE Zuora__Zuora_Id__c IN :subZuoraIdToStopDate.keySet()];
+                   // AND Subscription_Type_1__c = 'Publication']; 
+
         
         spcList = [SELECT Zuora__Quantity__c, Zuora__RatePlanName__c, Name,Id, Zuora__ProductSKU__c, Zuora__ChargeNumber__c, Zuora__UOM__c, Zuora__Type__c, 
                         Zuora__Subscription__c, PublicationCode__c, Zuora__Subscription__r.Zuora__Zuora_Id__c, Zuora__Subscription__r.Billing_Type__c
                    FROM Zuora__SubscriptionProductCharge__c 
-                   WHERE Zuora__Type__c = 'Usage' AND Zuora__Subscription__r.Zuora__Zuora_Id__c IN :subZuoraIdToStopDate.keySet() AND Zuora__Subscription__r.Subscription_Type_1__c = 'Publication'];
+                   WHERE Zuora__Type__c = 'Usage' AND Zuora__Subscription__r.Zuora__Zuora_Id__c IN :subZuoraIdToStopDate.keySet()];
+                    //AND Zuora__Subscription__r.Subscription_Type_1__c = 'Publication']; 
+        //End PD-0039 5-17-2016 added by Jason A.
         system.debug('>>>>>test2');
         system.debug('>>>>>subList ' + subList);
         system.debug('>>>>>spcList ' + spcList);
+        
         for(Zuora__SubscriptionProductCharge__c spc :spcList) {         
             if(spc.PublicationCode__c != null) {
                 if(subZuoraIdToPubCodeSetMap.get(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c) == null) { //START-END UD-2549 4/8/2016 Added by J.Sarion - Set Zuora Id
@@ -1107,35 +1367,71 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
                 }
             }
         }
+        */
+        //END PD-0291 6/6/2016 Added by J.Sarion - Commented out
         system.debug('>>>>>spcList ' + spcList);
         system.debug('>>>>>spcIdentifierToSpcMap ' + spcIdentifierToSpcMap);
         system.debug('>>>>>test1');
+        //START PD-0291 6/6/2016 Added by J.Sarion - usage creation
         for(Zuora__Subscription__c sub :subList) {
-            //START UD-2549 3/29/2016 Added by J.Sarion - Set usageStartDate to Sub Start Date if it's first payment failure
-            if(sub.Zuora__SubscriptionStartDate__c.monthsBetween(subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c)) == 1) {
-                usageStartDate = sub.Zuora__SubscriptionStartDate__c;
-            }
-            else {
-                //START UD-2549 4/8/2016 Added by J.Sarion - set usage Start Date
-                usageStartDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).toStartOfMonth(); //for Recurring Prepaid
-                if(sub.Billing_Type__c == 'Recurring Postpaid') {
-                    usageStartDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).addMonths(-1).toStartOfMonth();
+            //START PD-0293 6/7/2016 Added by J.Sarion - No usages will be created for future dated subscriptions
+            if(sub.Subscription_Type_1__c == 'Publication' && subZuoraIdToStopDate.containsKey(sub.Zuora__Zuora_Id__c) && sub.Zuora__SubscriptionStartDate__c <= subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c)) {
+                //START PD-0506 6/9/2016 Added by J.Sarion - commented out
+                /*
+                for(Zuora__SubscriptionProductCharge__c spc :sub.Zuora__Subscription_Product_Charges__r) {         
+                    if(spc.PublicationCode__c != null) {
+                        if(subZuoraIdToPubCodeSetMap.get(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c) == null) { //START-END UD-2549 4/8/2016 Added by J.Sarion - Set Zuora Id
+                            subZuoraIdToPubCodeSetMap.put(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c, new Set<String>());
+                        }
+                        subZuoraIdToPubCodeSetMap.get(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c).add(spc.PublicationCode__c);
+                        
+                        if(spc.Zuora__Subscription__r.Billing_Type__c == 'Recurring Prepaid') {
+                            spcIdentifierToSpcMap.put(generateSpcIndentifierKey(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c, spc.Zuora__UOM__c, spc.PublicationCode__c), spc);
+                        }
+                        else if(spc.Zuora__Subscription__r.Billing_Type__c == 'Recurring Postpaid') {
+                            spcIdentifierToSpcMap.put(generateSpcIndentifierKey(spc.Zuora__Subscription__r.Zuora__Zuora_Id__c, spc.Zuora__UOM__c, spc.PublicationCode__c), spc);
+                        }
+                    }
                 }
-                //END UD-2549 4/8/2016 Added by J.Sarion - set usage Start Date
+                */
+                //END PD-0506 6/9/2016 Added by J.Sarion - commented out
+                //START UD-2549 3/29/2016 Added by J.Sarion - Set usageStartDate to Sub Start Date if it's first payment failure
+                system.debug('>>>>>monthsBetween ' + sub.Zuora__SubscriptionStartDate__c.monthsBetween(subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c)));
+                //START PD-0293 6/8/2016 Added by J.Sarion - check months between
+                if(sub.Zuora__SubscriptionStartDate__c.monthsBetween(subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c)) == 1 || sub.Zuora__SubscriptionStartDate__c.monthsBetween(subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c)) == 0) {
+                    usageStartDate = sub.Zuora__SubscriptionStartDate__c;
+                }
+                //END PD-0293 6/8/2016 Added by J.Sarion - check months between
+                else {
+                    //START UD-2549 4/8/2016 Added by J.Sarion - set usage Start Date
+                    usageStartDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).toStartOfMonth(); //for Recurring Prepaid
+                    if(sub.Billing_Type__c == 'Recurring Postpaid') {
+                        usageStartDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).addMonths(-1).toStartOfMonth();
+                    }
+                    //END UD-2549 4/8/2016 Added by J.Sarion - set usage Start Date
+                }
+                
+                //START PD-0237 6/1/2016 Added by J.Abolac - For Recurring Postpaid, set usageEndDate to last month end
+                usageEndDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).addDays(-1);
+                if(sub.Billing_Type__c == 'Recurring Postpaid') {
+                    usageEndDate = usageStartDate.addMonths(1).toStartOfMonth().addDays(-1);
+                }
+                //END PD-0237 6/1/2016 Added by J.Abolac - For Recurring Postpaid, set usageEndDate to last month end
+                //END UD-2549 3/29/2016 Added by J.Sarion - Set usageStartDate to Sub Start Date if it's first payment failure
+                
+                if(sub.Billing_Type__c == 'Recurring Prepaid') {
+                    subZuoraIdToUomTypeMap.put(sub.Zuora__Zuora_Id__c, COPY_USAGE);
+                }
+                else if(sub.Billing_Type__c == 'Recurring Postpaid') {
+                    subZuoraIdToUomTypeMap.put(sub.Zuora__Zuora_Id__c, ISSUE_USAGE);
+                }
+                system.debug('>>>>>usageStartDate ' + usageStartDate);
+                system.debug('>>>>>usageEndDate ' + usageEndDate);
+                createUsageFirst(sub, usageStartDate, usageEndDate);
             }
-            usageEndDate = subZuoraIdToStopDate.get(sub.Zuora__Zuora_Id__c).addDays(-1);
-            //END UD-2549 3/29/2016 Added by J.Sarion - Set usageStartDate to Sub Start Date if it's first payment failure
-            
-            if(sub.Billing_Type__c == 'Recurring Prepaid') {
-                subZuoraIdToUomTypeMap.put(sub.Zuora__Zuora_Id__c, COPY_USAGE);
-            }
-            else if(sub.Billing_Type__c == 'Recurring Postpaid') {
-                subZuoraIdToUomTypeMap.put(sub.Zuora__Zuora_Id__c, ISSUE_USAGE);
-            }
-            system.debug('>>>>>usageStartDate ' + usageStartDate);
-            system.debug('>>>>>usageEndDate ' + usageEndDate);
-            createUsageFirst(sub, usageStartDate, usageEndDate);
+            //END PD-0293 6/7/2016 Added by J.Sarion - No usages will be created for future dated subscriptions
         }
+        //END PD-0291 6/6/2016 Added by J.Sarion - usage creation
         system.debug('>>>>>test');
     }
     
@@ -1144,7 +1440,7 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
         if (subZuoraIdToPubCodeSetMap.containsKey(sub.Zuora__Zuora_Id__c)) {
             for (String pubCode :subZuoraIdToPubCodeSetMap.get(sub.Zuora__Zuora_Id__c)) {
                 pubIssueWrapperObject = UsageHelper.IssueCalculation(pubCode, startDate, endDate, sub, Integer.valueOf(sub.Number_of_Copies__c));
-                system.debug('>>>>>pubIssueWrapperObject ' + pubIssueWrapperObject);
+                //system.debug('>>>>>pubIssueWrapperObject ' + pubIssueWrapperObject);
                 createUsagePrep(sub, pubIssueWrapperObject.weekday_no_of_copies, 'Weekday', endDate, pubCode);
                 createUsagePrep(sub, pubIssueWrapperObject.sat_no_of_copies, 'Sat', endDate, pubCode);
                 createUsagePrep(sub, pubIssueWrapperObject.sun_no_of_copies, 'Sun', endDate, pubCode);
@@ -1161,13 +1457,22 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
     public void createUsagePrep (Zuora__Subscription__c sub, Integer quantity, String uom, Date usageDate, String pubCode) {             
         Usage__c usage = new Usage__c();
         usage = createUsage(sub, quantity, uom, usageDate, pubCode);
-        
         if (usage.Quantity__c != 0 && usage != null)
             usageList.add(usage);
     }
     
     private Usage__c createUsage (Zuora__Subscription__c sub, Integer quantity, String uom, Date usageDate, String pubCode) {
         String spcIdentifier = generateSpcIndentifierKey(sub.Zuora__Zuora_Id__c, subZuoraIdToUomTypeMap.get(sub.Zuora__Zuora_Id__c) + ' ' + uom, pubCode);
+        //Start PD-0039 5-17-2016 added by Jason A.
+        if(sub.Subscription_Type_1__c == 'Delivery' || sub.Subscription_Type_1__c == 'Postage'){
+
+            //spcIdentifier = generateSpcIndentifierKey(sub.Id, uom, '');
+            spcIdentifier = sub.id + ' ' + uom;
+
+        }else{
+            spcIdentifier = generateSpcIndentifierKey(sub.Zuora__Zuora_Id__c, subZuoraIdToUomTypeMap.get(sub.Zuora__Zuora_Id__c) + ' ' + uom, pubCode);
+        }
+        //End PD-0039 5-17-2016 added by Jason A.        
         system.debug('>>>>>spcIdentifier ' + spcIdentifier);
         Usage__c usage = new Usage__c();
         system.debug('>>>>>spcIdentifier ' + spcIdentifierToSpcMap.containsKey(spcIdentifier));
@@ -1185,17 +1490,21 @@ public class CreditCardFailureQueueableClass implements queueable, Database.Allo
             usage.Publication_Code__c = spc.PublicationCode__c;
             usage.Quantity__c = quantity;
             
+            //START PD-0291 6/3/2016 Added by J.Sarion - Set Start Date
+            usage.Start_Date__c = usageDate.toStartOfMonth();
             if(sub.Billing_Type__c == 'Recurring Prepaid') {
                 usage.Usage_Type__c = UsageHelper.USAGE_TYPE_RECURRING_PREPAID_STOP;
             }
             else if(sub.Billing_Type__c == 'Recurring Postpaid') {
                 usage.Usage_Type__c = 'RecurringPostpaid_Stop';
+                usage.Start_Date__c = usageDate.toStartOfMonth().addMonths(1);
             }
-            
-            usage.Start_Date__c = usageDate.toStartOfMonth();
+            //END PD-0291 6/3/2016 Added by J.Sarion - Set Start Date
             
             usage.StopType__c = 'PStop';
         }
+
+        
         return usage;
     }
     

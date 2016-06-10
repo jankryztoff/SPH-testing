@@ -6,9 +6,13 @@
  * @description<Test Class for SP_MidMonthTempStopBatch>
  */
 
-@isTest (Seealldata = TRUE)
+@isTest
 public class SP_MidMonthTempStopBatchTest {
-    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+    }  
     
     static testMethod void testBatch(){
         

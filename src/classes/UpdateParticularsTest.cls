@@ -1,5 +1,15 @@
-@isTest (Seealldata = TRUE)
+@isTest 
 private class UpdateParticularsTest{
+    
+        @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createMASS_CONFIG();
+        insert CustomSettingsDataFactory.createError_Messages();
+    }
     
     public class ChangeofParametersRequest{
         String nric;
@@ -79,7 +89,7 @@ private class UpdateParticularsTest{
                 System.assertEquals(response, null);    
                 
             Test.stopTest();
-		}
+    }
     }
 
     static testmethod void testWrongUpdateParticulars() {
@@ -122,7 +132,7 @@ private class UpdateParticularsTest{
                     add.Address_Unique_Id__c = 'testing';
                     add.Country__c = cntry.Id; //added by jjzs apr072016
                     add.RecordTypeId = ConstantsSLB.getKeyId('Address_Local');   
-            	Database.insert(add);
+              Database.insert(add);
 
                 cont = new Contact();
                     cont.Lastname = 'Benzon';
@@ -131,7 +141,7 @@ private class UpdateParticularsTest{
                     cont.Billing_Indicator__c = FALSE;
                     cont.Email__c = 'abc@gmail.com';
                     cont.NRIC__c = 'S1234567X';
-                	cont.HomePhone__c = '222-111-333';
+                  cont.HomePhone__c = '222-111-333';
                 Database.insert(cont);
             
          // cont = [SELECT Address_Unique_ID__c FROM Contact WHERE Id = : cont.Id];

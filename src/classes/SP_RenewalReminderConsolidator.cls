@@ -174,16 +174,16 @@ global class SP_RenewalReminderConsolidator implements Database.Batchable<sObjec
             {
                 nextBatchCode = 'SP033';
             }
-
-            //Start D-4742 Raviteja 26Apr2016 - Should not send the signal to control M
+           
+            //Start D-4742 Raviteja 26Apr2016 - Should not send the signal to control M       
             if(!isApexJobSuccessful){
                 //BatchJobHelper.updateJobStatus(jobId, false); 
-                 BatchJobHelper.updateBatchJobScheduler(jobId, false); 
+                BatchJobHelper.updateBatchJobScheduler(jobId, false); 
             }else{
                 //BatchJobHelper.updateJobStatus(jobId, true);
                 BatchJobHelper.updateBatchJobScheduler(jobId, true);
             }
-            
+                                 
             SP_BatchJobSchedulerService.setParentBatchJobSchedulerId(jobId);  
             //End D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id
             SP_BatchJobSchedulerService.processRequest(nextBatchCode,'Start', null, sessionId);   

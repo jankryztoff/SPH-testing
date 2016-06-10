@@ -124,6 +124,7 @@ global with sharing class ChangeSubscriptionService
         Boolean isPromoNotFound = false;
         
         if(request.subscription.recipientId != null && request.subscription.recipientId != ''){
+            system.debug('>>>>acnt.Account_Auto_Number__c: ' + request.subscription.accountNumber);
             recipientContact = getContact(request.subscription.recipientId, request.subscription.accountNumber);
             if(recipientContact == null){           
                 response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;   
@@ -680,6 +681,8 @@ global with sharing class ChangeSubscriptionService
 
         if(contactList.size() > 0)
         {
+            System.debug('>>>>>contactList.get(0).Account.Account_Auto_Number__c: ' + contactList.get(0).Account.Account_Auto_Number__c);
+            System.debug('>>>>>accountNumberParam: ' + accountNumberParam);
             if(accountNumberParam != null && accountNumberParam != '' && contactList.get(0).Account.Account_Auto_Number__c == accountNumberParam)           
                 contactRecord = contactList.get(0);
         }

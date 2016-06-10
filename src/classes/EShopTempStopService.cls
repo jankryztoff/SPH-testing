@@ -1,12 +1,12 @@
 /**
- * Class Name: EShopTempStopService 
- * @author: Jb Domingo
- * Date: 11/7/2014
- * Requirement/Project Name: Singapore Press Holdings
- * @description ESHOP Temp Stop Web Service
- * History: D-2012 JLedesma 3/27/2015 Updated class to utilize IssuCalculation method from UsageHelper
- * Raviteja : D-2683 Restructure the class
- */
+* Class Name: EShopTempStopService 
+* @author: Jb Domingo
+* Date: 11/7/2014
+* Requirement/Project Name: Singapore Press Holdings
+* @description ESHOP Temp Stop Web Service
+* History: D-2012 JLedesma 3/27/2015 Updated class to utilize IssuCalculation method from UsageHelper
+* Raviteja : D-2683 Restructure the class
+*/
 @RestResource(urlMapping='/EShopTempStopService1/*')
 global with sharing class EShopTempStopService{
     
@@ -51,31 +51,31 @@ global with sharing class EShopTempStopService{
     private static Map<Date, Id> mapDateToSPC = new Map<Date, Id>();
     private static Map<Id, List<Publication__c>> packageToPubrec = new Map<Id, List<Publication__c>>();
     //get discount
-     private static Map<Id, List<Date>> finalDiscountMap = new Map<Id, List<Date>>();
-     //comput discount
-     private static Decimal totalDiscount = 0;
-     private static Decimal totalDiscountPerPub = 0;
-     private static  Decimal totalNotDiscounted = 0;
-     private static Decimal totalNotDiscountedPerPub = 0;
-     private static  Decimal weekdayIssue = 0;
-     private static Decimal SaturdayIssue = 0;
-     private static   Decimal SundayIssue = 0;
-     private static Decimal weekDayDiscount = 0;
-     private static Decimal saturdayDiscount = 0;
-     private static   Decimal sundayDiscount = 0;
-     private static Decimal copyPriceWeekday = 0;
-     private static   Decimal copyPriceSaturday = 0;
-     private static   Decimal copyPriceSunday = 0;
-     private static Decimal weekDayNotDiscounted = 0;
-     private static   Decimal saturdayNotDiscounted = 0;
-     private static  Decimal sundayNotDiscounted = 0;
-     //computnotdiscount
-     private static Integer accumulatedNextYear = 0;
-     private static Integer accumulatedCurrentYear = 0;
-     private static Integer currentYear = 0;
-     private static   Integer nextYear = 0;
-     private static Map<String, Decimal> totalIssueAndTotalAmount = new Map<String, Decimal>();
-     
+    private static Map<Id, List<Date>> finalDiscountMap = new Map<Id, List<Date>>();
+    //comput discount
+    private static Decimal totalDiscount = 0;
+    private static Decimal totalDiscountPerPub = 0;
+    private static  Decimal totalNotDiscounted = 0;
+    private static Decimal totalNotDiscountedPerPub = 0;
+    private static  Decimal weekdayIssue = 0;
+    private static Decimal SaturdayIssue = 0;
+    private static   Decimal SundayIssue = 0;
+    private static Decimal weekDayDiscount = 0;
+    private static Decimal saturdayDiscount = 0;
+    private static   Decimal sundayDiscount = 0;
+    private static Decimal copyPriceWeekday = 0;
+    private static   Decimal copyPriceSaturday = 0;
+    private static   Decimal copyPriceSunday = 0;
+    private static Decimal weekDayNotDiscounted = 0;
+    private static   Decimal saturdayNotDiscounted = 0;
+    private static  Decimal sundayNotDiscounted = 0;
+    //computnotdiscount
+    private static Integer accumulatedNextYear = 0;
+    private static Integer accumulatedCurrentYear = 0;
+    private static Integer currentYear = 0;
+    private static   Integer nextYear = 0;
+    private static Map<String, Decimal> totalIssueAndTotalAmount = new Map<String, Decimal>();
+    
     //END: D-2012 3/27/2015 JLedesma Issue Calculation
     
     global class EShopResponse{
@@ -126,22 +126,22 @@ global with sharing class EShopTempStopService{
         }catch (Exception e){
             flag = 1;
         }
-         //START HotFix 05-Sep-2015 Added by Raviteja - Implemented logic for  Direct_Corporate accounts
+        //START HotFix 05-Sep-2015 Added by Raviteja - Implemented logic for  Direct_Corporate accounts
         if(account.RecordType.developerName == 'Direct_Corporate')
-            {
+        {
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
             response.error_code = GlobalVariableClass.ERROR_CODE_INVALID_INPUT;
             response.error_message =GlobalVariableClass.ERROR_MESSAGE_INVALID_INPUT+': Temp Stop is not allowed for Corporate Subscribers';   
-            }
+        }
         //End HotFix 05-Sep-2015 Added by Raviteja   
         try{
             subscription = getSubscription(req);  
             //START KRITHIKA D D-2365
             if(subscription.Qty__c > 1)
             {
-            response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
-            response.error_code = GlobalVariableClass.ERROR_CODE_MORETHANONE_SUBSCRIPTIONQTY;
-            response.error_message =GlobalVariableClass.ERROR_MESSAGE_INVALID_INPUT+': Eshop Subscription with quantity greater than one not supported';   
+                response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
+                response.error_code = GlobalVariableClass.ERROR_CODE_MORETHANONE_SUBSCRIPTIONQTY;
+                response.error_message =GlobalVariableClass.ERROR_MESSAGE_INVALID_INPUT+': Eshop Subscription with quantity greater than one not supported';   
             }
             //END KRITHIKA D D-2365
         }catch(Exception e){
@@ -159,24 +159,24 @@ global with sharing class EShopTempStopService{
             response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;
         }
         else if(req.actionIndicator == 'ADD' && (req.subscriberId == '' || req.subscriberId == NULL || req.subscriptionId == '' || req.subscriptionId == NULL || 
-        req.tempStopDate == '' || req.tempStopDate == NULL || req.restartDate == '' || req.restartDate == NULL || req.source == '' || req.source == NULL || req.tempReasonCode == '')){          
-            response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
-            response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
-            response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;             
-        }
+                                                 req.tempStopDate == '' || req.tempStopDate == NULL || req.restartDate == '' || req.restartDate == NULL || req.source == '' || req.source == NULL || req.tempReasonCode == '')){          
+                                                     response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
+                                                     response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
+                                                     response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;             
+                                                 }
         else if(req.actionIndicator == 'UPDATE' && (req.subscriberId == '' || req.subscriberId == NULL  || req.subscriptionId == '' || req.subscriptionId == NULL || 
-                    req.tempStopId == '' || req.tempStopId == NULL || req.tempStopDate == '' || req.tempStopDate == NULL || req.restartDate == '' || req.restartDate == NULL || 
-                    req.source == '' || req.source == NULL || req.tempReasonCode == '' )){
-            response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
-            response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
-            response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;         
-        }
+                                                    req.tempStopId == '' || req.tempStopId == NULL || req.tempStopDate == '' || req.tempStopDate == NULL || req.restartDate == '' || req.restartDate == NULL || 
+                                                    req.source == '' || req.source == NULL || req.tempReasonCode == '' )){
+                                                        response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
+                                                        response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
+                                                        response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;         
+                                                    }
         else if(req.actionIndicator == 'CANCEL' && (req.subscriberId == '' || req.subscriberId == NULL || req.subscriptionId == '' || req.subscriptionId == NULL || 
-        req.tempStopId == '' || req.tempStopId == NULL || req.source == '' || req.source == NULL || req.tempReasonCode == '')){
-            response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
-            response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
-            response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;       
-        }
+                                                    req.tempStopId == '' || req.tempStopId == NULL || req.source == '' || req.source == NULL || req.tempReasonCode == '')){
+                                                        response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
+                                                        response.error_code = GlobalVariableClass.ERROR_CODE_MANDATORY;
+                                                        response.error_message = GlobalVariableClass.ERROR_MESSAGE_MANDATORY;       
+                                                    }
         else if(convertDate(req.tempStopDate) < Date.today() || convertDate(req.restartDate) < Date.today()){
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
             response.error_code = GlobalVariableClass.ERROR_CODE_INVALID_INPUT;
@@ -196,9 +196,9 @@ global with sharing class EShopTempStopService{
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
             response.error_code = GlobalVariableClass.ERROR_CODE_INVALID_INPUT;
             response.error_message = GlobalVariableClass.ERROR_MESSAGE_INVALID_INPUT+' : ' +  (ConstantsSLB.getErrorMessage('TempStopDateRestartDatePart1') 
-                                                                                           + ' ' + tempstopsettings[0].TempStop_Min_Gap_Days__c + ' ' 
-                                                                                           + ConstantsSLB.getErrorMessage('TempStopDateRestartDatePart2'));
-                          
+                                                                                               + ' ' + tempstopsettings[0].TempStop_Min_Gap_Days__c + ' ' 
+                                                                                               + ConstantsSLB.getErrorMessage('TempStopDateRestartDatePart2'));
+            
         }
         else if(flag == 1){
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
@@ -233,7 +233,7 @@ global with sharing class EShopTempStopService{
                 publicationObject = getPublication(req);
                 List<Subscription_Temp_Stop__c> subTemp = new List<Subscription_Temp_Stop__c>();
                 List<Subscription_Temp_Stop__c> subTempUpdate = new List<Subscription_Temp_Stop__c>(); 
-
+                
                 if(req.actionIndicator == 'ADD'){
                     subTemp = getTempStop(req); 
                     if(convertDate(req.tempStopDate) < publicationObject.earliest_start_date__c){
@@ -323,7 +323,7 @@ global with sharing class EShopTempStopService{
                               FROM Subscription_Temp_Stop__c 
                               WHERE subscription__r.Name =: req.subscriptionId];
         //END 03 May 2016 D-4797 Kevin Evasco - Added Temp_Stop__r.IsDeleted
-                              
+        
         return tempStopRecordList;
     }
     
@@ -337,7 +337,7 @@ global with sharing class EShopTempStopService{
                               FROM Subscription_Temp_Stop__c 
                               WHERE subscription__r.Name =: req.subscriptionId AND Temp_Stop__r.Name !=: req.tempStopId];       
         //END 03 May 2016 D-4797 Kevin Evasco - Added Temp_Stop__r.IsDeleted
-                              
+        
         return tempStopUpdateList;
     }   
     
@@ -357,18 +357,18 @@ global with sharing class EShopTempStopService{
                        (endprev >= startinput && endprev <= endinput) ||                            
                        (startprev <= startinput && endprev >= endinput) ||
                        (startprev >= startinput && endprev <= endinput)){            
-                        returnValue = true;
-                    }
+                           returnValue = true;
+                       }
                 }
             }
         }
         //END 03 May 2016 Kevin Evasco - Only consider overlapping temp stop if it is not deleted        
         return returnValue;
     }
-
+    
     private static Account getAccount(String subscriberId){
         Account accountRecord = new Account();
-         //START HotFix 05-Sep-2015 Added by Raviteja - Added RecordType.developerName in SOQL 
+        //START HotFix 05-Sep-2015 Added by Raviteja - Added RecordType.developerName in SOQL 
         //accountRecord = [SELECT id, name, account_auto_number__c FROM Account WHERE account_auto_number__c =: subscriberId];
         accountRecord = [SELECT id, name, account_auto_number__c,RecordType.developerName FROM Account WHERE account_auto_number__c =: subscriberId];
         //End HotFix 05-Sep-2015 Added by Raviteja         
@@ -385,12 +385,12 @@ global with sharing class EShopTempStopService{
         //START UD-1129 07-May-2015 Added by Raviteja - Added Order_Line_Item_Number_1__r.Ph_d__c in SOQL// END
         //START PD-0114 10-May-2016 Added by Raviteja - Added Order_Line_Item_Number_1__r.Ph_e__c in SOQL // END
         subscription = [SELECT id,Qty__c,name, Vendor_Subscription_To_Convert_1__r.Temp_Stop_Count_Year_to_Date__c, Year_to_Date_Temp_Stop_Days__c, Zuora__SubscriptionStartDate__c, 
-                                Zuora__SubscriptionEndDate__c, Recipient_Contact__c, Recipient_Contact__r.Name, Zuora__Status__c,Next_Year_Temp_Stop_Days__c,
-                                Order_Line_Item_Number_1__r.Main_Package_Frequency__c, Order_Line_Item_Number_1__r.Ph_d__c, Order_Line_Item_Number_1__r.Ph_e__c ,  Ph_d__c, Ph_e__c,Recipient_Address_ID__c,
-                                Main_Package_1__r.Name,Previous_Year_Temp_Stop_Days__c,Subscription_Type_1__c,Zuora__CustomerAccount__r.Name, 
-                                Main_Package_1__r.Id,Zuora__CustomerAccount__r.Id,Delivery_Charge__c,Frequency_1__c,Recipient_Contact__r.Id,Number_of_Copies__c 
-                                FROM Zuora__Subscription__c WHERE Name =: req.subscriptionId AND Zuora__Account__c =: account.id];
-
+                        Zuora__SubscriptionEndDate__c, Recipient_Contact__c, Recipient_Contact__r.Name, Zuora__Status__c,Next_Year_Temp_Stop_Days__c,
+                        Order_Line_Item_Number_1__r.Main_Package_Frequency__c, Order_Line_Item_Number_1__r.Ph_d__c, Order_Line_Item_Number_1__r.Ph_e__c ,  Ph_d__c, Ph_e__c,Recipient_Address_ID__c,
+                        Main_Package_1__r.Name,Previous_Year_Temp_Stop_Days__c,Subscription_Type_1__c,Zuora__CustomerAccount__r.Name, 
+                        Main_Package_1__r.Id,Zuora__CustomerAccount__r.Id,Delivery_Charge__c,Frequency_1__c,Recipient_Contact__r.Id,Number_of_Copies__c 
+                        FROM Zuora__Subscription__c WHERE Name =: req.subscriptionId AND Zuora__Account__c =: account.id];
+        
         //END: D-2365 25/02/2015 Added Qty__c by Krithika D
         //END: D-1360 01/27/2015 Added by S.Puli
         //END: D-1357 01/23/2015 Added by S.Puli
@@ -404,7 +404,7 @@ global with sharing class EShopTempStopService{
         tempStop.temp_stop_date__c = tempStop_Date;
         tempStop.restart_date__c = date.valueOf(restart_Date);
         tempStop.remarks__c = req.remarks;
-
+        
         //KRITHIKA D D-2012 START
         Zuora__Subscription__c sub = getSubscription(req);
         if(sub.id!=NULL && req.tempStopDate!= NULL && req.restartDate!=NULL){
@@ -416,10 +416,10 @@ global with sharing class EShopTempStopService{
             nextCount = mapRefundTotalCredit.get('next');
         }
         else{
-        tempStop.Year_To_Date_Count__c = 0;
-        tempStop.Qty__c = 0;
-        tempStop.Request_Total_Credit__c = 0;
-        tempStop.Request_Total_Issue__c = 0;
+            tempStop.Year_To_Date_Count__c = 0;
+            tempStop.Qty__c = 0;
+            tempStop.Request_Total_Credit__c = 0;
+            tempStop.Request_Total_Issue__c = 0;
         }
         //KRITHIKA D D-2012 END
         insert tempStop;
@@ -436,7 +436,7 @@ global with sharing class EShopTempStopService{
         //update sub;
         //END: UD-1830 7/13/2015 Avoid looping of Trigger
         createSubscritpionTempStopRecord(req);
-
+        
         return tempStop;
     } 
     
@@ -466,12 +466,12 @@ global with sharing class EShopTempStopService{
         Zuora__Subscription__c subscription = getSubscription(req);
         //START: D-1360 01/27/2015 Added by S.Puli
         if(subscription.Zuora__Status__c <> GlobalVariableClass.STATUS_CANCELLED){
-        //END: D-1360 01/27/2015 Added by S.Puli
+            //END: D-1360 01/27/2015 Added by S.Puli
             subTempStop.subscription__c = subscription.id;
             subTempStop.temp_stop__c = tempStop.id;
             
             insert subTempStop;
-        //START: D-1360 01/27/2015 Added by S.Puli
+            //START: D-1360 01/27/2015 Added by S.Puli
         } else{
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
             //START: D-1933,1938 01/28/2015 Added by S.Puli update fields
@@ -515,7 +515,9 @@ global with sharing class EShopTempStopService{
         order.Case_Owner__c = newCase.id;
         order.status__c = 'Close';
         update order;
+
         createCaseSubRecord(newCase, subscriptionObj, accountObj);
+       
         
     }
     //END: D-2012 3/27/2015 JLedesma Issue Calculation
@@ -601,9 +603,9 @@ global with sharing class EShopTempStopService{
         Decimal nextCount = 0;
         //START: D-1933,1938 01/28/2015 Added by S.Puli update fields
         Temp_Stop__c tempStopRecordUpdate = [SELECT Case__r.Next_Year_for_Year_To_Date__c, Case__r.Current_Date_for_Year_To_Date__c, Id, Name, temp_stop_date__c, 
-                                                    restart_date__c, remarks__c, Case__c, Order__c, Qty__c,Request_Total_Issue__c 
-                                                    FROM Temp_Stop__c 
-                                                    WHERE Name =: req.tempStopId];
+                                             restart_date__c, remarks__c, Case__c, Order__c, Qty__c,Request_Total_Issue__c 
+                                             FROM Temp_Stop__c 
+                                             WHERE Name =: req.tempStopId];
         //END: D-1933,1938 01/28/2015 Added by S.Puli update fields
         tempStop = new Temp_Stop__c();
         tempStop.temp_stop_date__c = tempStop_Date;
@@ -624,10 +626,10 @@ global with sharing class EShopTempStopService{
             nextCount = mapRefundTotalCredit.get('next');
         }
         else{
-        tempStop.Year_To_Date_Count__c = current;
-        tempStop.Qty__c = 0;
-        tempStop.Request_Total_Credit__c = 0;
-        tempStop.Request_Total_Issue__c = 0;
+            tempStop.Year_To_Date_Count__c = current;
+            tempStop.Qty__c = 0;
+            tempStop.Request_Total_Credit__c = 0;
+            tempStop.Request_Total_Issue__c = 0;
         }
         //KRITHIKA D D-2012 END
         System.debug('tempStop' + tempStop);
@@ -658,7 +660,7 @@ global with sharing class EShopTempStopService{
             Temp_Stop__c tempStopRecordCancel = [SELECT Id, Name, Cancelled__c, Case__c, Order__c FROM Temp_Stop__c WHERE Name =: req.tempStopId];
             tempStopRecordCancel.Cancelled__c = true;
             update tempStopRecordCancel;
-                
+            
             if(tempStopRecordCancel.Case__c != null){
                 caseRecordToClose = [SELECT Id, Status FROM Case WHERE Id =: tempStopRecordCancel.Case__c];
                 //START: D-1357 01/23/2015 Added by S.Puli update case fields
@@ -670,7 +672,7 @@ global with sharing class EShopTempStopService{
                 //END: D-1357 01/23/2015 Added by S.Puli
                 update caseRecordToClose;
             }
-                
+            
             if(tempStopRecordCancel.Order__c != null){
                 orderRecordToClose = [SELECT Id, Status__c FROM Order__c WHERE Id =: tempStopRecordCancel.Order__c];
                 //START: D-1933,1938 01/28/2015 Added by S.Puli update fields remove hardcode
@@ -720,104 +722,104 @@ global with sharing class EShopTempStopService{
         return flag;
     }
     // END : D-0926 12/6/2014
-        //START: D-2012 3/27/2015 JLedesma Issue Calculation
-        private static Map<String, Decimal> computation(Zuora__Subscription__c zsub, Id subId, Date TempStopdate, Date RestartDate, Integer qty){
+    //START: D-2012 3/27/2015 JLedesma Issue Calculation
+    private static Map<String, Decimal> computation(Zuora__Subscription__c zsub, Id subId, Date TempStopdate, Date RestartDate, Integer qty){
         
-            subProdChList = [SELECT Zuora__EffectiveStartDate__c, Zuora__Model__c, Zuora__ProductName__c, Zuora__Subscription__r.Ph_d__c, Zuora__Subscription__r.Ph_e__c, 
-                                            Name, Zuora__Quantity__c, Zuora__UOM__c, Zuora__Price__c, Zuora__Subscription__c, Zuora__ProductSKU__c, PublicationCode__c, Zuora__RatePlanName__c 
-                                            FROM Zuora__SubscriptionProductCharge__c 
-                                            where Zuora__Subscription__c = : subId];
-            
-            List<Package_Item__c> packItemsInitial = [SELECT Package__c, Product_Rate_Plan__c, Id, Is_Print__c, Is_All_In_One__c, Is_Newspaper__c, 
-                                                                RecordType.developerName 
-                                                                FROM Package_Item__c 
-                                                                WHERE Package__c =:  zsub.Main_Package_1__c AND Is_Newspaper__c = TRUE 
-                                                                AND (Is_Print__c=TRUE OR Is_All_In_One__c=TRUE)];
-            
-            List<Package_Item__c> pckItems = new List<Package_Item__c>();
-            Set<String> pubcodeList = new Set<String>();
-            Set<String> prpIds = new Set<String>();
-            
-            for(Package_Item__c p : packItemsInitial){
-                if(p.RecordType.developerName.contains('Base_Product') || p.RecordType.developerName.contains('Bundle_Product')){
-                    pckItems.add(p);
-                    prpIds.add(p.Product_Rate_Plan__c);
-                }
+        subProdChList = [SELECT Zuora__EffectiveStartDate__c, Zuora__Model__c, Zuora__ProductName__c, Zuora__Subscription__r.Ph_d__c, Zuora__Subscription__r.Ph_e__c, 
+                         Name, Zuora__Quantity__c, Zuora__UOM__c, Zuora__Price__c, Zuora__Subscription__c, Zuora__ProductSKU__c, PublicationCode__c, Zuora__RatePlanName__c 
+                         FROM Zuora__SubscriptionProductCharge__c 
+                         where Zuora__Subscription__c = : subId];
+        
+        List<Package_Item__c> packItemsInitial = [SELECT Package__c, Product_Rate_Plan__c, Id, Is_Print__c, Is_All_In_One__c, Is_Newspaper__c, 
+                                                  RecordType.developerName 
+                                                  FROM Package_Item__c 
+                                                  WHERE Package__c =:  zsub.Main_Package_1__c AND Is_Newspaper__c = TRUE 
+                                                  AND (Is_Print__c=TRUE OR Is_All_In_One__c=TRUE)];
+        
+        List<Package_Item__c> pckItems = new List<Package_Item__c>();
+        Set<String> pubcodeList = new Set<String>();
+        Set<String> prpIds = new Set<String>();
+        
+        for(Package_Item__c p : packItemsInitial){
+            if(p.RecordType.developerName.contains('Base_Product') || p.RecordType.developerName.contains('Bundle_Product')){
+                pckItems.add(p);
+                prpIds.add(p.Product_Rate_Plan__c);
             }
-            
-            ratePlanChargeList = [SELECT Id, Name, PublicationCode__c, zqu__ProductRatePlan__c, zqu__ProductRatePlan__r.Name 
-                                            from zqu__ProductRatePlanCharge__c 
-                                            WHERE zqu__ProductRatePlan__c IN :prpIds];
-            
-            for(zqu__ProductRatePlanCharge__c prpc : ratePlanChargeList){
-                pubcodeList.add(prpc.PublicationCode__c);
-            }
-            
-            pubList = [SELECT Id, Name, Platform_Type__c, Publication_Code__c, Published_Days__c, Earliest_Start_Date__c from Publication__c WHERE Publication_Code__c IN : pubcodeList];             
-            
-            
-            for(Zuora__SubscriptionProductCharge__c z : subProdChList){
-                if(z.Zuora__Model__c == ConstantsSLB.getUOM('Discount-Percentage') && z.Zuora__ProductName__c.toLowerCase() == 'discount' && z.Zuora__Subscription__c == subId){
-                    zuoSubProdChargListDisc.add(z);
-                }
-                if(z.Zuora__UOM__c == 'Copy Weekday'){
-                    copyPriceWeekday = z.Zuora__Price__c;
-                }
-                if(z.Zuora__UOM__c == 'Copy Sat'){
-                    copyPriceSaturday = z.Zuora__Price__c;
-                }
-                if(z.Zuora__UOM__c == 'Copy Sun'){
-                    copyPriceSunday = z.Zuora__Price__c;
-                }
-            }
-            
-            
-            for(Zuora__SubscriptionProductCharge__c zSPC : zuoSubProdChargListDisc){
-                mapSPCIdToSPCRec.put(zSPC.Id, zSPC);
-                zSPCDiscount.add(zSPC);
-                if(!zSPCDiscountSet.contains(zSPC.Zuora__EffectiveStartDate__c)){
-                    zSPCDiscountSet.add(zSPC.Zuora__EffectiveStartDate__c);
-                    zSPCDiscountList.add(zSPC.Zuora__EffectiveStartDate__c);
-                }
-            }
-            for(Zuora__SubscriptionProductCharge__c spcDisc : zSPCDiscount){
-                mapSPCDiscToPrice.put(spcDisc.Id, spcDisc.Zuora__Price__c);
-                mapDateToSPC.put(spcDisc.Zuora__EffectiveStartDate__c, spcDisc.Id);
-            }
-            
-                         
-            totalIssueAndTotalAmountGetter = computeNotDiscounted(pubList, subId, qty, TempStopdate, RestartDate, zsub, copyPriceWeekday, copyPriceSaturday, copyPriceSunday);
-            totalNotDiscountedAmount = totalIssueAndTotalAmountGetter.get('amount');
-            Decimal totalIssue = totalIssueAndTotalAmountGetter.get('issues');            
-            totalDiscountAmount = computeDiscount(pubList, subId, qty);            
-            Decimal total = totalNotDiscountedAmount - totalDiscountAmount;
-            refundEligibleAndTotalCredit.put('tempStopDays', totalIssue/qty);
-            refundEligibleAndTotalCredit.put('refund', totalIssue*qty);            
-            if(totalIssue < 8){
-                total = 0;
-            }
-            
-            refundEligibleAndTotalCredit.put('credit', total);  
-            refundEligibleAndTotalCredit.put('issue', totalIssue);                 
-            refundEligibleAndTotalCredit.put('current', Integer.valueOf(totalIssueAndTotalAmountGetter.get('current')));
-            refundEligibleAndTotalCredit.put('next', Integer.valueOf(totalIssueAndTotalAmountGetter.get('next')));
-            refundEligibleAndTotalCredit.put('qty', qty);
-            return refundEligibleAndTotalCredit;
-            
         }
-      
-       private static Map<Id, List<Date>> getDiscount(Date strDate, Date enDate, List<Date> zSPCDiscountListtemp){
+        
+        ratePlanChargeList = [SELECT Id, Name, PublicationCode__c, zqu__ProductRatePlan__c, zqu__ProductRatePlan__r.Name 
+                              from zqu__ProductRatePlanCharge__c 
+                              WHERE zqu__ProductRatePlan__c IN :prpIds];
+        
+        for(zqu__ProductRatePlanCharge__c prpc : ratePlanChargeList){
+            pubcodeList.add(prpc.PublicationCode__c);
+        }
+        
+        pubList = [SELECT Id, Name, Platform_Type__c, Publication_Code__c, Published_Days__c, Earliest_Start_Date__c from Publication__c WHERE Publication_Code__c IN : pubcodeList];             
+        
+        
+        for(Zuora__SubscriptionProductCharge__c z : subProdChList){
+            if(z.Zuora__Model__c == ConstantsSLB.getUOM('Discount-Percentage') && z.Zuora__ProductName__c.toLowerCase() == 'discount' && z.Zuora__Subscription__c == subId){
+                zuoSubProdChargListDisc.add(z);
+            }
+            if(z.Zuora__UOM__c == 'Copy Weekday'){
+                copyPriceWeekday = z.Zuora__Price__c;
+            }
+            if(z.Zuora__UOM__c == 'Copy Sat'){
+                copyPriceSaturday = z.Zuora__Price__c;
+            }
+            if(z.Zuora__UOM__c == 'Copy Sun'){
+                copyPriceSunday = z.Zuora__Price__c;
+            }
+        }
+        
+        
+        for(Zuora__SubscriptionProductCharge__c zSPC : zuoSubProdChargListDisc){
+            mapSPCIdToSPCRec.put(zSPC.Id, zSPC);
+            zSPCDiscount.add(zSPC);
+            if(!zSPCDiscountSet.contains(zSPC.Zuora__EffectiveStartDate__c)){
+                zSPCDiscountSet.add(zSPC.Zuora__EffectiveStartDate__c);
+                zSPCDiscountList.add(zSPC.Zuora__EffectiveStartDate__c);
+            }
+        }
+        for(Zuora__SubscriptionProductCharge__c spcDisc : zSPCDiscount){
+            mapSPCDiscToPrice.put(spcDisc.Id, spcDisc.Zuora__Price__c);
+            mapDateToSPC.put(spcDisc.Zuora__EffectiveStartDate__c, spcDisc.Id);
+        }
+        
+        
+        totalIssueAndTotalAmountGetter = computeNotDiscounted(pubList, subId, qty, TempStopdate, RestartDate, zsub, copyPriceWeekday, copyPriceSaturday, copyPriceSunday);
+        totalNotDiscountedAmount = totalIssueAndTotalAmountGetter.get('amount');
+        Decimal totalIssue = totalIssueAndTotalAmountGetter.get('issues');            
+        totalDiscountAmount = computeDiscount(pubList, subId, qty);            
+        Decimal total = totalNotDiscountedAmount - totalDiscountAmount;
+        refundEligibleAndTotalCredit.put('tempStopDays', totalIssue/qty);
+        refundEligibleAndTotalCredit.put('refund', totalIssue*qty);            
+        if(totalIssue < 8){
+            total = 0;
+        }
+        
+        refundEligibleAndTotalCredit.put('credit', total);  
+        refundEligibleAndTotalCredit.put('issue', totalIssue);                 
+        refundEligibleAndTotalCredit.put('current', Integer.valueOf(totalIssueAndTotalAmountGetter.get('current')));
+        refundEligibleAndTotalCredit.put('next', Integer.valueOf(totalIssueAndTotalAmountGetter.get('next')));
+        refundEligibleAndTotalCredit.put('qty', qty);
+        return refundEligibleAndTotalCredit;
+        
+    }
+    
+    private static Map<Id, List<Date>> getDiscount(Date strDate, Date enDate, List<Date> zSPCDiscountListtemp){
         Integer counter;
         finalDiscountMap = new Map<Id, List<Date>>();
         for(counter = 0; counter < zSPCDiscountListtemp.size(); counter++){
             if(zSPCDiscountListtemp[counter] >= strDate && zSPCDiscountListtemp[counter] <= enDate-1){
-               if(counter != zSPCDiscountListtemp.size()-1){
-                finalDiscountMap.put(mapDateToSPC.get(zSPCDiscountListtemp[counter]), new List<Date>{zSPCDiscountListtemp[counter], zSPCDiscountListtemp[counter + 1] - 1});
-               } 
-               else {
-                finalDiscountMap.put(mapDateToSPC.get(zSPCDiscountListtemp[counter]), new List<Date>{zSPCDiscountListtemp[counter], enDate-1});
-               }
-             }
+                if(counter != zSPCDiscountListtemp.size()-1){
+                    finalDiscountMap.put(mapDateToSPC.get(zSPCDiscountListtemp[counter]), new List<Date>{zSPCDiscountListtemp[counter], zSPCDiscountListtemp[counter + 1] - 1});
+                } 
+                else {
+                    finalDiscountMap.put(mapDateToSPC.get(zSPCDiscountListtemp[counter]), new List<Date>{zSPCDiscountListtemp[counter], enDate-1});
+                }
+            }
             else if(zSPCDiscountListtemp[counter] < strDate && zSPCDiscountListtemp[counter] <= enDate-1){
                 if(counter == 0){
                     if(zSPCDiscountListtemp.size() > counter+1){
@@ -836,8 +838,8 @@ global with sharing class EShopTempStopService{
         
         return finalDiscountMap;
     }  
-        
-        private static Decimal computeDiscount(List<Publication__c> publicationList, Id subId, Integer qty){    
+    
+    private static Decimal computeDiscount(List<Publication__c> publicationList, Id subId, Integer qty){    
         Zuora__Subscription__c zuoSubscrpt = new Zuora__Subscription__c();
         zuoSubscrpt = mapIdToSubRec.get(subId);
         totalDiscount = 0;
@@ -845,105 +847,105 @@ global with sharing class EShopTempStopService{
         for(Id spcDiscountId : totalDiscountDateMap.keySet()){
             List<Date> discountRange = totalDiscountDateMap.get(spcDiscountId);
             for(Publication__c pubRec : publicationList){
-            
-                    PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, discountRange[0], discountRange[1], zuoSubscrpt, qty);
-                    weekdayIssue = Decimal.valueOf(pubWrapperDiscount.weekday_no_of_copies);
-                    SaturdayIssue = Decimal.valueOf(pubWrapperDiscount.sat_no_of_copies);
-                    SundayIssue = Decimal.valueOf(pubWrapperDiscount.sun_no_of_copies);
-                    
-                    weekDayDiscount = 0.00;
-                    saturdayDiscount = 0.00;
-                    sundayDiscount = 0.00;
-                    List<String> coverPrices = new List<String>();
-                    coverPrices = subToCoverPrice.get(subId);
-                    
-                    for(String s : coverPrices){
-                        if(s.contains('wkd')){
-                            copyPriceWeekday = Decimal.valueOf(s.subString(3));
-                            weekDayDiscount = (Math.abs(copyPriceWeekday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * weekdayIssue;
-                        }
-                        else if(s.contains('sat')){
-                            copyPriceSaturday = Decimal.valueOf(s.subString(3));
-                            saturdayDiscount = (Math.abs(copyPriceSaturday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * SaturdayIssue;
-                        }
-                        else if(s.contains('sun')){
-                            copyPriceSunday = Decimal.valueOf(s.subString(3));
-                            sundayDiscount = (Math.abs(copyPriceSunday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * SundayIssue;
-                        }
-                    }
-                    totalDiscountPerPub += weekDayDiscount + saturdayDiscount + sundayDiscount;
-            }
-                totalDiscount += totalDiscountPerPub;
                 
+                PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, discountRange[0], discountRange[1], zuoSubscrpt, qty);
+                weekdayIssue = Decimal.valueOf(pubWrapperDiscount.weekday_no_of_copies);
+                SaturdayIssue = Decimal.valueOf(pubWrapperDiscount.sat_no_of_copies);
+                SundayIssue = Decimal.valueOf(pubWrapperDiscount.sun_no_of_copies);
+                
+                weekDayDiscount = 0.00;
+                saturdayDiscount = 0.00;
+                sundayDiscount = 0.00;
+                List<String> coverPrices = new List<String>();
+                coverPrices = subToCoverPrice.get(subId);
+                
+                for(String s : coverPrices){
+                    if(s.contains('wkd')){
+                        copyPriceWeekday = Decimal.valueOf(s.subString(3));
+                        weekDayDiscount = (Math.abs(copyPriceWeekday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * weekdayIssue;
+                    }
+                    else if(s.contains('sat')){
+                        copyPriceSaturday = Decimal.valueOf(s.subString(3));
+                        saturdayDiscount = (Math.abs(copyPriceSaturday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * SaturdayIssue;
+                    }
+                    else if(s.contains('sun')){
+                        copyPriceSunday = Decimal.valueOf(s.subString(3));
+                        sundayDiscount = (Math.abs(copyPriceSunday) * (mapSPCDiscToPrice.get(spcDiscountId)/100)) * SundayIssue;
+                    }
+                }
+                totalDiscountPerPub += weekDayDiscount + saturdayDiscount + sundayDiscount;
+            }
+            totalDiscount += totalDiscountPerPub;
+            
         }
         return totalDiscount;
     }
     
     private static Map<String, Decimal> computeNotDiscounted(List<Publication__c> publicationList, Id subId, Integer qty, Date start, Date endDate, 
-                                                                    Zuora__Subscription__c zuoSubscrpt, Decimal PriceWeekday, Decimal PriceSaturday, Decimal PriceSunday){ 
-        totalNotDiscountedPerPub = 0.00;
-        totalNotDiscounted = 0.00;
-        Decimal allIssues = 0.00;
-        Decimal totalIssue = 0.00;
-        AccumulatedNextYear = 0;
-        AccumulatedCurrentYear = 0;
-        Decimal totalweekdayIssue = 0;
-        Decimal totalSaturdayIssue = 0;
-        Decimal totalSundayIssue = 0;
-    for(Date tempDate = start; tempDate<endDate; tempDate=tempDate.addDays(1)){
-        for(Publication__c pubRec : publicationList){
-            currentYear = 0;
-            nextYear = 0;
-            UsageHelper.initialize();
-            //PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, start, endDate-1, zuoSubscrpt, qty);
-            PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, tempDate, tempDate, zuoSubscrpt, qty);
-            weekdayIssue = Decimal.valueOf(pubWrapperDiscount.weekday_no_of_copies);
-            SaturdayIssue = Decimal.valueOf(pubWrapperDiscount.sat_no_of_copies);
-            SundayIssue = Decimal.valueOf(pubWrapperDiscount.sun_no_of_copies);
-            currentYear = pubWrapperDiscount.current_year_days;  
-            nextYear = pubWrapperDiscount.next_year_days;   
-            allIssues += weekdayIssue + SaturdayIssue + SundayIssue;
-            
-            AccumulatedCurrentYear += currentYear;
-            AccumulatedNextYear += nextYear;
-            if(tempDate.year() == date.today().year() && zuoSubscrpt.Year_to_Date_Temp_Stop_Days__c+AccumulatedCurrentYear <= 30){
-                totalweekdayIssue += weekdayIssue;
-                totalSaturdayIssue += SaturdayIssue;
-                totalSundayIssue += SundayIssue;
-            }
-            else if(tempDate.year() != date.today().year() && zuoSubscrpt.Next_Year_Temp_Stop_Days__c+AccumulatedNextYear <= 30){
-                totalweekdayIssue += weekdayIssue;
-                totalSaturdayIssue += SaturdayIssue;
-                totalSundayIssue += SundayIssue;
-            }            
-        }   
-    }
-            //totalIssue = allIssues;
-            totalIssue = totalweekdayIssue + totalSaturdayIssue + totalSundayIssue ;
-            
-            weekDayNotDiscounted = (Math.abs(PriceWeekday) * totalweekdayIssue);
-            saturdayNotDiscounted = (Math.abs(PriceSaturday) * totalSaturdayIssue);
-            sundayNotDiscounted = (Math.abs(PriceSunday) * totalSundayIssue);
-            totalNotDiscountedPerPub += weekDayNotDiscounted + saturdayNotDiscounted+ sundayNotDiscounted;
-            totalNotDiscounted += totalNotDiscountedPerPub;
-        
-        
-        totalIssueAndTotalAmount.put('issues', totalIssue);
-        totalIssueAndTotalAmount.put('amount', totalNotDiscounted);
-        totalIssueAndTotalAmount.put('current', AccumulatedCurrentYear);
-        totalIssueAndTotalAmount.put('next', AccumulatedNextYear);
-        return totalIssueAndTotalAmount;
-    }
+                                                             Zuora__Subscription__c zuoSubscrpt, Decimal PriceWeekday, Decimal PriceSaturday, Decimal PriceSunday){ 
+                                                                 totalNotDiscountedPerPub = 0.00;
+                                                                 totalNotDiscounted = 0.00;
+                                                                 Decimal allIssues = 0.00;
+                                                                 Decimal totalIssue = 0.00;
+                                                                 AccumulatedNextYear = 0;
+                                                                 AccumulatedCurrentYear = 0;
+                                                                 Decimal totalweekdayIssue = 0;
+                                                                 Decimal totalSaturdayIssue = 0;
+                                                                 Decimal totalSundayIssue = 0;
+                                                                 for(Date tempDate = start; tempDate<endDate; tempDate=tempDate.addDays(1)){
+                                                                     for(Publication__c pubRec : publicationList){
+                                                                         currentYear = 0;
+                                                                         nextYear = 0;
+                                                                         UsageHelper.initialize();
+                                                                         //PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, start, endDate-1, zuoSubscrpt, qty);
+                                                                         PublicationIssueWrapper pubWrapperDiscount = UsageHelper.IssueCalculation(pubRec.Publication_Code__c, tempDate, tempDate, zuoSubscrpt, qty);
+                                                                         weekdayIssue = Decimal.valueOf(pubWrapperDiscount.weekday_no_of_copies);
+                                                                         SaturdayIssue = Decimal.valueOf(pubWrapperDiscount.sat_no_of_copies);
+                                                                         SundayIssue = Decimal.valueOf(pubWrapperDiscount.sun_no_of_copies);
+                                                                         currentYear = pubWrapperDiscount.current_year_days;  
+                                                                         nextYear = pubWrapperDiscount.next_year_days;   
+                                                                         allIssues += weekdayIssue + SaturdayIssue + SundayIssue;
+                                                                         
+                                                                         AccumulatedCurrentYear += currentYear;
+                                                                         AccumulatedNextYear += nextYear;
+                                                                         if(tempDate.year() == date.today().year() && zuoSubscrpt.Year_to_Date_Temp_Stop_Days__c+AccumulatedCurrentYear <= 30){
+                                                                             totalweekdayIssue += weekdayIssue;
+                                                                             totalSaturdayIssue += SaturdayIssue;
+                                                                             totalSundayIssue += SundayIssue;
+                                                                         }
+                                                                         else if(tempDate.year() != date.today().year() && zuoSubscrpt.Next_Year_Temp_Stop_Days__c+AccumulatedNextYear <= 30){
+                                                                             totalweekdayIssue += weekdayIssue;
+                                                                             totalSaturdayIssue += SaturdayIssue;
+                                                                             totalSundayIssue += SundayIssue;
+                                                                         }            
+                                                                     }   
+                                                                 }
+                                                                 //totalIssue = allIssues;
+                                                                 totalIssue = totalweekdayIssue + totalSaturdayIssue + totalSundayIssue ;
+                                                                 
+                                                                 weekDayNotDiscounted = (Math.abs(PriceWeekday) * totalweekdayIssue);
+                                                                 saturdayNotDiscounted = (Math.abs(PriceSaturday) * totalSaturdayIssue);
+                                                                 sundayNotDiscounted = (Math.abs(PriceSunday) * totalSundayIssue);
+                                                                 totalNotDiscountedPerPub += weekDayNotDiscounted + saturdayNotDiscounted+ sundayNotDiscounted;
+                                                                 totalNotDiscounted += totalNotDiscountedPerPub;
+                                                                 
+                                                                 
+                                                                 totalIssueAndTotalAmount.put('issues', totalIssue);
+                                                                 totalIssueAndTotalAmount.put('amount', totalNotDiscounted);
+                                                                 totalIssueAndTotalAmount.put('current', AccumulatedCurrentYear);
+                                                                 totalIssueAndTotalAmount.put('next', AccumulatedNextYear);
+                                                                 return totalIssueAndTotalAmount;
+                                                             }
     //END: D-2012 3/27/2015 JLedesma Issue Calculation
     //START: PD-0308 5/31/2016 CCamilon CaseSubRecord
     private static void createCaseSubRecord(Case caseObj,  Zuora__Subscription__c subscriptionObj, Account accountObj){
-    
+        
         Case_Subscription__c newCaseSub = new Case_Subscription__c();
         newCaseSub.Account__c = accountObj.id;
         newCaseSub.Case__c = caseObj.id;
         newCaseSub.Subscription__c = subscriptionObj.id;
         insert newCaseSub;
-    
+        
     }
     //END PD-0308 5/31/2016 CCamilon CaseSubRecord
     //START: PD-0434 06/01/2016 CCamilon CaseSubRecord
@@ -957,6 +959,7 @@ global with sharing class EShopTempStopService{
         Map<Id, String> subIdToProductCodeMap = new Map<Id, String>();
         
         List<Zuora__SubscriptionProductCharge__c> nsubProdChList = [SELECT Zuora__EffectiveStartDate__c, Zuora__Model__c, Zuora__ProductName__c, Zuora__Subscription__r.Ph_d__c, Zuora__Subscription__r.Ph_e__c, Name, Zuora__Quantity__c, Zuora__UOM__c, Zuora__Price__c, Zuora__Subscription__c, Zuora__ProductSKU__c, PublicationCode__c, Zuora__RatePlanName__c, Zuora__Subscription__r.Product_Code__c FROM Zuora__SubscriptionProductCharge__c where Zuora__Subscription__c = : sub.id AND Zuora__UOM__c IN : UOMSet];
+        system.debug('nsubProdChList' + nsubProdChList);
         for(Zuora__SubscriptionProductCharge__c s: nsubProdChList){
                 
                 if(nsubToCoverPrice.containsKey(s.Zuora__Subscription__c)){            
@@ -1002,6 +1005,8 @@ global with sharing class EShopTempStopService{
 
             }
         }
+        system.debug('packIdToPackItemListMap' + packIdToPackItemListMap);
+        system.debug('pckItems' + pckItems);
         if(packIdToPackItemListMap.containsKey(sub.Main_Package_1__c)){
                     for(Package_Item__c pacItem : packIdToPackItemListMap.get(sub.Main_Package_1__c)){
                         if(nsubIdToPackageItems.containsKey(sub.id)){
@@ -1011,6 +1016,7 @@ global with sharing class EShopTempStopService{
                         }
                     }
         }
+        system.debug('nsubIdToPackageItems' + nsubIdToPackageItems);
         List<Id> sublistId = new List<Id> ();
         List<Package_Item__c> packageItems = new List<Package_Item__c>();
         Set<Id> prp = new Set<Id>();
@@ -1021,6 +1027,7 @@ global with sharing class EShopTempStopService{
                     if(nsubIdToPackageItems.containsKey(subIdFromPackageMap)){
                         packageItems = nsubIdToPackageItems.get(subIdFromPackageMap);
                     }
+                    system.debug('packageItems' + packageItems);
                     if(packageItems!=NULL){
                         for(Package_Item__c p : packageItems){
                             prp.add(p.Product_Rate_Plan__c);
@@ -1028,6 +1035,7 @@ global with sharing class EShopTempStopService{
                     }
                 }
         }
+           system.debug('prp' + prp);
         List<zqu__ProductRatePlanCharge__c> nratePlanChargeList = new List<zqu__ProductRatePlanCharge__c>();
         nratePlanChargeList = [SELECT Id, Name, PublicationCode__c, zqu__ProductRatePlan__c, zqu__ProductRatePlan__r.Name from zqu__ProductRatePlanCharge__c WHERE zqu__ProductRatePlan__c IN :prp];
         Map<Id, Set<String>> PRPToPubCode = new Map<Id, Set<String>>();
@@ -1041,6 +1049,7 @@ global with sharing class EShopTempStopService{
                     PRPToPubCode.get(prpc.zqu__ProductRatePlan__c).add(prpc.PublicationCode__c);
                 }
         }
+        system.debug('PRPToPubCode' + PRPToPubCode);
         List<Publication__c> npublist = new List<Publication__c>();
         npubList = [SELECT Id, Name, Platform_Type__c, Publication_Code__c, Published_Days__c, Earliest_Start_Date__c from Publication__c WHERE Publication_Code__c IN : pubcodes]; 
         Set<String> publCodeFromRatePlan = new Set<String>();
@@ -1062,6 +1071,8 @@ global with sharing class EShopTempStopService{
                      }
                   }
                   }  
+                  system.debug('npubList' +   npubList);
+                  system.debug('packageToPubrec'+packageToPubrec);
         Date earliestDate = null;
         List<Publication__c> publications = new List<Publication__c>();
         List<Date> pubDates = new List<Date>();
@@ -1079,8 +1090,10 @@ global with sharing class EShopTempStopService{
             }
         }
         
+        system.debug('earliestDate'+ earliestDate);
         return earliestDate;
         
     }
     //END: PD-0434 06/01/2016 CCamilon CaseSubRecord
+    
 }

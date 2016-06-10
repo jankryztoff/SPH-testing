@@ -7,7 +7,10 @@ public with sharing class UpdateZuoraArmsInfo {
 // Author: Percival Gacad
 // Date: 8/21/2014
 // Defect/CR no:
+
 // Logic: 
+
+
 //      High-Level: Update the Zuora Account with ARMS no and AGD No
 //      Detailed:   After the Billing Account record has been created, update the Zuora's Customer Account record with ARMS no and AGD Unit
 //
@@ -47,19 +50,19 @@ public with sharing class UpdateZuoraArmsInfo {
     }
 
     public void updateZuoraAccount(string zId)
-	{
+  {
         // START: Code Review Implementation 2/13/2015 JAlejandro
         if (zId !=null)
-		{ // END: Code Review Implementation 2/13/2015 JAlejandro
-			Zuora__CustomerAccount__c c = [select Zuora__Zuora_Id__c, Payment_Mode__c, ARMS_Account_Number__c, Zuora__PaymentMethod_Type__c, AGD_Unit__c from Zuora__CustomerAccount__c where id = :zId];
-			string ZuoraId = c.Zuora__Zuora_Id__c;
-			string ArmsNo = c.ARMS_Account_Number__c;
-			string PayMode = c.Payment_Mode__c;   
-			//valgacad 08292014: removed due to confirmed approach on when the AGD Unit will be sync to Zuora refer to: QL-210 of the toolkit
-			string AGDNo = c.AGD_Unit__c;
-			system.debug('>>>>>>>' +c);
-			updateCustomerAccount(ZuoraId, ArmsNo, AGDNo, PayMode);
-		}// Code Review Implementation 2/13/2015 JAlejandro
+    { // END: Code Review Implementation 2/13/2015 JAlejandro
+      Zuora__CustomerAccount__c c = [select Zuora__Zuora_Id__c, Payment_Mode__c, ARMS_Account_Number__c, Zuora__PaymentMethod_Type__c, AGD_Unit__c from Zuora__CustomerAccount__c where id = :zId];
+      string ZuoraId = c.Zuora__Zuora_Id__c;
+      string ArmsNo = c.ARMS_Account_Number__c;
+      string PayMode = c.Payment_Mode__c;   
+      //valgacad 08292014: removed due to confirmed approach on when the AGD Unit will be sync to Zuora refer to: QL-210 of the toolkit
+      string AGDNo = c.AGD_Unit__c;
+      system.debug('>>>>>>>' +c);
+      updateCustomerAccount(ZuoraId, ArmsNo, AGDNo, PayMode);
+    }// Code Review Implementation 2/13/2015 JAlejandro
     }
     
     public static void updateCustomerAccount(String billingAccountId, string armsNo, string AGDNo, string PayMode){
@@ -95,12 +98,12 @@ public with sharing class UpdateZuoraArmsInfo {
         Zuora.zObject rec = new Zuora.zObject('Account');
         rec.setValue('Id', billingAccountId);
         //START UD-2649 21-Sept-2015 Removed by S.Puli - remove update of ARMS info to Zuora
-	//rec.setValue('ARMS_Account_Number__c', armsNo );
-	//ENd UD-2649 21-Sept-2015
+  //rec.setValue('ARMS_Account_Number__c', armsNo );
+  //ENd UD-2649 21-Sept-2015
         //valgacad 08292014: removed due to confirmed approach on when the AGD Unit will be sync to Zuora refer to: QL-210 of the toolkit
         rec.setValue('AGD_Unit__c', agdNo );
         //rec.setValue('DefaultPaymentMethodId', paymentMethodId);
-            
+        //system.assertequals(zApiInstance, null);   
             try {
                 List<Zuora.zObject> objs = new List<Zuora.zObject> {rec};
                 List<Zuora.zApi.SaveResult> results = zApiInstance.zupdate(objs);

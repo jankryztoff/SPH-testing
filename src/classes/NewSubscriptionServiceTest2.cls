@@ -965,4 +965,6 @@ global class NewSubscriptionServiceTest2{
         Boolean isValid = NewSubscriptionService.validateSimilarSubscriptions('subscriptionIdParam', 'accountNumberParam',productFamiliesParam ,'countryCodeParam','postalCodeParam', 'levelNumberParam', 'unitNumberParam');
         Test.StopTest();        
     }
+  
+    
 }

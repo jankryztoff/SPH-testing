@@ -6,11 +6,18 @@
 * @description<Test Class for EshopCustomerProfileFetch>
 */
 
-@isTest (Seealldata = TRUE)
+@isTest
 public class EshopCustomerProfileFetchTest {
-
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        //insert CustomSettingsDataFactory.createOther(); 
+    }  
+        
     static testmethod void EshopCustomerProfileFetchUnitTest()
     {
+        
+        Integer count = 0;
         /*this portion added by Mayank Singh Rana*/
         /*Sample Account record*/
         //Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
@@ -23,8 +30,24 @@ public class EshopCustomerProfileFetchTest {
         
         //START EGC 4/9/2016
         //Get a Country. Assuming Country__c records are funtional data.
-        Country__c country = [SELECT Id FROM Country__c LIMIT 1];
+        //Country__c country = [SELECT Id FROM Country__c LIMIT 1];
         //END EGC 4/9/2016
+        
+        List<Zone__c> zoneList = TestDataFactory.createZone(1);
+        count = 0;
+        for (Zone__c obj : zoneList) {
+            obj.Name = ''+count;
+            count++;
+        }
+        insert zoneList;
+        
+        List<Country__c> countryList = TestDataFactory.createCountry(1);
+        count = 0;
+        for (Country__c obj : countryList) {
+            obj.Zone__c = zoneList[count].id;
+            count++;
+        }
+        insert countryList;
         
         
         /*Sample address records*/
@@ -34,7 +57,7 @@ public class EshopCustomerProfileFetchTest {
             addr.Legacy_Created_Date__c= '';
             addr.Legacy_Updated_By__c  = '';
             addr.Legacy_Updated_Date__c= '';
-        	addr.Country__c = country.Id; //EGC 4/9/2016 added
+            addr.Country__c = countryList[0].Id; //EGC 4/9/2016 added
         insert addr;
         
         /*Sample contact record*/

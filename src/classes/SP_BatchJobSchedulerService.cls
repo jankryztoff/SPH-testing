@@ -23,7 +23,7 @@ global class SP_BatchJobSchedulerService
         parentBatchJobSchedulerId = parentId;
     }        
     
-    //End D-4742 Raviteja 26Apr2016 - Capturing parent batch job schdduler record id  
+    //End D-4742 Raviteja 26Apr2016 - Capturing parent batch job schdduler record id      
     static 
     {       
         parallelBatches.add('SP018');
@@ -45,7 +45,7 @@ global class SP_BatchJobSchedulerService
         parallelBatches.add('SP041');
         parallelBatches.add('SP063');//Start/End UD-3207 01-Apr-2016 Added By S.Puli
         //END
-        parallelBatches.add('SP047'); // START-END : UD-2634 9/10/2015 Alyana Navarro
+    parallelBatches.add('SP047'); // START-END : UD-2634 9/10/2015 Alyana Navarro
     }
     //START 04/15/2015 D-2740 Kevin Evasco - Dynamic Number of Parallel Jobs for Infoprint
     @HttpPost

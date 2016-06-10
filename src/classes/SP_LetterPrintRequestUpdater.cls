@@ -12,7 +12,7 @@ global class SP_LetterPrintRequestUpdater implements Database.Batchable<sObject>
     public Integer requestCount;
     public String letterType;
     public String batchCode;
-    public String parentjobid; //Start-End PD-0027 09-May-2016 Added By Raviteja Kumar - add variable for source batch code 
+    public String parentjobid; //Start-End PD-0027 09-May-2016 Added By Raviteja Kumar - add variable for source batch code
     //START UD-2847 22-Sept-2015 Added By S.Puli - add variable for source batch code
     public String sourceCode;
     //END UD-2847 22-Sept-2015 Added By S.Puli
@@ -38,9 +38,9 @@ global class SP_LetterPrintRequestUpdater implements Database.Batchable<sObject>
                             ORDER BY CreatedDate DESC LIMIT 1];
         }
         //END D-3930 Gdelrosario 23/11/2015 : added to cater a new parameter  
-        //END UD-2847 22-Sept-2015 Added By S.Puli - add variable for source batch code  
+        //END UD-2847 22-Sept-2015 Added By S.Puli - add variable for source batch code 
         //Start D-4449 11-MAr-2016 Added by S.Puli - update to avoid first run issue
-		if(batchJobSchedulerList.size() == 1){
+        if(batchJobSchedulerList.size() == 1){
             DateTime lastExecution = batchJobSchedulerList[0].Start_Time__c;            
             
             return Database.getQueryLocator([SELECT Id, Letter_Type__c,Status__c FROM Letter_Print_Request__c WHERE CreatedDate <: lastExecution AND Status__c = :SP_GenerateLetterPrintBatch.newValue AND Letter_Type__c = :letterType]);

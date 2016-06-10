@@ -22,7 +22,7 @@ global class SP_PopulateVDCCreditNotes implements Database.Batchable<sObject>, D
     global static final String REASON_CATEGORY_24 = '24';
     global static final String REASON_CATEGORY_D3 = 'D3';
     global static final String REASON_CATEGORY_M = 'M';
-     //Start D-4742 Raviteja 26Apr2016 - removing hardocde values and applying custom settings
+    //Start D-4742 Raviteja 26Apr2016 - removing hardocde values and applying custom settings
     /*global static final Integer CREDIT_INITIAL_NUMBER = 19999999;
     global static final Integer CREDIT_MIN_NUMBER = 20000000;
     global static final Integer CREDIT_MAX_NUMBER = 20099999;
@@ -37,6 +37,7 @@ global class SP_PopulateVDCCreditNotes implements Database.Batchable<sObject>, D
     global static final Integer DEBIT_MIN_NUMBER = getCreditDebitNumberSetting('DEBIT_MIN_NUMBER');
     global static final Integer DEBIT_MAX_NUMBER = getCreditDebitNumberSetting('DEBIT_MAX_NUMBER');
     //End D-4742 Raviteja 26Apr2016 - removing hardocde values and applying custom settings
+    
     global Date startDate;
     global Date endDate;
     global Boolean ismanualrun = False;

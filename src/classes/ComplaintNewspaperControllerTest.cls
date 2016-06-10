@@ -22,7 +22,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id, 
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -91,6 +91,8 @@ public class ComplaintNewspaperControllerTest {
             ApexPages.StandardController stdCtrlr = new ApexPages.StandardController(testCase);
             ComplaintNewspaperController compNewsCont = new ComplaintNewspaperController (stdCtrlr);
             compNewsCont.goodwillCopiesSelected = 'TEST';
+            compNewsCont.subSelected4 = 'test';
+            compNewsCont.subSelected3 = 'test';
             compNewsCont.subSelected5 = 'test';
             compNewsCont.objcase = testcase;
             compNewsCont.objcase.AccountId = acc.Id;
@@ -128,7 +130,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id,
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -335,7 +337,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id,
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -434,7 +436,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id,
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -685,7 +687,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id,
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -902,7 +904,7 @@ public class ComplaintNewspaperControllerTest {
             
         }           
     }
-    /*
+    
     
     static testMethod void testWithsubs(){
         
@@ -915,7 +917,7 @@ public class ComplaintNewspaperControllerTest {
             LastName='Test',
             LanguageLocaleKey='en_US', 
             LocaleSidKey='en_US',
-            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+            ProfileId = (Id) ConstantsSLB.getKeyId('Profile_System Administrator'), 
             TimeZoneSidKey='America/Los_Angeles',
             UserName='standard@test.com'
         );
@@ -929,7 +931,7 @@ public class ComplaintNewspaperControllerTest {
             Map<String, Set<Date>> pubCodesToNonPubDatesMap = new Map<String, Set<Date>>();
             Map<Id, Set<Date>> subsIdTopubCodesToNonPubDatesMap = new Map<Id, Set<Date>>();
             
-            Account acc = new Account(Name = 'Test Account', RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber'));
+            Account acc = new Account(Name = 'Test Account', RecordTypeId = ConstantsSLB.getKeyId('Vendor Subscriber'));
             List<Package__c> pkg = TestDataFactory.createPackage(1);
             pkg[0].Subscription_Period__c = '15';             
             Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
@@ -1143,7 +1145,7 @@ public class ComplaintNewspaperControllerTest {
             Test.stopTest();    
             
         }           
-    }*/
+    }
     /*
     static testMethod void testWithNosubs(){
         

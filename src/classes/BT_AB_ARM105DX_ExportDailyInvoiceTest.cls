@@ -3,17 +3,17 @@
  * Date: 17 May 2017
  * Project/Requirement: Test class for BT_AB_ARM105DX_ExportDailyInvoice
  */
-@isTest
+@isTest//(seealldata = true)
 private class BT_AB_ARM105DX_ExportDailyInvoiceTest{
 
-	@testSetup
-	static void setupData() {
-		
-		insert CustomSettingsDataFactory.createKey_Id();
-		insert CustomSettingsDataFactory.createOther();
-		insert CustomSettingsDataFactory.createBatchInterface();
-		insert CustomSettingsDataFactory.createBillingBatch();
-	}
+    @testSetup
+    static void setupData() {
+        
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createBatchInterface();
+        insert CustomSettingsDataFactory.createBillingBatch();
+    }
 
     static testMethod void testExportDailyInvoice105(){
         //custom settings
@@ -32,8 +32,8 @@ private class BT_AB_ARM105DX_ExportDailyInvoiceTest{
         addressRec.Postal_Code__c = postal.Id;
         insert addressRec;
 
-		Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
-		acc.Attention_To_Care_Of_Indicator__c = 'C';
+        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        acc.Attention_To_Care_Of_Indicator__c = 'C';
         insert acc;
         
         Id conRecTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Customer Contact').getRecordTypeId();
@@ -43,7 +43,7 @@ private class BT_AB_ARM105DX_ExportDailyInvoiceTest{
         con.Phone = '1234567';
         con.Address__c = addressRec.Id; 
         con.Recipient_Indicator__c = true;
-		con.Billing_Indicator__c = true;
+        con.Billing_Indicator__c = true;
         insert con;
         
         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
@@ -62,7 +62,7 @@ private class BT_AB_ARM105DX_ExportDailyInvoiceTest{
         dailyInvoice.Total_Amt__c = 123.12;
         dailyInvoice.Billing_Account__c = billAcc.Id;
         dailyInvoice.To_ARMS_Time__c = Date.Today();
-		dailyInvoice.Prev_Bal__c = 100;
+        dailyInvoice.Prev_Bal__c = 100;
         
         insert dailyInvoice;
 
@@ -102,6 +102,7 @@ private class BT_AB_ARM105DX_ExportDailyInvoiceTest{
         zInvoice.Zuora__PaymentAmount__c= 5;
         insert zInvoice;
         
+        //SELECT Id, Name, ProductCode__c, ProductSubType__c, ProductType__c, zqu__SKU__c, ProductFamily__c, zqu__ZuoraId__c FROM zqu__ZProduct__c
         zqu__ZProduct__c zProduct = new zqu__ZProduct__c();
         zProduct.Name ='zProduct Test';
         zProduct.zqu__ZuoraId__c = '2c92c0f953078a3501530902e0e93929';

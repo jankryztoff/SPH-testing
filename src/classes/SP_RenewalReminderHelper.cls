@@ -160,8 +160,9 @@ public class SP_RenewalReminderHelper {
         for(Product_Code__c noDeliveryProductElem : [SELECT Id, Product_Code__c FROM Product_Code__c]) {
             noDeliveryProductsSet.add(noDeliveryProductElem.Product_Code__c);
         }
-         
+        system.debug('>>>>>CHA parentLPRSubscriptionListMap.keySet() : ' + parentLPRSubscriptionListMap.keySet()); //CHACHA
         for(Id parentLPRId : parentLPRSubscriptionListMap.keySet()){
+            system.debug('>>>>>CHA parentLPRSubscriptionListMap.get(parentLPRId) : ' + parentLPRSubscriptionListMap.get(parentLPRId)); //CHACHA
             for(Zuora__Subscription__c subscriptionElem : parentLPRSubscriptionListMap.get(parentLPRId)) {
                 orderLineItemIdSet.add(subscriptionElem.Order_Line_Item_Number_1__c);
                 
@@ -169,6 +170,8 @@ public class SP_RenewalReminderHelper {
                 if(!orderLIRecipientContactIdMap.containsKey(subscriptionElem.Order_Line_Item_Number_1__c)){
                     orderLIRecipientContactIdMap.put(subscriptionElem.Order_Line_Item_Number_1__c, subscriptionElem.Recipient_Contact__c);
                 }       
+                system.debug('>>>>>CHA subscriptionElem.Recipient_Contact__c : ' + subscriptionElem.Recipient_Contact__c); //CHACHA
+                system.debug('>>>>>CHA subscriptionElem.Recipient_Contact__r : ' + subscriptionElem.Recipient_Contact__r); //CHACHA
                 if(!recipientContactMap.containsKey(subscriptionElem.Recipient_Contact__c)){
                     recipientContactMap.put(subscriptionElem.Recipient_Contact__c, subscriptionElem.Recipient_Contact__r);
                 }
@@ -193,6 +196,7 @@ public class SP_RenewalReminderHelper {
         orderLineItemMap = new Map<Id,Order_Line_Item__c>([SELECT Id, Main_Package_ID__c, Addon_Package__c FROM Order_Line_Item__c WHERE Id IN :orderLineItemIdSet]);
         
         // START : UD-3510 1/8/2016 Alyana Navarro
+        system.debug('>>>>>CHA recipientContactMap : ' + recipientContactMap); //CHACHA
         contactDelChargeTypeChargesMap = SM_SubscriptionHelper.getChargesForRenewalLetter(contactDelChargeTypeMap, recipientContactMap);
         orderLineItemPostageFeeMap = PostageChargeHelper.getPostageChargeForLineItemRenewalLetter(orderLineItemMap, orderLIRecipientContactIdMap);
         // END : UD-3510 1/8/2016 Alyana Navarro
@@ -272,30 +276,30 @@ public class SP_RenewalReminderHelper {
                 for(Zuora__Subscription__c subscription : orderLineItemSubscriptionListMap.get(orderLineItemId)){
                     if(productMap.containsKey(subscription.Product_Code__c)) {
                         if(!isAdhoc){
-                        //START D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
-                        if(subscription.Main_Package_Product_Sub_Type_Mapping__c == 'Magazine'){
-                            if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',true))){
-                                if(!productMap.get(subscription.Product_Code__c).Suppress_Renewal_Letter__c){
-                                    isOrderLineSuspended = false;
+                            //START D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
+                            if(subscription.Main_Package_Product_Sub_Type_Mapping__c == 'Magazine'){
+                                if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',true))){
+                                    if(!productMap.get(subscription.Product_Code__c).Suppress_Renewal_Letter__c){
+                                        isOrderLineSuspended = false;
+                                    }
+                                } else if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',false))){
+                                    if(!productMap.get(subscription.Product_Code__c).Suppress_Reminder_Letter__c){
+                                        isOrderLineSuspended = false;
+                                    }
                                 }
-                            } else if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',false))){
-                                if(!productMap.get(subscription.Product_Code__c).Suppress_Reminder_Letter__c){
-                                    isOrderLineSuspended = false;
+                            }else if(subscription.Main_Package_Product_Sub_Type_Mapping__c == 'Newspaper'){
+                                if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays((ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',true)))){
+                                    if(!productMap.get(subscription.Product_Code__c).Suppress_Renewal_Letter__c){
+                                        isOrderLineSuspended = false;
+                                    }
+                                } else if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays((ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',false)))){
+                                    if(!productMap.get(subscription.Product_Code__c).Suppress_Reminder_Letter__c){
+                                        isOrderLineSuspended = false;
+                                    }
                                 }
                             }
-                        }else if(subscription.Main_Package_Product_Sub_Type_Mapping__c == 'Newspaper'){
-                            if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays((ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',true)))){
-                                if(!productMap.get(subscription.Product_Code__c).Suppress_Renewal_Letter__c){
-                                    isOrderLineSuspended = false;
-                                }
-                            } else if(subscription.Zuora__SubscriptionEndDate__c == Date.Today().addDays((ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Newspaper',false)))){
-                                if(!productMap.get(subscription.Product_Code__c).Suppress_Reminder_Letter__c){
-                                    isOrderLineSuspended = false;
-                                }
-                            }
-                        }
-                    //END D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability
-                    } else {
+                            //END D-4354 27.1.2016 Gdelrosario : added the custom setting for configurability 
+                        } else {
                             if(batchMode == 'N'){
                                 if(subscription.Main_Package_Product_Sub_Type_Mapping__c == 'Magazine'){
                                     if(subscription.Zuora__SubscriptionEndDate__c == adhocBatchRunDate.addDays(ConstantsSLB.getRenewalNotificationDay('Renewal Notifications Values','Magazine',true))){
@@ -364,7 +368,7 @@ public class SP_RenewalReminderHelper {
     // START : UD-3338 12/3/2015 Alyana Navarro
     public static String getSubscriptionTableLabel(String publicationType, Map<String, zqu__ZProduct__c> productMap, Map<id, Package__c> packageMap, List<Zuora__Subscription__c> subscriptionList){
         String subscriptionLabel = '';
-        
+
         //START: D-4262 1-12-2016 Added by Kristine Balaoing
         try{
             if(publicationType == 'Magazine'){

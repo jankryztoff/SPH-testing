@@ -5,7 +5,7 @@
    @Description To test SP_AddressAssignmentCallOut class
    @Version <1.0>
   */
-@isTest (Seealldata = TRUE)
+@isTest
 private class SP_AddressAssignmentCallOutTest {
     /**
     *  To test SP_AddressAssignmentCallOut class

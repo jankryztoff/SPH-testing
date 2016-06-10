@@ -1,5 +1,10 @@
-@isTest (Seealldata = TRUE)
+@isTest 
 public class ARMS_TriggerHandlerTest2{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createPlannerSched();  
+    }  
     
     static testMethod void testSingleInsertUpdateDelete(){
         //START: Tine Test Classes 04/25/2016

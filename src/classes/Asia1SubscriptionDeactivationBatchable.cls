@@ -132,9 +132,9 @@ public class Asia1SubscriptionDeactivationBatchable implements Database.Batchabl
         if (asia1SubscriptionList.size() > 0) {
             
             try {
-				//START UD-3832 1/29/2016 Added by Manolo Valena - set to Database.Update to allow successful records to be processed
+        //START UD-3832 1/29/2016 Added by Manolo Valena - set to Database.Update to allow successful records to be processed
                 Database.update(asia1SubscriptionList, false);
-				//END UD-3832 1/29/2016 Added by Manolo Valena - set to Database.Update to allow successful records to be processed
+        //END UD-3832 1/29/2016 Added by Manolo Valena - set to Database.Update to allow successful records to be processed
             } catch (exception e) {
                 logger.logBatchFailure(e, scope);   // Start/End UD-3427 13Jan16 JohnD
                 // system.debug(GlobalVariableClass.ASIA_ERROR + GlobalVariableClass.SPACE + e); Start/End UD-3427 13Jan16 JohnD - commented out

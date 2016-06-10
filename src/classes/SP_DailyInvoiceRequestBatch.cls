@@ -50,6 +50,7 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
 
     global Database.QueryLocator start(Database.BatchableContext bc){            
         latestARMSInvoiceId = Integer.valueOf(latestARMSInvoiceIdSetting.Value__c);
+        
         if(selectAccountsOnly == false){
             return Database.getQueryLocator([SELECT Id, Name, To_ARMS_Time__c, ARMS_Invoice_ID__c, Balance__c, Billing_Account__c, Invoice_Date__c, 
                 Is_PDF_Generated__c, Payment_Amt__c, Prev_Bal__c, Tax_Amt__c, Tax_Exempt_Amt__c, Total_Amt__c,Billing_Account__r.Zuora__Account__r.RecordTypeId,
@@ -72,6 +73,7 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
     }     
     
     global void execute(Database.BatchableContext BC, List<Daily_Invoice__c> scope){
+        
         Logger logger = new Logger(SP_DailyInvoiceRequestBatch.class.getName(), 'SP062', BC.getJobID());
         boolean isError = false;
         Set<Id> billingAccountIdSet = new Set<Id>(); 
@@ -88,7 +90,7 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
         Set<Id> initialDailyInvIds = new Set<Id>();
         
         Map<Id, boolean> invDailyToKey_Map = new Map<Id, boolean>();
-        
+
         for(Daily_Invoice__c dInv : scope){
             initialDailyInvIds.add(dInv.Id);
         }
@@ -157,7 +159,7 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
                             invDailyToKey_Map.put(invoiceRec.Daily_Invoice__c, true);
                         }
                     }           
-              
+                
                     if(gstUpdateFlag == false){
                         gstUpdateFlag = updateGSTRate(invoiceRec.Zuora__Zuora_Id__c);
                     }

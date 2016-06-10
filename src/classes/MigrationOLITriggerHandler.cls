@@ -22,6 +22,7 @@ global class MigrationOLITriggerHandler {
             }            
         }
         updNewOLIs(updatenewOLIList);
+        
         //START D-4474 03102016 Jessica Palapal - To include Billing type upon creation
         if(!updatenewOLIList.isEmpty())
             updOLI(updatenewOLIList);

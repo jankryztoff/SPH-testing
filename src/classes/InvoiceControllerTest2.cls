@@ -1,11 +1,11 @@
 @isTest
 private class InvoiceControllerTest2{
-	
-	@testSetup 
+    
+    @testSetup 
     static void setupData() {
         insert CustomSettingsDataFactory.createKey_Id(); 
-	}
-	
+    }
+    
     static testMethod void testInvoiceController(){
         //start custom settings
         //Key_Id__c key = new Key_Id__c();
@@ -172,8 +172,8 @@ private class InvoiceControllerTest2{
             cont6.isRecipientOverseas = false;
         test.stopTest();
     }
-	
-	static testMethod void testInvoiceController2(){
+    
+    static testMethod void testInvoiceController2(){
         //start custom settings
         //Key_Id__c key = new Key_Id__c();
         //key.Name = 'Account_Direct SPH Inter-Division';
@@ -213,8 +213,8 @@ private class InvoiceControllerTest2{
         
         Contact con = TestDataFactory.createContact(1)[0];
         con.Address__c = add.Id;
-		con.Recipient_Indicator__c = true;
-		con.Billing_Indicator__c = true;
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
         database.insert(con);
         
         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
@@ -254,7 +254,7 @@ private class InvoiceControllerTest2{
         UOM__c = 'UOM CREDIT',
         Charge_Amount__c = 100,
         Subscription_Number__c = '123', Tax_Amount__c = 20),
-		new Invoice_Line_Item__c(Invoice_ID__c = inv.Zuora__Zuora_Id__c, 
+        new Invoice_Line_Item__c(Invoice_ID__c = inv.Zuora__Zuora_Id__c, 
         //UOM__c = 'NO CREDIT',
         UOM__c = 'Copy',
         Charge_Amount__c = 100,
@@ -272,7 +272,7 @@ private class InvoiceControllerTest2{
         subRecs.Subscription_Type__c = 'Publication';
         subRecs.Main_Package_1__c = pack.id;    //April Veloso 11102015
         subRecs.Main_Package__c = pack.id;        //April Veloso 11102015
-		subRecs.Recipient_Contact__c = con.Id;
+        subRecs.Recipient_Contact__c = con.Id;
         database.insert(subRecs);
         //end test data
     
@@ -348,5 +348,5 @@ private class InvoiceControllerTest2{
             cont6.isRecipientOverseas = false;
         test.stopTest();
     }
-	
+    
 }

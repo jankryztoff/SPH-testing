@@ -100,12 +100,12 @@ public class AccountTriggerHandler implements TriggerHandlerInterface {
     }
        
     public void beforeUpdate(SObject oldSo, SObject so) {
-		//Start VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
+        //Start VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
         Account acc = (Account) so;
         if(acc.Generate_Account_Number__c) {
                 acc.AccountNumber = acc.Account_Auto_Number__c;
         }
-		//End VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
+        //End VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
     }
     
     public void beforeDelete(SObject so) {
@@ -149,12 +149,12 @@ public class AccountTriggerHandler implements TriggerHandlerInterface {
         
     }
 
-		//Start VPernicia/MGatchalian 5/13/15 D-2917: Add if Condition to filter if coutn is O
+        //Start VPernicia/MGatchalian 5/13/15 D-2917: Add if Condition to filter if coutn is O
     public void andFinally() {
         if(accountsToUpdateMap.values().size() > 0){
         update accountsToUpdateMap.values();
         }
-		//End VPernicia/MGatchalian 5/13/15 D-2917: Add if Condition to filter if coutn is O
+        //End VPernicia/MGatchalian 5/13/15 D-2917: Add if Condition to filter if coutn is O
         
         //START - Wenjun Change 10/12/2014: Vendor Conversion
         if(!lstVSAccountIDs.isEmpty())

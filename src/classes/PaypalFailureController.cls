@@ -61,6 +61,7 @@ public class PaypalFailureController {
     }
     
     public void main() {
+  
     try {
          //START UD-2632 Gdelrosario : added for query
         Set<Id> subscriptionIdSet = new Set<Id>();

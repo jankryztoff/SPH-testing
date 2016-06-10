@@ -700,14 +700,14 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
             thisOrder.Account_Name__c = acc.Name;
             thisOrder.Account_Number__c = acc.Account_Auto_Number__c;
             //END D-3164 06/242015 Added by J.Sarion - Populate Account Name, Account Number,
-    //Start PD-0035 May 13,2016 Added by Kristine Balaoing - added Promotion_1__c             
+               
     //Start UD-0407 03-16-15 ABanaag - populate months between start/end
             if(subscriptionId!=null){
                 //START D-3163 06/26/2015 Added by J.Sarion - Populate Delivery Charge Type, Vendor Credit
                 Zuora__Subscription__c selectedSub = [SELECT id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Order_Number_1__r.Delivery_Charge_Type__c, Order_Number_1__r.Subscriber_Charge__c,                                        Order_Number_1__r.Vendor_Credit__c, Promotion_1__c
                                                       FROM Zuora__Subscription__c
                                                       WHERE id =: subscriptionId];
-    //End PD-0035 May 13,2016 Added by Kristine Balaoing - added Promotion_1__c  
+
                 selectedDeliveryChargeType = selectedSub.Order_Number_1__r.Delivery_Charge_Type__c;
                 thisOrder.Delivery_Charge_Type__c = selectedDeliveryChargeType;
                 thisOrder.Subscriber_Charge__c = selectedSub.Order_Number_1__r.Subscriber_Charge__c;
@@ -720,13 +720,13 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
                 if(startDate!=null && endDate!=null){
                     thisOrder.Months_Between_Start_End__c = startDate.monthsbetween(endDate);
                 }
-                //START: PD-0035 May 23, 2016 Added by Kristine Balaoing - added for missing gifts section
+                //fritzMay
                 if(selectedSub.Promotion_1__c != null)
                 {
                     selectedPromotionId  = selectedSub.Promotion_1__c;
                     populatePromotionGifts();
                 }
-                //END:PD-0035 May 23, 2016 Added by Kristine Balaoing
+                //fritzMay
             }
     //End UD-0407 03-16-15 ABanaag - populate months between start/end
             
@@ -1653,6 +1653,7 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
         }
 
         /* validation */
+        //System.assertEquals(null, orderLineItem.Addon_Package__c);
         //START: PD-0035 May 15, 2016 Added by Kristine Balaoing - added validation for add on digital packages
         if(orderLineItem.Addon_Package__c!=null){
             Package__c addOnPackageForValidation = [select Id, Name, (select Id, Is_Digital__c, Product_Rate_Plan__r.zqu__ZProduct__c, 
@@ -1919,6 +1920,8 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
           // Start D-1345 01/19/2015 JohnD retrieve selected subscription's package name
           selectedSubscriptionPackageName = [select Name from Package__c where Id = :selectedPackageId].Name;
           // End D-1345 01/19/2015 JohnD
+          //System.assertEquals(null, selectedSubscriptionPackageName);
+          //System.assertEquals(1, 2);
           //START 12/01/15 D-1717 Wenjun - Retrieve Postage Charge Related Fields
           //START D-3332 11/05/15 RReyes -  added Main_Package_ID__r.Subscription_Period__c - rollback
           //START PD-0020 03-Mar-2016 Added By S.Puli, C.Lin, V.Pernicia
@@ -2008,6 +2011,7 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
         //END D-1082 JB Domingo 12/18/2014
 
         if (orderLineItem.Is_Digital__c == true) {
+            //System.assert(false);
             isDigital = true;
             asia1Subscriptions = getAsia1s(orderLineItem.Asia1_Subscriptions__r);
             asia1SubscriptionsTotal = asia1Subscriptions.size();
@@ -2132,7 +2136,6 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
        //START: PD-0035 May 13, 2016 Added by Kristine Balaoing - added field promotion in sub query
         Zuora__Subscription__c zSub = [SELECT Order_Number_1__r.Subscriber_Charge__c, Order_Number_1__r.Vendor_Credit__c, Delivered_By_1__c, Order_Number_1__r.Delivery_Charge_Type__c, Promotion_1__c FROM Zuora__Subscription__c WHERE Id = :subscriptionId];
         //System.assertEquals(null, zSub);
-	//END: PD-0035 May 13, 2016 Added by Kristine Balaoing
         if (zSub != null) {
             if (zSub.Order_Number_1__r.Subscriber_Charge__c != null) {
                 thisOrder.Subscriber_Charge__c = zSub.Order_Number_1__r.Subscriber_Charge__c;
@@ -2565,14 +2568,16 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
             
             retrievePackageSubscriptionRate(new set<id>{addOnPackage.Id}, orderLineItem.Main_Package_Billing_Type__c);
             orderLineItem.Add_On_Package_Subscription_Rate__c = packageId_subscriptionCharge.get(addOnPackage.Id);
+            System.debug('ADD ON >>>' + addOnPackage.Id);
+            System.debug('ORDER LINE >>>' + orderLineItem.Add_On_Package_Subscription_Rate__c);
+            System.debug('MAAAAAP PACKAGE ID SUBS >>>' + packageId_subscriptionCharge);
             
             
         } catch (exception e) {
             addOnPackage = new Package__c();
         }
-        //Start PD-0035 May 13, 2016 Added by Kristine Balaoing - added retrieval of newly added add on
+        
         retrieveNewlyAddedAddOn();
-	//End PD-0035 May 13, 2016 Added by Kristine Balaoing
     }
     
   private void eraseCheckDetails() {
@@ -2601,6 +2606,7 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
             
             promotionGifts.add(gw); 
         }
+        //System.assertEquals(null, promotionGifts);
     }
     // end gifst
 
@@ -2642,9 +2648,13 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
         // end retrieve recipient contact detai of the selected subscription
         
         oliId = zs.Order_Line_Item_Number_1__c;
+        //System.assertEquals(subToAddOn + '' , oliId + '');
         if(oliId != null && subToAddOn.containsKey(oliId)){
             selectedAddOnPackage = subToAddOn.get(oliId).Id;
             populateAddOn();
+            //System.debug('ORDERLINE AFTER POPADDON >>> ' + orderLineItem.Add_On_Package_Subscription_Rate__c);
+            //System.assertEquals(null, orderLineItem.Is_Digital__c);
+            //System.assert(false);
         }
         else{
             addOnPackage = new Package__c();
@@ -2855,6 +2865,9 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
           orderLineItem.Main_Package_Subscription_Rate__c = pkg.Package_Price__c;
           //START D-3143 GDel 06/23/2015
             subscriptionRate = pkg.Package_Price__c;
+            //fritz
+            //System.assertEquals(null, orderLineItem.Add_On_Package_Subscription_Rate__c);
+            //System.assertEquals(1, 2);
             if (orderLineItem.Add_On_Package_Subscription_Rate__c != null) {
                 subscriptionRate += orderLineItem.Add_On_Package_Subscription_Rate__c;
             }
@@ -3098,6 +3111,9 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
         }
         recalculateCharges();
         calculateCharges(); //START/END D-4214 RReyes 01/18/2016
+        //System.assertEquals(null + '', orderlineitem.Add_On_Package_Subscription_Rate__c + '');
+        //fritz subscriptionRate
+        //System.assertEquals(1,2);
         // End UD-1147/D-2486/D-2907 10Jun15 JohnD 
          
          // Start UD-1147/D-2486/D-2907 10Jun15 JohnD - commented out. replaced by calling the updateCharges method instead
@@ -3426,12 +3442,13 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
           for (Asia1Wrapper tmpw : asia1Subscriptions) {
               tmpAsia1Ids.add(tmpw.asia1Id);
           }
+          //System.assertEquals(null, tmpAsia1Ids);
           //START UD-3454 01/06/15 RReyes - added condition if Asia1 is not Disabled
           String disabled = GlobalVariableClass.ASIA1_SUBSCRIPTION_STATUS_DISABLED;
           for (Asia1__c asia1 : [select Id, User_ID_LDAP_ID__c from Asia1__c where Contact__r.Account.Id = :accountId  and Id not in :tmpAsia1Ids and status__c!=:disabled]) {
-              //START:UD-0429 3/18/15 Added by Manolo Valena - Put values in a set.
+              //START:UD-0429 3/18/15 Added by Manolo ValeÃƒÂ¯Ã‚Â¿Ã‚Â½a - Put values in a set.
               aOneIdSet.add(asia1.Id);
-        //END:UD-0429 3/18/15 Added by Manolo Valena
+        //END:UD-0429 3/18/15 Added by Manolo ValeÃƒÂ¯Ã‚Â¿Ã‚Â½a
           }
           //END UD-3454 01/06/15 RReyes - added condition if Asia1 is not Disabled
             
@@ -4267,6 +4284,8 @@ public class SM_RenewalOfSubscriptionEntryController extends SM_SubscriptionHelp
             if(orderlineitem.Add_On_Package_Subscription_Rate__c != null){
                 addOnSubRate = orderlineitem.Add_On_Package_Subscription_Rate__c;
             }
+            //System.assertEquals(null, orderlineitem);
+            //System.assertEquals(1,2);
             if(orderLineItem.Main_Package_Subscription_Rate__c != null){
                 subscriptionRate = orderLineItem.Main_Package_Subscription_Rate__c;
                 if (orderLineItem.Add_On_Package_Subscription_Rate__c != null) {

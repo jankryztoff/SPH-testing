@@ -5,7 +5,7 @@
  * Requirement/Project Name: <SPH>
  * @description<Test Class for DataPurgeBatch>
  */
-@isTest (seeAllData = TRUE)
+@isTest
 private class DataPurgeBatchTest {
     
     /*static testmethod void unitTest() {
@@ -36,11 +36,16 @@ private class DataPurgeBatchTest {
     
     static testmethod void unitTest2() {
 
-        String query = 'SELECT Account_Name__c, Account_Number__c, Customer_Name__c FROM Order__c WHERE isWaive__c =TRUE';
+        List<Publication__c> pubList = TestDataFactory.createPublication(1);
+        insert pubList;
+        String query = 'SELECT Name, Publication_Code__c, Published_Days__c, Publication_Type__c, Earliest_Start_Date__c FROM Publication__c LIMIT 1';
+        
+        Test.startTest();
         DataPurgeBatch batch = new DataPurgeBatch(query);
-        ID batchprocessid = Database.executeBatch(batch,10);
-        //System.assertNotEquals(null, batchprocessid);
-        Database.BatchableContext bc;
-        batch.start(bc);
+        ID batchprocessid = Database.executeBatch(batch);
+        System.assertNotEquals(null, batchprocessid);
+        Test.stopTest();
+        //Database.BatchableContext bc;
+        //batch.start(bc);
     }
  }

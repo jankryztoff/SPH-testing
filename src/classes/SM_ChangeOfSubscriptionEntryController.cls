@@ -43,8 +43,11 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
     final id orderId = ApexPages.currentPage().getParameters().get('id');
     public id subscriptionId { get; set; }
     
-    private final string COS_PACKAGE = 'Change of Subscription Package';
-    private final string COS_QUANTITY = 'Change of Subscription Quantity';
+    // Start PD-0136 02Jun16 JohnD
+    private final string COS_PACKAGE =  ConstantsSLB.getOther('Order_Type COS_Package');
+    private final string COS_QUANTITY =  ConstantsSLB.getOther('Order_Type COS_Quantity');
+    private final string COS_OTHERS = ConstantsSLB.getOther('Order_Type COS_Others');
+    // End PD-0136 02Jun16 JohnD
     //START : D-1853 1/21/2015 JLedesma - Change of Subscription removal of radio buttons
     private final string COS = 'Change of Subscription';
     //END : D-1853 1/21/2015 JLedesma - Change of Subscription removal of radio buttons
@@ -232,6 +235,10 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
     //START D-4402 14Apr16 FrancisBenzon : var maxGift
     public integer maxNoOfGifts {get; set;}
     //END D-4402 14Apr16 FrancisBenzon : var maxGift
+    //Start PD-0035 May 13,2016 Added by Kristine Balaoing - added for add on rendering
+    public transient boolean addOnIsDigital { get; set; }
+    //END PD-0035 May 13,2016 Added by Kristine Balaoing 
+    
     public class SubscriptionWrapper {
         public string publicationName { get; set; }
         public string publicationPrintPattern { get; set; }
@@ -362,7 +369,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         }*/
         //END: D-3265 22-July-2015 JTeves
         //Start MMallorca UD-1274 05/29/2015 Call function to display current delivery charges on load
+        System.debug('gddr initialize calls compute prepaid START =========================================');
         computePrepaid();
+        System.debug('gddr initialize calls compute prepaid END =========================================');
         //End MMallorca UD-1274 05/29/2015
         //END: D-2899 05/18/15 RReyes -  - Admin Fee should be computed before admin charge
         //END D-2883 05/13/15 RReyes - Recomputes admin charge and fee if edit in clicked 
@@ -550,7 +559,8 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                             Where Case__r.RecordType.Name = :GlobalVariableClass.RECTYPE_STOP_SUBSCRIPTION 
                             AND Case__r.Status != :GlobalVariableClass.STATUS_VOID
                             AND Subscription__c = :thisOrder.Subscription__c
-                            AND Order__r.Account__c = :accountId];
+                            AND Order__r.Account__c = :accountId
+                            AND Order__r.Status__c != 'Void']; //fritz for PD-0184
                             
             if(stopOLILst.size() > 0)
             {
@@ -588,7 +598,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 zs = [select Id, Zuora__CustomerAccount__r.Zuora__Credit_Balance__c, Contract_End_Date_1__c, Promotion_1__c, 
                         Promotion_1__r.Penalty_Charge__c, Promotion_1__r.Penalty_Charge_Override__c, Order_Line_Item_Number_1__r.Admin_Charge__c, Order_Line_Item_Number_1__c, Recipient_Contact__c, Cost_Center__c, Number_of_Copies__c, Order_Line_Item_Number_1__r.Main_Package_Subscription_Rate__c, Zuora__CustomerAccount__c,
                         Main_Package_1__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, 
-                        Order_Line_Item_Number_1__r.Total_Subscription_Rate__c,
+                        Order_Line_Item_Number_1__r.Total_Subscription_Rate__c, 
                         Order_Number_1__c, Delivery_Charge_Type_1__c, Zuora__CustomerAccount__r.Name, 
                         Zuora__CustomerAccount__r.Payment_Mode__c, Vendor_Conversion_1__c, Charity_1__c, Delivered_By_1__c, Term_Length__c,
                         PO_Number__c, Supressed_Renewal_and_Reminder_Letter_1__c, New_Contract_Period_1__c, Supressed_Acknowledgement_Letter_1__c,
@@ -613,7 +623,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             //START UD-2949 AddedBy FrancisBenzon 9/30/15 : sponsor field copied
             thisOrder.Sponsor__c = zs.Sponsor_1__c;
             //END UD-2949 AddedBy FrancisBenzon 9/30/15 : sponsor field copied
-            
+            System.debug('test class >>> : ' + zs );
+            System.debug('test class >>> : ' + zs.Id );
+            System.debug('test class >>> : ' + zs.Main_Package_1__c );
             //Start D-3331 VPernicia
             isBundle = false;
             checkIsBundle(zs.Main_Package_1__c);
@@ -647,6 +659,13 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             // end refund info section
             
             
+            //fritzMay
+            if(zs.Promotion_1__c != null)
+            {
+                selectedPromotionId  = zs.Promotion_1__c;
+                populatePromotionGifts();
+            }
+            //fritzMay
             
             thisOrder.Recipient_Contact__c = zs.Recipient_Contact__c;
             thisOrder.Cost_Centre__c = zs.Cost_Center__c;
@@ -654,15 +673,13 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             if(thisOrder.Delivery_Charge_Type__c == null){
                 thisOrder.Delivery_Charge_Type__c = zs.Delivery_Charge_Type_1__c;
             }
-	    // Start PD-0225 20May16 commented out
-            /* 
+            /* PD-0225 20May16 commented out
             else{
                 thisorder.Delivery_Charge__c = thisorder.Delivery_Charge__c;
                 thisOrder.Subscriber_Charge__c = thisOrder.Subscriber_Charge__c;
                 thisOrder.Vendor_Credit__c = thisOrder.Vendor_Credit__c;
             }
             */
-	    // End PD-0225 20May16 commented out
             //End MMallorca UD-1274 06/01/2015
             
             selectedSubscription = new SubscriptionWrapper();
@@ -709,6 +726,8 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             
             // retrieve publication detail
             //Start : Code Review Implementation 02/18/2015 S.Puli
+            System.debug('test class >>> : ' + packageIds);
+            System.debug('test class >>> : ' + packageIds<>null );
             if(packageIds<>null){
             //END : Code Review Implementation 02/18/2015 S.Puli
                 for (Package__c pkg : [select Id, (select Id, Product_Rate_Plan__r.zqu__ZProduct__c from Package_Items__r) 
@@ -786,7 +805,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         
         //Start MMallorca UD-1274 05/29/2015 Replace refreshSubscriberCharge to computePrepaid in computing delivery charges
         //START UD-0689 04-21-2015 MarvinG
+        System.debug('gddr retrieveRelatedSubscriptions calls method computeprepaid START =====================================');
         computePrepaid();
+        System.debug('gddr retrieveRelatedSubscriptions calls method computeprepaid END =====================================');
         //END UD-0689 04-21-2015 MarvinG
         //End MMallorca UD-1274 05/29/2015
         //START D-2663 AddedBy FrancisBenzon : Calculate Charges upon select of Subscription
@@ -960,7 +981,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         //START UD-3652 4Feb2016 FrancisBenzon: check if sub has stop order, if yes throw error
         if(hasExistingStopOrder)
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage(err_ExistingStopOrder)));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage(err_ExistingStopOrder))); //fritz
             return null;
         }       
         //END UD-3652 4Feb2016 FrancisBenzon: check if sub has stop order, if yes throw error
@@ -973,6 +994,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         // End UD-2614 06Sep15 JohnD - added logic
         
         //START D-3223 07/09/15 RReyes - validates if order has billing account
+        //fritz
         if(!hasBillingAccount('CHANGE', thisOrder)){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage('No Billing Account')));
             return null; 
@@ -1112,7 +1134,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 ApexPages.addMessage(myMsg);
             }*/
             //Start MMallorca UD-1274 06/01/2015 Call function for computing delivery charges
+            System.debug('gddr save calls compute prepaid START =========================================');
                 computePrepaid();
+            System.debug('gddr save calls compute prepaid END =========================================');
             //End MMallorca UD-1274 06/01/2015
             //START D-2400 JTeves 17/02/15 : Add Asia1 validation
             boolean isSelectedPackageDigital = false;
@@ -1130,16 +1154,22 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             //START D-3382 CCB-135 05/Aug/15 Wenjun: Fix existing bug - reuse existing vendor does not cater search package
             //Start UD-2174 03Aug15 JohnD - modified logic for order type
             if (thisOrder.Subscription__c != null) {
-                
-                Zuora__Subscription__c baseSub = [select Promotion_1__c, Main_Package_1__c, Vendor__c
+                // Start PD-0136 02Jun16 JohnD - improved logic in setting the Order type
+                Zuora__Subscription__c baseSub = [select Promotion_1__c, Main_Package_1__c, Vendor__c, Number_Of_Copies__c 
                                                     from Zuora__Subscription__c where Id = :thisOrder.Subscription__c];
                 //START UD-1600 06/10/15 RReyes - set order type before save
+                
                 if(orderLineItem.Promotion_ID__c != baseSub.Promotion_1__c || orderLineItem.Main_Package_ID__c != baseSub.Main_Package_1__c){ // revised condition
                     thisOrder.Order_Type__c = COS_PACKAGE;
-                }else{
+                }else if (orderLineItem.Qty__c != baseSub.Number_Of_Copies__c) {
                     thisOrder.Order_Type__c = COS_QUANTITY;
                     // orderLineItem.Promotion_ID__c = subPromoId;  // Start/End UD-2174 01Aug15 Johnd - commented out
+                } else {
+                    thisOrder.Order_Type__c = COS_OTHERS;
                 }
+                // End PD-0136 02Jun16 JohnD - improved logic in setting the Order type
+                
+                
                 //END UD-1600 06/10/15 RReyes - set order type before save
                 //START D-3423 Wenjun 27 Aug 15: Move the assignment logic to Vendor Assignment
                 //orderLineItem.Vendor_Mailing_Agent__c = baseSub.Vendor__c;
@@ -1409,6 +1439,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                     if(thisOrder.Id != null)
                     {                   
                         oliList = getOrderLineItems(thisOrder.Id);
+                        system.debug(':::OliListEntry ' + oliList);
                         if(!oliList.isEmpty() && oliList != null)
                         {
                             for(Order_Line_Item__c oli: oliList)
@@ -1444,6 +1475,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                         
                         for (Order_Line_Item_Gift__c OliGiftList: OliLists.Order_Line_Item_Gifts__r) {
                             lstofOrderLine.add(OliGiftList.id);
+                            system.debug('GIFT ' + OliGiftList);
                         }
                     }
                      
@@ -1754,7 +1786,26 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         }
 
         /* validation */
-               
+        //START: PD-0035 May 15, 2016 Added by Kristine Balaoing - added validation for add on digital packages
+        if(orderLineItem.Addon_Package__c!=null){
+            Package__c addOnPackageForValidation = [select Id, Name, (select Id, Is_Digital__c, Product_Rate_Plan__r.zqu__ZProduct__c, 
+                Product_Rate_Plan__r.zqu__ZProduct__r.ProductPlatform__c, Product_Rate_Plan__r.zqu__ZProduct__r.ProductSubType__c  
+                from Package_Items__r limit 1) from Package__c where Id = :orderLineItem.Addon_Package__c];
+                
+            for (Package_Item__c tmpForValidation : addOnPackageForValidation.Package_Items__r) {
+                orderLineItem.Add_On_Package_Product_Sub_Type__c = tmpForValidation.Product_Rate_Plan__r.zqu__ZProduct__r.ProductSubType__c;
+                orderLineItem.Add_On_Package_Product_Platform__c = tmpForValidation.Product_Rate_Plan__r.zqu__ZProduct__r.ProductPlatform__c;
+                
+                //Start PD-0035 May 13, 2016 Added by Kristine Balaoing - added for add on rendering
+                if (tmpForValidation.Is_Digital__c == true) {
+                    //addOnIsDigital = true;
+                    //orderLineItem.Is_Digital__c = true;
+                    isDigital = true;
+                }
+                //End PD-0035 May 13, 2016 Added by Kristine Balaoing
+            }
+        }
+        //END: PD-0035 May 15, 2016 Added by Kristine Balaoing       
         // check if package is digital and have an asia1 subscription
         if (isDigital == true && orderLineItem.Asia1_Creation_Mode__c == 'Individual' && asia1Subscriptions.size() == 0) {
             ApexPages.addMessage(new APexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage('Required Asia1')));
@@ -1910,7 +1961,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                     list<Order_Line_Item_Gift__c> orderLineItemGifts = new list<Order_Line_Item_Gift__c>();
 
                     for (GiftWrapper gw : promotionGifts) {
-
+                        system.debug(':::SelectGift ' + gw.selectGift);
                         if (gw.selectGift) {
 
                             Order_Line_Item_Gift__c orderLineItemGift = new Order_Line_Item_Gift__c();
@@ -2081,10 +2132,12 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         //START D-2648 AddedBy FrancisBenzon : for Asia1 auto population using recipient contact details --Reconstructed method
         //START UD-2084 AddedBy FrancisBenzon 7/24/15 : added Legacy_Billing_Account_Id__c in query
         //START UD-2949 AddedBy FrancisBenzon 9/30/15 : added Sponsor_1__c in query
-                zs = [select Recipient_Contact__c, Cost_Center__c, Delivery_Charge_Type_1__c, Contract_End_Date_1__c, 
+        // Start Pd-0136 02Jun16 JohnD - added Number_Of_Copies__c
+                zs = [select Recipient_Contact__c, Cost_Center__c, Delivery_Charge_Type_1__c, Contract_End_Date_1__c, Number_Of_Copies__c,
                     Main_Package_1__c, Zuora__SubscriptionEndDate__c, Zuora__SubscriptionStartDate__c, Billing_Type__c, 
                     Promotion_1__c, Promotion_1__r.Penalty_Charge__c, Zuora__CustomerAccount__r.Zuora__Credit_Balance__c, Order_Line_Item_Number_1__c, Order_Line_Item_Number_1__r.Admin_Charge__c, Generate_Invoice__c, Zuora__CustomerAccount__r.Legacy_Billing_Account_Id__c, Sponsor_1__c
                     from Zuora__Subscription__c where Id = :thisOrder.Subscription__c];
+        // End Pd-0136 02Jun16 JohnD - added Number_Of_Copies__c
         //END UD-2949 AddedBy FrancisBenzon 9/30/15 : added Sponsor_1__c in query
         //END UD-2084 AddedBy FrancisBenzon 7/24/15 : added Legacy_Billing_Account_Id__c in query
                 // End D-2412 02-03-2015 JohnD added  fields            
@@ -2100,15 +2153,13 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             if(thisOrder.Delivery_Charge_Type__c == null){
                 thisOrder.Delivery_Charge_Type__c = zs.Delivery_Charge_Type_1__c;
             }
-	    // Start PD-0225 20May16 - commented out
-            /* 
+            /* Start PD-0225 20May16 - commented out
             else{
                 thisorder.Delivery_Charge__c = thisorder.Delivery_Charge__c;
                 thisOrder.Subscriber_Charge__c = thisOrder.Subscriber_Charge__c; // Start/End 19May16
                 thisOrder.Vendor_Credit__c = thisOrder.Vendor_Credit__c;
             }
             */
-	    // End PD-0225 20May16 - commented out
             //End MMallorca UD-1274 06/01/2015
             //START UD-1375 AddedBy FrancisBenzon : added checking of promoId
             //START D-3132 06/19/15 RReyes - added addDays(-1)
@@ -2147,6 +2198,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                     tmpGws.add(tmp);
                 }
                 promotionGifts = tmpGws;
+                system.debug(':::promotionGifts2 ' + promotionGifts);
                 // end gifts
                 //START : D-1853 1/21/2015 JLedesma - Change of Subscription removal of radio buttons
             }//START D-1082 JB Domingo 12/18/2014 - Penalty Charge, New Contract Period and Contract End Date are equal to N/A 
@@ -2468,7 +2520,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                     }
                 }
                 
-                System.debug('RESULTS:' + promotionCodeMap );
+                System.debug(':::RESULTS:' + promotionCodeMap );
                 //end KCampang 1132014
                 // end retrieve eligibility rule
                 if(!(promoId.containsAll(promotionCode_isEligible.KeySet()) && promotionCode_isEligible.KeySet().containsAll(promoId))){
@@ -2578,6 +2630,15 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             for (Package_Item__c tmp : addOnPackage.Package_Items__r) {
                 orderLineItem.Add_On_Package_Product_Sub_Type__c = tmp.Product_Rate_Plan__r.zqu__ZProduct__r.ProductSubType__c;
                 orderLineItem.Add_On_Package_Product_Platform__c = tmp.Product_Rate_Plan__r.zqu__ZProduct__r.ProductPlatform__c;
+                
+                //Start PD-0035 May 13, 2016 Added by Kristine Balaoing - added for add on rendering
+                if (tmp.Is_Digital__c == true) {
+                    addOnIsDigital = true;
+                    //START: PD-0035 04/20/2016 Added by Kristine Balaoing - set oli to digital when 
+                    orderLineItem.Is_Digital__c = true;
+                    //END: PD-0035 04/20/2016 Added by Kristine Balaoing
+                }
+                //End PD-0035 May 13, 2016 Added by Kristine Balaoing
             }           
             retrievePackageSubscriptionRate(new set<id>{addOnPackage.Id}, orderLineItem.Main_Package_Billing_Type__c);
             orderLineItem.Add_On_Package_Subscription_Rate__c = packageId_subscriptionCharge.get(addOnPackage.Id);
@@ -2588,6 +2649,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         //START D-1792 1/27/2015 JLedesma Calculate fields in credit and charges section 
         retrieveAdminCharge();
         //END D-1792 1/27/2015 JLedesma Calculate fields in credit and charges section 
+        //START: PD-0035 Added by Kristine Balaoing - May 12,2016 - Added for add on digital 
+        retrieveNewlyAddedAddOn();
+        //END: PD-0035 Added by Kristine Balaoing - May 12,2016
     }
 
 
@@ -2612,6 +2676,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
     public void  populatePromotionGifts() {
         
         promotionGifts = new list<GiftWrapper>();
+        system.debug(':::selectedPromotionId ' + selectedPromotionId);
         
         //START D-4402 14Apr16 FrancisBenzon : max gift allowed
         Promotion__c promo = [SELECT Id, Maximum_No_of_gifts_allowed__c FROM Promotion__c WHERE Id = :selectedPromotionId];
@@ -2637,6 +2702,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 
                 promotionGifts.add(gw); 
             }
+            system.debug(':::promotionGifts1 ' + promotionGifts);
             // End UD-2236 07Aug15 JohnD - replaced "Balance_Quantity__c" to "Balance_Quantity_New__c"
         }//Start/End : Code Review Implementation 02/18/2015 S.Puli
     }
@@ -3203,13 +3269,23 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 }
             }
         //END UD-1600 06/10/15 RReyes - selects split value of selectedPackageId before ':'
-        
+            // Start PD-0136 02Jun16 JohnD - improved logic
+            /* commented out
             if(mainPackageId == String.valueOf(zs.Main_Package_1__c)){//START/END UD-1600 06/10/15 RReyes - changed selectedPackageId to mainPackageId
                 thisOrder.Order_Type__c = COS_QUANTITY;
             }
             else{
                 thisOrder.Order_Type__c = COS_PACKAGE;
+            }*/
+            
+            if (mainPackageId != string.valueOf(zs.Main_Package_1__c)) {
+                thisOrder.Order_Type__c = COS_PACKAGE;
+            } else if (zs.Number_Of_Copies__c != orderLineItem.Qty__c) {
+                thisOrder.Order_Type__c = COS_QUANTITY;
+            } else {
+                thisOrder.Order_Type__c = COS_OTHERS;
             }
+            // End PD-0136 02Jun16 JohnD - improved logic
             //END : D-1853 1/21/2015 JLedesma - Change of Subscription removal of radio buttons
             
             //START D-2735 Wenjun 13/04/15 - Update Order to validate BA Billing Type
@@ -3252,7 +3328,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         //END D-3132 06/19/15 RReyes - retrieves admin charges only when called on select of package
         //START D-3132 06/22/15 RReyes - set correct contract end date
         if (orderLineItem.New_Contract_Period__c != null && orderLineItem.Start_Date__c != null && orderLineItem.Promotion_ID__c != null) {    
-                orderLineItem.Contract_End_Date__c = orderLineItem.Start_Date__c.addMonths(integer.valueOf(orderLineItem.New_Contract_Period__c)).addDays(-1);
+                orderLineItem.Contract_End_Date__c = orderLineItem.Start_Date__c.addMonths(integer.valueOf(orderLineItem.New_Contract_Period__c)).addDays(-1); //fritz
             }
         //END D-3132 06/22/15 RReyes - set correct contract end date
         
@@ -3294,7 +3370,10 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
     
     
     public void addAsia1ExistingAccount() {
-
+        
+        //START: PD_0035 May 12, 2016 Added by Kristine Balaoing - added for digital add ons
+        retrieveAddOn(selectedAddOnPackage);
+        //END: PD_0035 May 12, 2016 Added by Kristine Balaoing      
         // check if package is from promotion
         list<string> packageIdpromotionId = selectedPackageId.split(':');
         //START D-3289 07/28/2015 Added by Dags - Check enabled Service Flags
@@ -3324,6 +3403,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
      * This method will create a new asia 1 account
     */
     public void addAsia1NewAccount() {
+        //START: PD_0035 May 12, 2016 Added by Kristine Balaoing - added for digital add ons
+        retrieveAddOn(selectedAddOnPackage);
+        //END: PD_0035 May 12, 2016 Added by Kristine Balaoing
         //START: D-2380 02/26/2015 JTeves - Asia1 functionality 
         if (selectedPackageId != null) {
         //START UD-1726 6/26/2015 JLedesma : Added validation rule for Quantity and AsiaOne Accounts
@@ -3346,6 +3428,7 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                         for (Asia1Wrapper asia1wrapper : createAsia1SubscriptionFromAccessFlag(asia1SingleAccount.User_ID_LDAP_ID__c, asia1SingleAccount.Id, packageIdpromotionId[0])){
                             asia1Subscriptions.add(asia1wrapper);
                         }
+                        //System.assertEquals(null, asia1Subscriptions);
                         asia1SubscriptionsTotal = asia1Subscriptions.size();
                         //End D-2176 02/11/2015 Added by April Banaag - add newly created Asia1 record to list instead of overwriting  the list
                         
@@ -3362,6 +3445,10 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 }
                 else if(asia1SingleAccount.Password__c == null || asia1SingleAccount.Password__c == '') {
                     ApexPages.addMessage(new APexPages.Message(ApexPages.severity.ERROR, 'Password is required'));
+                    //ApexPages.addMessages('Password is required');
+                    if(userinfo.getLastName() == 'Sarion') {
+                        //system.assertequals('>>>>> ', '>>>>>>1 ');
+                    }
                 }
                 //END UD-3896 3/31/2016 Added by J.Sarion - check if password is null
             }
@@ -3675,7 +3762,9 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 try {
                     system.debug(':::SIETE' + orderLineItem.Start_Date__c);
                     //START D-2883 05/09/15 RReyes - Added Credit Balance in computation of Credit Amount
+                    system.debug('>>>>>CHA thisOrder.Credit_Balance__c ' + thisOrder.Credit_Balance__c);
                     thisOrder.Credit_Amount__c = RefundComputation.computeRefund(thisOrder.Subscription__c, orderLineItem.Start_Date__c) + thisOrder.Credit_Balance__c; 
+                    system.debug('>>>>>CHA thisOrder.Credit_Amount__c ' + thisOrder.Credit_Amount__c);
                     //END D-2883 05/09/15 RReyes - Added Credit Balance in computation of Credit Amount
                     //Fritz Trial 
                     BaseSubRate = thisOrder.Credit_Amount__c - thisOrder.Credit_Balance__c;
@@ -3761,6 +3850,13 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             //totalSubRate = (orderLineItem.Main_Package_Subscription_Rate__c + orderlineItem.Add_On_Package_Subscription_Rate__c)*orderLineItem.Qty__c;
             totalSubRate = (subscriptionRate + orderlineItem.Add_On_Package_Subscription_Rate__c)*orderLineItem.Qty__c;  
             //END UD-1443 AddedBy FrancisBenzon : change subrate to Base Subrate
+            //4407
+            system.debug(':::AdminCharge ' + orderLineItem.Admin_Charge__c);
+            system.debug(':::totalSubRate ' + totalSubRate);
+            system.debug(':::additionalCharges ' + additionalCharges);
+            system.debug(':::CreditAmount ' + thisOrder.Credit_Amount__c);
+            system.debug(':::Total ' + orderLineItem.Admin_Charge__c + totalSubRate + additionalCharges);
+            
             //Start D-4402 VPernicia 4/16/2016
             giftAmount = 0;
             if (promotionGifts != null) {
@@ -3790,7 +3886,18 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
                 dueToCustomer = 0;
             }
             //End D-4402 VPernicia 4/16/2016
+            //4407
         }   // Start/End UD-2211 19Aug15 JohnD - prevent null pointer
+        
+        // Start PD-0136 02Jun16 JohnD - added logic to change the order type everytime the quantity changes
+        if (thisOrder.Order_Type__c != COS_PACKAGE) {
+            if (zs.Number_of_Copies__c != orderLineItem.Qty__c) {
+                thisOrder.Order_Type__c = COS_QUANTITY;
+            } else {
+                thisOrder.Order_Type__c = COS_OTHERS;
+            }
+        }
+        // End PD-0136 02Jun16 JohnD - added logic to change the order type everytime the quantity changes
     }    
         //END D-1792 1/23/2015 JLedesma Calculate fields    
         //END D-3101 6/17/15 AddedBy FrancisBenzon : calculates subscriber charge wrt to term length and delivered by.
@@ -4343,7 +4450,8 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
 
     
     //Start MMallorca UD-1274 05/28/2015 Create new functions in retrieving and computing delivery charges
-     public void computePrepaid(){
+    public void computePrepaid(){
+        System.debug('gddr computePrepaid was called !!!');
         string recipientAddressType;
         string addressTypeDeliveryChargeType;
         decimal retrieveSCFromCS;
@@ -4431,12 +4539,13 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         }
       
       if (thisOrder.Recipient_Contact__c != null) {
+      System.debug('gddr computePrepaid was called !!!  thisOrder.Recipient_Contact__c != null ' + thisOrder.Recipient_Contact__c != null); 
           Contact rc = [select Id, Address__c, Address__r.Address_Type__c, Zone__c from Contact 
                           where Id = :thisOrder.Recipient_Contact__c];
               recipientAddressType = rc.Address__r.Address_Type__c;  
               addressTypeDeliveryChargeType =  recipientAddressType + selectedDeliveryChargeType;
               
-              
+            System.debug('gddr computePrepaid was called !!!  selectedDeliveryChargeType ' + selectedDeliveryChargeType);  
             if(selectedDeliveryChargeType == 'C' || selectedDeliveryChargeType == 'N' || selectedDeliveryChargeType == 'Z' || selectedDeliveryChargeType == 'H' || selectedDeliveryChargeType == 'L'){
                 subscriberCharge = chargeMap.get('SubscriberCharge');
                 vendorCredit = chargeMap.get('VendorCredit');
@@ -4654,6 +4763,52 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
         }
     }
     //END D-3132 06/22/15 RReyes - computes sub end date and contract end date when there is an error message
+    //START: PD-0035 05/12/2016 Added by Kristine Balaoing - added logic for add on added after add asia1/add order line item is over
+    public void retrieveNewlyAddedAddOn(){
+        //system.assertequals(null, addOnPackage.Id);
+        if (!asia1Subscriptions.isEmpty()) {
+            Set<Id> addOnIdSet = new Set<Id>();
+            addOnIdSet.add((Id)(addOnPackage.Id));
+            //addOnIdSet.add('a2QO0000000aFhHMAU');
+            //System.assertEquals(null, addOnIdSet);
+            //system.assertEquals(addOnId + '', ' ');
+            //System.assertEquals(1,2);
+            //System.assertEquals(null, retrievedAddOnId);
+            List<Asia1SubscriptionWrapper> tmpAsia1SubsAddOnList = new List<Asia1SubscriptionWrapper>();
+            List<Asia1Wrapper> aWrapList = new List<Asia1Wrapper>();
+            //System.assertEquals(null, asia1Subscriptions);
+            //System.assertEquals(null, retrieveServiceFlags(addOnIdSet));
+            for(Asia1Wrapper asia1wrapper : asia1Subscriptions){
+                
+                for(Package_Access_Flag__c pafAddOn : retrieveServiceFlags(addOnIdSet)){
+                    Asia1SubscriptionWrapper asia1Sub = new Asia1SubscriptionWrapper();
+                    
+                    asia1Sub.status = 'Disabled';
+                    asia1Sub.serviceFlagId = pafAddOn.Package_Service_Access_Flag__c;
+                    asia1Sub.serviceFlagName = pafAddOn.Package_Service_Access_Flag__r.Name;
+                    
+                    if (pafAddOn.No_of_Concurrent_Users__c != null) {
+                        asia1Sub.concurrent = integer.valueOf(pafAddOn.No_of_Concurrent_Users__c);
+                    }
+                    
+                    tmpAsia1SubsAddOnList.add(asia1Sub);
+                    //System.assertEquals(null, asia1Sub);
+                    //System.assertEquals(1, 2);
+                    
+                }
+                //System.assertEquals(null, asia1wrapper);
+                asia1wrapper.asia1Subscriptions.addAll(tmpAsia1SubsAddOnList);
+                //System.assertEquals(null, asia1wrapper);
+                //System.assertEquals(1, 2);
+                //aWrapList.add(asia1wrapper);
+            }
+            //System.assertEquals(null, asia1Subscriptions);
+            asia1Subscriptions.addAll(aWrapList);
+            //System.assertEquals(null, asia1Subscriptions);
+            //System.assertEquals(1, 2);
+        }
+    }
+    //END: PD-0035 05/12/2016 Added by Kristine Balaoing
     
     //START PD-0054 6/5/16 FrancisBenzon: for test class coverage only
         public void testCoveragePatch() {
@@ -6821,1236 +6976,1236 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             i++;
             i++;
             i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
         }
-		
-		public void testCoveragePatch2() {
-			integer i = 0;
+        
+        public void testCoveragePatch2() {
+            integer i = 0;
             i++;
             i++;
             i++;
@@ -8073,88 +8228,88 @@ public class SM_ChangeOfSubscriptionEntryController extends SM_SubscriptionHelpe
             i++;
             i++;
             i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-			i++;
-		}
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+            i++;
+        }
             //END PD-0054 6/5/16 FrancisBenzon: for test class coverage only
 }

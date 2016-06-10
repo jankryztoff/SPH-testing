@@ -60,6 +60,7 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
     String corporateAcc = ConstantsSLB.getKeyId('Account_Direct Corporate');
     String fullPrep = GlobalVariableClass.BILLING_TYPE_FULL_PRE;
     //End UD-3207 26-Mar-2016 Added by S.Puli
+    
     global SP_InvoiceRequestBatch(String letterType, Integer batchCount, String sessionId, Boolean isRegularExecution){
         this.letterType = letterType;
         this.sessionId = sessionId;
@@ -78,7 +79,7 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
     global Database.QueryLocator start(Database.BatchableContext bc){               
         latestARMSInvoiceId = Integer.valueOf(latestARMSInvoiceIdSetting.Value__c);
         
-		//Start UD-3942 12-Apr-2016 Added By S.Puli 
+        //Start UD-3942 12-Apr-2016 Added By S.Puli 
         //Start UD-3207 01-Apr-2016 Added By S.Puli
         if(selectAccountsOnly == false){
             return Database.getQueryLocator([SELECT Id, Zuora__Zuora_Id__c, ARMS_Invoice_ID__c, Zuora__BillingAccount__r.Other_PaymentMethod__c, 
@@ -101,7 +102,7 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
             //END D-3620 01-Oct-2015 Added By S.Puli
         }
         //End UD-3207 01-Apr-2016 Added By S.Puli
-		//End UD-3942 12-Apr-2016 Added By S.Puli
+        //End UD-3942 12-Apr-2016 Added By S.Puli
     }     
     
     global void execute(Database.BatchableContext BC, List<Zuora__ZInvoice__c> scope){
@@ -182,30 +183,30 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
             try{
                 if(invoiceWithVAlue_MAP.containsKey(invoiceRec.Zuora__Zuora_Id__c) && zuoraIdTotalAmount.get(invoiceRec.Zuora__Zuora_Id__c) == invoiceRec.Zuora__TotalAmount__c){
                     //START UD-2819 19-Sept-2015 Added By S.Puli
-					//Start UD-3942 12-Apr-2016 Added By S.Puli Previous_Balance__c, Zuora__BillingAccount__r.Zuora__Balance__c, Zuora__TotalAmount__c, Zuora__PaymentAmount__c
-					Decimal totalOutstanding = 0;
-					Decimal previousBalance = 0;
-					if(invoiceRec.Previous_Balance__c != null) {
-						previousBalance = Decimal.valueOf(invoiceRec.Previous_Balance__c);
-					} else {           
-						previousBalance = invoiceRec.Zuora__BillingAccount__r.Zuora__Balance__c - invoiceRec.Zuora__TotalAmount__c + invoiceRec.Zuora__PaymentAmount__c; 
-					}
-					
-					totalOutstanding = previousBalance + invoiceRec.Zuora__TotalAmount__c;
-					
+                    //Start UD-3942 12-Apr-2016 Added By S.Puli Previous_Balance__c, Zuora__BillingAccount__r.Zuora__Balance__c, Zuora__TotalAmount__c, Zuora__PaymentAmount__c
+                    Decimal totalOutstanding = 0;
+                    Decimal previousBalance = 0;
+                    if(invoiceRec.Previous_Balance__c != null) {
+                        previousBalance = Decimal.valueOf(invoiceRec.Previous_Balance__c);
+                    } else {           
+                        previousBalance = invoiceRec.Zuora__BillingAccount__r.Zuora__Balance__c - invoiceRec.Zuora__TotalAmount__c + invoiceRec.Zuora__PaymentAmount__c; 
+                    }
+                    
+                    totalOutstanding = previousBalance + invoiceRec.Zuora__TotalAmount__c;
+                    
                     if(invoiceRec.Zuora__BillingAccount__r.Other_PaymentMethod__c <> 'Invoice' || totalOutstanding > 0){//invoiceRec.Zuora__TotalAmount__c > 0){
                         Letter_Print_Request__c letterPrintRequest = new Letter_Print_Request__c();
                         letterPrintRequest.Letter_Type__c = letterType;
                         letterPrintRequest.Record_ID__c = invoiceRec.Id;
                         letterPrintRequest.Status__c = SP_GenerateLetterPrintBatch.newValue;
-
+              
                         if(invoiceRec.Zuora__BillingAccount__r.Other_PaymentMethod__c == 'Invoice' || invoiceRec.Zuora__Account__r.GST_Invoice__c == 'Yes'){
                             letterPrintRequest.Printable__c = true ;
                         }
 
                         letterPrintRequests.add(letterPrintRequest);
                     }
-					
+                    
             //END UD-2819 19-Sept-2015 Added By S.Puli
             // START D-3555/UD-2508 10 September 2015 Kevin Evasco - Only assign arms invoice ID if we have a letter print request.             
                     if(invoiceRec.Zuora__BillingAccount__r.Other_PaymentMethod__c == 'Invoice' && totalOutstanding > 0){
@@ -215,7 +216,7 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
                             newARMSInvoices.add(invoiceRec);
                         }
                     }
-					//End UD-3942 12-Apr-2016 Added By S.Puli
+                    //End UD-3942 12-Apr-2016 Added By S.Puli
             // END D-3555/UD-2508 10 September 2015 Kevin Evasco - Only assign arms invoice ID if we have a letter print request.
               
                     if(gstUpdateFlag == false){
@@ -258,33 +259,35 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
          //START D-4482 14-Mar-2016 Added by Raviteja - Fetching Job status for letter Print Request job
         //BatchJobHelper.updateJobStatus(BC.getJobId());
         Boolean isSucess;   
+       
         isSucess = BatchJobHelper.getJobStatus(letterType,'SP020',GlobalVariableClass.STATUS_PENDING);
         //BatchJobHelper.updateJobStatus(BC.getJobId(),isSucess);
         BatchJobHelper.updateBatchJobScheduler(BC.getJobId(),isSucess);
         //End D-4482 14-Mar-2016 Added by Raviteja 
         List<Letter_Print_Request__c> letterRequests_LIST = [SELECT Id,Letter_Type__c,Status__c FROM Letter_Print_Request__c 
                                                             WHERE Letter_Type__c = :letterType AND Status__c = :SP_GenerateLetterPrintBatch.newValue LIMIT 1];
+        
         if(letterRequests_LIST.size()>0){
             SP_LetterPrintRequestUpdater sp = new SP_LetterPrintRequestUpdater();
             sp.sessionId = sessionId;
             sp.requestCount = requestCount;
             sp.letterType = letterType;
             sp.batchCode = 'SP028';
-            sp.parentjobid = BC.getJobId();//Start PD-0027 Raviteja 09May2016 - Capturing batch job schdduler record id    
+            sp.parentjobid = BC.getJobId();//Start PD-0027 Raviteja 09May2016 - Capturing batch job scheduler record id
             //Start PD-0027 Raviteja 09May2016 - Added isRunningTest if condition
             if(!Test.isRunningTest()){
-            	Database.executeBatch(sp, 100);
+                Database.executeBatch(sp, 100);
             }
             //End PD-0027 Raviteja 09May2016
         } else {
             //Start D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id            
             SP_BatchJobSchedulerService.setParentBatchJobSchedulerId(BC.getJobId());  
-            //End D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id	
+            //End D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id
             //Start PD-0027 Raviteja 09May2016 - Added isRunningTest if condition
             if(!Test.isRunningTest()){
-            	SP_BatchJobSchedulerService.initializeBatches('SP028','Start', null, sessionId,requestCount);
-            }
-           //End PD-0027 Raviteja 09May2016	
+            SP_BatchJobSchedulerService.initializeBatches('SP028','Start', null, sessionId,requestCount);
+           }
+           //End PD-0027 Raviteja 09May2016
         }
         
         //END D-3535 09-Sept-2015 Added By S.Puli
@@ -306,6 +309,7 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
             }
             //END D-3268 Modified By C.I.Salas - Test Coverage
             String zoql = 'SELECT TaxRate, CreatedDate FROM TaxationItem Where InvoiceId =\'' + invoiceZuoraId + '\'';
+            
             //Start PD-0027 Raviteja 18May2016  - Included below D-4686 changes as part of the PD-0027 deployment to avoid code coverage issue 
             //START 15/04/2016 D-4686 - added isRunningTest to skip zCallout (MBG)
             List<Zuora.zObject> zobjs = new List<Zuora.zObject>();
@@ -317,7 +321,6 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
             }
             //END 15/04/2016 D-4686 - added isRunningTest to skip zCallout (MBG)
             //END PD-0027 Raviteja 18May2016
-             
             for (Zuora.zObject o : zobjs){
                 if(latestCreatedDate == null){                  
                     latestCreatedDate = (DateTime)o.getValue('CreatedDate');

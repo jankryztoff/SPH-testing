@@ -334,6 +334,7 @@ global class BatchAddressAssignmentEffectiveDate implements  Database.Batchable<
             for (Address_Assignment__c addAssign :scopeAddressAssignment){ //START END D-4034 Change scope to scopeAddressAssignment
                 if (addAssign.Contact__c != null) {
                     if (addAssign.Contact__r.AccountId != null) {
+                        system.debug('>>>>>CHA : ' + addAssign.Contact__r.AccountId);
                         accountIdSet.add(addAssign.Contact__r.AccountId);
                         //START UD-0883 and UD-0899 5/9/2015 Added By C. Lin - Fix for Attempt to dereference null
                         conIdToAccountIdMap.put(addAssign.Contact__c, addAssign.Contact__r.AccountId);
@@ -2087,9 +2088,11 @@ global class BatchAddressAssignmentEffectiveDate implements  Database.Batchable<
         Map<Id, List<BT_CO_ARMS_UpdateCustomerBatchFile__c>> updCusMasterToDetail_MAP = new Map<Id, List<BT_CO_ARMS_UpdateCustomerBatchFile__c>>();
         List<BT_CO_ARMS_UpdateCustomerBatchFile__c> updCusToDelete_LIST = new List<BT_CO_ARMS_UpdateCustomerBatchFile__c>();
         
-        
         if(customerToCreateList.size()>0){
             for(Zuora__CustomerAccount__c zc : customerToCreateList){
+                System.debug('>>>>>zc.Name : ' + zc.Name);
+                System.debug('>>>>>zc.Zuora__Account__r.AccountNumber : ' + zc.Zuora__Account__r.AccountNumber);
+                System.debug('>>>>>zc.ARMS_Customer_Number__c : ' + zc.ARMS_Customer_Number__c);
                 updCusName_SET.add(zc.Name);
                 updUniqKey_SET.add(zc.Zuora__Account__r.AccountNumber);
                 updCusNum_SET.add(zc.ARMS_Customer_Number__c);
@@ -2097,7 +2100,9 @@ global class BatchAddressAssignmentEffectiveDate implements  Database.Batchable<
         }
         
         List<BT_CO_ARMS_UpdateCustomerBatchFile__c> oldUpdateCusRecord_LIST = [Select Id, CreatedDate,Customer_Name1__c, CCRID__c,Business_Profile__c, UniqueKey__c from BT_CO_ARMS_UpdateCustomerBatchFile__c Where CreatedDate = Today AND Customer_Name1__c IN :updCusName_SET AND UniqueKey__c IN :updUniqKey_SET AND CCRID__c IN :updCusNum_SET];
-        
+        System.debug('>>>>>oldUpdateCusRecord_LIST : ' + oldUpdateCusRecord_LIST);
+        System.debug('>>>>>customerToCreateList : ' + customerToCreateList);
+
         if(oldUpdateCusRecord_LIST.size()>0 && customerToCreateList.size()>0){
             for(Zuora__CustomerAccount__c zc : customerToCreateList){
                 for(BT_CO_ARMS_UpdateCustomerBatchFile__c oldRec : oldUpdateCusRecord_LIST){

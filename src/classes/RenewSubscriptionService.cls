@@ -219,20 +219,20 @@ global with sharing class RenewSubscriptionService {
                 response.debug += 'Paypal Billing Account Creation failed. ';            
             }
         }
-		
-		//START 17 December 2015 D-4115 Kevin Evasco - Future COA on Recipient Contact
-		if(isValid){
-			String errorMessage = SM_SubscriptionHelper.validateFutureDatedCOA(subscription.Recipient_Contact__c,null,GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION);
-			if(errorMessage != null) {
-				isValid = false;            
-				response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;   
-				response.error_code = GlobalVariableClass.NSS_ERROR_CODE_INVALID_INPUT;
-				response.error_message = errorMessage;   
-				response.debug += errorMessage; 
-			}
-		}				
-		//END 17 December 2015 D-4115 Kevin Evasco - Future COA on Recipient Contact
-		
+        
+        //START 17 December 2015 D-4115 Kevin Evasco - Future COA on Recipient Contact
+        if(isValid){
+            String errorMessage = SM_SubscriptionHelper.validateFutureDatedCOA(subscription.Recipient_Contact__c,null,GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION);
+            if(errorMessage != null) {
+                isValid = false;            
+                response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;   
+                response.error_code = GlobalVariableClass.NSS_ERROR_CODE_INVALID_INPUT;
+                response.error_message = errorMessage;   
+                response.debug += errorMessage; 
+            }
+        }               
+        //END 17 December 2015 D-4115 Kevin Evasco - Future COA on Recipient Contact
+        
         Savepoint savepointBeforeDML = Database.setSavepoint();   
         //END 07/01/15 D-3198 Kevin Evasco - Renewal of Subscription Paypal CR
         
@@ -244,15 +244,17 @@ global with sharing class RenewSubscriptionService {
             if(subscription.Grace_Period_Subscription__r.Zuora__Zuora_Id__c != null && subscription.Grace_Period_Subscription__r.Zuora__Zuora_Id__c != '')
                 gracePeriodSubscription = getSubscription(subscription.Grace_Period_Subscription__r.Zuora__Zuora_Id__c);
             
-			//START 21 October 2015 D-3377/D-3376 Kevin Evasco - Retain Vendor Mailing Agent Assignment
-			Id vendorMailingAgentId;
-			List<Order_Line_Item__c> orderLineItemWithVendor = [SELECT Id, Vendor_Mailing_Agent__c FROM Order_Line_Item__c WHERE Order__c = :subscription.Order_Number__c AND Vendor_Mailing_Agent__c != null LIMIT 1];
-			if(!orderLineItemWithVendor.isEmpty()){
-				vendorMailingAgentId = orderLineItemWithVendor.get(0).Vendor_Mailing_Agent__c;
-			}
-			//END 21 October 2015 D-3377/D-3376 Kevin Evasco - Retain Vendor Mailing Agent Assignment
-			
+            //START 21 October 2015 D-3377/D-3376 Kevin Evasco - Retain Vendor Mailing Agent Assignment
+            Id vendorMailingAgentId;
+            List<Order_Line_Item__c> orderLineItemWithVendor = [SELECT Id, Vendor_Mailing_Agent__c FROM Order_Line_Item__c WHERE Order__c = :subscription.Order_Number__c AND Vendor_Mailing_Agent__c != null LIMIT 1];
+            if(!orderLineItemWithVendor.isEmpty()){
+                vendorMailingAgentId = orderLineItemWithVendor.get(0).Vendor_Mailing_Agent__c;
+            }
+            //END 21 October 2015 D-3377/D-3376 Kevin Evasco - Retain Vendor Mailing Agent Assignment
+            system.debug('>>>>>CHA subscription.Order_Number__c ' + subscription.Order_Number__c);
             Order__c oldOrder = getOrder(subscription.Order_Number__c);
+            system.debug('>>>>>CHA oldOrder ' + oldOrder);
+            system.debug('>>>>>CHA oldOrder.getsObjectType() ' + oldOrder.getsObjectType());
             Order__c newOrder = (Order__c)SObjectAllFieldCloner.cloneObject(oldOrder,oldOrder.getsObjectType());
             newOrder.Order_Legacy_Id__c  = null; //START/END 05/10/2015 UD-1230, UD-1231,UD-1232, UD-1233 Kevin Evasco - Hotfix
             //START 07/01/15 D-3198 Kevin Evasco - Renewal of Subscription Paypal CR
@@ -316,7 +318,9 @@ global with sharing class RenewSubscriptionService {
                 startDate = repopulateOrderLineItemStartDate(newOrder.Id, subscription.Zuora__SubscriptionEndDate__c.addDays(1), renewalPackageRecord);     
                 
             newOrder.Subscription_Start_Date__c = startDate;    
-            newOrder.Subscription_End_Date__c = startDate.addMonths(Integer.valueOf(renewalPackageRecord.Subscription_Period__c));             
+            newOrder.Subscription_End_Date__c = startDate.addMonths(Integer.valueOf(renewalPackageRecord.Subscription_Period__c));
+            newOrder.Base_Subscription__c = subscription.Id; //START END PD-0210 18May2016 Added By C. Lin - Populate Base Subscription of Order with old sub
+            
             update newOrder;
             newOrder = [SELECT Id, Recipient_Contact__r.Address__r.Postal_Code__c, Account__r.Account_Auto_Number__c,
                         Billing_Contact__c, Recipient_Contact__r.Address__c, Recipient_Contact__c, Delivery_Charge__c, Vendor_Credit__c, //START/END 12 October 2015 UD-3082 Kevin Evasco - Added Delivery Charge and Vendor Credit
@@ -355,6 +359,7 @@ global with sharing class RenewSubscriptionService {
         }
         catch(Exception e)
         {        
+            system.debug('>>>>>CHA e ' + e);
             Database.rollback(savepointBeforeDML);
             response.orderid = null;
             response.svc_status = GlobalVariableClass.SVC_STATUS_FAILURE;
@@ -392,7 +397,8 @@ global with sharing class RenewSubscriptionService {
             response.debug += 'Stack Trace: ' + e.getStackTraceString();
         }
         }
-        
+        system.debug('>>>>>CHA response ' + response);
+        system.debug('>>>>>CHA response.debug ' + response.debug);
         return response;
     }
     
@@ -400,11 +406,11 @@ global with sharing class RenewSubscriptionService {
     public static Zuora__Subscription__c getSubscription(String subscriptionId)
     {
         Zuora__Subscription__c subscription;
-		//START 17 December 2015 D-4115 Kevin Evasco - Added Recipient_Contact__c
+        //START 17 December 2015 D-4115 Kevin Evasco - Added Recipient_Contact__c
         //START D-3159 29-June-2015 Added by Raviteja - Added Zuora__CustomerAccount__r.Billing_Type__c field in the SOQL
         List<Zuora__Subscription__c> subscriptionList = [SELECT Id, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__r.Billing_Type__c,Order_Number__c, Order_Line_Item_Number__c, Zuora__CustomerAccount__r.Id, Zuora__CustomerAccount__r.Zuora__Zuora_Id__c, Zuora__Account__r.Id, Zuora__Zuora_Id__c, Grace_Period_Subscription__r.Zuora__Zuora_Id__c, Main_Package_1__r.Effective_End_Date__c, Main_Package_1__r.Product_Family_Current_Package__c, Main_Package_1__r.Package_Code__c, Zuora__CustomerAccount__r.Zuora__Default_Payment_Method__r.Zuora__External_Id__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Address__r.Country_Name__c, Recipient_Contact__c FROM Zuora__Subscription__c WHERE Zuora__Zuora_Id__c = :subscriptionId AND Status_Formula__c = 'Active' AND Main_Package_1__r.Effective_End_Date__c >= :Date.Today() AND Main_Package_1__r.Effective_Start_Date__c <= :Date.Today() LIMIT 1]; //START/END 07/01/15 D-3198 Kevin Evasco - Renewal of Subscription Paypal CR
         //End D-3159 29-June-2015 Added by Raviteja 
-		//END 17 December 2015 D-4115 Kevin Evasco - Added Recipient_Contact__c
+        //END 17 December 2015 D-4115 Kevin Evasco - Added Recipient_Contact__c
         if(subscriptionList.size() > 0){
             subscription = subscriptionList.get(0);
             //START D-3277 23 July 2015 Kevin Evasco - PayPal CR Hotfix
@@ -476,6 +482,7 @@ global with sharing class RenewSubscriptionService {
                 
         packId = packageParam.Id;
         subPeriod = packageParam.Subscription_Period__c;
+
         //START D-4413 Gdelrosario reverted the pulling of data of Package code to Package instead of Package_Item__c
         Package__c packageSelected = [SELECT Id, RenewalPkgCodeNewspaper__c, RenewalPkgCodeNewspaper__r.Package_Code__c, 
                                     RenewalPkgCodeMag1YrBase__c,RenewalPkgCodeMag1YrBase__r.Package_Code__c, RenewalPkgCodeMag1YrDisc__c,RenewalPkgCodeMag1YrDisc__r.Package_Code__c, RenewalPkgCodeMag2YrBase__c,RenewalPkgCodeMag2YrBase__r.Package_Code__c, RenewalPkgCodeMag2YrDisc__c,RenewalPkgCodeMag2YrDisc__r.Package_Code__c
@@ -603,6 +610,7 @@ global with sharing class RenewSubscriptionService {
     
     public static Date repopulateOrderLineItemStartDate(Id orderId, Date startDate, Package__c renewalPackageParam)
     {
+        system.debug('>>>>>CHA orderId ' + orderId);
         Date startDateResult; 
         List<Order_Line_Item__c> orderLineItems = [SELECT Id, Earliest_Start_Date__c, Start_Date__c FROM Order_Line_Item__c WHERE Order__r.Id = :orderId];
         
@@ -627,9 +635,10 @@ global with sharing class RenewSubscriptionService {
                     response.error_message += 'Order Line Item does not have an Earliest Start Date. ';
                 }
             }
+            system.debug('>>>>>CHA orderLineItems ' + orderLineItems);
             update orderLineItems;
         }
-        
+        system.debug('>>>>>CHA startDateResult ' + startDateResult);
         return startDateResult;
     }
     

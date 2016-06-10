@@ -198,7 +198,6 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
         * and Set Billing Account to Active
         */
         
-		//START UD-2549 3/23/2016 Added by J.Sarion - Remove Transfer and Cancellation
         //START D-3236 13-07-2015 Marvin/John
         if (trigger.isAfter) {
             if (!extCCIdSet.isEmpty()) {
@@ -223,13 +222,12 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
             if (!extIdSet.isEmpty()) {
                 paymentToZuora(extIdSet, parentTransactionIdSet);
             }
-			//START UD-1544 03-07-2015 Marvin Gatchalian
+        //START UD-1544 03-07-2015 Marvin Gatchalian
             if(!logList.isEmpty()){
                 insert logList;
             }
-			//END UD-1544 03-07-2015 Marvin Gatchalian
+        //END UD-1544 03-07-2015 Marvin Gatchalian
         }
-		//END UD-2549 3/23/2016 Added by J.Sarion - Remove Transfer and Cancellation
     }
 
     /*Create Payment in Zuora. Existing unpaid Invoices will be considered. Remaining Balance will 
@@ -632,7 +630,7 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
     public static void createBillingAccountToZuora(Set<Id> extId, Set<Id> subriptionIdSet, Set<String> subscriptionNameSet) {
     //public void createBillingAccountToZuora(Set<Id> extId) {
     //END D-3236 13-07-2015 Marvin/JOHN
-	
+    
     //START D-3236 11-07-2015 Marvin/Jonh
     //START UD-1544 03-07-2015 Marvin Gatchalian
     String BillingAcctId;
@@ -687,7 +685,7 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
             
             //END UD-1544 03-07-2015 Marvin Gatchalian   K. Tan/ J. Sarion 10/14/2015                                                       
         }//END 02/18/2015 - Code Review - Added by Rom Edison Reyes - Checks if extId is not empty
-		
+        
         accList = createAccount(ext);
         if (!accList.isEmpty()) {
             List<Map<String,String>> returnVarAccount = accountCallOut.loadZObjects(accList, 'Account'); 
@@ -972,12 +970,12 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
         //START: Code Review - 02/18/2015 - Added by Rom Edison Reyes
         List<External_Payment__c> extAmendList = new List<External_Payment__c>();
         //END: Code Review - 02/18/2015 - Added by Rom Edison Reyes
-		
+        
         //START 02/18/2015 - Code Review - Added by Rom Edison Reyes - Checks id extAmendId is not empty | Transferred declaration of 'extAmendList' on start of method
         if(extAmendId.size()>0){
             extAmendList = [SELECT Id, Billing_Account__c, Payment_Method__c, Billing_Account__r.Zuora__Account__c, Parent_Transaction_ID__c, Transaction_Amount__c, Transaction_Date__c, PayPal_Email__c, PayPal_BAID__c FROM External_Payment__c WHERE Id IN :extAmendId]; //START-END UD-2806 10/12/2015 Added by K.Tan/J.Sarion - implement retry failure for paypal
         }//END 02/18/2015 - Code Review - Added by Rom Edison Reyes - Checks id extAmendId is not empty
-		
+        
         //START: Code Review - 02/18/2015 - Added by Rom Edison Reyes   
         List<Zuora__Subscription__c> subAmendList = new List<Zuora__Subscription__c>();
         //END: Code Review - 02/18/2015 - Added by Rom Edison Reyes
@@ -1043,8 +1041,8 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
                 }
             }
         }
-		//START UD-2806 11/09/2015 Added by J.Sarion - Commented Subscription Cancellation
-		/*
+        //START UD-2806 11/09/2015 Added by J.Sarion - Commented Subscription Cancellation
+        /*
         if (!pTransIdToSubToZuoraMap.isEmpty()) {
             for (External_Payment__c ext :extAmendList) {
                 //Zuora Standard Fields. Required for the Cancellation of Subscription
@@ -1066,8 +1064,8 @@ public class ExternalPaymentTriggerHandler implements TriggerHandlerInterface {
                 }
             }
         }
-		*/
-		//END UD-2806 11/09/2015 Added by J.Sarion - Commented Subscription Cancellation
+        */
+        //END UD-2806 11/09/2015 Added by J.Sarion - Commented Subscription Cancellation
         return lamendList;
     }
 

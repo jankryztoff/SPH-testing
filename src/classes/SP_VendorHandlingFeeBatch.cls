@@ -19,8 +19,8 @@ global class SP_VendorHandlingFeeBatch implements Database.Batchable<sObject>, D
     global final Date monthEndDate; 
     global final Boolean increaseMth;    
     ID jobID; 
-    Boolean isApexJobSuccessful = false;
     Set<Id> subscriptionIDs = New Set<Id>(); //START I-0405 - PD-0473 - Raviteja - 06Jun2016 - Creating New constructor to calculate specific Subscription Ids
+    Boolean isApexJobSuccessful = false;
     //END: D-43481-21-2016 Added by Kristine Balaoing
     //Contructor to be used by Control-M Auto Scheduled Run
     global SP_VendorHandlingFeeBatch()
@@ -41,7 +41,7 @@ global class SP_VendorHandlingFeeBatch implements Database.Batchable<sObject>, D
         monthEndDate  = Date.newInstance(monthEnd.year(), monthEnd.month(), numberOfDays);
         //End D-3576 - Hotfix Raviteja - 16Sep2015 - Updating Posting Date as month end for given date
     }
-    
+
     //START I-0405 - PD-0473 - Raviteja - 06Jun2016 - Creating New constructor to calculate specific Subscription Ids 
     //Contructor for adhoc Run with Subscription Ids
     global SP_VendorHandlingFeeBatch(Date dtMthEnd, Set<Id> subIDs)
@@ -85,18 +85,16 @@ global class SP_VendorHandlingFeeBatch implements Database.Batchable<sObject>, D
         query       += ' Recipient_Contact__r.Address__c, '; //START/End D-3621 - Hotfix Raviteja - 29Sep2015 - Added Address__c field in SOQL  
         query       += ' Delivered_By_1__c, Sponsor_1__c, Other_PaymentMethod_1__c, Ph_d__c, Ph_e__c, Frequency_1__c ';  //START UAT Hotfix Wenjun 18 Aug - Using Subscription Frequency instead
         query       += ' FROM Zuora__Subscription__c WHERE Subscription_Type__c  = \'Publication\' and Delivered_By_1__c =\'Vendor\' '; 
-        //START I-0405 - PD-0473 - Raviteja - 06Jun2016 - Executing job with specific Subscription Ids    
+         //START I-0405 - PD-0473 - Raviteja - 06Jun2016 - Executing job with specific Subscription Ids    
         //query       += ' AND id = \'a0C9000000T3ORb\' '; // 04Jan2015 Added by Raviteja for testing purpose
         if(!SubscriptionIDs.isEmpty()){
             query       += ' AND id in :SubscriptionIDs ';
         }
-        //End I-0405 - PD-0473 - Raviteja - 06Jun2016 - Executing job with specific Subscription Ids  
+        //End I-0405 - PD-0473 - Raviteja - 06Jun2016 - Executing job with specific Subscription Ids 
         query       += ' AND Vendor_1__c != NULL AND Vendor_1__r.RecordType.DeveloperName = \'Vendor\' AND Zuora__SubscriptionStartDate__c <= :monthEnd ';
         query       += ' AND (Zuora__SubscriptionEndDate__c >= :monthStart OR Zuora__SubscriptionEndDate__c = NULL) ';
         
         //query       += ' limit 1 '; // START/End 04Feb2016 - Added by Raviteja - added limit 1 for testing purpose
-        
-        System.debug(' query: '+query);
         
         return Database.getQueryLocator(query);
     }
@@ -842,10 +840,10 @@ global class SP_VendorHandlingFeeBatch implements Database.Batchable<sObject>, D
         Decimal insertionRate = 0.00; 
         //START D-3621 - Hotfix Raviteja - 29Sep2015 -Passing VendorInfoWrapper instead of vendorGroup and vendorNumber
         //String key = vendorGroup + '|' + vendorNumber + '|' + pub.ID + '|' + sub.ID;
-        //START UD-3837 D-4606 - Raviteja - 28Mar2016 - updating key with Address Id to split at the detail level  
+        //START UD-3837 - Raviteja - 28Mar2016 - updating key with Address Id to split at the detail level
         //String key = vendorwrap.vendorGroup + '|' + vendorwrap.vendorCode + '|' + pub.ID + '|' + sub.ID;
         String key = vendorwrap.vendorGroup + '|' + vendorwrap.vendorCode + '|' + pub.ID + '|' + sub.ID + '|' +  vendorwrap.addressId ;
-        //End UD-3837 D-4606 - Raviteja - 28Mar2016 
+        //End UD-3837 - Raviteja - 28Mar2016
         //End D-3621 - Hotfix Raviteja - 29Sep2015
         
         Integer qty = (sub.qty__c == null) ? 0 : Integer.valueOf(sub.qty__c);

@@ -175,10 +175,10 @@ public class CreateInvoiceTriggerHandler implements TriggerHandlerInterface {
                 //START UD-3676 RReyes - change method call
                 //Id jobID = System.enqueueJob(new invoicePostProcessingForDirectCorp(directCorpInvoiceIdSet));
                 //Start PD-0040/UD-3207 27-Apr-2016 Added by S.Puli
-				if(!Test.isRunningTest()){
-					invoicePostProcessingForDirectCorp inv = new invoicePostProcessingForDirectCorp(directCorpInvoiceIdSet); 
-				}
-				//End PD-0040/UD-3207 27-Apr-2016 Added by S.Puli
+                if(!Test.isRunningTest()){
+                    invoicePostProcessingForDirectCorp inv = new invoicePostProcessingForDirectCorp(directCorpInvoiceIdSet); 
+                }
+                //End PD-0040/UD-3207 27-Apr-2016 Added by S.Puli
                 //system.debug(':::jobID' + ' ' + jobID);
                 //END UD-3676 RReyes - change method call
             }

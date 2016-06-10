@@ -6,8 +6,14 @@
    @Version <1.0>
    @reference <Referenced program names>
   */
-@isTest (Seealldata = TRUE)
+@isTest
 private class OrderLineItemGiftTriggerHandlerTest {
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createOther();
+    }
+    
      /**
     *  @description This method executes during class instantiation.  
     *  @name <testOrderLineItemGiftTrigger>

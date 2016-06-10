@@ -335,7 +335,7 @@ private class SM_ChangeOfSubscriptionEntryContTest1{
             controller.billingAccountOption = 'createNew';      
             controller.save();
             controller.testCoveragePatch();
-			controller.testCoveragePatch2();
+            controller.testCoveragePatch2();
         }catch(Exception e){
             System.debug('XXXXXXXXXX');
             System.debug(e);

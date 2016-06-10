@@ -30,6 +30,7 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
     map<id, string> quoteId_billingAccountZuoraId = new map<id, string>();
     map<id, id> quoteId_orderId = new map<id, id>();
     map<id, map<string, string>> orderId_creditCard;
+    
     //START PD-0041 16May16 FrancisBenzon : variables
     Set<String> subzIDSet = new Set<String>();
     List<Zuora__Subscription__c> fppCreditCardSubs = new List<Zuora__Subscription__c>();
@@ -121,7 +122,7 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                 if(quoteList.size() > 0){
                     //START D-2497 Added by J. Sarion 04/27/2015 - Added Try Catch 
                     try {   
-                        results = zqu.zQuoteUtil.sendToZBilling(quoteList);
+                        results = zqu.zQuoteUtil.sendToZBilling(quoteList); 
                         
                         // Start UD-2865 07Oct15/26Nov15 JohnD
                         for (zqu.zQuoteUtil.zBillingResult result : results) {
@@ -144,16 +145,14 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                     }
                     //END D-2497 Added by J. Sarion 04/27/2015 - Added Try Catch 
                 }                
-            }
-           
-            else {
+            }else {
                 //NEED TO create hardcoded return of zqu.zQuoteUtil.sendToZBilling(quotes) for coverage
-				 //START PD-0041 16May16 FrancisBenzon : variables
+                 //START PD-0041 16May16 FrancisBenzon : variables
                 quoteId_billingAccountZuoraId.put(lquoteList[0].id,'12345');
                 subzIDSet.add('12345');  
-				//END PD-0041 16May16 FrancisBenzon : variables				
+                //END PD-0041 16May16 FrancisBenzon : variables             
             }
-            
+                        
             system.debug('>results< ' + results);            
             
             for (zqu.zQuoteUtil.zBillingResult result :results) {
@@ -162,8 +161,6 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                     resultList.add(result.success + ':'+ result.zAccountId + ':'+result.zSubscriptionId);
                     zAccountIdSet.add(result.zAccountId);
                     zSubIdSet.add(result.zSubscriptionId);
-                    zAccountIdSet.remove(null);
-
                 } catch (Exception e) {
                     logger.log(e);
                 }
@@ -186,9 +183,8 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
     {         
         // Start UD-2865 07Oct15 JohnD - update the billing account to zuora prior to sync
         if (origin == 'csvupload') {
-            
-            if (!quoteId_billingAccountZuoraId.isEmpty()) {
-                
+             system.debug(':::QUOTE_BA ' + quoteId_billingAccountZuoraId);
+            if (!quoteId_billingAccountZuoraId.isEmpty()) {              
                 Zuora.zApi zApiInstance = new Zuora.zApi();
                 
                 if (!Test.isRunningTest()) {
@@ -252,7 +248,7 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                         mockResponse.errors = new list<Zuora.zObject>();
                         paymentResults.add(mockResponse);
                     }
-                                       
+                    system.debug(':::paymentResults ' + paymentResults);
                     integer index = 0;
                     for (Zuora.zApi.SaveResult result : paymentResults) {
                         
@@ -274,6 +270,7 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                         index++;
                     }
                 }
+                                
                 
                 for (id quoteId : quoteId_orderId.keySet()) {
                     
@@ -295,6 +292,7 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                 
                 try {
 
+                    system.debug(':::subExtIdSet ' + subzIDSet);
                     //START PD-0041 FrancisBenzon 16May16 : get fpp creditCard subs and call InvoiceProcessForFullPrepaid
                     if(subzIDSet.size() > 0)
                     {
@@ -322,7 +320,6 @@ global class SendQuotesToZuoraMultipleAccount implements Database.Batchable<sObj
                     }                   
                     //END PD-0041 FrancisBenzon 16May16 : get fpp creditCard subs and call InvoiceProcessForFullPrepaid
                     update orderList;
-
                     for (zqu__Quote__c quote : [select Id, Order_Number__c, zqu__ElectronicPaymentMethodId__c from zqu__Quote__c 
                             where Order_Number__c in :ccOrderIdSet]) {
                         

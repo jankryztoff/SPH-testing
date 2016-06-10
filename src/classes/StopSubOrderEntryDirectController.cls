@@ -83,6 +83,10 @@ global class StopSubOrderEntryDirectController{
     Map<Id, Boolean> oliToIsAdminFeeCharged = new Map<Id, Boolean>();
     //END: UD-3852 2-24-2016 Added by Kristine Balaoing
     
+    //START UD-3088 3/30/2016 Added by J.Sarion
+    Contact con = new Contact();
+    String contactId; 
+    //END UD-3088 3/30/2016 Added by J.Sarion
     
     // ------------  Subscription Wrapper  ------------ //
     public class SubscriptionWrapper{ 
@@ -211,6 +215,17 @@ global class StopSubOrderEntryDirectController{
     //END UD-2738 Wenjun 21/Sep/15 
     
     public StopSubOrderEntryDirectController(){   
+        //START UD-3088 3/30/2016 Added by J.Sarion - get contact
+        system.debug('>>>>>contactId ' + contactId);
+        contactId = ApexPages.currentPage().getParameters().get('contactId');
+        system.debug('>>>>>contactId ' + contactId);
+        //system.assertequals('contactId ' + contactId, 'parentCaseId ' + parentCaseId);
+        if(contactId != '' && contactId != null) {
+            //system.assertequals('>>>>> 123', '>>>>>qwe');
+            con = [SELECT Id, Billing_Indicator__c, Recipient_Indicator__c FROM Contact WHERE Id = :contactId];
+        }
+        //END UD-3088 3/30/2016 Added by J.Sarion - get contact
+        
         parentCaseId = ApexPages.currentPage().getParameters().get('def_parent_id');
         if (parentCaseId != null) {
             string tmp = parentCaseId;
@@ -220,7 +235,7 @@ global class StopSubOrderEntryDirectController{
                 parentCaseId = null;
             }
         }
-  
+        //system.assertequals('>>>>> 123', '>>>>>qwe');
         deletedSubscriptionList = new List<OrderLineItemWrapper>();
         relatedSubscriptionResultList = new List<OrderLineItemWrapper>();
         retention = false;
@@ -421,7 +436,9 @@ global class StopSubOrderEntryDirectController{
                   //START:D-3344 8/10/15 Added by Manolo Valena
                   //START:UD-3143 10/26/2015 Added by Manolo Valena - Added Recipient_Contact__r.Recipient_Number__c.
                   //START: D-4097 12/17/15 Added by Manolo Valena
-                  Promotion_1__c, Order_Line_Item_Number_1__c, Recipient_Contact__r.Recipient_Number__c, Recipient_Contact__c 
+                  //START UD-3088 3/30/2016 Added by J.Sarion
+                  Promotion_1__c, Order_Line_Item_Number_1__c, Recipient_Contact__r.Recipient_Number__c, Recipient_Contact__c, Contact__c 
+                  //END UD-3088 3/30/2016 Added by J.Sarion
                   //END: D-4097 12/17/15 Added by Manolo Valena
                   //END:UD-3143 10/26/2015 Added by Manolo Valena
                   //END:D-3344 8/10/15 Added by Manolo Valena
@@ -430,13 +447,20 @@ global class StopSubOrderEntryDirectController{
                                   WHERE Zuora__Account__c = :account.id AND Subscription_Type_1__c = : ConstantsSLB.getkeyid('SubTypePub')
                                   AND Zuora__Status__c =: GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE AND (Zuora__SubscriptionEndDate__c > today OR Zuora__SubscriptionEndDate__c = Null)];
         
-        
+        //system.debug('@@@MC1'+ account.id);
+        //system.debug('@@@MC2'+ ConstantsSLB.getkeyid('SubTypePub'));
+        //system.debug('@@@MC3'+ GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE);
+        //system.debug('@@@MC4'+ Zuora__SubscriptionEndDate__c);
+
+        system.debug('@@@subscriptionResultList'+subscriptionResultList);
+
         //END UD-0912 04/23/2015 Arvin
         //End UD-0782 04/07/2015 James
         //END D-1757 14/01/15 Wenjun
         for(Zuora__Subscription__c sub : subscriptionResultList){
             subscriptionIdSet.add(sub.id);
             packIdSet.add(sub.Main_Package_1__c);
+
       
       //START:D-3330 8/17/15 Added by Manolo Valena   
       subToOLIMap.put(sub.Id, sub.Order_Line_Item_Number_1__c);
@@ -517,8 +541,27 @@ global class StopSubOrderEntryDirectController{
                 packageIdToPackItemMap.put(packItem.Package__c, new List<Package_Item__c> {packItem});
             }
         }       
-                 
+        //system.assertequals('>>>>> 123', '>>>>>qwe');
         for(Zuora__Subscription__c sub : subscriptionResultList){
+            //START UD-3088 3/30/2016 Added by J.Sarion - Check if from contact
+            if(contactId !=  '' && contactId != null) {
+                if(con.Recipient_Indicator__c) {
+                    if(con.Billing_Indicator__c) {
+                        if(sub.Recipient_Contact__c != con.Id && sub.Contact__c != con.Id)
+                            continue;
+                    }
+                    else {
+                        if(sub.Recipient_Contact__c != con.Id)
+                            continue;
+                    }
+                }
+                if(con.Billing_Indicator__c) {
+                    if(sub.Contact__c != con.Id)
+                        continue;
+                }
+            }
+            //END UD-3088 3/30/2016 Added by J.Sarion - Check if from contact
+            
             subscriptionWrapper = new SubscriptionWrapper();
             for(Package_Item__c pckItem: packageIdToPackItemMap.get(sub.Main_Package_1__c)){
                     if(pckItem.Product_Rate_Plan__r.zqu__ZProduct__r.ProductCode__c == sub.Product_Code__c) {
@@ -690,16 +733,19 @@ global class StopSubOrderEntryDirectController{
         /*cosOrderList = [Select Id, Name From Order__c
                         Where Order_Type__c IN :COSOrderTypes
                         AND Account__c = :accountId
-                        AND Subscription__c = :myId];*/       
+                        AND Subscription__c = :myId];*/   
+
         try
         {
             cosOliList = [Select Id From Order_Line_Item__c Where Order__r.Order_Type__c IN :COSOrderTypes
                         and Order__r.Subscription__c = :myId and Case__r.Status != :GlobalVariableClass.STATUS_VOID 
-                        and Order__r.Account__c = :accountId]; //Start/End UD-3911  14Apr16 FrancisBenzon :Update account
-        }catch(exception e) {
+                        and Order__r.Account__c = :accountId
+                        and Order__r.Status__c != 'Void']; //START/END Fritz for PD-0184
+                        //Start/End UD-3911  14Apr16 FrancisBenzon :Update account
+        }catch(exception e) {           
             cosOliList = new List<Order_Line_Item__c>();
         }
-
+        
         if(cosOliList.size() > 0)
         {           
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage(err_ExistingCOSOrder)));
@@ -733,6 +779,7 @@ global class StopSubOrderEntryDirectController{
             try{
                 packageType = [SELECT Package_Type__c, Billing_Type__c FROM Package__c WHERE id =: subscription.Main_Package_1__c];
                 for(SubscriptionWrapper sub : allSubscriptionResultList){
+
                     oLineWrapper = new OrderLineItemWrapper();
                     //START: UD-3852 2-24-2016 Added by Kristine Balaoing - added variables for admin fee charging of bundled subscriptions
                     oLineWrapper.oli1 = sub.orderLineItem1;
@@ -1433,6 +1480,7 @@ global class StopSubOrderEntryDirectController{
      *Return:
      */
     public void getAdminFee(OrderLineItemWrapper subscription){
+        
         for(OrderLineItemWrapper relSub : relatedSubscriptionResultList){
             if(relSub.id == subscription.id){
         //START: UD-3852 2-24-2016 Added by Kristine Balaoing - modified logif for admin fee charging on bundled subscriptions
@@ -1450,6 +1498,7 @@ global class StopSubOrderEntryDirectController{
         }
         }
     }
+    
     
     /*Description: Method for getting Refund
      *Parameter: OrderLineItemWrapper
@@ -1522,10 +1571,12 @@ global class StopSubOrderEntryDirectController{
         for(OrderLineItemWrapper relSub : relatedSubscriptionResultList){
             if(relSub.id == subscription.id){
                 //START D-3842 10/30/2015 Added by J.Sarion - Add Delivery fee to only 1 sub for bundle subscriptions
+                system.debug('>>>>>oliIdForBundleSet ' + oliIdForBundleSet);
                 if(subIdForBundleSet.contains(relSub.Id)){
                     oliIdForBundleSet.remove(relSub.bundledWith);
                 }
                 RefundComputation.oliIdForBundleSetRC = oliIdForBundleSet;
+                system.debug('>>>>>RefundComputation.oliIdForBundleSetRC ' + RefundComputation.oliIdForBundleSetRC);
                 //END D-3842 10/30/2015 Added by J.Sarion - Add Delivery fee to only 1 sub for bundle subscriptions
                 //START UD-0760 7/14/2015 Added by Manolo Valena
                 //if(isPaid) { //START/END UD-2012 7/21/2015 Added by Manolo Valena - Removed fix for UD-0760
@@ -1632,6 +1683,7 @@ global class StopSubOrderEntryDirectController{
                         subIdForBundleSet.add(relSub.Id);
                     }
                     oliIdForBundleSet.add(relSub.bundledWith);
+                    system.debug('>>>>>oliIdForBundleSet ' + oliIdForBundleSet);
                 }
                 //END D-3842 10/30/2015 Added by J.Sarion - Add Delivery fee to only 1 sub for bundle subscriptions
             }
@@ -2209,12 +2261,10 @@ global class StopSubOrderEntryDirectController{
                         recs.add(oliWrap.Id);
                     }
                 }
-    //START: UD-3852 2-24-2016 Added by Kristine Balaoing - added variables for admin fee charging on bundled subscriptions
                 else if((oliWrap.feeOverrideAmountHidden == null && (oliWrap.feeOverrideAmount == null || negOne < 0.00)) || 
                         (oliWrap.feeOverrideAmountHidden < 0.00 && (oliWrap.feeOverrideAmount == null || negOne < 0.00)) ||
                         (oliWrap.feeOverrideAmountHidden != null && (oliWrap.feeOverrideAmount == null || negOne < 0.00)) ||
                         (oliWrap.feeOverrideAmountHidden > 0.00 && (oliWrap.feeOverrideAmount == null || negOne < 0.00))) {
-    //END: UD-3852 2-24-2016 Added by Kristine Balaoing
                     recs2.add(oliWrap.Id);    
                 }
                 //END:UD-2074 7/25/15 Added by Manolo Valena
@@ -2339,8 +2389,8 @@ global class StopSubOrderEntryDirectController{
     }
     
     if(OLIToBundSubsMap.keySet().size() > 0) {
-      for(Id oliId : OLIToBundSubsMap.keySet()) {
-        uniqueDate = new Set<Date>();
+        for(Id oliId : OLIToBundSubsMap.keySet()) {
+            uniqueDate = new Set<Date>(); 
             feewaiverSet = new Set<Boolean>();
             feeOverrideValSet = new Set<Boolean>();
             
@@ -2361,20 +2411,20 @@ global class StopSubOrderEntryDirectController{
             }
                       
             if(isPerStpDate || isFeeWaiverDiff || isOverrideValueDiff) {
-          Integer count = 0;
-          String err = GlobalVariableClass.PACKAGETYPE_BUNDLE + GlobalVariableClass.COLON + GlobalVariableClass.SPACE;
-          for(OrderLineItemWrapper bundSubRec : OLIToBundSubsMap.get(oliId)) {
-            count++;
-            if(OLIToBundSubsMap.get(oliId).size() != count) {
-              err = err + bundSubRec.subscription + GlobalVariableClass.COMMA + GlobalVariableClass.SPACE;
+                Integer count = 0;
+                String err = GlobalVariableClass.PACKAGETYPE_BUNDLE + GlobalVariableClass.COLON + GlobalVariableClass.SPACE;
+                for(OrderLineItemWrapper bundSubRec : OLIToBundSubsMap.get(oliId)) {
+                    count++;
+                    if(OLIToBundSubsMap.get(oliId).size() != count) {
+                        err = err + bundSubRec.subscription + GlobalVariableClass.COMMA + GlobalVariableClass.SPACE;
+                    }
+                    else {
+                        err = err + bundSubRec.subscription + GlobalVariableClass.SPACE;
+                    }
+                }
+                errSet.add(err);
             }
-            else {
-              err = err + bundSubRec.subscription + GlobalVariableClass.SPACE;
-            }
-          }
-          errSet.add(err);
         }
-      }
     }
     
     if(errSet.size() > 0) {

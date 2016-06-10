@@ -773,6 +773,8 @@ public class RefundComputation{
                         //END: D- 0077 03/09/2015 Added by Kristine Campang
                         System.debug('TOTAL DISCOUNT AMOUNT' + totalDiscountAmount);
                         System.debug('BEFORE' + prorationAmountForRemainingDaysBef);
+                        System.debug('>>>>>CHA AFTER' + prorationAmountForRemainingDaysAft);
+                        System.debug('>>>>>CHA AIOMAG' + totalProrationAIOMag);
                         //START-END: DELETED LINES by Kristine Campang D-2553
                         
                         //START UD-2657/D-3414/D-3711 Wenjun 19 Oct 15: hanlde if stop before start

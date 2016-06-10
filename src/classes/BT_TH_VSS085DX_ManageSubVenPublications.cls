@@ -34,7 +34,7 @@ public class BT_TH_VSS085DX_ManageSubVenPublications
         mapManager.printOutAccountSubscriptionVendorMap(accountSubscriptionVendorMap);
         
         //Get the list of HDS Subscription IDs
-        for(BT_CO_VSS_ImportVendorSubscription__c so : recordsList) {
+        for(BT_CO_VSS_ImportVendorSubscription__c so : recordsList) {            
             String vHdsSubscriptionId = so.HdsSubscriptionId__c;
             String vCrsmSubscriptionId = so.crsmVendorSubscriptionId__c;
             
@@ -42,12 +42,15 @@ public class BT_TH_VSS085DX_ManageSubVenPublications
             if (StringUtility.validate(vCrsmSubscriptionId)=='0') crsmSubscriptionIDList.add(vCrsmSubscriptionId.trim());
         }
         
+        System.debug('hdsSubscriptionIDList : '+hdsSubscriptionIDList);
+        System.debug('hdsSubscriptionIDList : '+hdsSubscriptionIDList);
         subVenPubMap = mapManager.getSubVenPublicationMap(hdsSubscriptionIDList, subVenIDList, true);
         subVenPubMapByID = mapManager.getSubVenPublicationMapByCRSMSubID(crsmSubscriptionIDList, true);       
         subVenMapX = mapManager.getSubscriptionVendorsList(crsmSubscriptionIDList);
        
         //Process the list
-        for(BT_CO_VSS_ImportVendorSubscription__c so : recordsList) {       
+        for(BT_CO_VSS_ImportVendorSubscription__c so : recordsList) {   
+            System.debug('so  : '+so );    
             String vHdsRecipientId = so.HdsRecipientId__c;
             String vHdsSubscriptionId = so.HdsSubscriptionId__c;
             String vPublicationCode = so.PublicationCode__c;
@@ -89,6 +92,8 @@ public class BT_TH_VSS085DX_ManageSubVenPublications
             Boolean hasMatchFlag = false;
             if (vSubscriptionUpdateIndicator.trim().equalsIgnoreCase('U')) {
                 System.debug(loggingLevel.INFO,'VSS085DX DEF: Update Indicator');
+                System.debug(' subVenPubMap : '+subVenPubMap);
+                System.debug(' vHdsSubscriptionId: '+vHdsSubscriptionId);
                 if (subVenPubMap.containsKey(vHdsSubscriptionId)) {
                     System.debug(loggingLevel.INFO,'VSS085DX DEF: subVenPubMap.containsKey(vHdsSubscriptionId) = TRUE');
                     Subscription_Vendor_Publication__c svpRec = null;
@@ -133,7 +138,7 @@ public class BT_TH_VSS085DX_ManageSubVenPublications
                     }                   
                 }
                 
-                //Nitin Khanna : UD-3435  - PD-0081 : 23-12-2015 : adding an extra block to insert SVP recors in case its an update request but no records are found :Start
+                //Nitin Khanna : UD-3435 - PD-0081 : 23-12-2015 : adding an extra block to insert SVP recors in case its an update request but no records are found :Start
                 //Create new record if no match found on both maps.
                 if (hasMatchFlag==false) {
                     System.debug(loggingLevel.INFO,'VSS085DX DEF: Add Indicator');
@@ -165,10 +170,11 @@ public class BT_TH_VSS085DX_ManageSubVenPublications
 
                     forInsertList.add(svpRec);                          
                 }
-                //Nitin Khanna : UD-3435 - PD-0081 : 23-12-2015 : adding an extra block to insert SVP recors in case its an update request but no records are found :End
+                //Nitin Khanna : UD-3435 - PD-0081: 23-12-2015 : adding an extra block to insert SVP recors in case its an update request but no records are found :End
             }
             
             //Create new record if no match found on both maps.
+            System.debug('vSubscriptionUpdateIndicator : '+vSubscriptionUpdateIndicator);
             if (vSubscriptionUpdateIndicator.trim().equalsIgnoreCase('A')) {
                 System.debug(loggingLevel.INFO,'VSS085DX DEF: Add Indicator');
                 Subscription_Vendor_Publication__c svpRec = new Subscription_Vendor_Publication__c();               

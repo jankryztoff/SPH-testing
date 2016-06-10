@@ -576,7 +576,7 @@ public class BillingAccountHelper {
                 
                 if (billId_CreditLimitExternal.get(tmp.Id) != null) {
                     tmp.Credit_Limit_External__c = decimal.valueOf(billId_CreditLimitExternal.get(tmp.Id));
-                 }
+                }
                 
                     
                     // prepare data for zuora update
@@ -679,7 +679,7 @@ public class BillingAccountHelper {
             billingAccountIdSet.remove(null);
             
             list<Zuora__CustomerAccount__c> billingAccountList = [select Id, Zuora__Default_Payment_Method__c, 
-                    Zuora__DefaultPaymentMethod__c, Zuora__Zuora_Id__c, Zuora__CreditCardType__c from Zuora__CustomerAccount__c where Id in :billingAccountIdSet];	// Start/End D-4592 07Apr16 JohnD - added field
+                    Zuora__DefaultPaymentMethod__c, Zuora__Zuora_Id__c, Zuora__CreditCardType__c from Zuora__CustomerAccount__c where Id in :billingAccountIdSet];  // Start/End D-4592 07Apr16 JohnD
             
             set<id> paymentIdSet = new set<id>();
             map<id, string> paymentId_paymentExternalId = new map<id, string>();
@@ -708,7 +708,7 @@ public class BillingAccountHelper {
                         paymentId_paymentExternalId.put(p.Id, p.Zuora__External_Id__c);
                     }
                 }
-                
+                 
                 for (Zuora__CustomerAccount__c ba : billingAccountList) {
                     if (ba.Zuora__DefaultPaymentMethod__c != null && ba.Zuora__Default_Payment_Method__c != null) {
                                 
@@ -721,11 +721,11 @@ public class BillingAccountHelper {
                             // Start D-4592 07Apr16 JohnD - added PaymentGateway
                             if (ba.Zuora__DefaultPaymentMethod__c.toLowerCase() == CREDIT_CARD || ba.Zuora__DefaultPaymentMethod__c == 'PayPal') { //START/END 05/04/2015 CR-005 Kevin Evasco - PayPal CR
                                 zObject.setValue('AutoPay', true);
-								
-								if (ba.Zuora__DefaultPaymentMethod__c.toLowerCase() == CREDIT_CARD && ba.Zuora__CreditCardType__c == CARD_TYPE_AMEX) {
-									zObject.setValue('PaymentGateway', PAYMENT_GATEWAY);
-								}								
-								
+                                
+                                if (ba.Zuora__DefaultPaymentMethod__c.toLowerCase() == CREDIT_CARD && ba.Zuora__CreditCardType__c == CARD_TYPE_AMEX) {
+                                    zObject.setValue('PaymentGateway', PAYMENT_GATEWAY);
+                                }                               
+                                
                             }
                             // End D-4592 07Apr16 JohnD - added PaymentGateway
                             

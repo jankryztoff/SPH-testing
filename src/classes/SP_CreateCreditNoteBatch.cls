@@ -29,7 +29,7 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
 
         String query = '';
         //Start UD-2549 16-Mar-2016 Added By S.Puli - enhancement for credit note batch SP061
-		//Start D-4648 08-Apr-2016 Added By S.Puli
+        //Start D-4648 08-Apr-2016 Added By S.Puli
         if(isAdhoc){   
             query = 'SELECT Id,Zuora__TotalAmount__c,Zuora__TaxExemptAmount__c,Zuora__TaxAmount__c,Is_CN_Processed__c,Zuora__InvoiceDate__c,';
             query += ' Zuora__Zuora_Id__c,Zuora__BillingAccount__c,Zuora__BillingAccount__r.Billing_Type__c, Zuora__AdjustmentAmount__c,';
@@ -44,7 +44,7 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
             query += ' WHERE (Zuora__TotalAmount__c < 0 OR InvoicePaymentFailure__c = \'Y\')';
             query += ' AND Is_CN_Processed__c = false'; 
         }
-		//End D-4648 08-Apr-2016 Added By S.Puli
+        //End D-4648 08-Apr-2016 Added By S.Puli
         //End UD-2549 16-Mar-2016 Added By S.Puli - enhancement for credit note batch SP061
         system.debug('query: '+ query);
         return Database.getQueryLocator(query);
@@ -260,13 +260,13 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
             if(!fullAdjAndCancelInvoice_List.isEmpty()){
                 for(Zuora__ZInvoice__c otherInv : fullAdjAndCancelInvoice_List){
                     Credit_Note_Item__c cni = new Credit_Note_Item__c();
-					//Start UD-2549 Added By S.Puli - Credit note batch enhancement
-					if(invoiceIdToCreditRecord_Map.containsKey(otherInv.Id)){
-						cni.Credit_Note__c = invoiceIdToCreditRecord_Map.get(otherInv.Id).Id;
-					}else{
-						logger.log(false, 'Full Adjusttment or Cancel Invoice not in Map', string.valueOf(otherInv.Id));
-					}
-					//End UD-2549 Added By S.Puli - Credit note batch enhancement
+                    //Start UD-2549 Added By S.Puli - Credit note batch enhancement
+                    if(invoiceIdToCreditRecord_Map.containsKey(otherInv.Id)){
+                        cni.Credit_Note__c = invoiceIdToCreditRecord_Map.get(otherInv.Id).Id;
+                    }else{
+                        logger.log(false, 'Full Adjusttment or Cancel Invoice not in Map', string.valueOf(otherInv.Id));
+                    }
+                    //End UD-2549 Added By S.Puli - Credit note batch enhancement
                     cni.Invoice__c = otherInv.Id;
                     cni.Amt_Before_Tax__c = MATH.ABS(otherInv.Zuora__AmountWithoutTax__c);
                     cni.Tax_Amt__c = MATH.ABS(otherInv.Zuora__TaxAmount__c);
@@ -293,17 +293,17 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
                                     if(!tempInvToCreLine_Map.containsKey(tempInvKey)){
                                         Credit_Note_Item__c cni = new Credit_Note_Item__c();
                                         //Start UD-2549 Added By S.Puli - Credit note batch enhancement
-										if(invoiceIdToCreditId_Map.containsKey(invRecord.Id)){
-											cni.Credit_Note__c = invoiceIdToCreditId_Map.get(invRecord.Id);
-										}else{
-											logger.log(false, 'Full prepaid Invoice Id not in Map', string.valueOf(invRecord.Id));
-										}
-										if(invoiceZuoraIdToRecord_Map.containsKey(subsIdToInvZuoraID_Map.get(invLi.Subscription__c))){
-											cni.Invoice__c = invoiceZuoraIdToRecord_Map.get(subsIdToInvZuoraID_Map.get(invLi.Subscription__c)).Id;
-										}else{
-											logger.log(false, 'Full prepaid Invoice Zuora Id not in Map', subsIdToInvZuoraID_Map.get(invLi.Subscription__c));
-										}
-										//End UD-2549 Added By S.Puli - Credit note batch enhancement
+                                        if(invoiceIdToCreditId_Map.containsKey(invRecord.Id)){
+                                            cni.Credit_Note__c = invoiceIdToCreditId_Map.get(invRecord.Id);
+                                        }else{
+                                            logger.log(false, 'Full prepaid Invoice Id not in Map', string.valueOf(invRecord.Id));
+                                        }
+                                        if(invoiceZuoraIdToRecord_Map.containsKey(subsIdToInvZuoraID_Map.get(invLi.Subscription__c))){
+                                            cni.Invoice__c = invoiceZuoraIdToRecord_Map.get(subsIdToInvZuoraID_Map.get(invLi.Subscription__c)).Id;
+                                        }else{
+                                            logger.log(false, 'Full prepaid Invoice Zuora Id not in Map', subsIdToInvZuoraID_Map.get(invLi.Subscription__c));
+                                        }
+                                        //End UD-2549 Added By S.Puli - Credit note batch enhancement
                                         cni.Amt_Before_Tax__c = MATH.ABS(invLi.Charge_Amount__c);
                                         cni.Tax_Amt__c = MATH.ABS(invLi.Tax_Amount__c);
                                         cni.Tax_Exempt_Amt__c = MATH.ABS(invLi.Tax_Exempt_Amount__c);
@@ -329,30 +329,30 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
                                 if(!tempInvToCreLine_Map.containsKey(invRecord.Zuora__Zuora_Id__c)){
                                     Credit_Note_Item__c cni = new Credit_Note_Item__c();
                                     //Start UD-2549 Added By S.Puli - Credit note batch enhancement
-									if(invoiceIdToCreditId_Map.containsKey(invRecord.Id)){
-										cni.Credit_Note__c = invoiceIdToCreditId_Map.get(invRecord.Id);
-									}else{
-										logger.log(false, 'Recurring Invoice Id not in Map', string.valueOf(invRecord.Id));
-									}
-									//End UD-2549 Added By S.Puli - Credit note batch enhancement
+                                    if(invoiceIdToCreditId_Map.containsKey(invRecord.Id)){
+                                        cni.Credit_Note__c = invoiceIdToCreditId_Map.get(invRecord.Id);
+                                    }else{
+                                        logger.log(false, 'Recurring Invoice Id not in Map', string.valueOf(invRecord.Id));
+                                    }
+                                    //End UD-2549 Added By S.Puli - Credit note batch enhancement
                                     cni.Amt_Before_Tax__c = MATH.ABS(invLi.Charge_Amount__c);
                                     cni.Tax_Amt__c = MATH.ABS(invLi.Tax_Amount__c);
                                     cni.Tax_Exempt_Amt__c = MATH.ABS(invLi.Tax_Exempt_Amount__c);
                                     cni.Amt_After_Tax__c = cni.Amt_Before_Tax__c + cni.Tax_Amt__c;
                                     //Populate Invoice field if Credit Amount is less than or equal to Last Invoice Total Amount
                                     cni.Invoice__c = null;
-									//Start UD-2549 Added By S.Puli - Credit note batch enhancement
-									if(billAccToAllInvoice_Map.containsKey(invRecord.Zuora__BillingAccount__c)){
-										if(billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c).size() > 1){
-											if(cni.Amt_After_Tax__c <= billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Zuora__TotalAmount__c){
-												cni.Invoice__c = billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Id;
-											}
-										}else{
-											logger.log(false, 'Billing Account has 1 or 0 recurring invoice', string.valueOf(invRecord.Zuora__BillingAccount__c));
-										}
-									}else{
-										logger.log(false, 'Billing Account Id not in Map', string.valueOf(invRecord.Zuora__BillingAccount__c));
-									}
+                                    //Start UD-2549 Added By S.Puli - Credit note batch enhancement
+                                    if(billAccToAllInvoice_Map.containsKey(invRecord.Zuora__BillingAccount__c)){
+                                        if(billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c).size() > 1){
+                                            if(cni.Amt_After_Tax__c <= billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Zuora__TotalAmount__c){
+                                                cni.Invoice__c = billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Id;
+                                            }
+                                        }else{
+                                            logger.log(false, 'Billing Account has 1 or 0 recurring invoice', string.valueOf(invRecord.Zuora__BillingAccount__c));
+                                        }
+                                    }else{
+                                        logger.log(false, 'Billing Account Id not in Map', string.valueOf(invRecord.Zuora__BillingAccount__c));
+                                    }
                                     //End UD-2549 Added By S.Puli - Credit note batch enhancement
                                     tempInvToCreLine_Map.put(invRecord.Zuora__Zuora_Id__c, cni);
                                 }else{
@@ -366,17 +366,17 @@ global class SP_CreateCreditNoteBatch implements Database.Batchable<sObject>, Da
                                     //Populate Invoice field if Credit Amount is less than or equal to Last Invoice Total Amount
                                     cni.Invoice__c = null;
                                     //Start UD-2549 Added By S.Puli - Credit note batch enhancement
-									if(billAccToAllInvoice_Map.containsKey(invRecord.Zuora__BillingAccount__c)){
-										if(billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c).size() > 1){
-											if(cni.Amt_After_Tax__c <= billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Zuora__TotalAmount__c){
-												cni.Invoice__c = billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Id;
-											}
-										}else{
-											logger.log(false, 'Billing Account has 1 or 0 recurring invoice', string.valueOf(invRecord.Zuora__BillingAccount__c));
-										}
-									}else{
-										logger.log(false, 'Billing Account Id not in Map', string.valueOf(invRecord.Zuora__BillingAccount__c));
-									}
+                                    if(billAccToAllInvoice_Map.containsKey(invRecord.Zuora__BillingAccount__c)){
+                                        if(billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c).size() > 1){
+                                            if(cni.Amt_After_Tax__c <= billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Zuora__TotalAmount__c){
+                                                cni.Invoice__c = billAccToAllInvoice_Map.get(invRecord.Zuora__BillingAccount__c)[1].Id;
+                                            }
+                                        }else{
+                                            logger.log(false, 'Billing Account has 1 or 0 recurring invoice', string.valueOf(invRecord.Zuora__BillingAccount__c));
+                                        }
+                                    }else{
+                                        logger.log(false, 'Billing Account Id not in Map', string.valueOf(invRecord.Zuora__BillingAccount__c));
+                                    }
                                     //End UD-2549 Added By S.Puli - Credit note batch enhancement
                                     
                                     tempInvToCreLine_Map.put(invRecord.Zuora__Zuora_Id__c, cni);

@@ -25,7 +25,7 @@
             invoiceMap.put('Previous_Balance__c', invoiceWrapperElem.previousBalance);
             invoiceZList.add(invoiceMap);
         }
-        
+
         try {   
             List<Map<String,String>> resultMap = zCallout.updateZObjects(invoiceZList, 'Invoice');
              for(Map<String,String> result :resultMap){

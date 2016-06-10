@@ -87,38 +87,38 @@ public class BT_AU_BATCHRUNREQUEST_UpdateInfo
 
         return  batchRunDate.format('yyyy-MM-dd');
     }   
-	
-	//START 10 March 2016 UD-3247 Kevin Evasco - Added abortJob and delegateBatchCall utility methods
-	public static void abortJob(String jobId, String className, String batchCode, Exception exceptionParam, Boolean isFuture)
+    
+    //START 10 March 2016 UD-3247 Kevin Evasco - Added abortJob and delegateBatchCall utility methods
+    public static void abortJob(String jobId, String className, String batchCode, Exception exceptionParam, Boolean isFuture)
     {
-		if(isFuture)
-			delegateBatchFutureCall(batchCode,true);
-		else
-			delegateBatchCall(batchCode, false);		
-		BT_AU_BATCHRUNREQUEST_UpdateInfo.updateEndTime(batchCode);
+        if(isFuture)
+            delegateBatchFutureCall(batchCode,true);
+        else
+            delegateBatchCall(batchCode, false);        
+        BT_AU_BATCHRUNREQUEST_UpdateInfo.updateEndTime(batchCode);
         Logger logger = new Logger(className, batchCode);
         logger.log(exceptionParam);
         logger.save();
         System.abortJob(jobId);
     }
-	
-	public static void delegateBatchCall(String batchCode, Boolean isSuccess){
-		String batchRunDate = BT_AU_BATCHRUNREQUEST_UpdateInfo.getBatchRunDate(batchCode);            
+    
+    public static void delegateBatchCall(String batchCode, Boolean isSuccess){
+        String batchRunDate = BT_AU_BATCHRUNREQUEST_UpdateInfo.getBatchRunDate(batchCode);            
         Date myDate = DateUtility.convertDate(batchRunDate,'-','YMD');
-		
-		BatchServiceFacade a1F = new BatchServiceFacade();
+        
+        BatchServiceFacade a1F = new BatchServiceFacade();
         BatchServiceRequestVO serviceRequestVO = new BatchServiceRequestVO();
         serviceRequestVO.setJobStatus(isSuccess ? 0 : 1);
         serviceRequestVO.setJobID(batchCode);
         serviceRequestVO.setJobDate(myDate);
         System.debug('################ before');
         a1F.delegateBatchCall(serviceRequestVO);
-        System.debug('################ after');        		
-	}
-	
-	@future(callout=true)
-	public static void delegateBatchFutureCall(String batchCode, Boolean isSuccess){
-		delegateBatchCall(batchCode, isSuccess);     		
-	}
-	//END 10 March 2016 UD-3247 Kevin Evasco - Added abortJob and delegateBatchCall utility methods
+        System.debug('################ after');             
+    }
+    
+    @future(callout=true)
+    public static void delegateBatchFutureCall(String batchCode, Boolean isSuccess){
+        delegateBatchCall(batchCode, isSuccess);            
+    }
+    //END 10 March 2016 UD-3247 Kevin Evasco - Added abortJob and delegateBatchCall utility methods
 }

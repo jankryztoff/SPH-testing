@@ -8,68 +8,71 @@
 
 public class AutoApprover implements Queueable, Database.allowsCallouts {
     
-	Map<Id, List<ProcessInstance>> mapReturnPI = new Map<Id, List<ProcessInstance>>();
+    Map<Id, List<ProcessInstance>> mapReturnPI = new Map<Id, List<ProcessInstance>>();
     Map<Id, Id> tObjIdToworkItemIdMap = new Map<Id, Id>();
-	
-	set<id> approvedCaseIdSet = new set<id>();
-	string action;
+    
+    set<id> approvedCaseIdSet = new set<id>();
+    string action;
 
-	public AutoApprover(set<id> approvedCaseIdSetParam, string actionParam) {
-		this.approvedCaseIdSet = approvedCaseIdSetParam;
-		this.action = actionParam;
-	}
+    public AutoApprover(set<id> approvedCaseIdSetParam, string actionParam) {
+        this.approvedCaseIdSet = approvedCaseIdSetParam;
+        this.action = actionParam;
+    }
 
-	public void execute(QueueableContext context) {
-		if (action == 'Approved') {
-			approveRecord(approvedCaseIdSet);
-		} else if (action == 'Reject') {
-			rejectRecord(approvedCaseIdSet);
-		}
-	}
+    public void execute(QueueableContext context) {
+        if (action == 'Approved') {
+            approveRecord(approvedCaseIdSet);
+        } else if (action == 'Reject') {
+            rejectRecord(approvedCaseIdSet);
+        }
+    }
 
 
     /**
     * This method will Approve the Case Record
     **/
-    @TestVisible // Start/End PD-0236 Vpernicia: Test Class enhancement
+    @TestVisible
     private void approveRecord(Set<Id> approvedCasesSet)
     {
         Set<Id> caseIdToAppSet = new Set<Id>();
         Set<Id> tempStopSubIdSet = new Set<Id>();
         Set<Id> OLIIdSet = new Set<Id>();
-		Map<Id, Zuora__Subscription__c> subIdToSubscriptionMap = new Map<Id, Zuora__Subscription__c>();
-		Map<Id, List<Case>> approveBundleCaseTS = new Map<Id, List<Case>>();
-		Logger logger = new Logger(AutoApprover.class.getName(), null, null);
-		
-		List<Case> casesList = [SELECT Id, Temp_Stop_Sub__c, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Id IN :approvedCasesSet];
+        Map<Id, Zuora__Subscription__c> subIdToSubscriptionMap = new Map<Id, Zuora__Subscription__c>();
+        Map<Id, List<Case>> approveBundleCaseTS = new Map<Id, List<Case>>();
+        Logger logger = new Logger(AutoApprover.class.getName(), null, null);
         
-		if(!casesList.isEmpty()){
-			for(Case cas : casesList){
-				if(cas.Temp_Stop_Sub__c != null){
-					tempStopSubIdSet.add(cas.Temp_Stop_Sub__c);
-				}
-			}
-		}
-		
-		if(!tempStopSubIdSet.isEmpty()){
+        List<Case> casesList = [SELECT Id, Temp_Stop_Sub__c, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Id IN :approvedCasesSet];
+        
+        if(!casesList.isEmpty()){
+            for(Case cas : casesList){
+                if(cas.Temp_Stop_Sub__c != null){
+                    tempStopSubIdSet.add(cas.Temp_Stop_Sub__c);
+                }
+            }
+        }
+        
+        if(!tempStopSubIdSet.isEmpty()){
             for(Zuora__Subscription__c sub : [SELECT Id, Name, Order_Line_Item_Number_1__c FROM Zuora__Subscription__c WHERE Id IN :tempStopSubIdSet]){
                 subIdToSubscriptionMap.put(sub.Id, sub);
             }
         }
-		
-		if(!casesList.isEmpty()){
-			for(Case cas : casesList){
-				if(subIdToSubscriptionMap.containsKey(cas.Temp_Stop_Sub__c)){
-					if(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c != null){
-						OLIIdSet.add(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c);
-					}
-				}
-			}
-		}
-		
+        
+        if(!casesList.isEmpty()){
+            for(Case cas : casesList){
+                if(subIdToSubscriptionMap.containsKey(cas.Temp_Stop_Sub__c)){
+                    if(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c != null){
+                        OLIIdSet.add(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c);
+                    }
+                }
+            }
+        }
+        
         if(!OLIIdSet.isEmpty()){
-            for(Case casR : [SELECT Id, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Temp_Stop_Sub__r.Order_Line_Item_Number_1__c IN :OLIIdSet AND Temp_Stop_Sub__c NOT IN :tempStopSubIdSet AND Sub_Status__c != 'Temp Stop Approved' AND Sub_Status__c != 'Temp Stop Rejected]']){
-				for(Case theCase : casesList){
+            for(Case casR : [SELECT Id, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Temp_Stop_Sub__r.Order_Line_Item_Number_1__c IN :OLIIdSet 
+                                                                                              AND Temp_Stop_Sub__c NOT IN :tempStopSubIdSet 
+                                                                                              AND Sub_Status__c != 'Temp Stop Approved' 
+                                                                                              AND Sub_Status__c != 'Temp Stop Rejected]']){
+                for(Case theCase : casesList){
                     if(casR.Temp_Stop_Date__c == theCase.Temp_Stop_Date__c && casR.Restart_Date__c == theCase.Restart_Date__c && casR.Temp_Stop_Type__c == theCase.Temp_Stop_Type__c){
                         if(approveBundleCaseTS.containsKey(theCase.Id)){
                             approveBundleCaseTS.get(theCase.Id).add(casR);
@@ -78,9 +81,9 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
                         }
                     }
                 }
-			}
-		}
-		
+            }
+        }
+        
         for(Id cId : approveBundleCaseTS.keySet()){
             if(approveBundleCaseTS.containsKey(cId)){
                 for(Case caseRec : approveBundleCaseTS.get(cId)){
@@ -105,24 +108,24 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
                     
                     if(workItemId == null)
                     {
-						logger.log(true, 'Error Occured in Trigger for Approving Case. workItemId is null.');
+                        logger.log(true, 'Error Occured in Trigger for Approving Case. workItemId is null.');
                         system.debug('Error Occured in Trigger for Approving Case. workItemId is null.');
                     }
                     else
                     {
                         req.setWorkitemId(workItemId);
                         // Submit the request for approval
-						try{
-							Approval.ProcessResult result =  Approval.process(req);
-						}catch(Exception e){
-							logger.log(e);
-						}
+                        try{
+                            Approval.ProcessResult result =  Approval.process(req);
+                        }catch(Exception e){
+                            logger.log(e);
+                        }
                     }
                 }
             }
         }
-		
-		logger.save();
+        
+        logger.save();
     }
     
     /**
@@ -133,39 +136,39 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
         Set<Id> caseIdToRejSet = new Set<Id>();
         Set<Id> tempStopSubIdSet = new Set<Id>();
         Set<Id> OLIIdSet = new Set<Id>();
-		Map<Id, Zuora__Subscription__c> subIdToSubscriptionMap = new Map<Id, Zuora__Subscription__c>();
-		Map<Id, List<Case>> rejectBundleCaseTS = new Map<Id, List<Case>>();
-		Logger logger = new Logger(AutoApprover.class.getName(), null, null);
-		
-		List<Case> casesList = [SELECT Id, Temp_Stop_Sub__c, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Id IN :approvedCasesSet];
+        Map<Id, Zuora__Subscription__c> subIdToSubscriptionMap = new Map<Id, Zuora__Subscription__c>();
+        Map<Id, List<Case>> rejectBundleCaseTS = new Map<Id, List<Case>>();
+        Logger logger = new Logger(AutoApprover.class.getName(), null, null);
         
-		if(!casesList.isEmpty()){
-			for(Case cas : casesList){
-				if(cas.Temp_Stop_Sub__c != null){
-					tempStopSubIdSet.add(cas.Temp_Stop_Sub__c);
-				}
-			}
-		}
-		
-		if(!tempStopSubIdSet.isEmpty()){
+        List<Case> casesList = [SELECT Id, Temp_Stop_Sub__c, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Id IN :approvedCasesSet];
+        
+        if(!casesList.isEmpty()){
+            for(Case cas : casesList){
+                if(cas.Temp_Stop_Sub__c != null){
+                    tempStopSubIdSet.add(cas.Temp_Stop_Sub__c);
+                }
+            }
+        }
+        
+        if(!tempStopSubIdSet.isEmpty()){
             for(Zuora__Subscription__c sub : [SELECT Id, Name, Order_Line_Item_Number_1__c FROM Zuora__Subscription__c WHERE Id IN :tempStopSubIdSet]){
                 subIdToSubscriptionMap.put(sub.Id, sub);
             }
         }
-		
-		if(!casesList.isEmpty()){
-			for(Case cas : casesList){
-				if(subIdToSubscriptionMap.containsKey(cas.Temp_Stop_Sub__c)){
-					if(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c != null){
-						OLIIdSet.add(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c);
-					}
-				}
-			}
-		}
-		
+        
+        if(!casesList.isEmpty()){
+            for(Case cas : casesList){
+                if(subIdToSubscriptionMap.containsKey(cas.Temp_Stop_Sub__c)){
+                    if(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c != null){
+                        OLIIdSet.add(subIdToSubscriptionMap.get(cas.Temp_Stop_Sub__c).Order_Line_Item_Number_1__c);
+                    }
+                }
+            }
+        }
+        
         if(!OLIIdSet.isEmpty()){
             for(Case casR : [SELECT Id, Temp_Stop_Date__c, Restart_Date__c, Temp_Stop_Type__c FROM Case WHERE Temp_Stop_Sub__r.Order_Line_Item_Number_1__c IN :OLIIdSet AND Temp_Stop_Sub__c NOT IN :tempStopSubIdSet AND Sub_Status__c != 'Temp Stop Approved' AND Sub_Status__c != 'Temp Stop Rejected]']){
-				for(Case theCase : casesList){
+                for(Case theCase : casesList){
                     if(casR.Temp_Stop_Date__c == theCase.Temp_Stop_Date__c && casR.Restart_Date__c == theCase.Restart_Date__c && casR.Temp_Stop_Type__c == theCase.Temp_Stop_Type__c){
                         if(rejectBundleCaseTS.containsKey(theCase.Id)){
                             rejectBundleCaseTS.get(theCase.Id).add(casR);
@@ -174,9 +177,9 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
                         }
                     }
                 }
-			}
-		}
-		
+            }
+        }
+        
         for(Id cId : rejectBundleCaseTS.keySet()){
             if(rejectBundleCaseTS.containsKey(cId)){
                 for(Case caseRec : rejectBundleCaseTS.get(cId)){
@@ -189,7 +192,7 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
         getProcessInstanceWorkitem(caseIdToRejSet);
         
         for(Id cId : approvedCasesSet){
-			String comments = mapReturnPI.get(cId)[0].Steps[0].Comments;
+            String comments = mapReturnPI.get(cId)[0].Steps[0].Comments;
                 
             if(rejectBundleCaseTS.containsKey(cId)){
                 for(Case caseRec : rejectBundleCaseTS.get(cId)){
@@ -199,24 +202,24 @@ public class AutoApprover implements Queueable, Database.allowsCallouts {
                     Id workItemId = tObjIdToworkItemIdMap.get(caseRec.Id);
                     if(workItemId == null)
                     {
-						logger.log(true, 'Error Occured in Trigger for Approving Case. workItemId is null.');
+                        logger.log(true, 'Error Occured in Trigger for Approving Case. workItemId is null.');
                         system.debug('Error Occured in Trigger for Rejecting Case. workItemId is null.');
                     }
                     else
                     {
                         req.setWorkitemId(workItemId);
                         // Submit the request for approval
-						try{
-							Approval.ProcessResult result =  Approval.process(req);
-						}catch(Exception e){
-							logger.log(e);
-						}
+                        try{
+                            Approval.ProcessResult result =  Approval.process(req);
+                        }catch(Exception e){
+                            logger.log(e);
+                        }
                     }
                 }
             }
         }
-		
-		logger.save();
+        
+        logger.save();
     }
     
     private void getProcessInstance(Set<Id> caseIds){

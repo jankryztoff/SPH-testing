@@ -24,7 +24,7 @@ global class SendQuotesToZuora2 {
                                         boolean bCreateNewBillingAccount, boolean bCreateDeliverySubscription, boolean bPayDeliveryChargeNow,
                                         ID ExistingDeliverySubscriptionId, ID SFBillingAccount, string zBillingAccount, decimal SubscriberCharge,
                                         ID AccountId, ID OrderId, decimal DeliveryFPSubscriptionUsage, string CCPaymentMethodID){
-        
+
         performCallout(lQuoteIds, PaymentMode, PaymentModeOther, sDeliveryChargeType, 
                                     bCreateNewBillingAccount, bCreateDeliverySubscription, bPayDeliveryChargeNow, 
                                     ExistingDeliverySubscriptionId, SFBillingAccount, zBillingAccount, SubscriberCharge,
@@ -66,6 +66,7 @@ global class SendQuotesToZuora2 {
             
             if (PaymentMode == 'Credit Card'){
                 req.paymentMethodId = CCPaymentMethodID;
+                req.setNewPaymentAsDefault = true; //WJ Testing 21 April 16
             }
             
             req.sfdcQuoteId = quoteID;
@@ -76,6 +77,7 @@ global class SendQuotesToZuora2 {
         quoteCollection.quoteRequests = lstQuoteReqs;
         lstQuoteCollections.add(quoteCollection);
         
+        System.debug('==========> ' + lstQuoteCollections);
         if (!Test.isRunningTest()) 
         {
             /*START UD-3315 11/26/2015 Added by J.Sarion
@@ -86,6 +88,7 @@ global class SendQuotesToZuora2 {
                 try{
                     if(!lstQuoteReqs.isEmpty()){
                         results = zqu.zQuoteUtil.sendToZBilling(lstQuoteCollections);
+                        //logger.log( false, Zuora.zApi.currentLogger.toString() ) ;
             //Start UD-3446 28-Dec-2015 Added S.Puli
             String messageResults = '';
             messageResults = String.valueOf(results);
@@ -122,7 +125,7 @@ global class SendQuotesToZuora2 {
                         
                         if (PaymentMode == 'Credit Card'){
                             req.paymentMethodId = CCPaymentMethodID;
-                            //req.setNewPaymentAsDefault = true;
+                            req.setNewPaymentAsDefault = true; //WJ Testing 21 April 16
                         }
                         
                         req.sfdcQuoteId = quoteID;

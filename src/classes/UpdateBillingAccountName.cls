@@ -1,23 +1,20 @@
 public with sharing class UpdateBillingAccountName {
-    
-    
+
     public String getResponse() {
         return response;
     }
    
-// Author: Krithika D
-// Date: 11/11/2014
-// Defect/CR no:
-// Logic: 
-// 
-//
-// Update:
-// Update by:
-// Update date:
-// Defect/CR no:
-// Update reason:
-//      High-Level: 
-//      Detailed:   
+    // Author: Krithika D
+    // Date: 11/11/2014
+    // Defect/CR no:
+    // Logic: 
+    // Update:
+    // Update by:
+    // Update date:
+    // Defect/CR no:
+    // Update reason:
+    // High-Level: 
+    // Detailed:   
     
     String returnUrl;
     String billingAccountId;
@@ -25,22 +22,19 @@ public with sharing class UpdateBillingAccountName {
     public String response { get; set; }
     public static Boolean isTrue = true; //Start END PD-0174 - Loven Reyes 5/23/16
     
- @future (callout=true)
+    @future (callout=true)
     public static void updateZuoraBillingAccount(string Name, string BillingaccntID){
     
-    //Log in to Zuora
-    Zuora.zApi zApiInstance = new Zuora.zApi();
-    map<string,boolean> map2 = new map<string,boolean>();
+        //Log in to Zuora
+        Zuora.zApi zApiInstance = new Zuora.zApi();
+        map<string,boolean> map2 = new map<string,boolean>();
         try {
             if(!system.Test.isRunningTest()){
                 zApiInstance.zlogin();
             }
-        }
-        catch(Zuora.zAPIException ex){
-            //m = ex.getMessage();
+        }catch(Zuora.zAPIException ex){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getMessage())); 
-        }
-        catch (Zuora.zForceException ex) { 
+        }catch (Zuora.zForceException ex) { 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getMessage())); 
         }
 
@@ -48,11 +42,11 @@ public with sharing class UpdateBillingAccountName {
         Zuora.zObject rec = new Zuora.zObject('Account');
         rec.setValue('Id', BillingaccntID);
         rec.setValue('Name', Name);
-        System.debug('#################name is'+Name);
             
-            try {
-                List<Zuora.zObject> objs = new List<Zuora.zObject> {rec};
-                List<Zuora.zApi.SaveResult> results;
+        try {
+            List<Zuora.zObject> objs = new List<Zuora.zObject> {rec};
+            List<Zuora.zApi.SaveResult> results;
+
             //Start PD-0174 - Loven Reyes 5/23/16
             //created isTrue to cover from Test class
             if(!system.Test.isRunningTest()){
@@ -81,46 +75,30 @@ public with sharing class UpdateBillingAccountName {
             }
             //END PD-0174 - Loven Reyes 5/23/16
                 
-                    
-                for (Zuora.zApi.SaveResult result : results) {  
-                    if (result.Success){  
-                        string createdId = result.Id;
-                        boolean isSuccess = result.Success;
-                        //string updateError = result.Errors;
-                        map2.put('Success',result.Success);
-                        
-                    } 
-                    
-                    else {  
-                        Zuora.zObject[] errors = result.errors; 
-                        for (Zuora.zObject error : errors) {  
-                            String errorCode = (String)error.getValue('Code');  
-                            System.debug(errorCode);
-                            String message = (String)error.getValue('Message');  
-                            System.debug(message);
-                            String FullErrorr = errorCode + message ;
-                            System.debug(FullErrorr);
-                        }  
-                    }  
-        
-                }  
-            } 
-           
-            catch (Zuora.zRemoteException ex) {  
-                if ('INVALID_FIELD' == ex.code) {  
+            for (Zuora.zApi.SaveResult result : results) {  
+                if (result.Success){  
+                    string createdId = result.Id;
+                    boolean isSuccess = result.Success;
+                    map2.put('Success',result.Success);
                 } 
-                
                 else {  
+                    Zuora.zObject[] errors = result.errors; 
+                    for (Zuora.zObject error : errors) {  
+                        String errorCode = (String)error.getValue('Code');  
+                        String message = (String)error.getValue('Message');  
+                        String FullErrorr = errorCode+message;
+                    }  
                 }  
+            }  
+        }catch (Zuora.zRemoteException ex) {  
+            if ('INVALID_FIELD' == ex.code) {  
             } 
-            
-            catch (Zuora.zAPIException ex) {  
-                ex.getMessage();  
-            }
-            
-            catch (Zuora.zForceException ex) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getMessage()));  
-            }
-
+            else {  
+            }  
+        }catch (Zuora.zAPIException ex) {  
+            ex.getMessage(); 
+        }catch (Zuora.zForceException ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getMessage()));  
         }
-        }
+    }
+}

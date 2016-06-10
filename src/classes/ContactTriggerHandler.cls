@@ -154,11 +154,12 @@ public class ContactTriggerHandler {
     private void setRecipientNumber(List<Contact> lstRecipients) {
         Integer nextNumber = null;
         Key_Id__c setting;
+        Key_Id__c setting2;
         
         try{
-            //Query the next number from Custom Setting and Lock for update to prevent concurrent updates
-            setting = [SELECT Name, Id__c FROM Key_Id__c WHERE Name = 'NEXT_RECIPIENT_NUMBER' LIMIT 1 FOR UPDATE];
-            
+            //Query the next number from Custom Setting and Lock for update to prevent concurrent updates           
+            setting = [SELECT Name, Id__c FROM Key_Id__c WHERE Name = 'NEXT_RECIPIENT_NUMBER' LIMIT 1 FOR UPDATE];           
+            //System.assertEquals(setting2,setting);
             if(setting != null)
             {
                 nextNumber = Integer.valueOf(setting.Id__c);

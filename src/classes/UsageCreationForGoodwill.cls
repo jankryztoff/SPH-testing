@@ -37,6 +37,7 @@ public class UsageCreationForGoodwill{
                     Subscription__c, Goodwill_Amount__c FROM Case_Subscriptions__r) from case where id in: 
                     caseIdSet and Status = 'Closed']; //START/END 03/31/2015 D-2684 Kevin Evasco - No usage for goodwill are being created
         //END D-2884 05-18-2015 Marvin Gatchalian added condition status = closed
+        system.debug('>>>CHA scase ' + scase);
         for (case vcase : scase)
         {
             caseidtocasemap.put(vcase.id, vcase);
@@ -72,13 +73,14 @@ public class UsageCreationForGoodwill{
         //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
         
         system.debug('sublist' + sublist);
-    	//START D-4001 12/2/2015 Added by J.Sarion - Moved creation of usage 
+        //START D-4001 12/2/2015 Added by J.Sarion - Moved creation of usage 
         for (zuora__subscription__c sub : subList)
         {
+            system.debug('>>>CHA sub.Zuora__Subscription_Product_Charges__r[0].Zuora__Price__c ' + sub.Zuora__Subscription_Product_Charges__r[0].Zuora__Price__c);
             Decimal price = sub.Zuora__Subscription_Product_Charges__r[0].Zuora__Price__c;
             Decimal goodwill = 0;
             Case c = new Case();
-
+            system.debug('>>>CHA subIdToCaseMap ' + subIdToCaseMap);
             if (subIdToCaseMap.containsKey(sub.Id)) 
             {
                 c = caseidtocasemap.get(subIdToCaseMap.get(sub.Id));
@@ -97,6 +99,7 @@ public class UsageCreationForGoodwill{
                 for (Case_Subscription__c caseSub : subIdToCaseSubListMap.get(sub.Id))
                 {
                     goodwill = 0;
+                    system.debug('>>>CHA caseSub.Goodwill_Amount__c ' + caseSub.Goodwill_Amount__c);
                     if (caseSub.Goodwill_Amount__c != null && caseSub.Goodwill_Amount__c != 0) {
                         goodwill = math.ceil(math.abs(caseSub.Goodwill_Amount__c / price)); //START/END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                     }
@@ -151,17 +154,20 @@ public class UsageCreationForGoodwill{
             }
             //END D-4001 12/1/2015 Added by J.Sarion - Compute for goodwill
         }
+
         
         //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
         try{
+            system.debug('>>>CHA usageList ' + usageList);
+            
             //Start D-4452 02-Apr-2016 Added By S.Puli
-			//UsageHelper.loadUniqueUsages(usageList,false);
-			UsageHelper.insertUniqueUsages(usageList);
-			//End D-4452 02-Apr-2016 Added By S.Puli
+            //UsageHelper.loadUniqueUsages(usageList,false);
+            UsageHelper.insertUniqueUsages(usageList);
+            //End D-4452 02-Apr-2016 Added By S.Puli
         } catch(Exception e){
             system.debug('>>>>>ERROR ' + e);
         }
-    	//END D-4001 12/2/2015 Added by J.Sarion - Moved creation of usage 
+        //END D-4001 12/2/2015 Added by J.Sarion - Moved creation of usage 
         //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only       
     }
     
@@ -188,6 +194,10 @@ public class UsageCreationForGoodwill{
             //START UD-2913 25-Sept-2015 Added by S.Puli - populate StopType__c
             usageRecord.StopType__c = UsageHelper.USAGE_TYPE_GOODWILL;
             //END UD-2913 25-Sept-2015 Added by S.Puli
+            //START PD-0324 GDelrosario 06092016
+            usageRecord.Case__c = c.Id;
+            //END PD-0324 GDelrosario 06092016
+            
         }
         
         return usageRecord;

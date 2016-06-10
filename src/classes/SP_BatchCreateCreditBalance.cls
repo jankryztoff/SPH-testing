@@ -201,7 +201,8 @@ global class SP_BatchCreateCreditBalance  implements Database.Batchable<sObject>
         //ZInvoiceHelper.adjustInvoicePreviousBalance(zInvoiceWrapperList,logger);//START 05 October 2015 UD-2504 Kevin Evasco - Zuora Invoice Previous Balance update 
         //END 05 November 2015 D-3875 Kevin Evasco - Previous Balance Assignment no longer needed in SP055
         
-        try {                                                 
+        try {      
+                                                      
                  List<Map<String,String>> resultMap = zCallout.loadZObjects(creditBalanceList, 'CreditBalanceAdjustment');
                  for(Map<String,String> result :resultMap){
                       if(result.get('Status') == 'Success') {                      
@@ -221,6 +222,7 @@ global class SP_BatchCreateCreditBalance  implements Database.Batchable<sObject>
             }
 
             try {   
+            
                     List<Map<String,String>> resultMap = zCallout.loadZObjects(paymentZList, 'Payment');
                      for(Map<String,String> result :resultMap){
                           if(result.get('Status') == 'Success') {                      

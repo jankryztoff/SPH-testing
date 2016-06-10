@@ -93,12 +93,14 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         Date dtEffStart = Date.valueOf(brd);        
         Date dtEffEnd = dtEffStart.addDays(1);              
         
+
         //START 24 August 2015 UD-2048 Kevin Evasco - Include cases closed after effective date to the output file
         DateTime dStartDate = DateTime.newInstance(dtEffStart.year(),dtEffStart.month(),dtEffStart.day());
         DateTime dEndDate = dStartDate.addDays(1);      
-    
+        
+
         mapProdPub = BT_CO_INT_Utilities.prodPubMapping();   //START/End UD-2691 23-Sep-2015 Added by Raviteja 
-    
+        
         String query = '';
         query += ' SELECT ';
         query += '      Case__r.Id, ';
@@ -130,7 +132,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         query += '      Case__r.Subscription_Name__r.Recipient_Contact__r.Name,  ';
         query += '      Case__r.Subscription_Name__r.Recipient_Contact__r.Recipient_Number__c,  ';
         query += '      Case__r.Subscription_Name__r.Recipient_Contact__r.Salutation,       ';
-		query += '      Case__r.Subscription_Name__r.Recipient_Contact__r.Company_Name__c,  ';  //START/END D-3914 2015-11-11 Renz Company_Name__c is the new attention to name
+        query += '      Case__r.Subscription_Name__r.Recipient_Contact__r.Company_Name__c,  ';  //START/END D-3914 2015-11-11 Renz Company_Name__c is the new attention to name
         query += '      Case__r.Subscription_Name__r.Id,  ';
         query += '      Case__r.Subscription_Name__r.Name,  ';
         query += '      Case__r.Subscription_Name__r.Qty__c,  ';
@@ -171,7 +173,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         query += '      Subscription__r.Recipient_Contact__r.Id, ';
         query += '      Subscription__r.Recipient_Contact__r.Name, ';
         query += '      Subscription__r.Recipient_Contact__r.Recipient_Number__c, ';
-		query += '      Subscription__r.Recipient_Contact__r.Company_Name__c, ';    //START/END D-3914 2015-11-11 Renz Company_Name__c is the new attention to name
+        query += '      Subscription__r.Recipient_Contact__r.Company_Name__c, ';    //START/END D-3914 2015-11-11 Renz Company_Name__c is the new attention to name
         query += '      Subscription__r.Id, ';
         query += '      Subscription__r.Name, ';      
         query += '      Subscription__r.Qty__c, ';      
@@ -194,7 +196,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         query += '      Case_Subscription__c ';
         query += ' WHERE ';
         query += '      Case__r.Status IN :caseStatusSet ';
-		query += '      AND Subscription__r.Delivered_By_1__c = \'Vendor\' ';     //START/END 2016/01/28 Renino Niefes        UD-3848		
+        query += '      AND Subscription__r.Delivered_By_1__c = \'Vendor\' ';     //START/END 2016/01/28 Renino Niefes        UD-3848       
         query += '      AND ( ';
         query += '              (   Case__r.RecordType.DeveloperName = :CHANGE_OF_ADDRESS ';
         query += '                  AND (   Case__r.Change_of_Address_Type__c LIKE :CHANGE_OF_ADDRESS_TYPE';
@@ -217,7 +219,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         query += '                  ) ';
         query += '          ) '; 
         query += '      ) ';
-		query += '      AND (NOT Case__r.Sub_Status__c LIKE \'%Rejected%\' ) ';  //START/END UD-3080 Renino Niefes 2015-10-12 Exclude rejected cases in the main query
+        query += '      AND (NOT Case__r.Sub_Status__c LIKE \'%Rejected%\' ) ';  //START/END UD-3080 Renino Niefes 2015-10-12 Exclude rejected cases in the main query
         query += ' ORDER BY ';
         query += '      Case__r.RecordType.DeveloperName, ';
         query += '      LastModifiedDate, ';
@@ -232,6 +234,13 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
 
     global void execute(Database.BatchableContext BC, List<sObject> scope)
     {  
+        
+        //START 26May2016 JC Aduan - call this method for test coverage purposes
+        if(Test.isRunningTest()){
+            mapProdPub = BT_CO_INT_Utilities.prodPubMapping();
+        }
+        //END
+
         String brd = BT_AU_BATCHRUNREQUEST_UpdateInfo.getBatchRunDate(Z_INTERFACE_ID); 
         
         List<BA_INT_DATA_FAILED_POOL__c> datapoolListFailed = new List<BA_INT_DATA_FAILED_POOL__c>();
@@ -239,8 +248,8 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
         Map<Decimal,String> errorMessageMap = BT_CO_INT_Utilities.getErrorMessageMap(Z_INTERFACE_ID);
         
         List<Id> caseIdList = new List<Id>();
-        List<ID> lPackageIDs = new List<ID>();  
-
+        List<ID> lPackageIDs = new List<ID>();
+    
         // START UD-2132 2015-08-14 Renino Niefes
         Map<String, String> mapProdCode2ProdFamily = new Map<String, String>();
         List<String> lstProdCodes = new List<String>();
@@ -351,19 +360,19 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
             
             if (zChgVendorGroup == null) zChgVendorGroup = 'V';
 
-			//START D-3914 Renino Niefes 2015-11-11 Get the attention to field from Contact object.  Note that Company_Name__c is the field for attention To
+            //START D-3914 Renino Niefes 2015-11-11 Get the attention to field from Contact object.  Note that Company_Name__c is the field for attention To
             //String zAttnToCareOf = csRecord.Account__r.Attention_To_Care_Of__c; 
-			String zAttnToCareOf = csRecord.Case__r.Subscription_Name__r.Recipient_Contact__r.Company_Name__c;
-			if (zAttnToCareOf == null) zAttnToCareOf = csRecord.Subscription__r.Recipient_Contact__r.Company_Name__c;
-			//END D-3914 Renino Niefes 2015-11-11 Get the attention to field from Contact object
-			
+            String zAttnToCareOf = csRecord.Case__r.Subscription_Name__r.Recipient_Contact__r.Company_Name__c;
+            if (zAttnToCareOf == null) zAttnToCareOf = csRecord.Subscription__r.Recipient_Contact__r.Company_Name__c;
+            //END D-3914 Renino Niefes 2015-11-11 Get the attention to field from Contact object
+            
             String zCRSMAccountNumber = csRecord.Account__r.Account_Auto_Number__c;
             String zAccountLegacyId = csRecord.Account__r.Account_Legacy_Id__c;
             String zRestartDate = String.valueOf(csRecord.Case__r.Restart_Date__c);
             Date dtStopRequestDate = csRecord.Case__r.Stop_Request_Date__c;          
             Date dtEffectiveDate = csRecord.Case__r.Effective_Date__c;
-            DateTime dtLastModifiedDate = csRecord.LastModifiedDate;			
-			String zCrsmSubscriptionId = csRecord.Subscription__r.Name; //START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
+            DateTime dtLastModifiedDate = csRecord.LastModifiedDate;            
+            String zCrsmSubscriptionId = csRecord.Subscription__r.Name; //START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
 
             String zTransactionDesc = null;
             String zTransactionType = null;
@@ -428,8 +437,12 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                 if (mPackagePublications.get(zPackageID) != null) {
                     publicationListData = mPackagePublications.get(zPackageID);
                 }                
-                String prodCode = csRecord.Subscription__r.product_code__c; //START/End UD-2691 23-Sep-2015 Added by Raviteja      
+                String prodCode = csRecord.Subscription__r.product_code__c; //START/End UD-2691 23-Sep-2015 Added by Raviteja
+                System.debug('$%$ publicationListData1: ' + publicationListData);
+                System.debug('$%$ prodCode: ' + prodCode);
+                System.debug('$%$ mapProdPub: ' + mapProdPub);    
                 publicationListData = BT_CO_INT_Utilities.prodPubMapping(publicationListData, prodCode, mapProdPub);//START/End UD-2691 23-Sep-2015 Added by Raviteja
+                System.debug('$%$ publicationListData2: ' + publicationListData);
                 for (Publication__c rec : publicationListData) { 
                     if (rec != null && rec.Product_Family__c == mapProdCode2ProdFamily.get(zProductCode)) {  //UD-2132 start/end  added conditions to filter out listdata
                         String zDayOfWeekPattern = null;
@@ -468,17 +481,17 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                         Date dateTo = dtSubscriptionEndDate;
                         if (dateFrom==null) dateFrom = Date.Today();
                         if (dateTo==null) dateTo = DateUtility.convertDateFromYYYYMMDD(DEFAULT_END_DATE);
-						
-						//START UD-3634 2016-01-18 Renz Niefes  adding 7 days to subscription end date both applies to COA and COV
-						if (isChangeOfAddress||isChangeOfVendor) {
-							//add 7 days to dateTo
-							dateTo=dateTo.addDays(7); 
-							zEffectiveIssueDate = DateUtility.getFirstPublicationDate(dateFrom,dateTo,zPublishedDays);                
-						} else {
-							zEffectiveIssueDate = DateUtility.getFirstPublicationDate(dateFrom,dateTo,zPublishedDays);                
-						}
+                        
+                        //START UD-3634 2016-01-18 Renz Niefes  adding 7 days to subscription end date both applies to COA and COV
+                        if (isChangeOfAddress||isChangeOfVendor) {
+                            //add 7 days to dateTo
+                            dateTo=dateTo.addDays(7); 
+                            zEffectiveIssueDate = DateUtility.getFirstPublicationDate(dateFrom,dateTo,zPublishedDays);                
+                        } else {
+                            zEffectiveIssueDate = DateUtility.getFirstPublicationDate(dateFrom,dateTo,zPublishedDays);                
+                        }
                         //END UD-3634 2016-01-18 Renz Niefes
-						
+                        
                         //Setting transaction type and description for first record
                         zTransactionType = (isChangeOfSubscription || isRenewalOfSubscription) ? TRANSACTION_TYPE_START : TRANSACTION_TYPE_STOP ;
                         zTransactionDesc = getTransactionDesc(zRecordType); 
@@ -551,7 +564,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                         zData += StringUtility.quoteReplaceStr(zCRSMAccountNumber) +',';                            // CRSM Account ID
                         zData += StringUtility.quoteReplaceStr(zCRSMContactNumber) +',';                            // CRSM Contact ID
                         zData += StringUtility.quoteReplaceStr(zPHeIndicator) +',';                                 // Day of week pattern (PHe)
-						zData += StringUtility.quoteReplaceStr(zCrsmSubscriptionId) + ',';							// START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
+                        zData += StringUtility.quoteReplaceStr(zCrsmSubscriptionId) + ',';                          // START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
                     
                         
                         //Duplicate Record for tempstops (one for stop (above) and another one for restart (below))
@@ -599,7 +612,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                             zData2 += StringUtility.quoteReplaceStr(zCRSMAccountNumber) +',';                                                       // CRSM Account ID
                             zData2 += StringUtility.quoteReplaceStr(zCRSMContactNumber) +',';                                                       // CRSM Contact ID
                             zData2 += StringUtility.quoteReplaceStr(zPHeIndicator) +',';                                                            // Day of week pattern (PHe)                            
-							zData2 += StringUtility.quoteReplaceStr(zCrsmSubscriptionId) + ',';														// START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
+                            zData2 += StringUtility.quoteReplaceStr(zCrsmSubscriptionId) + ',';                                                     // START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
                         }
                     
                         if (BT_CO_INT_Utilities.checkValidation(zVALIDATION_CODE) ) {
@@ -643,7 +656,7 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                 String zOldProductCode = (String) mOldSubscriptionData.get(ZDATA_SUBSCRIPTION_PRODUCT_CODE);                             
                 String zOldSubscriptionStatus = (String) mOldSubscriptionData.get(ZDATA_SUBSCRIPTION_Z_STATUS);             
                 String zOldSubscriptionFrequency = (String) mOldSubscriptionData.get(ZDATA_SUBSCRIPTION_FREQUENCY); 
-				String zOldCrsmSubscriptionId = csRecord.Case__r.Subscription_Name__r.Name;  //START/END UD-3077 Renino Niefes 2015-10-12 Use the old subscription Ids for COS scenario
+                String zOldCrsmSubscriptionId = csRecord.Case__r.Subscription_Name__r.Name;  //START/END UD-3077 Renino Niefes 2015-10-12 Use the old subscription Ids for COS scenario
                 
                 if (mPackagePublications.containsKey(zOldPackageID)) {
                     Set<Publication__c> oldPublicationDataSet = new Set<Publication__c>();
@@ -760,28 +773,28 @@ global class BT_AB_HDS038DX_ChangeOfAddress implements Database.Batchable<sObjec
                             zData += StringUtility.quoteReplaceStr(zCRSMAccountNumber) +',';                    // CRSM Account ID
                             zData += StringUtility.quoteReplaceStr(zOldCRSMContactNumber) +',';             // CRSM Contact ID
                             zData += StringUtility.quoteReplaceStr(zPHeIndicator) +',';                         // Day of week pattern (PHe)
-							//START UD-3077 Renino Niefes 2015-10-12 Use the old subscription Ids for COS scenario.  If blank use null.
-							if (zOldCrsmSubscriptionId!=null) {
-								zData += StringUtility.quoteReplaceStr(zOldCrsmSubscriptionId) + ',';					// START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
-							} else {
-								zData += null + ',';
-							}
-							//END UD-3077 Renino Niefes 2015-10-12 
-						
+                            //START UD-3077 Renino Niefes 2015-10-12 Use the old subscription Ids for COS scenario.  If blank use null.
+                            if (zOldCrsmSubscriptionId!=null) {
+                                zData += StringUtility.quoteReplaceStr(zOldCrsmSubscriptionId) + ',';                   // START/END  UD-2980 2015-10-01 Renino Niefes add Subscription ID
+                            } else {
+                                zData += null + ',';
+                            }
+                            //END UD-3077 Renino Niefes 2015-10-12 
+                        
                             if (BT_CO_INT_Utilities.checkValidation(zVALIDATION_CODE)) {
                                 if (!exportDataSet.contains(zData) && String.isNotBlank(zData)) {
-									//START UD-2599 2015-10-08 Renino Niefes  Check if the Old Subscription's start date is greater than or equal to end date.  If it is, reject that record
-									//Note that the code is adding 1 day for End date that's why the criteria is greater than or equal to.
-									if (dtOldSubscriptionEndDate==null||dtOldSubscriptionEndDate>dtOldSubscriptionStartDate) {
-										datapoolList = BT_CO_INT_Utilities.exportDataItem(Z_INTERFACE_ID, 'Detail', zRecordId, zData, dtLastModifiedDate, datapoolList);
-										exportDataSet.add(zData);
-									} else {
-										BT_CO_INT_Utilities.log(zData,zRecordId);
-										String zErrorMsg = '('+zRecordType+') Subscription start date is greater than end date';
-										datapoolListFailed = BT_CO_INT_Utilities.exportFailedDataItem(Z_INTERFACE_ID, 'Detail', zRecordId, 
-										zErrorMsg, '1', zData, DateTime.now(), datapoolListFailed);	
-									}
-									//START UD-2599 2015-10-08 Renino Niefes
+                                    //START UD-2599 2015-10-08 Renino Niefes  Check if the Old Subscription's start date is greater than or equal to end date.  If it is, reject that record
+                                    //Note that the code is adding 1 day for End date that's why the criteria is greater than or equal to.
+                                    if (dtOldSubscriptionEndDate==null||dtOldSubscriptionEndDate>dtOldSubscriptionStartDate) {
+                                        datapoolList = BT_CO_INT_Utilities.exportDataItem(Z_INTERFACE_ID, 'Detail', zRecordId, zData, dtLastModifiedDate, datapoolList);
+                                        exportDataSet.add(zData);
+                                    } else {
+                                        BT_CO_INT_Utilities.log(zData,zRecordId);
+                                        String zErrorMsg = '('+zRecordType+') Subscription start date is greater than end date';
+                                        datapoolListFailed = BT_CO_INT_Utilities.exportFailedDataItem(Z_INTERFACE_ID, 'Detail', zRecordId, 
+                                        zErrorMsg, '1', zData, DateTime.now(), datapoolListFailed); 
+                                    }
+                                    //START UD-2599 2015-10-08 Renino Niefes
                                 }
                             } else {
                                 //Create a debug log / Interpret Validation String / Insert to Failed Pool

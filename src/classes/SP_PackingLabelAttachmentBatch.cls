@@ -427,6 +427,9 @@ global class SP_PackingLabelAttachmentBatch implements Database.Batchable<sObjec
             // START: 12/05/2014 D-0797, D-0849 Kevin Evasco Added the Session ID Parameter
             //START 04-Nov-2015 D-3672 Added by Kristine Balaoing - Recovery plan
             if(!isRecovery){
+                //Start D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id            
+                SP_BatchJobSchedulerService.setParentBatchJobSchedulerId(BC.getJobId());  
+                //End D-4742 Raviteja 26Apr2016 - Capturing batch job schdduler record id
                 SP_BatchJobSchedulerService.processRequest('SP029','Start', null, sessionId); 
             }else{
                 SP_GenerateLetterPrintBatch generateBatch = new SP_GenerateLetterPrintBatch(null, SP_GenerateLetterPrintBatch.packingLabelLetter, 1, sessionId); 

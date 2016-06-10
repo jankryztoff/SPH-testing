@@ -34,19 +34,19 @@ public class SP_DeliveryChargeHandlerCOA{
         newDelChargeList = new List<Zuora__Subscription__c> ();
 
         //Search for all Publication Subscriptions
-		//START Code Review Jean Cari?o : check subsId if null
-		if(subsId != null){
+        //START Code Review Jean Cari?o : check subsId if null
+        if(subsId != null){
         selectedSubs = [SELECT Id, Name, Zuora__Account__c,Zuora__Account__r.Id, Recipient_Contact__c, Subscription_Type_1__c, Zuora__CustomerAccount__c, 
                         Recipient_Contact__r.Address__r.id, Zuora__CustomerAccount__r.Zuora__SoldToId__c, Zuora__CustomerAccount__r.Zuora__BillToId__c, 
                         Order_Number_1__r.Billing_Contact__c, Order_Number_1__r.Recipient_Contact__c 
                         FROM Zuora__Subscription__c
                         WHERE Id = :subsId];
-		}
-		//End Code Review Jean Cari?o : check subsId if null
+        }
+        //End Code Review Jean Cari?o : check subsId if null
         //query all subscriptions with same account and address
-		//START Code Review Jean Cari?o : check WHERE identifier if null
-		if(selectedSubs.Zuora__Account__r.Id != null && selectedSubs.Recipient_Contact__r.Address__r.Id != null){
-			PubSubRelatedSubsList =[SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Recipient_Contact__c, Subscription_Type_1__c, Zuora__CustomerAccount__c, 
+        //START Code Review Jean Cari?o : check WHERE identifier if null
+        if(selectedSubs.Zuora__Account__r.Id != null && selectedSubs.Recipient_Contact__r.Address__r.Id != null){
+            PubSubRelatedSubsList =[SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Recipient_Contact__c, Subscription_Type_1__c, Zuora__CustomerAccount__c, 
                                 Recipient_Contact__r.Address__c, Zuora__CustomerAccount__r.Zuora__SoldToId__c, Zuora__CustomerAccount__r.Zuora__BillToId__c,
                                 Order_Number_1__r.Billing_Contact__c, Order_Number_1__r.Recipient_Contact__c
                                 FROM Zuora__Subscription__c
@@ -54,9 +54,9 @@ public class SP_DeliveryChargeHandlerCOA{
                                 AND  Subscription_Type_1__c = :GlobalVariableClass.SUBSCRIPTION_TYPE_PUBLICATION
                                 AND  Recipient_Contact__r.Address__r.Id =:selectedSubs.Recipient_Contact__r.Address__r.Id
                                 AND  Zuora__Status__c = :GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE];
-		
-			//Query all Delivery Subcriptions Related to Publication Subscriptions
-			delChargeSubToCancel = [SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Zuora__CustomerAccount__r.Zuora__External_Id__c, Zuora__CustomerAccount__c, Recipient_Contact__c, Subscription_Type_1__c, 
+        
+            //Query all Delivery Subcriptions Related to Publication Subscriptions
+            delChargeSubToCancel = [SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Zuora__CustomerAccount__r.Zuora__External_Id__c, Zuora__CustomerAccount__c, Recipient_Contact__c, Subscription_Type_1__c, 
                                 Zuora__Zuora_Id__c, Recipient_Contact__r.Address__c, Zuora__CustomerAccount__r.Zuora__SoldToId__c, Zuora__CustomerAccount__r.Zuora__BillToId__c,
                                 Order_Number_1__r.Billing_Contact__c, Order_Number_1__r.Recipient_Contact__c
                                 FROM Zuora__Subscription__c
@@ -65,7 +65,7 @@ public class SP_DeliveryChargeHandlerCOA{
                                 AND  Recipient_Contact__r.Address__r.Id =:selectedSubs.Recipient_Contact__r.Address__r.Id
                                 AND Zuora__Status__c = :GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE
                                 LIMIT 1];
-		}	
+        }   
         //END Code Review Jean Cari?o : check WHERE identifier if null
         if(PubSubRelatedSubsList.size()==0){
                 System.debug('ZUOOOOOOOOOOORAAA ID:' + delChargeSubToCancel.Zuora__Zuora_Id__c);
@@ -89,24 +89,24 @@ public class SP_DeliveryChargeHandlerCOA{
     *
     */
     public Boolean checkIfNewDelSubExist(Id newAddId){
-		//START Code Review Jean Cari?o : check WHERE identifier if null
-		if(newAddId != null && selectedSubs.Zuora__Account__r.Id != null){
-			newDelChargeList = [SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Recipient_Contact__c, Subscription_Type_1__c, Zuora__Zuora_Id__c,
-							Zuora__CustomerAccount__c, 
-							Recipient_Contact__r.Address__c, Zuora__CustomerAccount__r.Zuora__SoldToId__c, Zuora__CustomerAccount__r.Zuora__BillToId__c, Order_Number__c
-							FROM Zuora__Subscription__c
-							WHERE Zuora__Account__c =:selectedSubs.Zuora__Account__r.Id 
-							AND  Subscription_Type_1__c = :GlobalVariableClass.SUBSCRIPTION_TYPE_DELIVERY 
-							AND  Recipient_Contact__r.Address__r.Id =:newAddId
-							AND Zuora__Status__c = :GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE];     
-		}
-		//END Code Review Jean Cari?o : check WHERE identifier if null
-		if(newDelChargeList.size()>0){
-			return true;
-		}
-		else{
-			return false;
-		}
+        //START Code Review Jean Cari?o : check WHERE identifier if null
+        if(newAddId != null && selectedSubs.Zuora__Account__r.Id != null){
+            newDelChargeList = [SELECT Id, Name, Zuora__Account__c, Zuora__Account__r.Id, Recipient_Contact__c, Subscription_Type_1__c, Zuora__Zuora_Id__c,
+                            Zuora__CustomerAccount__c, 
+                            Recipient_Contact__r.Address__c, Zuora__CustomerAccount__r.Zuora__SoldToId__c, Zuora__CustomerAccount__r.Zuora__BillToId__c, Order_Number__c
+                            FROM Zuora__Subscription__c
+                            WHERE Zuora__Account__c =:selectedSubs.Zuora__Account__r.Id 
+                            AND  Subscription_Type_1__c = :GlobalVariableClass.SUBSCRIPTION_TYPE_DELIVERY 
+                            AND  Recipient_Contact__r.Address__r.Id =:newAddId
+                            AND Zuora__Status__c = :GlobalVariableClass.SUBSCRIPTION_STATUS_ACTIVE];     
+        }
+        //END Code Review Jean Cari?o : check WHERE identifier if null
+        if(newDelChargeList.size()>0){
+            return true;
+        }
+        else{
+            return false;
+        }
                 
     }
     

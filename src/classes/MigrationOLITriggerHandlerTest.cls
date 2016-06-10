@@ -1,5 +1,10 @@
-@IsTest (seeAllData = True)
+@IsTest
 private class MigrationOLITriggerHandlerTest {
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createOther();
+    }
 
             static Account testAccount;
             static Order__c testOrder;  

@@ -60,7 +60,6 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
             query += ' AND (Letter_Type__c =: firstNewspaperRenewal OR Letter_Type__c =: secondNewspaperRenewal';
             query += ' OR Letter_Type__c =: firstMagazineRenewal OR Letter_Type__c =: secondMagazineRenewal)';
         }
-
         return Database.getQueryLocator(query);
     }
     
@@ -146,6 +145,7 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
                     subIdSet.add(childLetterPrintRequest.Record_Id__c);             
                 }               
             }
+
             // START : D-3997 11/26/2015 Alyana Navarro
       // START : D-3338 12/7/2015 Alyana Navarro
             // START : UD-3510 1/8/2016 Alyana Navarro
@@ -491,7 +491,7 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
                 } else {
                     fieldName = insideValue;
                 }
-                
+
                 if (subMap.containsKey(fieldName)) {
                     if (subMap.get(fieldName) != null) {
                         actualValue = String.valueOf(subMap.get(fieldName));

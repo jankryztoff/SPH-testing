@@ -5,11 +5,18 @@
  * Project/Requirement
  * 
  */ 
-@isTest(SeeAllData = true)
+@isTest
 public with sharing class SP_CreditNoteRecordPatcherTest {
-
+        @testSetup 
+        static void setupData() {
+            insert CustomSettingsDataFactory.createKey_Id();  
+            insert CustomSettingsDataFactory.createOther();
+        }  
+        
+        
         static testmethod void testSingleBatchJobScheduler(){
-                
+            //List<Other__c> otherLst = [Select name, value__c From Other__c  ];  
+            //system.debug();
             Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
             acc.NRIC__c = 'T1234567R';
             acc.Name = 'Test Account';

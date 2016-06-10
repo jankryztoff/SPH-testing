@@ -20,7 +20,7 @@ public class PromotionEligibilityRuleTest {
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standardPHwe23@test.com'
             );
 
         //The test will run as the user created.

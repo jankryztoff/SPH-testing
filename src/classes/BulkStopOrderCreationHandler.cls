@@ -10,7 +10,7 @@ public class BulkStopOrderCreationHandler {
     final string ORDER_TYPE = 'Stop';
     final string TERMINATION_REASON = 'Payment failure - '; //START-END UD-2549 3/24/2016 Added by J.Sarion 
     final string ACQUISITION_TYPE = 'System Generated';
-    final string ERR_LOCK_ROW ='UNABLE_TO_LOCK_ROW';	//START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
+    final string ERR_LOCK_ROW ='UNABLE_TO_LOCK_ROW';    //START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
     final date EFFECTIVE_DATE = date.today();
     
     map<id, list<Zuora__Subscription__c>> accountId_subscriptionList = new map<id, list<Zuora__Subscription__c>>();
@@ -28,14 +28,14 @@ public class BulkStopOrderCreationHandler {
     list<Zuora__Subscription__c> subscriptionList = new list<Zuora__Subscription__c>();
     list<Case_Subscription__c> caseSubscriptionList = new list<Case_Subscription__c>();
     list<string> billingAccountIdList = new list<string>();
-    set<id> subscriptionIdSet = new set<id>();	//START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
+    set<id> subscriptionIdSet = new set<id>();  //START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
     string orderIdentifier;
     string orderLineItemIdentifier;
     string caseIdentifier;
     boolean isExecuteCancellation = true;
-	
-	//START UD-2549 4/11/2016 Added by J.Sarion - Set PStop Testing Date
-	public Boolean isBillRun = boolean.valueOf(ConstantsSLB.getKeyId('BILL_RUN_TESTING').toLowerCase());
+    
+    //START UD-2549 4/11/2016 Added by J.Sarion - Set PStop Testing Date
+    public Boolean isBillRun = boolean.valueOf(ConstantsSLB.getKeyId('BILL_RUN_TESTING').toLowerCase());
     Date_Configuration__c dateConfig = Date_Configuration__c.getInstance('PAYMENT_FAILURE_TEST_PSTOP_DATE');
     public Date testingPSTOPDate = dateConfig.Date__c;
     //END UD-2549 4/11/2016 Added by J.Sarion - Set PStop Testing Date
@@ -43,12 +43,14 @@ public class BulkStopOrderCreationHandler {
     Logger logger = new Logger(BulkStopOrderCreationHandler.class.getName());
     
     public map<id, id> createRelatedRecords(List<Zuora__Subscription__c> subList) { //START-END UD-2549 3/23/2016 Added by J.Sarion - changed param
-        
+        system.debug('>>>>>subList ' + subList);
+        system.debug('>>>>>subList ' + subList.size());
         prepareRecords(subList); //START-END UD-2549 3/23/2016 Added by J.Sarion - changed param
         executeRecordCreation();
         //executeCancellation();
         
         logger.save();
+        
         return subscriptionId_caseId;
     }
     
@@ -70,21 +72,21 @@ public class BulkStopOrderCreationHandler {
                 order by Publication_Code__r.Earliest_Start_Date__c desc]) {
             
             productCode_earliestStartDate.put(pp.ZProduct__r.ProductCode__c, pp.Publication_Code__r.Earliest_Start_Date__c);
-			
-			//START UD-2549 4/11/2016 Added by J.Sarion - Set PStop Date
-			if(isBillRun) {
-				productCode_earliestStartDate.put(pp.ZProduct__r.ProductCode__c, testingPSTOPDate);
-			}
-			//END UD-2549 4/11/2016 Added by J.Sarion - Set PStop Date
+            
+            //START UD-2549 4/11/2016 Added by J.Sarion - Set PStop Date
+            if(isBillRun) {
+                productCode_earliestStartDate.put(pp.ZProduct__r.ProductCode__c, testingPSTOPDate);
+            }
+            //END UD-2549 4/11/2016 Added by J.Sarion - Set PStop Date
         }
         // end - retrieve publication earliest start date
-        //END UD-2549 3/30/2016 Added by J.Sarion - Order by desc
+        //END UD-2549 3/30/2016 Added by J.Sarion - Order by desc       
         system.debug('>>>>>productCode_earliestStartDate ' + productCode_earliestStartDate);
     }
     
     
     private void prepareRecords(List<Zuora__Subscription__c> subList) { //START-END UD-2549 3/23/2016 Added by J.Sarion - changed param
-                
+        
         // start - map subscriptions under the same account
         for (Zuora__Subscription__c sub :subList) { //START-END UD-2549 3/23/2016 Added by J.Sarion - changed param
             
@@ -100,7 +102,7 @@ public class BulkStopOrderCreationHandler {
             productCode_earliestStartDate.put(sub.Product_Code__c, null);
             billingAccountIdList.add(sub.Zuora__CustomerAccount__c);
             
-            subscriptionIdSet.add(sub.Id);	//START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
+            subscriptionIdSet.add(sub.Id);  //START-END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
             
             subIdToAccountIdMap.put(sub.Id, sub.Zuora__Account__c); //START-END UD-2549 4/10/2016 Added by J.Sarion - added sub Id to account Id 
         }
@@ -172,7 +174,8 @@ public class BulkStopOrderCreationHandler {
                 }
                 //END UD-2549 3/24/2016 Added by J.Sarion 
                 orderLineItemx.Amount_To_Refund__c = 0;
-                
+                //system.assertequals('asdf' + productCode_earliestStartDate, 'qwer ' + productCode_earliestStartDate.get(sub.Product_Code__c));
+                system.debug('>>>>>orderLineItemx ' + orderLineItemx);
                 orderLineItemIdentifier_orderLineItem.put(orderLineItemIdentifier, orderLineItemx);
                 orderLineItemIdentifier_orderIdentifier.put(orderLineItemIdentifier, orderIdentifier);
                 orderLineItemIdentifier_caseIdentifier.put(orderLineItemIdentifier, caseIdentifier);
@@ -188,17 +191,23 @@ public class BulkStopOrderCreationHandler {
         savepoint sp = Database.setSavepoint();
         
         try {
-                
+            system.debug('>>>>>orderIdentifier_order.values() ' + orderIdentifier_order.values());
+            system.debug('>>>>>caseIdentifier_case.values() ' + caseIdentifier_case.values());
+            system.debug('>>>>>orderLineItemIdentifier_orderLineItem.values() ' + orderLineItemIdentifier_orderLineItem.values());
+            
             insert orderIdentifier_order.values();
             
             populateCaseLookupFields();
             insert caseIdentifier_case.values();
             
             populateOrderLineItemLookupFields();
-            insert orderLineItemIdentifier_orderLineItem.values();
             
+            insert orderLineItemIdentifier_orderLineItem.values();
+            system.debug('>>>>>orderLineItemIdentifier_orderLineItem.values() ' + orderLineItemIdentifier_orderLineItem.values());
             prepareCaseSubscriptions();
             
+            system.debug('>>>>>caseSubscriptionList ' + caseSubscriptionList);
+            system.debug('>>>>>subscriptionList ' + subscriptionList);
             insert caseSubscriptionList;
             update subscriptionList;
                 
@@ -210,7 +219,7 @@ public class BulkStopOrderCreationHandler {
             
             //START UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
             if (e.getMessage() != null && e.getMessage().contains(ERR_LOCK_ROW)) {
-            	System.enqueueJob(new BulkStopOrderCreationQueueable(subscriptionIdSet));
+                System.enqueueJob(new BulkStopOrderCreationQueueable(subscriptionIdSet));
             }
             //END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
         }

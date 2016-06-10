@@ -10,11 +10,11 @@ global class CancelSubscription {
    
     public static String amendApiCall(Zuora.zObject amendment) {
         Zuora.zApi zuorApi = new Zuora.zApi();
-		//START D-3268 Modified By C.I.Salas - Test Coverage
-		if (!Test.isRunningTest()) {
-			zuorApi.zlogin();
-		}
-		//END D-3268 Modified By C.I.Salas - Test Coverage
+        //START D-3268 Modified By C.I.Salas - Test Coverage
+        if (!Test.isRunningTest()) {
+            zuorApi.zlogin();
+        }
+        //END D-3268 Modified By C.I.Salas - Test Coverage
 
         // Amend Request
         Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();

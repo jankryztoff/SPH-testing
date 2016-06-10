@@ -17,6 +17,7 @@ public class AddressTriggerHandler implements TriggerHandlerInterface {
     
     Map <String, Singpost_Address__c> matchPostal = new Map <String, Singpost_Address__c> ();
     Set<String> postalCodeName = new Set<String>();
+    map<string, boolean> addressIdentifier_isValid = new map<string, boolean>();	// Start/End Singpost Database JohnD
     
     public Boolean runBeforeInsertTrigger() {
         Boolean returnVar = !AddressTriggerHandler.isBeforeInsertTriggerCalled;
@@ -56,16 +57,25 @@ public class AddressTriggerHandler implements TriggerHandlerInterface {
     
     
     public void bulkBefore() {
+    	
+    	set<string> addressIdentifierSet = new set<string>();	// Start/End Singpost Database JohnD
+    	string addressIdentifier = '';	// Start/End Singpost Database JohnD
+    	
         if(Trigger.isUpdate || Trigger.isInsert) {
             for(SObject singPostAddressLookup : Trigger.new) {
                 Address__c postalCodeInput = (Address__c)singPostAddressLookup;
-                postalCodeName.add(postalCodeInput.Postal_Code__c);            
+                postalCodeName.add(postalCodeInput.Postal_Code__c);
+                
+                // Start Singpost Database JohnD
+                
+                // End Singpost Database JohnD
+                
             }
             //Start Code Review 02/18/2015 James
             if (postalCodeName.size() > 0){
-            for (Singpost_Address__c singPost : [SELECT ID, Street_Name__c, Building_Name__c, Name, Address_Type__c, House_Block_Number__c from Singpost_Address__c WHERE ID in : postalCodeName]){
-                matchPostal.put(singPost.ID, singPost);
-            }
+            	for (Singpost_Address__c singPost : [SELECT ID, Street_Name__c, Building_Name__c, Name, Address_Type__c, House_Block_Number__c from Singpost_Address__c WHERE ID in : postalCodeName]){
+                	matchPostal.put(singPost.ID, singPost);
+            	}
             }
             //End Code Review 02/18/2015 James
         }

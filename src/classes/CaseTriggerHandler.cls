@@ -132,7 +132,7 @@ public class CaseTriggerHandler{
     Map<Id, List<Case>> sub_CaseList_MAP = new Map<Id, List<Case>>();
     List<Case_Subscription__c> coaCaseSub_LIST = new List<Case_Subscription__c>();
     Map<Id, Case> coaIdToObj_MAP = new Map<Id, Case>();
-	//START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
+    //START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
     //List<Case> tempExtisting = new List<Case>();
     Map<Id, Case> tempExistingMap = new Map<Id, Case>();
     //END PD-0155 01Jun2016 Added By C. Lin
@@ -184,6 +184,14 @@ public class CaseTriggerHandler{
     List<Order__c> ordersToUpdateAfterApprovalReject = new List<Order__c>();
     Set<Id> orderIdSet_COS = new Set<Id>();
     //END PD-0202 FrancisBenzon 20May16 : variables
+    
+    //START PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases
+    Set<Id> cosVoidedSubsId = new Set<Id>();
+    Set<Id> stopVoidedSubsId = new Set<Id>();
+    List<Zuora__Subscription__c> voidedSubs = new List<Zuora__Subscription__c>();
+    Map<Id, Id> casIdRecTypeId = new Map<Id, Id>();
+    //END PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases
+    
     public static String forcedDayOfMonth = '';//Start/End D-4452 Added By S.Puli - test coverage variable
     
     public void doBeforeInsert(List<Case> lstNewCases)
@@ -426,17 +434,29 @@ public class CaseTriggerHandler{
             }
             //END PD-0202 FrancisBenzon 20May16 : get orders of rejected cases for COS approval
         }
+        /*if(userinfo.getLastName() == 'Benzon')
+        {
+            system.assertEquals('GETORDERS', 'HERE' + orderIdSet_COS);
+        }*/
         //START PD-0202 FrancisBenzon 20May16 : update order status
         if(orderIdSet_COS.size() > 0)
         {
             for(Order__c ord : [Select Id, Status__c From Order__c Where Id IN :orderIdSet_COS])
             {
+                /*if(userinfo.getLastName() == 'Benzon')
+                {
+                    system.assertEquals('GETORDERS', 'HERE' + ord);
+                }*/
                 ord.Status__c = GlobalVariableClass.STATUS_VOID;
                 ordersToUpdateAfterApprovalReject.add(ord);
             }
         }
         //END PD-0202 FrancisBenzon 20May16 : update order status
         
+        /*if(userinfo.getLastName() == 'Benzon')
+        {
+            system.assertEquals('GETORDERS', 'HERE' + ordersToUpdateAfterApprovalReject);
+        }*/
         if (!lstCasetoUpdate.isEmpty()) {
             updateContactFields(lstCasetoUpdate);
         }
@@ -708,17 +728,21 @@ public class CaseTriggerHandler{
             //START D-4100 04Jan2016 Added By C. Lin - Revert End Date of subscription during Void
             system.debug('>>>>>CHA theCase.Status ' + theCase.Status);
             system.debug('>>>>>CHA mapOldCases.get(theCase.Id).Status ' + mapOldCases.get(theCase.Id).Status);
-            
+                    
             if((theCase.RecordTypeId == CASE_CHNG_SUB_TYPE_ID || theCase.RecordTypeId == CASE_STOP_SUB_TYPE_ID) && theCase.Status == GlobalVariableClass.STATUS_VOID &&  theCase.Status != mapOldCases.get(theCase.Id).Status){
-                voidCaseId.add(theCase.Id);
+                voidCaseId.add(theCase.Id); 
+                //START PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases
+                casIdRecTypeId.put(theCase.Id, theCase.RecordTypeId); 
+                //END PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases               
             }
             //END D-4100 04Jan2016 Added By C. Lin
+            
         }
         
         //END D-2323 Wenjun 24/02/15
         
         //START D-4100 04Jan2016 Added By C. Lin - Revert End Date of subscription during Void
-        //START 18 April 2016 UD-3911 Kevin Evasco - Revert End Date of Subscription during COS
+        //START 18 April 2016 UD-3911 Kevin Evasco - Revert End Date of Subscription during COS //fritz
         Set<Id> subscripId = new Set<Id>();
         Set<Id> subVendorId = new Set<Id>();
         Set<Id> ordIdSet = new Set<Id>();
@@ -752,7 +776,7 @@ public class CaseTriggerHandler{
                     subVendorId.add(subV.Subscription_Vendor__c);
                 }
             }
-            
+            //system.assertEquals('OLI', ' ' + oLineItemIdSet);
             if(!oLineItemIdSet.isEmpty()){
                 for(Zuora__Subscription__c sub : [SELECT Id, Name, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Term_Length__c, Zuora__TermSettingType__c FROM Zuora__Subscription__c WHERE Order_Line_Item_Number_1__c IN :oLineItemIdSet]){
                     if(sub.Zuora__TermSettingType__c == GlobalVariableClass.SUBSCRIPTION_TYPE_TERMED && sub.Term_Length__c != null){
@@ -764,7 +788,37 @@ public class CaseTriggerHandler{
                     subListToUpdate.add(sub);
                 }
             }
-            
+            //START PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases
+            else {
+                for(Id casId : voidCaseId)
+                {
+                    if(casIdRecTypeId.containsKey(casId) && casIdRecTypeId.get(casId) != null)
+                    {
+                        if(casIdRecTypeId.get(casId) == CASE_CHNG_SUB_TYPE_ID)
+                        {
+                            for(Case cas : [Select Subscription_Name__c From Case Where Id IN :voidCaseId])
+                            {
+                                if(cas.Subscription_Name__c != null) {
+                                    cosVoidedSubsId.add(cas.Subscription_Name__c);
+                                }                   
+                            }
+                            if(cosVoidedSubsId.size() > 0)
+                            {
+                                 for(Zuora__Subscription__c sub : [SELECT Id, Name, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Term_Length__c, Zuora__TermSettingType__c                                       FROM Zuora__Subscription__c WHERE Id IN :cosVoidedSubsId])
+                                 {
+                                    if(sub.Zuora__TermSettingType__c == GlobalVariableClass.SUBSCRIPTION_TYPE_TERMED && sub.Term_Length__c != null){
+                                        sub.Zuora__SubscriptionEndDate__c = sub.Zuora__SubscriptionStartDate__c.addMonths(integer.valueOf(sub.Term_Length__c)).addDays(-1);
+                                    }else if(sub.Zuora__TermSettingType__c == GlobalVariableClass.EVERGREEN){
+                                        sub.Zuora__SubscriptionEndDate__c = null;
+                                    }                           
+                                    subListToUpdate.add(sub);
+                                }
+                            }
+                        }
+                    } 
+                }           
+            }
+            //END PD-0113 FrancisBenzon 9June16 : cater voiding for pending cases
             /*
             if(!oLineItemIdSet.isEmpty()){
                 for(Zuora__Subscription__c sub : [SELECT Id, Name, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Term_Length__c, Zuora__TermSettingType__c FROM Zuora__Subscription__c WHERE Order_Line_Item_Number_1__c IN :oLineItemIdSet]){
@@ -922,7 +976,11 @@ public class CaseTriggerHandler{
         }
         
         //START: D-1955 2/11/15 J.Sarion - Create Address Assignment
+        System.debug('cube ---------------------------------------------------------------- nasalabas' + lstAddressCases);
         if (!lstAddressCases.isEmpty()){//START/END: MD-61 03/25/2015 Added by S.PULI 
+            //cube -----
+                System.debug('cube ---------------------------------------------------------------- pumasok' + lstAddressCases);
+            //cube -----
             createAddressAssignment(lstAddressCases);
             //START: MD-61 03/25/2015 Added by S.PULI 
             for(Case c : lstAddressCases){
@@ -937,8 +995,14 @@ public class CaseTriggerHandler{
         
         
      //START D-2884 05/29/2015 Added By J. Sarion - usage will be created once
-        //START MD-17 03/20/2015 Added by J.Sarion/J.Abolac - Create Usage for Goodwill 
+        //START MD-17 03/20/2015 Added by J.Sarion/J.Abolac - Create Usage for Goodwill
+        system.debug('>>>CHA caseIdForGoodwill.size() ' + caseIdForGoodwill.size());
+        system.debug('>>>CHA caseIdForGoodwill ' + caseIdForGoodwill);
+        system.debug('>>>CHA isSendToZuoraCallOutFiredForGoodWill ' + isSendToZuoraCallOutFiredForGoodWill);
+        system.debug('>>>CHA !isSendToZuoraCallOutFiredForGoodWill ' + !isSendToZuoraCallOutFiredForGoodWill);
+        
         if (caseIdForGoodwill.size() > 0 && !isSendToZuoraCallOutFiredForGoodWill) {
+            System.debug('cube ---------------------------------------------- || called usageCreationForGoodwill ' );
             usageCreationForGoodwill.createUsageForGoodwill(caseIdForGoodwill);
             isSendToZuoraCallOutFiredForGoodWill = true;
         }
@@ -987,11 +1051,15 @@ public class CaseTriggerHandler{
         //END:D-3916 11/11/2015 Added by Manolo Valena
         
         //START UD-2549 3/17/2016 Added by J.Sarion - Call method
+        //START PD-0327 06/08/2016 removed by Jason A.
+        /*
         if(!closedStopCaseIdSet.isEmpty() && !iscreateInvoiceAdjustmentPStop) {
             system.debug('>>>>>closedStopCaseIdSet ' + closedStopCaseIdSet);
             createInvoiceAdjustmentPStop(closedStopCaseIdSet);
             iscreateInvoiceAdjustmentPStop = true;
         }
+        */
+        //END PD-0327 06/08/2016 removed by Jason A.
         //END UD-2549 3/17/2016 Added by J.Sarion - Call method
     }
     
@@ -1003,7 +1071,7 @@ public class CaseTriggerHandler{
     public void doAfterDelete(List<Case> lstOldCases, Map<Id, Case> mapOldCases)
     {}
     
-    private void bulkAfterDataPrep(List<Case> lstNewCases) { 
+    private void bulkAfterDataPrep(List<Case> lstNewCases) {
         casToUpdateMap = new Map<Id, Case>(); 
         /*------ Start Subscription ---------*/ 
         Set<Id> orderIds = new Set<Id>();
@@ -1025,6 +1093,8 @@ public class CaseTriggerHandler{
         //END UD-3293 11/25/15 RReyes
         set<id> setcontact = new set<Id>();//START-END: UD-3520 1/5/2015 added by Jason A.
         Set<Id> setRetContact = new Set<Id>();//START/END UD-3486 1/5/2015 RReyes
+        set<id> stopCaseSet = new set<Id>();//START-END PD-0327 06/08/2016 added by Jason A.
+        List<Order_Line_Item__c> oliStopList = new List<Order_Line_Item__c>();//START-END PD-0327 06/08/2016 added by Jason A.
         for(Case c : lstNewCases) {
             //START: UD-3520 1/5/2015 added by Jason A.
             if(c.RecordTypeId == Case_Particulars ){
@@ -1069,7 +1139,12 @@ public class CaseTriggerHandler{
                 }
             }
             //END  UD-3293 RReyes - 11/25/15
-        }
+            ////START PD-0327 06/08/2016 added by Jason A.
+            if(c.RecordTypeId == CASE_STOP_SUB_TYPE_ID && c.Sub_Status__c == GlobalVariableClass.SUB_STATUS_READY_FOR_SUBMISSION){
+                stopCaseSet.add(c.Id);
+            }
+            //END PD-0327 06/08/2016 added by Jason A.
+        }   
         //START: UD-3520 1/5/2015 added by Jason A.
         
         if(setcontact.size() > 0){
@@ -1230,6 +1305,12 @@ public class CaseTriggerHandler{
         //END UD-3293 11/25/15 RReyes - Hotfixed in SIT
         
         //START UD-2002 07/22/2015
+        //START PD-0327 06/08/2016 added by Jason A.
+        if(!stopCaseSet.isEmpty() && !iscreateInvoiceAdjustmentPStop) {
+            createInvoiceAdjustmentPStop(stopCaseSet);
+            iscreateInvoiceAdjustmentPStop = true;
+        }
+        //END PD-0327 06/08/2016 added by Jason A.
     }
     
     private void andFinally() {
@@ -1263,17 +1344,18 @@ public class CaseTriggerHandler{
         }
         //END: JLedesma D-3091 6/18/2015 Year To Date computation
         //END: UD-1830 7/13/2015 Avoid looping of Trigger
-		
-		//START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
+    
+        //START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
         //START: MD-61 03/24/2015 Added by S.PULI 
         /*if(tempExtisting.size()>0){
             update tempExtisting;
         }*/
-		if(tempExistingMap.size()>0){
+        if(tempExistingMap.size()>0){
             update tempExistingMap.values();
         }
-        //END: MD-61 03/24/2015 Added by S.PULI
-		//END PD-0155 01Jun2016 Added By C. Lin
+        //END: MD-61 03/24/2015 Added by S.PULI 
+        //END PD-0155 01Jun2016 Added By C. Lin
+        system.debug(':::OrderLst1 ' + ordersToUpdateAfterApprovalReject);
         //START PD-0202 FrancisBenzon 20May16 : update orders
         if(ordersToUpdateAfterApprovalReject.size() > 0)
         {
@@ -1286,6 +1368,7 @@ public class CaseTriggerHandler{
             }
         }
         //END PD-0202 FrancisBenzon 20May16 : update orders
+        system.debug(':::OrderLst ' + ordersToUpdateAfterApprovalReject);
         //START: D-3140 20/06/2015 Added by S.Puli
         if(coaCaseVendorSubs_LIST.size()>0){
             update coaCaseVendorSubs_LIST;
@@ -1560,6 +1643,14 @@ public class CaseTriggerHandler{
         
         for(Case c : lstCases) {
             //START PD-0138 Gdelrosario : added for creation of renewal subscription when created via URGENT CASE
+                System.debug('cube ---------------------------------------------- || ');
+                System.debug('cube ------ : ' + c.Id  );
+                System.debug('cube ------ : ' +  c.RecordTypeId );
+                System.debug('cube ------ : ' +  c.Category__c );
+                System.debug('cube ------ : ' +  c.Sub_Category__c );
+                System.debug('cube ------ : ' +  c.Sub_Status__c );
+                System.debug('cube ------ : ' +  c.Status );
+                System.debug('cube ---------------------------------------------- || ');
                 
                 if (c.RecordTypeId == CASE_RENEW_SUB_TYPE_ID && c.Category__c == 'Subscription Request' &&  c.Sub_Category__c == 'Renewal of Subscription' && c.Sub_Status__c == 'Ready for Submission' && c.Status == 'Pending') {
 
@@ -1567,7 +1658,7 @@ public class CaseTriggerHandler{
                     if(c.Account_Record_Type__c <> GlobalVariableClass.VENDOR && c.Account_Record_Type__c<>GlobalVariableClass.VENDORSUB && c.Account_Record_Type__c<>GlobalVariableClass.OLIDELIVEREDBY_MAILING_AGENT){    
                         orderIds.add(c.Order__c);
                     }
-                }
+                } 
             //END PD-0138 Gdelrosario : added for creation of renewal subscription when created via URGENT CASE
             //Start: D-1355 01/06/15 Added by April Banaag - change criteria for case sub status & status in creation of quote    
             if(c.RecordTypeId == CASE_START_SUB_TYPE_ID && c.Category__c == 'Subscription Request' &&  
@@ -1588,6 +1679,8 @@ public class CaseTriggerHandler{
             System.debug('JEPI oldCase: ' + oldCAse);
             System.debug('JEPI newCAse: ' + c);
             //START D-3411 Wenjun 03/Sep/15 : Submit Quotes after waive approval 
+            
+            
             if(
             c.RecordTypeId == (Id) ConstantsSLB.getKeyId(ChangeOfSubString) && c.Category__c == GlobalVariableClass.CATEGORY_SUBSCRIPTION_REQUEST &&
             c.Sub_Category__c == GlobalVariableClass.SUBCATEGORY_CHANGE_OF_SUBCRIPTION && oldCase != null
@@ -1609,6 +1702,7 @@ public class CaseTriggerHandler{
                         Order__c cosOrder = cosOrderMap.get(c.Order__c);
                         for(Order_Line_Item__c oli : cosOrder.Order_Line_Items_Direct__r) {
                             //check if urgent invoicing scenario
+                            
                             if((cosOrder.Subscription__r.Billing_Type__c == FULL_PRE && oli.Main_Package_Billing_Type__c == FULL_PRE) || (cosOrder.Subscription__r.Billing_Type__c == FULL_PRE && oli.Main_Package_Billing_Type__c == MR_PRE) || (cosOrder.Subscription__r.Billing_Type__c == MR_PRE && oli.Main_Package_Billing_Type__c == FULL_PRE && oli.Start_Date__c.toStartOfMonth() == Date.today().toStartOfMonth())) {
                                 urgentInvoicingScenario = TRUE;
                             }
@@ -1717,7 +1811,10 @@ public class CaseTriggerHandler{
         /* End Start Subscription Auto Route Case for Approval*/
         //START UD-0816 5/6/2015 Added By C. Lin  - Fix auto urgent approval for COA
         else if(c.RecordTypeId == CASE_COA && c.Sub_Category__c == 'Change of Address' && c.Status == 'Pending' && c.Effective_Date__c < c.POP_Start_Date__c &&
-            (c.Change_of_Address_Type__c == 'Change of Delivery Address - Local to Local' || c.Change_of_Address_Type__c == 'Change of Billing and Delivery Address'))
+            (c.Change_of_Address_Type__c == 'Change of Delivery Address - Local to Local' || c.Change_of_Address_Type__c == 'Change of Billing and Delivery Address'
+                //START PD-0284 6/8/2016 Added By L. Valencia - Added condition for Change of Billing address
+                || c.Change_of_Address_Type__c == 'Change of Billing address'))
+                //END PD-0284 6/8/2016 Added By L. Valencia 
         {
             genApprovalRequest(c);
         }
@@ -2121,7 +2218,7 @@ public class CaseTriggerHandler{
         // End UD-1926 VPernicia 07/20/15 Code Optimization: Comment out this block
     }
     // End UD-0759 ronald dagaraga add criteria     
-    //START: UD - 0234 05/03/15 Jean Carino, Updated the if condition
+    //START: UD - 0234 05/03/15 Jean Cariï¿½o, Updated the if condition
     //START: D-1347 12/19/14 Added by J. Sarion Added Case oldC as parameter. Check old and new value if not same then update Case Owner
     private void returnCaseToCSO(Case c, Case oldC) {
         //START: D-1795 1/20/15 By Mark Gatdula, Update the IF condition to include Temp Stop Rejected value for sub status  
@@ -2141,7 +2238,7 @@ public class CaseTriggerHandler{
         //END: D-0726 2/13/2015 Added by ABanaag, Update the IF condition to include Ready for Subscription value for sub status; removed hardcoded values
         //END: D-1795 1/20/15 By Mark Gatdula
     //END: D-1347 12/19/14 Added by J. Sarion
-    //END: UD - 0234 05/03/15 Jean Carino
+    //END: UD - 0234 05/03/15 Jean Cariï¿½o
         else if(c.RecordTypeId == CASE_START_SUB_TYPE_ID && c.Sub_Status__c == 'Ready for Subscription' && c.Status == 'Closed'){
             c.OwnerId = c.CreatedById;
         }
@@ -2383,9 +2480,15 @@ public class CaseTriggerHandler{
             addIdToPostalCodeMap.put(add.Id, add.Postal_Code__c);
         }
         //END D-2905 5/12/2015 Added By C. Lin
-        caseSubList = [SELECT Id, Subscription__c, Case__c, Case__r.Change_of_Address_Type__c FROM Case_Subscription__c WHERE Case__c in : lstCases];
+        System.debug('cube -----  || lstCases ' +  lstCases);
+        //START PD-0284 6/7/2016 Added By L. Valencia - Added query field Delivered_By_1__c
+        caseSubList = [SELECT Id, Subscription__c, Case__c, Case__r.Change_of_Address_Type__c, Subscription__r.Delivered_By_1__c FROM Case_Subscription__c WHERE Case__c in : lstCases];
+        //END PD-0284 6/7/2016 Added By L. Valencia
         caseSubVendorList = [SELECT Id, Subscription_Vendor__c, Case__c, Case__r.Change_of_Address_Type__c FROM Case_Vendor_Subscription__c WHERE Case__c in: lstCases];
-        
+        //cube ----------- 
+        System.debug('cube -----  || caseSubList.size() ' +  caseSubList.size());
+        System.debug('cube -----  || caseSubList ' +  caseSubList);
+        //cube ----------- 
         //START D-2905 5/12/2015 Added By C. Lin - CCB for COA
         //Start D-4706 19-Apr-2016 Added By S.Puli - test coverage - test coverage
         if(!postalCodeSet.isEmpty()){
@@ -2414,17 +2517,26 @@ public class CaseTriggerHandler{
                 newC.Id = cas.Id;
                 
                 if(postalCodeToVendorMap.containsKey(addIdToPostalCodeMap.get(cas.New_Address__c))){
-                    if(postalCodeToVendorMap.get(addIdToPostalCodeMap.get(cas.New_Address__c)).size() == 1){
-                        for(Id vendorAcc : postalCodeToVendorMap.get(addIdToPostalCodeMap.get(cas.New_Address__c))){
-                            addressAssignment.Vendor__c = vendorAcc;
+                    //START PD-0284 6/7/2016 Added By L. Valencia - Added checking subscription will be delivered by Mailing Agent
+                    if(caseSub.Subscription__r.Delivered_By_1__c == GlobalVariableClass.OLIDELIVEREDBY_MAILING_AGENT) {
+                        newC.Sub_Status__c = null;
+                        newC.Status = GlobalVariableClass.STATUS_CLOSED;
+                    } else {
+                    //END PD-0284 6/7/2016 Added By L. Valencia
+                        if(postalCodeToVendorMap.get(addIdToPostalCodeMap.get(cas.New_Address__c)).size() == 1){
+                            for(Id vendorAcc : postalCodeToVendorMap.get(addIdToPostalCodeMap.get(cas.New_Address__c))){
+                                addressAssignment.Vendor__c = vendorAcc;
+                            }
+                        }else{
+                            newC.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
+                            //START D-4722 24April2016 Added By C. Lin - set Case Owner to Vendor Ops Queue for COA
+                            //newC.OwnerId = ConstantsSLB.getKeyID('Ven Ops N&E Cir Reps Queue');
+                            //END D-4722 24April2016 Added By C. Lin
+                            newC.Status = 'Pending';
                         }
-                    }else{
-                        newC.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
-                        //START D-4722 24April2016 Added By C. Lin - set Case Owner to Vendor Ops Queue for COA
-                        //newC.OwnerId = ConstantsSLB.getKeyID('Ven Ops N&E Cir Reps Queue');
-                        //END D-4722 24April2016 Added By C. Lin
-                        newC.Status = 'Pending';
+                    //START PD-0284 6/7/2016 Added By L. Valencia - Added checking subscription will be delivered by Mailing Agent
                     }
+                    //END PD-0284 6/7/2016 Added By L. Valencia
                 }else{
                     newC.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
                     //START D-4722 24April2016 Added By C. Lin - set Case Owner to Vendor Ops Queue for COA
@@ -2652,7 +2764,7 @@ public class CaseTriggerHandler{
                                     //list of temp to update in andFinally
                                     Case cas = new Case(id = c.Id);  
                                     cas.COA__c = true;
-									//START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
+                                    //START PD-0155 01Jun2016 Added By C. Lin - prevent update duplicate TS cases
                                     //tempExtisting.add(cas);
                                     if(!tempExistingMap.containsKey(cas.Id)){
                                         tempExistingMap.put(cas.Id, cas);
@@ -2823,11 +2935,13 @@ public class CaseTriggerHandler{
         }
         
         //START D-2940 5/15/15 Added by Manolo Valena - New logic to map the subscription vendor to the new stop cases.
+          
         if(orderIds.size() > 0) {
+           
             olivs = [SELECT Id, Order__c, Subscription_Vendor__c, Subscription_Vendor__r.Order_Number__c, Subscription_Vendor__r.Status__c 
                     FROM Order_Line_Item_Vendor__c 
                     WHERE Order__c IN : orderIds];
-            
+           
             for(Order_Line_Item_Vendor__c oliv : olivs) {
                 if(mapOrderToCase.containsKey(oliv.Order__c)) {
                     if(casToSVListMap.containsKey(mapOrderToCase.get(oliv.Order__c))) {
@@ -3893,7 +4007,7 @@ public class CaseTriggerHandler{
         }
     }
     //END D-3488 9/4/15 Added by Manolo Valena
-    
+   
    /* START PD-0138 Gdelrosario 
     //START UD-1825 07/14/2015 Added by J.Sarion - Create Invoice Adjustment
     @future(callout=true)
@@ -4223,6 +4337,8 @@ public class CaseTriggerHandler{
       }
             //END PD-0138 Gdelrosario
             system.debug('>>>>>oliList ' + oliList);
+ 
+       
             for(Order_Line_Item__c oli :oliList) {
                 subZuoraNameSet.add(oli.Subscription__r.Name);
                 subZuoraIdToCaseNumberMap.put(oli.Subscription__r.Zuora__Zuora_Id__c, oli.Case__r.CaseNumber);
@@ -4260,32 +4376,35 @@ public class CaseTriggerHandler{
                 }
                 
                 //objMap.put('AccountId', inv.Zuora__BillingAccount__r.Zuora__Zuora_Id__c); // not available in create call
-                objMap.put('InvoiceId', inv.Zuora__Zuora_Id__c);
-                objMap.put('Type', 'Credit');
-                objMap.put('AdjustmentDate', Zuora.Zutil.getZuoraDate(Date.Today()));
-                objMap.put('Amount', inv.Zuora__TotalAmount__c);
-                if(invZuoraIdToCaseNumberMap.containsKey(inv.Zuora__Zuora_Id__c)) {
-                    objMap.put('ReferenceId', invZuoraIdToCaseNumberMap.get(inv.Zuora__Zuora_Id__c));
-                }
-                objMap.put('Comments', 'Payment failure - Credit card / Paypal');
-                system.debug('>>>>>objMap ' + objMap);
-                invAdjustmentMapList.add(objMap);           
-                
-                for(Zuora__PaymentInvoice__c invPayment :inv.Zuora__PaymentInvoices__r) {
-                    objMap = new Map<String, Object>();
-                    if(invPayment.Zuora__Payment__r.Zuora__Type__c == 'Electronic') {
-                        objMap = new Map<String, Object>();
-                        objMap.put('Id', invPayment.Zuora__Payment__r.Zuora__EXT_ID__c);
-                        objMap.put('Status', 'Voided');
-                        cancelPaymentMapList.add(objMap);
+          
+                                      objMap.put('InvoiceId', inv.Zuora__Zuora_Id__c);
+                    objMap.put('Type', 'Credit');
+                    objMap.put('AdjustmentDate', Zuora.Zutil.getZuoraDate(Date.Today()));
+                    objMap.put('Amount', inv.Zuora__TotalAmount__c);
+                    if(invZuoraIdToCaseNumberMap.containsKey(inv.Zuora__Zuora_Id__c)) {
+                        objMap.put('ReferenceId', invZuoraIdToCaseNumberMap.get(inv.Zuora__Zuora_Id__c));
                     }
-                    else if(invPayment.Zuora__Payment__r.Zuora__Type__c == 'External') {
+                    objMap.put('Comments', 'Payment failure - Credit card / Paypal');
+                    system.debug('>>>>>objMap ' + objMap);
+                    invAdjustmentMapList.add(objMap);           
+                    
+                    for(Zuora__PaymentInvoice__c invPayment :inv.Zuora__PaymentInvoices__r) {
                         objMap = new Map<String, Object>();
-                        objMap.put('Id', invPayment.Zuora__Payment__r.Zuora__EXT_ID__c);
-                        objMap.put('Status', 'Canceled');
-                        cancelPaymentMapList.add(objMap);
+                        if(invPayment.Zuora__Payment__r.Zuora__Type__c == 'Electronic') {
+                            objMap = new Map<String, Object>();
+                            objMap.put('Id', invPayment.Zuora__Payment__r.Zuora__EXT_ID__c);
+                            objMap.put('Status', 'Voided');
+                            cancelPaymentMapList.add(objMap);
+                        }
+                        else if(invPayment.Zuora__Payment__r.Zuora__Type__c == 'External') {
+                            objMap = new Map<String, Object>();
+                            objMap.put('Id', invPayment.Zuora__Payment__r.Zuora__EXT_ID__c);
+                            objMap.put('Status', 'Canceled');
+                            cancelPaymentMapList.add(objMap);
+                        }
                     }
-                }
+            
+  
             }
             //END UD-2549 4/6/2016 Added by J.Sarion - Cancel Payment
             system.debug('>>>>>invAdjustmentMapList ' + invAdjustmentMapList);

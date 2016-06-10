@@ -1,4 +1,4 @@
-@isTest (Seealldata = TRUE)
+@isTest
 public class ARMS_TriggerHandlerTest{
     
 static testMethod void TestInsertUpdateBillingAcc(){

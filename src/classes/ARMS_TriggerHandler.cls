@@ -375,11 +375,11 @@ public class ARMS_TriggerHandler implements TriggerHandlerInterface{
             if(newBa.Billing_Contact__c <> null){
                 newBa.ExistingBillingContact__c = newBa.Billing_Contact__c;
             }
-            
+            system.debug('+++++CHA oldBA.ExistingBillingContact__c ' + oldBA.ExistingBillingContact__c);
             if(newBa.Billing_Contact__c == null && oldBA.Billing_Contact__c <> null && oldBA.ExistingBillingContact__c <> null){
                 newBa.Billing_Contact__c = oldBA.ExistingBillingContact__c;
             }
-            
+            system.debug('+++++CHA newBa.Billing_Contact__c ' + newBa.Billing_Contact__c);
             //START UD-1361 Kestoya 06/09/2015
             copyPreviousBA (newBa);
             //END UD-1361 Kestoya 06/09/2015
@@ -387,9 +387,11 @@ public class ARMS_TriggerHandler implements TriggerHandlerInterface{
             // Start D-3852 John D. K. Tan 11/3/2015
             //START D-3923 11/20/15 RReyes - added more conditions to prevent billing contact deletion
             if (newBa.Billing_Contact__c == null && newBa.Link_Prev_Billing_Contact__c != null){
+                system.debug('+++++CHA newBa.Link_Prev_Billing_Contact__c ' + newBa.Link_Prev_Billing_Contact__c);
                 newBa.Billing_Contact__c = newBa.Link_Prev_Billing_Contact__c;
                 newBa.Link_Prev_Billing_Contact__c = null;
             }else if(newBa.Billing_Contact__c == null && oldBa.Billing_Contact__c != null){
+                system.debug('+++++CHA oldBa.Billing_Contact__c ' + oldBa.Billing_Contact__c);
                 newBa.Billing_Contact__c = oldBa.Billing_Contact__c;
             }
             //END D-3923 11/20/15 RReyes - added more conditions to prevent billing contact deletion

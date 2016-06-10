@@ -298,8 +298,8 @@ public class DateUtility
     }    
     //[END UD-0639 Renz] 
 
-	//START UD-2768 2015-09-30 Renz Niefes overloaded this method to add batch run date in the critera
-	public static DateTime getOverrideDate(String interfaceId, Date batchRunDate)
+    //START UD-2768 2015-09-30 Renz Niefes overloaded this method to add batch run date in the critera
+    public static DateTime getOverrideDate(String interfaceId, Date batchRunDate)
     {
         DateTime d = null;      
         List<BT_CO_Batch_Run_Request__c> brr = [SELECT CreatedDate 
@@ -317,8 +317,8 @@ public class DateUtility
         return d;
     
     }
-	//END UD-2768 2015-09-30 Renz Niefes overloaded this method to add batch run date in the critera
-	
+    //END UD-2768 2015-09-30 Renz Niefes overloaded this method to add batch run date in the critera
+    
     
    /* @description This converts the given date text input to Salesforce Date instance.  Returns the first day of that month
      * 
@@ -430,7 +430,10 @@ public class DateUtility
             monthString = String.valueOf(month);
         }
         
-        String dateString = monthString + '/' + dayString + '/' + yearString;
+        //Nitin Khanna : I-0439 - PD-0522 : changing the date format to be dd/mm/yyyy for AGD description : start
+        //String dateString = monthString + '/' + dayString + '/' + yearString;
+        String dateString =  dayString + '/' + monthString + '/' + yearString;
+        //Nitin Khanna : I-0439 - PD-0522 : changing the date format to be dd/mm/yyyy for AGD description : end
         
         return dateString;
     } 

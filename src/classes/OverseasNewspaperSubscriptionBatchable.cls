@@ -37,40 +37,40 @@ public class OverseasNewspaperSubscriptionBatchable implements Database.Batchabl
             mainPackageId_isNewspaper.put(tmp.Main_Package_1__c, false);
         }
         
-		//START 02/18/2015 - Added by Rom Edison Reyes - Checks if mainPackageId_isNewspaper is not empty
-		if(mainPackageId_isNewspaper.size()>0){
-			for (Package_Item__c tmp : [select Package__c from Package_Item__c 
-					where Package__c in :mainPackageId_isNewspaper.keySet() and Is_Newspaper__c = true]) {
-				mainPackageId_isNewspaper.put(tmp.Package__c, true);
-			}
+        //START 02/18/2015 - Added by Rom Edison Reyes - Checks if mainPackageId_isNewspaper is not empty
+        if(mainPackageId_isNewspaper.size()>0){
+            for (Package_Item__c tmp : [select Package__c from Package_Item__c 
+                    where Package__c in :mainPackageId_isNewspaper.keySet() and Is_Newspaper__c = true]) {
+                mainPackageId_isNewspaper.put(tmp.Package__c, true);
+            }
 
-			for (Zuora__SubscriptionProductCharge__c tmp : [select Zuora__Subscription__c, PublicationCode__c, Zuora__Price__c 
-					from Zuora__SubscriptionProductCharge__c where Zuora__Subscription__c in :mainPackageId_isNewspaper.keySet()]) {
-					
-					//START: 02/18/2015 - Added by Rom Edison Reyes - Checks if tmp.Zuora__Subscription__c is not null and tmp.PublicationCode__c is not null before adding to subscriptionId_publicationCode
-					if(tmp.Zuora__Subscription__c != null && tmp.PublicationCode__c != null){
-						subscriptionId_publicationCode.put(tmp.Zuora__Subscription__c, tmp.PublicationCode__c);
-					}//END: 02/18/2015 - Added by Rom Edison Reyes - Checks if tmp.Zuora__Subscription__c is not null and tmp.PublicationCode__c is not null before adding to subscriptionId_publicationCode
-					
-				if (tmp.Zuora__Price__c > 0) {
-					subscriptionId_copyType.put(tmp.Zuora__Subscription__c, 'Subscription');
-				} else {
-					subscriptionId_copyType.put(tmp.Zuora__Subscription__c, 'Freelist');
-				}
-			}
-		}//END 02/18/2015 - Added by Rom Edison Reyes - Checks if mainPackageId_isNewspaper is not empty
+            for (Zuora__SubscriptionProductCharge__c tmp : [select Zuora__Subscription__c, PublicationCode__c, Zuora__Price__c 
+                    from Zuora__SubscriptionProductCharge__c where Zuora__Subscription__c in :mainPackageId_isNewspaper.keySet()]) {
+                    
+                    //START: 02/18/2015 - Added by Rom Edison Reyes - Checks if tmp.Zuora__Subscription__c is not null and tmp.PublicationCode__c is not null before adding to subscriptionId_publicationCode
+                    if(tmp.Zuora__Subscription__c != null && tmp.PublicationCode__c != null){
+                        subscriptionId_publicationCode.put(tmp.Zuora__Subscription__c, tmp.PublicationCode__c);
+                    }//END: 02/18/2015 - Added by Rom Edison Reyes - Checks if tmp.Zuora__Subscription__c is not null and tmp.PublicationCode__c is not null before adding to subscriptionId_publicationCode
+                    
+                if (tmp.Zuora__Price__c > 0) {
+                    subscriptionId_copyType.put(tmp.Zuora__Subscription__c, 'Subscription');
+                } else {
+                    subscriptionId_copyType.put(tmp.Zuora__Subscription__c, 'Freelist');
+                }
+            }
+        }//END 02/18/2015 - Added by Rom Edison Reyes - Checks if mainPackageId_isNewspaper is not empty
         
-		//START 02/18/2015 - Added by Rom Edison Reyes - Checks if subscriptionId_publicationCode is not empty
-		if(subscriptionId_publicationCode.size()>0){
-			// retrieve latest publication issue date
-			for (SObject tmp : [select Publication_Code__c, Publication_Issue_Date__c 
-					from Publication_Daily_Issue_Data__c where Publication_Code__c in :subscriptionId_publicationCode.values() 
-					group by Publication_Code__c, Publication_Issue_Date__c order by Publication_Issue_Date__c desc]) {
+        //START 02/18/2015 - Added by Rom Edison Reyes - Checks if subscriptionId_publicationCode is not empty
+        if(subscriptionId_publicationCode.size()>0){
+            // retrieve latest publication issue date
+            for (SObject tmp : [select Publication_Code__c, Publication_Issue_Date__c 
+                    from Publication_Daily_Issue_Data__c where Publication_Code__c in :subscriptionId_publicationCode.values() 
+                    group by Publication_Code__c, Publication_Issue_Date__c order by Publication_Issue_Date__c desc]) {
             
-				publicationCode_publicationIssueDate.put((string)tmp.get('Publication_Code__c'), (date)tmp.get('Publication_Issue_Date__c'));
-			}
-			// end retrieve latest publication issue date
-		}//END 02/18/2015 - Added by Rom Edison Reyes - Checks if subscriptionId_publicationCode is not empty
+                publicationCode_publicationIssueDate.put((string)tmp.get('Publication_Code__c'), (date)tmp.get('Publication_Issue_Date__c'));
+            }
+            // end retrieve latest publication issue date
+        }//END 02/18/2015 - Added by Rom Edison Reyes - Checks if subscriptionId_publicationCode is not empty
         
         for (Zuora__Subscription__c tmp : scope) {
             

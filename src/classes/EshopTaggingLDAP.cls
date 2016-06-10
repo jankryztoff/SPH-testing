@@ -123,7 +123,7 @@ global with sharing class EshopTaggingLDAP{
     
     
     
-    private static  Map<id, zqu__ProductRatePlan__c> getProductRatePlan(Set<id> subIdSet){
+    @TestVisible private static  Map<id, zqu__ProductRatePlan__c> getProductRatePlan(Set<id> subIdSet){
         Set<String> prodSKU = new Set<String>();
         List<Zuora__SubscriptionProductCharge__c> subProdChargeList = new List<Zuora__SubscriptionProductCharge__c>();
         Map<id, Set<String>> prodSKUSetMap = new Map<id, Set<String>>();        
@@ -181,7 +181,7 @@ global with sharing class EshopTaggingLDAP{
         return subProdRatePlanMap;
     }
     
-    private static Asia1__c createAsia1(String ldapId){
+    @TestVisible private static Asia1__c createAsia1(String ldapId){
         Map<String,Object> userDetailsMap = new Map<String,Object>();
         userDetailsMap = AsiaOneServicesController.viewUserDetails(ldapId);
         //System.assertEquals(null, userDetailsMap);
@@ -198,7 +198,7 @@ global with sharing class EshopTaggingLDAP{
         return asia1;
     }
     
-    private static List<Asia1_Subscription__c> createAsia1Sub(Set<Id> zSubsId, Id asiaOneId){
+    @TestVisible private static List<Asia1_Subscription__c> createAsia1Sub(Set<Id> zSubsId, Id asiaOneId){
         List<Asia1_Subscription__c> asia1SubList = new List<Asia1_Subscription__c>();
         
         

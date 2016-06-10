@@ -16,7 +16,7 @@ global class CaseVoidButtonController{
         List<Order_Line_Item__c> lstOLIs = new List<Order_Line_Item__c>();
         Set<String> mainPackageIds = new Set<String>();
         String result = '';
-        
+                        
         if(caseRec.RecordType.Name == GlobalVariableClass.RECTYPE_COMPLAINT_NEWSPAPER){
             if(caseRec.Owner.Id != userId){
                 result = 'You don\'t have permission to void this case record.';
@@ -40,7 +40,7 @@ global class CaseVoidButtonController{
                 
             }
         }else if(caseRec.RecordType.Name == GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION || caseRec.RecordType.Name == GlobalVariableClass.RECTYPE_STOP_SUBSCRIPTION){
-            
+           
             Date earliestStartStopDate;
             Boolean startStopDateError = false;
             String startStop = '';
@@ -106,8 +106,9 @@ global class CaseVoidButtonController{
                 }
             }else{
                 result = 'Case has no related Order Line Item. This data is invalid.';
-            }
+            }                   
         }
+            
         return result;
    }
    

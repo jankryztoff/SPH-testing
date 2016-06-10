@@ -5,7 +5,7 @@ Class Name: BulkOrderUploadControllerTest
 @Project/Requirement: SPH 
 @description This class is test class for BulkOrderUploadController
 **/
-@isTest (Seealldata = false)
+@isTest (Seealldata =true)
 private class BulkOrderUploadControllerTest {
 
     //List of variables
@@ -28,18 +28,19 @@ private class BulkOrderUploadControllerTest {
     static EmailTemplate validEmailTemplate;
 
     static void setUpTestData() {
-
+        
         //CustomSettings
-        RecordType Case_ChangeinAddress = [SELECT id, Name FROM RecordType WHERE SobjectType='Case' AND Name='Change of Address/Vendor' LIMIT 1];
+        /*RecordType Case_ChangeinAddress = [SELECT id, Name FROM RecordType WHERE SobjectType='Case' AND Name='Change of Address/Vendor' LIMIT 1];
         RecordType Contact_CustomerContact = [SELECT id, Name FROM RecordType WHERE SobjectType='Contact' AND Name='Customer Contact' LIMIT 1];
         RecordType Address_Local = [SELECT id, Name FROM RecordType WHERE SobjectType='Address__c' AND Name='Local' LIMIT 1];
         RecordType addressOverseas = [SELECT id, Name FROM RecordType WHERE SobjectType='Address__c' AND Name='Overseas' LIMIT 1];
         RecordType directCorporate = [SELECT id, Name FROM RecordType WHERE SobjectType='Account' AND Name='Direct Corporate' LIMIT 1];
         RecordType addressAirline = [SELECT id, Name FROM RecordType WHERE SobjectType='Address__c' AND Name='Airline' LIMIT 1];
         RecordType addressInternal = [SELECT id, Name FROM RecordType WHERE SobjectType='Address__c' AND Name='Internal' LIMIT 1];
-        
+        RecordType startSub = [SELECT id, Name FROM RecordType WHERE SobjectType='Case' AND Name='Start Subscription'LIMIT 1];
+        */
         //Key_Id__c
-        List<Key_Id__c> kisList = new List<Key_Id__c>{
+        /*List<Key_Id__c> kisList = new List<Key_Id__c>{
             new Key_Id__c(Name='Vendor Rep Role', Id__c='123456789', Type__c='Number'),
             new Key_Id__c(Name='NEXT_RECIPIENT_NUMBER', Id__c='123456789', Type__c='Number'),
             new Key_Id__c(Name='Case_Change in Address', Id__c=Case_ChangeinAddress.id ,Type__c='RecordType'),
@@ -48,26 +49,35 @@ private class BulkOrderUploadControllerTest {
             new Key_Id__c(Name='Address_Overseas', Id__c=addressOverseas.id ,Type__c='RecordType'),
             new Key_Id__c(Name='Address_Internal', Id__c=addressInternal.id ,Type__c='RecordType'),
             new Key_Id__c(Name='Address_Airline', Id__c=addressAirline.id ,Type__c='RecordType'),
-            new Key_Id__c(Name='Account_Direct Corporate', Id__c=directCorporate.id ,Type__c='RecordType')
-        };
+            new Key_Id__c(Name='Account_Direct Corporate', Id__c=directCorporate.id ,Type__c='RecordType'),
+            new Key_Id__c(Name='Start Subscription', Id__c=startSub.id ,Type__c='RecordType')
+        };*/
+        
+        List<Key_Id__c> kisList = new List<Key_Id__c>();
+        kislist = CustomSettingsDataFactory.createKey_Id();
         Database.insert(kisList);
-
+        Cir_Planner_Schedule__c cps = new Cir_Planner_Schedule__c();
+        cps = CustomSettingsDataFactory.createPlannerSched();
+        insert cps;
+        List<Record_Type_Field_Setup__c> recordtypeFS = CustomSettingsDataFactory.createRecord_Type_Field_Setup();
+        insert recordtypeFS;
         //Other__c
+        
         List<Other__c> otherList = new List<Other__c>{
             new Other__c(Name='DTL', Value__c='23:59')
         };
         Database.insert(otherList);
-       
+        
         //Setup Country__c records
         cntryList = TestDataFactory.createCountry(2);
-        cntryList[0].Country_Name__c = 'Singapore';
-        cntryList[0].Code__c = 'Singapore';
+        cntryList[0].Country_Name__c = 'Singaspore';
+        cntryList[0].Code__c = 'Singaspore';
         cntryList[1].Country_Name__c = 'Philippines';
         cntryList[1].Code__c = 'Philippines';
         insert cntryList;
         
         //Setup Account records
-        acnt = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acnt = TestDataFactory.createAccount(1, 'Direct Individual')[0];
         acnt.NRIC__c = 'T1234567R';
         acnt.Name = 'Test Account';
         acnt.Phone = '123-456';
@@ -80,7 +90,7 @@ private class BulkOrderUploadControllerTest {
         acnt.Sub_Group__c = 'Freelist(MY)';
         acnt.Generate_Account_Number__c = true;
         acnt.Renewal_Letter__c = 'Email';
-
+        acnt.AccountNumber = '31411552';
         insert acnt;
 
         //Setup Postal records
@@ -154,7 +164,7 @@ private class BulkOrderUploadControllerTest {
         custAccount.Zuora__Account__c = acnt.Id;
         custAccount.Billing_Contact__c = cntctList[1].Id;
         custAccount.Zuora__Zuora_Id__c = ZuoraZuoraIdc;
-        custAccount.Billing_Type__c = 'Full Prepaid';
+        custAccount.Billing_Type__c = 'Recurring Prepaid';
         custAccount.Zuora__DefaultPaymentMethod__c = 'Other';
         custAccount.Zuora__AccountNumber__c = 'Test1';
         
@@ -162,7 +172,7 @@ private class BulkOrderUploadControllerTest {
 
         //Setup Package records
         packge = TestDataFactory.createPackage(1)[0];
-        packge.Billing_Type__c = 'Full Prepaid';
+        packge.Billing_Type__c = 'Recurring Prepaid';
         packge.Package_Type__c = 'Grace Period';
         packge.Subscription_Period__c = '1';
         packge.Package_Code__c = PackageCodec;
@@ -209,7 +219,7 @@ private class BulkOrderUploadControllerTest {
         orders.Billing_Account_Creation_Mode__c = 'Create New Billing Account';
         orders.Payment_Mode__c = 'Credit Card';
         orders.Billing_Account__c = custAccount.id;
-        orders.Billing_Type__c = 'Full Prepaid';
+        orders.Billing_Type__c = 'Recurring Prepaid';
         orders.Billing_Contact__c = cntctList[1].id;
         orders.Case_Record_Type__c = 'Complaint - Magazine';
         orders.Category__c = 'Subscription Request';
@@ -304,19 +314,27 @@ private class BulkOrderUploadControllerTest {
 
         System.runAs(testUser) {
 
-            setUpTestData();
-            Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+          //  setUpTestData();
+            /* List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+             billingBatches = CustomSettingsDataFactory.createBillingBatch();
+            insert billingBatches;*/
+           Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
             config.Name = 'Test';
             config.Field_Name__c = 'Test';
             config.Object_Name__c = 'Test';
             config.Identifier__c = 'Test';
             insert config;
-                      
-            Integer count;
+            
+            String stringVal = '';
+            for (Bulk_Order_Configuration__c BuldOrderConfig:[select name from Bulk_Order_Configuration__c]) {
+                stringVal += BuldOrderConfig.name +', ';
+            }
+                
+            /*Integer count;
             String stringVal = '';
             for(count = 0; count <= 5 ; count++){
                 stringVal += 'Test Document Body ' + count + ' ';
-            }
+            }*/
              
             Document doc = new Document();
             doc.FolderId = UserInfo.getUserId();
@@ -348,7 +366,9 @@ private class BulkOrderUploadControllerTest {
         User testUser = createUser();
 
         System.runAs(testUser) {
-
+              List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+             billingBatches = CustomSettingsDataFactory.createBillingBatch();
+            //insert billingBatches;
             Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
             config.Name = 'Test';
             config.Field_Name__c = 'Test';
@@ -356,10 +376,9 @@ private class BulkOrderUploadControllerTest {
             config.Identifier__c = 'Test';
             insert config;
                       
-            Integer count;
             String stringVal = '';
-            for(count = 0; count <= 5 ; count++){
-                stringVal += 'Test Document Body ' + count + ' ';
+            for (Bulk_Order_Configuration__c BuldOrderConfig:[select name from Bulk_Order_Configuration__c]) {
+                stringVal += BuldOrderConfig.name +', ';
             }
              
             Document doc = new Document();
@@ -415,16 +434,14 @@ private class BulkOrderUploadControllerTest {
          Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
         insert acc;
          
-         Integer count;
-         String stringVal = '';
-         for(count = 0; count <= 5 ; count++){
-             //stringVal += 'Test Document, Body, ' + count + ', test \n';
-           stringVal += 'Test Document Body ' + count + ' ';
+        String stringVal = '';
+        for (Bulk_Order_Configuration__c BuldOrderConfig:[select name from Bulk_Order_Configuration__c]) {
+            stringVal += BuldOrderConfig.name +', ';
         }
-          List<Other__c> otherList = new List<Other__c>{
+           List<Other__c> otherList = new List<Other__c>{
             new Other__c(Name='DTL', Value__c='23:59')
         };
-        database.insert(otherList);
+        //database.insert(otherList);
          
          Document doc = new Document();
          doc.FolderId = UserInfo.getUserId();
@@ -463,17 +480,28 @@ private class BulkOrderUploadControllerTest {
         User testUser = createUser();
            
         System.runAs(testUser) {   
-         setUpTestData(); 
-                   Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+        // setUpTestData(); 
+                 /*  Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
           config.Name = 'Test';
           config.Field_Name__c = 'Test';
          config.Object_Name__c = 'Test';
          config.Identifier__c = 'Test';
-         insert config;
-         Test.startTest(); 
+         insert config;*/
+       /*  List<Product_Frequency__c> prodfreqs = CustomSettingsDataFactory.createProduct_Frequency();
+         insert prodfreqs;
+         List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+         billingBatches = CustomSettingsDataFactory.createBillingBatch();
+         insert billingBatches;
         List<Bulk_Order_Configuration__c>  boc = new List<Bulk_Order_Configuration__c>();
-        boc = CustomSettingsDataFactory.createBulkOrder();
-         insert boc;
+        boc = CustomSettingsDataFactory.createBulkOrder();*/
+         
+        // insert boc;
+         Test.startTest();
+         
+         Zone__c zone = new Zone__c();
+         zone.Name = '0';
+         insert zone;
+      
          Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
          postal.Name = '123';
          postal.Name = '100044';
@@ -481,10 +509,13 @@ private class BulkOrderUploadControllerTest {
          postal.Address_Type__c = 'A';
          insert postal;
          
-         //Country__c co = new Country__c();
-        // co.Code__c =  'Singapore';
-        // co.Country_Name__c = 'Singapore';
-        // insert co;
+        
+         Country__c co = [Select Id,Name, Code__c, Country_Name__c, Zonal_Code__c, Zone__c From Country__c WHERE Name = 'SG' Limit 1];
+       //  co.Code__c =  'SG';
+      //   co.Name = 'SG';
+    //   co.Zonal_Code__c = '0';
+       
+      //  insert co;
          
          Address__c addressRec = TestDataFactory.createAddress(1)[0];
          addressRec.Address_Type__c = 'A';
@@ -492,23 +523,28 @@ private class BulkOrderUploadControllerTest {
          addressRec.Block_House_Number__c ='TEST';
          addressRec.Level_Number__c ='xx';
          addressRec.Unit_Number__c = 'yy';
-         addressRec.Country__c = cntryList[0].Id;
+         addressRec.Country__c = co.Id;
          addressRec.Address_1__c = 'address1';
          addressRec.Address_2__c = 'address2';
          addressRec.Address_3__c = 'address3';
          addressRec.Address_4__c = 'address4';
          addressRec.RecordTypeId = ConstantsSLB.getKeyId('Address_Local');
+         
          insert addressRec;
          
          Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
-         acc.AccountNumber = '31411551';
+         acc.AccountNumber = '91411551';
          acc.Name = 'Bulk Upload Test 1';
          acc.Email__c = 'sample@sph.com';
          acc.Acknowledgement_Letter__c = 'Email';
          acc.Renewal_Letter__c = 'Hard Copy';
          acc.Airline_Indicator__c = false;
+         System.debug('account beforeinserted' + acc.AccountNumber);
+         acc.Status__c = 'Active';
+         acc.Generate_Account_Number__c = false;
          insert acc;
-         System.debug('account inserted' + acc.id);
+         
+         
          Contact con = TestDataFactory.createContact(1)[0];
          con.FirstName = 'Water';
          con.LastName = 'Monkey';
@@ -518,22 +554,426 @@ private class BulkOrderUploadControllerTest {
          con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
          con.Email__c = 'sample@sph.com';
          con.HomePhone__c = '9999222';
+         con.Billing_Indicator__c = true;
+         con.Recipient_Indicator__c = true;
+         insert con; 
+         
+         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
+         billAcc.Zuora__Account__c = acc.id;
+         billAcc.Billing_Contact__c = con.Id;
+         billAcc.Billing_Type__c = 'Recurring Prepaid';
+         billAcc.Zuora__AccountNumber__c = '91411551';
+         billAcc.Zuora__DefaultPaymentMethod__c = 'Other';
+         billAcc.Other_PaymentMethod__c = 'Internal Storage';
+         insert billAcc;
+        // System.debug('account inserted' + billAcc.id);
+         //String stringVal1 = 'PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,RCAddressRecordType,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,GiftCodes,PromotionCode,GiftCodes,RCAddressRecordType,RCCityCode,RCPackingCode,BCAddressRecordType,BCCityCode,BCPackingCode';
+         String stringVal1 = 'AccountNumber,BillingAccountNumber,AccountRecordType,AccountName,DateSince,AccountDateOfBirth,Designation,AccountNRIC,Passport,AccountGender,ContactPerson,AttentionSeekingSubs,AttentionToCareOfIndicator,AttentionToCareOfSalutation,AttentionToCareOf,SubGroup,VipStaffHomePhone,VipStaffMobilePhone,VipStaffEmail,AccountEmail,EmailSecondary,Education,Language,Race,GstOutOfScope,GstInvoice,CreditAlert,AcknowledgementLetter,RenewalLetter,SmsRenewalNotification,VendorCommunicationPreference,EshopRefNo,AirlineIndicator,StaffId,UniqueEntityNumber,IncomeRange,RCSalutation,RCFirstName,RCLastName,RCNRIC,RCPassport,RCAttnToName,RCAccountName2,RCBusinessAddressIndicator,RCHomeNumber,RCFax,RCMobileNumber,RCMobileNumber2,RCOfficeNumber,RCOfficeExtension,RCEmail,RCEmailSecondary,RCAddressRecordType,RCPostalCode,RCLevelNumber,RCUnitNumber,RCCountryCode,RCAddress1,RCAddress2,RCAddress3,RCAddress4,RCCompanyCode,RCDepartmentCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCPackingCode,RCCityCode,RCAdditionalInfo,BCSalutation,BCFirstName,BCLastName,BCNRIC,BCPassport,BCAttnToName,BCAccountName2,BCBusinessAddressIndicator,BCHomeNumber,BCFax,BCMobileNumber,BCMobileNumber2,BCOfficeNumber,BCOfficeExtension,BCEmail,BCEmailSecondary,BCAddressRecordType,BCPostalCode,BCLevelNumber,BCUnitNumber,BCCountryCode,BCAddress1,BCAddress2,BCAddress3,BCAddress4,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,BCPackingCode,BCCityCode,BCAdditionalInfo,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,ArmsAccountNumber,ArmsBusinessProfile,ArmsDebtManagementTreatment,CashAmountPaid,CheckAmount,CheckDated,CheckIssuingBank,CheckNumber,CheckRemarks,CostCentre,CreditCardAddress1,CreditCardCity,CreditCardCountry,CreditCardCVV,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardNumber,CreditCardType,DeliveryAmount,DeliveryChargeType,GlCode,Sponsor,VendorSmsRemark,SuppressAcknoweledgementLetter,SuppressRenewalAndReminderLetter,SuppressVendorNotification,GenerateInvoice,AutoRenew,PromotionCode,PackageCode,AddonPackageCode,GiftCodes,StartDate,NewContractPeriod,Quantity,DeliveredBy,MailingAgentCode';
+         //String stringVal2 = 'PackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,123456,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,Other,Invoice,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,Quantity,Internal,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,Internal,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,Gift Codes,PromotionCode,GiftCodes,Test,Airline,RCCityCode,RCPackingCode,Airline,BCCityCode,BCPackingCode';
+         String stringVal2 = '91411551,,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Water,Monkey,,,,Bulk Upload Test 1,,,,,,,,sample@sph.com,,Local,100044,3,3,TestCountry,,,,,,,,,,,,,,Water,Monkey,,,,Bulk Upload Test 1,,9999222,,,,,,sample@sph.com,,Local,100044,3,3,TestCountry,,,,,,,,,,,,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Mailing Agent,';
+         //Test.setMock(WebServiceMock.class, new zLoginMock());
+                 
+         Document doc = new Document();
+         doc.FolderId = UserInfo.getUserId();
+         doc.Name = 'BulkOrderUploadTemplate';
+         //Blob bodyBlob = Blob.valueOf('PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy\nPackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy');
+         Blob bodyBlob = Blob.valueOf(stringVal1 + '\n' + stringVal2);
+         doc.body = bodyBlob;
+         doc.Type = 'csv';
+         doc.ContentType = 'application/vnd.ms-excel';
+         insert doc;
+          
+         
+         //Promotion__c
+         prom = TestDataFactory.createPromotion(1)[0];
+         prom.Promotion_Code__c = 'PackageCode';
+         prom.Contract_Period__c = '30';
+         insert prom;
+         
+         Package__c pack = TestDataFactory.createPackage(1)[0];
+         pack.Package_Code__c = 'AddonPackageCode';
+         pack.Billing_Type__c = 'Recurring Prepaid';
+         pack.Subscription_Type__c = 'TERMED';
+         pack.Package_Price__c = 3;
+         pack.Subscription_Period__c = '30';
+         insert pack;
+         
+         Promotion_Package__c promPack = TestDataFactory.createPromotionPackage(1)[0];
+         promPack.Promotion__c = prom.Id;
+         promPack.Package_Name__c = pack.ID;
+         insert promPack;
+         
+         zqu__ZProduct__c zProduct = TestDataFactory.createZProduct(1)[0];
+         zProduct.ProductPlatform__c = 'All-In-One';
+         zProduct.ProductCode__c = 'POSCHG';
+         database.insert(zProduct);
+         
+         Zone_Product__c zoneProd = new Zone_Product__c();
+         zoneProd.Zone__c = zone.id;
+         zoneProd.Product__c = zProduct.id;
+         zoneProd.Effective_Start_Date__c = Date.Today();
+         zoneProd.Postage_Charge__c = 5;
+         insert zoneProd;
+         
+         
+         zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
+         prdRatePlan.zqu__ZProduct__c = zProduct.Id;
+         prdRatePlan.RatePlanType__c= 'Bill Plan';
+         prdRatePlan.SubscriptionFrequency__c = '1';
+         prdRatePlan.RatePlanCode__c = 'CHGPOS';
+         prdRatePlan.zqu__Deleted__c = false;
+  
+         database.insert(prdRatePlan);
+         
+         Package_Item__c pItem = TestDataFactory.createPackageItem(1,'Base Product')[0];
+         pItem.Package__c = pack.id;
+         pItem.Product_Rate_Plan__c = prdRatePlan.Id;
+         database.insert(pItem);
+         
+         Publication__c pub = TestDataFactory.createPublication(1)[0];
+         pub.Earliest_Start_Date__c = date.today()+1;
+         pub.Direct_Sub_Delivery_Method__c = 'Mailing Agent';
+         insert pub;
+         
+         Product_Publication__c pp = TestDataFactory.createProductPublication(1)[0];
+         pp.ZProduct__c = zProduct.Id;
+         pp.Publication_Code__c = pub.Id;
+         insert pp;
+         
+         Order__c order = TestDataFactory.createOrder(1)[0];
+         order.Account__c = acc.Id;
+         order.Payment_Mode__c = 'Other';
+         order.Other_Payment_Mode__c = 'External Parties';
+         order.Billing_Account__c = billAcc.id;
+         order.Billing_Type__c = 'Recurring Prepaid';
+         order.Order_Type__c = 'Start';
+         order.Recipient_Contact__c = con.id;
+         order.Billing_Contact__c = con.id;
+         insert order;
+         
+         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+         orderline.Order__c = order.Id;
+         orderline.Main_Package_ID__c = pack.Id;
+         orderline.Delivered_By__c = 'Mailing Agent';
+         orderline.Qty__c = 1;
+         orderline.Main_Package_Frequency__c = 'Default';
+         insert orderline;
+         
+       
+         BulkOrderUploadController bulkorder = new BulkOrderUploadController();
+         bulkorder.orderFile = doc;
+         bulkorder.verifyDocument();         
+         bulkorder.processDocument();
+         bulkorder.retrieveReferenceDoc();
+         bulkorder.cancel();
+         //bulkorder.testCoveragePatch();
+         
+         BulkOrderUploadController bulkorder2 = new BulkOrderUploadController();
+         bulkorder2.orderFile = NULL;
+         bulkorder2.verifyDocument();
+         Test.stopTest();
+         
+         }
+        
+     }
+     
+     static testmethod void unitTest4() {
+        User testUser = createUser();
+           
+        System.runAs(testUser) {   
+        // setUpTestData(); 
+                 /*  Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+          config.Name = 'Test';
+          config.Field_Name__c = 'Test';
+         config.Object_Name__c = 'Test';
+         config.Identifier__c = 'Test';
+         insert config;*/
+       /*  List<Product_Frequency__c> prodfreqs = CustomSettingsDataFactory.createProduct_Frequency();
+         insert prodfreqs;
+         List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+         billingBatches = CustomSettingsDataFactory.createBillingBatch();
+         insert billingBatches;
+        List<Bulk_Order_Configuration__c>  boc = new List<Bulk_Order_Configuration__c>();
+        boc = CustomSettingsDataFactory.createBulkOrder();*/
+         
+        // insert boc;
+         Test.startTest();
+         
+         Zone__c zone = new Zone__c();
+         zone.Name = '0';
+         insert zone;
+      
+         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+         postal.Name = '123';
+         postal.Name = '100044';
+         postal.House_Block_Number__c = '1';
+         postal.Address_Type__c = 'A';
+         insert postal;
+         
+        
+         Country__c co = [Select Id,Name, Code__c, Country_Name__c, Zonal_Code__c, Zone__c From Country__c WHERE Name = 'SG' Limit 1];
+       //  co.Code__c =  'SG';
+      //   co.Name = 'SG';
+    //   co.Zonal_Code__c = '0';
+       
+      //  insert co;
+         
+         Address__c addressRec = TestDataFactory.createAddress(1)[0];
+         addressRec.Address_Type__c = 'A';
+         addressRec.Postal_Code__c = postal.Id;
+         addressRec.Block_House_Number__c ='TEST';
+         addressRec.Level_Number__c ='xx';
+         addressRec.Unit_Number__c = 'yy';
+         addressRec.Country__c = co.Id;
+         addressRec.Address_1__c = 'address1';
+         addressRec.Address_2__c = 'address2';
+         addressRec.Address_3__c = 'address3';
+         addressRec.Address_4__c = 'address4';
+         addressRec.RecordTypeId = ConstantsSLB.getKeyId('Address_Local');
+         
+         insert addressRec;
+         
+         Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+         acc.AccountNumber = '91411551';
+         acc.Name = 'Bulk Upload Test 1';
+         acc.Email__c = 'sample@sph.com';
+         acc.Acknowledgement_Letter__c = 'Email';
+         acc.Renewal_Letter__c = 'Hard Copy';
+         acc.Airline_Indicator__c = false;
+         System.debug('account beforeinserted' + acc.AccountNumber);
+         acc.Status__c = 'Active';
+         acc.Generate_Account_Number__c = false;
+         insert acc;
+         
+         
+         Contact con = TestDataFactory.createContact(1)[0];
+         con.FirstName = 'Water';
+         con.LastName = 'Monkey';
+         con.Billing_Account_Name_2__c = 'Bulk Upload Test 1';
+         con.Address__c = addressRec.Id;
+         con.AccountId = acc.Id;
+         con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
+         con.Email__c = 'sample@sph.com';
+         con.HomePhone__c = '9999222';
+         con.Billing_Indicator__c = true;
+         con.Recipient_Indicator__c = true;
+         insert con; 
+         
+         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
+         billAcc.Zuora__Account__c = acc.id;
+         billAcc.Billing_Contact__c = con.Id;
+         billAcc.Billing_Type__c = 'Recurring Prepaid';
+         billAcc.Zuora__AccountNumber__c = '91411551';
+         billAcc.Zuora__DefaultPaymentMethod__c = 'Other';
+         billAcc.Other_PaymentMethod__c = 'Internal Storage';
+         insert billAcc;
+        // System.debug('account inserted' + billAcc.id);
+         //String stringVal1 = 'PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,RCAddressRecordType,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,GiftCodes,PromotionCode,GiftCodes,RCAddressRecordType,RCCityCode,RCPackingCode,BCAddressRecordType,BCCityCode,BCPackingCode';
+         String stringVal1 = 'AccountNumber,BillingAccountNumber,AccountRecordType,AccountName,DateSince,AccountDateOfBirth,Designation,AccountNRIC,Passport,AccountGender,ContactPerson,AttentionSeekingSubs,AttentionToCareOfIndicator,AttentionToCareOfSalutation,AttentionToCareOf,SubGroup,VipStaffHomePhone,VipStaffMobilePhone,VipStaffEmail,AccountEmail,EmailSecondary,Education,Language,Race,GstOutOfScope,GstInvoice,CreditAlert,AcknowledgementLetter,RenewalLetter,SmsRenewalNotification,VendorCommunicationPreference,EshopRefNo,AirlineIndicator,StaffId,UniqueEntityNumber,IncomeRange,RCSalutation,RCFirstName,RCLastName,RCNRIC,RCPassport,RCAttnToName,RCAccountName2,RCBusinessAddressIndicator,RCHomeNumber,RCFax,RCMobileNumber,RCMobileNumber2,RCOfficeNumber,RCOfficeExtension,RCEmail,RCEmailSecondary,RCAddressRecordType,RCPostalCode,RCLevelNumber,RCUnitNumber,RCCountryCode,RCAddress1,RCAddress2,RCAddress3,RCAddress4,RCCompanyCode,RCDepartmentCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCPackingCode,RCCityCode,RCAdditionalInfo,BCSalutation,BCFirstName,BCLastName,BCNRIC,BCPassport,BCAttnToName,BCAccountName2,BCBusinessAddressIndicator,BCHomeNumber,BCFax,BCMobileNumber,BCMobileNumber2,BCOfficeNumber,BCOfficeExtension,BCEmail,BCEmailSecondary,BCAddressRecordType,BCPostalCode,BCLevelNumber,BCUnitNumber,BCCountryCode,BCAddress1,BCAddress2,BCAddress3,BCAddress4,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,BCPackingCode,BCCityCode,BCAdditionalInfo,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,ArmsAccountNumber,ArmsBusinessProfile,ArmsDebtManagementTreatment,CashAmountPaid,CheckAmount,CheckDated,CheckIssuingBank,CheckNumber,CheckRemarks,CostCentre,CreditCardAddress1,CreditCardCity,CreditCardCountry,CreditCardCVV,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardNumber,CreditCardType,DeliveryAmount,DeliveryChargeType,GlCode,Sponsor,VendorSmsRemark,SuppressAcknoweledgementLetter,SuppressRenewalAndReminderLetter,SuppressVendorNotification,GenerateInvoice,AutoRenew,PromotionCode,PackageCode,AddonPackageCode,GiftCodes,StartDate,NewContractPeriod,Quantity,DeliveredBy,MailingAgentCode';
+         //String stringVal2 = 'PackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,123456,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,Other,Invoice,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,Quantity,Internal,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,Internal,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,Gift Codes,PromotionCode,GiftCodes,Test,Airline,RCCityCode,RCPackingCode,Airline,BCCityCode,BCPackingCode';
+         String stringVal2 = ',,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Local,100044,03,03,TestCountry,,,,,,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Local,100044,03,03,TestCountry,,,,,,,,,,,,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Vendor,';
+         //Test.setMock(WebServiceMock.class, new zLoginMock());
+                 
+         Document doc = new Document();
+         doc.FolderId = UserInfo.getUserId();
+         doc.Name = 'BulkOrderUploadTemplate';
+         //Blob bodyBlob = Blob.valueOf('PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy\nPackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy');
+         Blob bodyBlob = Blob.valueOf(stringVal1 + '\n' + stringVal2);
+         doc.body = bodyBlob;
+         doc.Type = 'csv';
+         doc.ContentType = 'application/vnd.ms-excel';
+         insert doc;
+          
+         
+         //Promotion__c
+         prom = TestDataFactory.createPromotion(1)[0];
+         prom.Promotion_Code__c = 'PackageCode';
+         prom.Contract_Period__c = '30';
+         insert prom;
+         
+         Package__c pack = TestDataFactory.createPackage(1)[0];
+         pack.Package_Code__c = 'AddonPackageCode';
+         pack.Billing_Type__c = 'Recurring Prepaid';
+         pack.Subscription_Type__c = 'TERMED';
+         pack.Package_Price__c = 3;
+         pack.Subscription_Period__c = '30';
+         insert pack;
+         
+         Promotion_Package__c promPack = TestDataFactory.createPromotionPackage(1)[0];
+         promPack.Promotion__c = prom.Id;
+         promPack.Package_Name__c = pack.ID;
+         insert promPack;
+         
+         zqu__ZProduct__c zProduct = TestDataFactory.createZProduct(1)[0];
+         zProduct.ProductPlatform__c = 'All-In-One';
+         zProduct.ProductCode__c = 'POSCHG';
+         database.insert(zProduct);
+         
+         Zone_Product__c zoneProd = new Zone_Product__c();
+         zoneProd.Zone__c = zone.id;
+         zoneProd.Product__c = zProduct.id;
+         zoneProd.Effective_Start_Date__c = Date.Today();
+         zoneProd.Postage_Charge__c = 5;
+         insert zoneProd;
+         
+         
+         zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
+         prdRatePlan.zqu__ZProduct__c = zProduct.Id;
+         prdRatePlan.RatePlanType__c= 'Bill Plan';
+         prdRatePlan.SubscriptionFrequency__c = '1';
+         prdRatePlan.RatePlanCode__c = 'CHGPOS';
+         prdRatePlan.zqu__Deleted__c = false;
+  
+         database.insert(prdRatePlan);
+         
+         Package_Item__c pItem = TestDataFactory.createPackageItem(1,'Base Product')[0];
+         pItem.Package__c = pack.id;
+         pItem.Product_Rate_Plan__c = prdRatePlan.Id;
+         database.insert(pItem);
+         
+         Publication__c pub = TestDataFactory.createPublication(1)[0];
+         pub.Earliest_Start_Date__c = date.today()+1;
+         pub.Direct_Sub_Delivery_Method__c = 'Vendor';
+         insert pub;
+         
+         Product_Publication__c pp = TestDataFactory.createProductPublication(1)[0];
+         pp.ZProduct__c = zProduct.Id;
+         pp.Publication_Code__c = pub.Id;
+         insert pp;
+         
+         Order__c order = TestDataFactory.createOrder(1)[0];
+         order.Account__c = acc.Id;
+         order.Payment_Mode__c = 'Other';
+         order.Other_Payment_Mode__c = 'External Parties';
+         order.Billing_Account__c = billAcc.id;
+         order.Billing_Type__c = 'Recurring Prepaid';
+         order.Order_Type__c = 'Start';
+         order.Recipient_Contact__c = con.id;
+         order.Billing_Contact__c = con.id;
+         insert order;
+         
+         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+         orderline.Order__c = order.Id;
+         orderline.Main_Package_ID__c = pack.Id;
+         orderline.Delivered_By__c = 'Mailing Agent';
+         orderline.Qty__c = 1;
+         orderline.Main_Package_Frequency__c = 'Default';
+         insert orderline;
+         
+       
+         BulkOrderUploadController bulkorder = new BulkOrderUploadController();
+         bulkorder.orderFile = doc;
+         bulkorder.verifyDocument();         
+         bulkorder.processDocument();
+         bulkorder.retrieveReferenceDoc();
+         bulkorder.cancel();
+         //bulkorder.testCoveragePatch();
+         
+         BulkOrderUploadController bulkorder2 = new BulkOrderUploadController();
+         bulkorder2.orderFile = NULL;
+         bulkorder2.verifyDocument();
+         Test.stopTest();
+         
+         }
+        
+     }
+     
+     static testmethod void unitTest3() {
+        User testUser = createUser();
+           
+        System.runAs(testUser) {   
+        // setUpTestData(); 
+                 /*  Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+          config.Name = 'Test';
+          config.Field_Name__c = 'Test';
+         config.Object_Name__c = 'Test';
+         config.Identifier__c = 'Test';
+         insert config;*/
+       /*  List<Product_Frequency__c> prodfreqs = CustomSettingsDataFactory.createProduct_Frequency();
+         insert prodfreqs;
+         List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+         billingBatches = CustomSettingsDataFactory.createBillingBatch();
+         insert billingBatches;
+        List<Bulk_Order_Configuration__c>  boc = new List<Bulk_Order_Configuration__c>();
+        boc = CustomSettingsDataFactory.createBulkOrder();*/
+         
+        // insert boc;
+         Test.startTest();
+         
+         Zone__c zone = new Zone__c();
+         zone.Name = '0';
+         insert zone;
+      
+         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+         postal.Name = '123';
+         postal.Name = '100044';
+         postal.House_Block_Number__c = '1';
+         postal.Address_Type__c = 'A';
+         insert postal;
+         
+        
+         Country__c co = [Select Id,Name, Code__c, Country_Name__c, Zonal_Code__c, Zone__c From Country__c WHERE Name = 'SG' Limit 1];
+       //  co.Code__c =  'SG';
+      //   co.Name = 'SG';
+    //   co.Zonal_Code__c = '0';
+       
+      //  insert co;
+         
+         Address__c addressRec = TestDataFactory.createAddress(1)[0];
+         addressRec.Address_Type__c = 'A';
+         addressRec.Postal_Code__c = postal.Id;
+         addressRec.Block_House_Number__c ='TEST';
+         addressRec.Level_Number__c ='xx';
+         addressRec.Unit_Number__c = 'yy';
+         addressRec.Country__c = co.Id;
+         addressRec.Address_1__c = 'address1';
+         addressRec.Address_2__c = 'address2';
+         addressRec.Address_3__c = 'address3';
+         addressRec.Address_4__c = 'address4';
+         addressRec.RecordTypeId = ConstantsSLB.getKeyId('Address_Local');
+         
+         insert addressRec;
+         
+         Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+         acc.AccountNumber = '91411551';
+         acc.Name = 'Bulk Upload Test 1';
+         acc.Email__c = 'sample@sph.com';
+         acc.Acknowledgement_Letter__c = 'Email';
+         acc.Renewal_Letter__c = 'Hard Copy';
+         acc.Airline_Indicator__c = false;
+         System.debug('account beforeinserted' + acc.AccountNumber);
+         acc.Status__c = 'Active';
+         acc.Generate_Account_Number__c = false;
+         insert acc;
+         
+         
+         Contact con = TestDataFactory.createContact(1)[0];
+         con.FirstName = 'Water';
+         con.LastName = 'Monkey';
+         con.Billing_Account_Name_2__c = 'Bulk Upload Test 1';
+         con.Address__c = addressRec.Id;
+         con.AccountId = acc.Id;
+         con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
+         con.Email__c = 'sample@sph.com';
+         con.HomePhone__c = '9999222';
+         con.Billing_Indicator__c = true;
+         con.Recipient_Indicator__c = true;
          insert con; 
          
          Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
          billAcc.Zuora__Account__c = acc.id;
          billAcc.Billing_Contact__c = con.Id;
          billAcc.Billing_Type__c = 'Full Prepaid';
-         billAcc.Zuora__AccountNumber__c = '12345';
+         billAcc.Zuora__AccountNumber__c = '91411551';
          billAcc.Zuora__DefaultPaymentMethod__c = 'Other';
          billAcc.Other_PaymentMethod__c = 'Internal Storage';
          insert billAcc;
-         System.debug('account inserted' + billAcc.id);
+        // System.debug('account inserted' + billAcc.id);
          //String stringVal1 = 'PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,RCAddressRecordType,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,GiftCodes,PromotionCode,GiftCodes,RCAddressRecordType,RCCityCode,RCPackingCode,BCAddressRecordType,BCCityCode,BCPackingCode';
          String stringVal1 = 'AccountNumber,BillingAccountNumber,AccountRecordType,AccountName,DateSince,AccountDateOfBirth,Designation,AccountNRIC,Passport,AccountGender,ContactPerson,AttentionSeekingSubs,AttentionToCareOfIndicator,AttentionToCareOfSalutation,AttentionToCareOf,SubGroup,VipStaffHomePhone,VipStaffMobilePhone,VipStaffEmail,AccountEmail,EmailSecondary,Education,Language,Race,GstOutOfScope,GstInvoice,CreditAlert,AcknowledgementLetter,RenewalLetter,SmsRenewalNotification,VendorCommunicationPreference,EshopRefNo,AirlineIndicator,StaffId,UniqueEntityNumber,IncomeRange,RCSalutation,RCFirstName,RCLastName,RCNRIC,RCPassport,RCAttnToName,RCAccountName2,RCBusinessAddressIndicator,RCHomeNumber,RCFax,RCMobileNumber,RCMobileNumber2,RCOfficeNumber,RCOfficeExtension,RCEmail,RCEmailSecondary,RCAddressRecordType,RCPostalCode,RCLevelNumber,RCUnitNumber,RCCountryCode,RCAddress1,RCAddress2,RCAddress3,RCAddress4,RCCompanyCode,RCDepartmentCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCPackingCode,RCCityCode,RCAdditionalInfo,BCSalutation,BCFirstName,BCLastName,BCNRIC,BCPassport,BCAttnToName,BCAccountName2,BCBusinessAddressIndicator,BCHomeNumber,BCFax,BCMobileNumber,BCMobileNumber2,BCOfficeNumber,BCOfficeExtension,BCEmail,BCEmailSecondary,BCAddressRecordType,BCPostalCode,BCLevelNumber,BCUnitNumber,BCCountryCode,BCAddress1,BCAddress2,BCAddress3,BCAddress4,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,BCPackingCode,BCCityCode,BCAdditionalInfo,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,ArmsAccountNumber,ArmsBusinessProfile,ArmsDebtManagementTreatment,CashAmountPaid,CheckAmount,CheckDated,CheckIssuingBank,CheckNumber,CheckRemarks,CostCentre,CreditCardAddress1,CreditCardCity,CreditCardCountry,CreditCardCVV,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardNumber,CreditCardType,DeliveryAmount,DeliveryChargeType,GlCode,Sponsor,VendorSmsRemark,SuppressAcknoweledgementLetter,SuppressRenewalAndReminderLetter,SuppressVendorNotification,GenerateInvoice,AutoRenew,PromotionCode,PackageCode,AddonPackageCode,GiftCodes,StartDate,NewContractPeriod,Quantity,DeliveredBy,MailingAgentCode';
          //String stringVal2 = 'PackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,123456,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,Other,Invoice,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,Quantity,Internal,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,Internal,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,Gift Codes,PromotionCode,GiftCodes,Test,Airline,RCCityCode,RCPackingCode,Airline,BCCityCode,BCPackingCode';
-         String stringVal2 = '31411551,,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Water,Monkey,,,,Bulk Upload Test 1,,,,,,,,sample@sph.com,,Internal,100044,3,3,,,,,,,,,,,,,,,Water,Monkey,,,,Bulk Upload Test 1,,9999222,,,,,,sample@sph.com,,Internal,100044,3,3,,,,,,,,,,,,,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Vendor,';
-         Test.setMock(WebServiceMock.class, new zLoginMock());
+         String stringVal2 = ',,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Local,100044,03,03,TestCountry,,,,,,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Local,100044,03,03,TestCountry,,,,,,,,,,,,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Mailing Agent,';
+         //Test.setMock(WebServiceMock.class, new zLoginMock());
                  
          Document doc = new Document();
          doc.FolderId = UserInfo.getUserId();
@@ -555,7 +995,7 @@ private class BulkOrderUploadControllerTest {
          Package__c pack = TestDataFactory.createPackage(1)[0];
          pack.Package_Code__c = 'AddonPackageCode';
          pack.Billing_Type__c = 'Full Prepaid';
-         pack.Subscription_Type__c = 'TEREMED';
+         pack.Subscription_Type__c = 'TERMED';
          pack.Package_Price__c = 3;
          pack.Subscription_Period__c = '30';
          insert pack;
@@ -567,12 +1007,24 @@ private class BulkOrderUploadControllerTest {
          
          zqu__ZProduct__c zProduct = TestDataFactory.createZProduct(1)[0];
          zProduct.ProductPlatform__c = 'All-In-One';
+         zProduct.ProductCode__c = 'POSCHG';
          database.insert(zProduct);
+         
+         Zone_Product__c zoneProd = new Zone_Product__c();
+         zoneProd.Zone__c = zone.id;
+         zoneProd.Product__c = zProduct.id;
+         zoneProd.Effective_Start_Date__c = Date.Today();
+         zoneProd.Postage_Charge__c = 5;
+         insert zoneProd;
+         
          
          zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
          prdRatePlan.zqu__ZProduct__c = zProduct.Id;
          prdRatePlan.RatePlanType__c= 'Bill Plan';
          prdRatePlan.SubscriptionFrequency__c = '1';
+         prdRatePlan.RatePlanCode__c = 'CHGPOS';
+         prdRatePlan.zqu__Deleted__c = false;
+  
          database.insert(prdRatePlan);
          
          Package_Item__c pItem = TestDataFactory.createPackageItem(1,'Base Product')[0];
@@ -582,6 +1034,7 @@ private class BulkOrderUploadControllerTest {
          
          Publication__c pub = TestDataFactory.createPublication(1)[0];
          pub.Earliest_Start_Date__c = date.today()+1;
+         pub.Direct_Sub_Delivery_Method__c = 'Mailing Agent';
          insert pub;
          
          Product_Publication__c pp = TestDataFactory.createProductPublication(1)[0];
@@ -596,23 +1049,260 @@ private class BulkOrderUploadControllerTest {
          order.Billing_Account__c = billAcc.id;
          order.Billing_Type__c = 'Full Prepaid';
          order.Order_Type__c = 'Start';
+         order.Recipient_Contact__c = con.id;
+         order.Billing_Contact__c = con.id;
          insert order;
          
          Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
          orderline.Order__c = order.Id;
          orderline.Main_Package_ID__c = pack.Id;
-         orderline.Delivered_By__c = 'Vendor';
+         orderline.Delivered_By__c = 'Mailing Agent';
          orderline.Qty__c = 1;
+         orderline.Main_Package_Frequency__c = 'Default';
          insert orderline;
          
        
          BulkOrderUploadController bulkorder = new BulkOrderUploadController();
          bulkorder.orderFile = doc;
-         bulkorder.retrieveReferenceDoc();
          bulkorder.verifyDocument();         
          bulkorder.processDocument();
+         bulkorder.retrieveReferenceDoc();
          bulkorder.cancel();
-         bulkorder.testCoveragePatch();
+         //bulkorder.testCoveragePatch();
+         
+         BulkOrderUploadController bulkorder2 = new BulkOrderUploadController();
+         bulkorder2.orderFile = NULL;
+         bulkorder2.verifyDocument();
+         Test.stopTest();
+         
+         }
+        
+     }
+    
+    static testmethod void unitTest5() {
+        User testUser = createUser();
+           
+        System.runAs(testUser) {   
+        // setUpTestData(); 
+                 /*  Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+          config.Name = 'Test';
+          config.Field_Name__c = 'Test';
+         config.Object_Name__c = 'Test';
+         config.Identifier__c = 'Test';
+         insert config;*/
+       /*  List<Product_Frequency__c> prodfreqs = CustomSettingsDataFactory.createProduct_Frequency();
+         insert prodfreqs;
+         List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+         billingBatches = CustomSettingsDataFactory.createBillingBatch();
+         insert billingBatches;
+        List<Bulk_Order_Configuration__c>  boc = new List<Bulk_Order_Configuration__c>();
+        boc = CustomSettingsDataFactory.createBulkOrder();*/
+         
+        // insert boc;
+         Test.startTest();
+         
+         
+         Zone__c zone = new Zone__c();
+         zone.Name = '0';
+         insert zone;
+      
+        SPH_Company__c comp = new SPH_Company__c();
+        comp.name = 'Company';
+        comp.Company_Code__c = 'Company';
+        insert comp;
+        
+        SPH_Department__c dept = new SPH_Department__c();
+        dept.name = 'Department';
+        dept.Department_Code__c = 'Department';
+        insert dept;
+        
+        SPH_Division__c div = new SPH_Division__c();
+        div.name = 'Division';
+        div.Department_Code__c = 'Division';
+        insert div;
+        
+        SPH_Location__c loc = new SPH_Location__c();
+        loc.name = 'Location';
+        loc.Location_Code__c = 'Loc';
+        insert loc;
+        
+        SPH_Section__c sec = new SPH_Section__c();
+        sec.name = 'Section';
+        sec.Section_Code__c = 'Section';
+        insert sec;
+        
+         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+         postal.Name = '123';
+         postal.Name = '100044';
+         postal.House_Block_Number__c = '1';
+         postal.Address_Type__c = 'A';
+         insert postal;
+         
+        
+         Country__c co = [Select Id,Name, Code__c, Country_Name__c, Zonal_Code__c, Zone__c From Country__c WHERE Name = 'SG' Limit 1];
+       //  co.Code__c =  'SG';
+      //   co.Name = 'SG';
+    //   co.Zonal_Code__c = '0';
+       
+      //  insert co;
+      
+        
+         
+         Address__c addressRec = TestDataFactory.createAddress(1)[0];
+         addressRec.Address_Type__c = 'A';
+         addressRec.Postal_Code__c = postal.Id;
+         addressRec.Block_House_Number__c ='TEST';
+         addressRec.Level_Number__c ='xx';
+         addressRec.Unit_Number__c = 'yy';
+         addressRec.Country__c = co.Id;
+         addressRec.Address_1__c = 'address1';
+         addressRec.Address_2__c = 'address2';
+         addressRec.Address_3__c = 'address3';
+         addressRec.Address_4__c = 'address4';
+         addressRec.Company_Code__c = comp.id;
+         addressRec.Department__c = dept.id;
+         addressRec.Division_Code__c = div.id;
+         addressRec.Location_Code__c = loc.id;
+         addressRec.Section_Code__c = sec.id;
+         addressRec.RecordTypeId = ConstantsSLB.getKeyId('Address_Internal');
+         
+         insert addressRec;
+         
+         Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+         acc.AccountNumber = '91411551';
+         acc.Name = 'Bulk Upload Test 1';
+         acc.Email__c = 'sample@sph.com';
+         acc.Acknowledgement_Letter__c = 'Email';
+         acc.Renewal_Letter__c = 'Hard Copy';
+         acc.Airline_Indicator__c = false;
+         System.debug('account beforeinserted' + acc.AccountNumber);
+         acc.Status__c = 'Active';
+         acc.Generate_Account_Number__c = false;
+         insert acc;
+         
+         
+         Contact con = TestDataFactory.createContact(1)[0];
+         con.FirstName = 'Water';
+         con.LastName = 'Monkey';
+         con.Billing_Account_Name_2__c = 'Bulk Upload Test 1';
+         con.Address__c = addressRec.Id;
+         con.AccountId = acc.Id;
+         con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
+         con.Email__c = 'sample@sph.com';
+         con.HomePhone__c = '9999222';
+         con.Billing_Indicator__c = true;
+         con.Recipient_Indicator__c = true;
+         insert con; 
+         
+         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
+         billAcc.Zuora__Account__c = acc.id;
+         billAcc.Billing_Contact__c = con.Id;
+         billAcc.Billing_Type__c = 'Full Prepaid';
+         billAcc.Zuora__AccountNumber__c = '91411551';
+         billAcc.Zuora__DefaultPaymentMethod__c = 'Other';
+         billAcc.Other_PaymentMethod__c = 'Internal Storage';
+         insert billAcc;
+        // System.debug('account inserted' + billAcc.id);
+         //String stringVal1 = 'PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,RCAddressRecordType,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,GiftCodes,PromotionCode,GiftCodes,RCAddressRecordType,RCCityCode,RCPackingCode,BCAddressRecordType,BCCityCode,BCPackingCode';
+         String stringVal1 = 'AccountNumber,BillingAccountNumber,AccountRecordType,AccountName,DateSince,AccountDateOfBirth,Designation,AccountNRIC,Passport,AccountGender,ContactPerson,AttentionSeekingSubs,AttentionToCareOfIndicator,AttentionToCareOfSalutation,AttentionToCareOf,SubGroup,VipStaffHomePhone,VipStaffMobilePhone,VipStaffEmail,AccountEmail,EmailSecondary,Education,Language,Race,GstOutOfScope,GstInvoice,CreditAlert,AcknowledgementLetter,RenewalLetter,SmsRenewalNotification,VendorCommunicationPreference,EshopRefNo,AirlineIndicator,StaffId,UniqueEntityNumber,IncomeRange,RCSalutation,RCFirstName,RCLastName,RCNRIC,RCPassport,RCAttnToName,RCAccountName2,RCBusinessAddressIndicator,RCHomeNumber,RCFax,RCMobileNumber,RCMobileNumber2,RCOfficeNumber,RCOfficeExtension,RCEmail,RCEmailSecondary,RCAddressRecordType,RCPostalCode,RCLevelNumber,RCUnitNumber,RCCountryCode,RCAddress1,RCAddress2,RCAddress3,RCAddress4,RCCompanyCode,RCDepartmentCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCPackingCode,RCCityCode,RCAdditionalInfo,BCSalutation,BCFirstName,BCLastName,BCNRIC,BCPassport,BCAttnToName,BCAccountName2,BCBusinessAddressIndicator,BCHomeNumber,BCFax,BCMobileNumber,BCMobileNumber2,BCOfficeNumber,BCOfficeExtension,BCEmail,BCEmailSecondary,BCAddressRecordType,BCPostalCode,BCLevelNumber,BCUnitNumber,BCCountryCode,BCAddress1,BCAddress2,BCAddress3,BCAddress4,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,BCPackingCode,BCCityCode,BCAdditionalInfo,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,ArmsAccountNumber,ArmsBusinessProfile,ArmsDebtManagementTreatment,CashAmountPaid,CheckAmount,CheckDated,CheckIssuingBank,CheckNumber,CheckRemarks,CostCentre,CreditCardAddress1,CreditCardCity,CreditCardCountry,CreditCardCVV,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardNumber,CreditCardType,DeliveryAmount,DeliveryChargeType,GlCode,Sponsor,VendorSmsRemark,SuppressAcknoweledgementLetter,SuppressRenewalAndReminderLetter,SuppressVendorNotification,GenerateInvoice,AutoRenew,PromotionCode,PackageCode,AddonPackageCode,GiftCodes,StartDate,NewContractPeriod,Quantity,DeliveredBy,MailingAgentCode';
+         //String stringVal2 = 'PackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,123456,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,Other,Invoice,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,Quantity,Internal,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,Internal,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,Gift Codes,PromotionCode,GiftCodes,Test,Airline,RCCityCode,RCPackingCode,Airline,BCCityCode,BCPackingCode';
+         String stringVal2 = ',,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Internal,100044,03,03,TestCountry,,,,,Company,Department,Division,Loc,Section,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Internal,100044,03,03,TestCountry,,,,,Company,Department,Division,Loc,Section,,,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Mailing Agent,';
+         //Test.setMock(WebServiceMock.class, new zLoginMock());
+                 
+         Document doc = new Document();
+         doc.FolderId = UserInfo.getUserId();
+         doc.Name = 'BulkOrderUploadTemplate';
+         //Blob bodyBlob = Blob.valueOf('PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy\nPackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy');
+         Blob bodyBlob = Blob.valueOf(stringVal1 + '\n' + stringVal2);
+         doc.body = bodyBlob;
+         doc.Type = 'csv';
+         doc.ContentType = 'application/vnd.ms-excel';
+         insert doc;
+          
+         
+         //Promotion__c
+         prom = TestDataFactory.createPromotion(1)[0];
+         prom.Promotion_Code__c = 'PackageCode';
+         prom.Contract_Period__c = '30';
+         insert prom;
+         
+         Package__c pack = TestDataFactory.createPackage(1)[0];
+         pack.Package_Code__c = 'AddonPackageCode';
+         pack.Billing_Type__c = 'Full Prepaid';
+         pack.Subscription_Type__c = 'TERMED';
+         pack.Package_Price__c = 3;
+         pack.Subscription_Period__c = '30';
+         insert pack;
+         
+         Promotion_Package__c promPack = TestDataFactory.createPromotionPackage(1)[0];
+         promPack.Promotion__c = prom.Id;
+         promPack.Package_Name__c = pack.ID;
+         insert promPack;
+         
+         zqu__ZProduct__c zProduct = TestDataFactory.createZProduct(1)[0];
+         zProduct.ProductPlatform__c = 'All-In-One';
+         zProduct.ProductCode__c = 'POSCHG';
+         database.insert(zProduct);
+         
+         Zone_Product__c zoneProd = new Zone_Product__c();
+         zoneProd.Zone__c = zone.id;
+         zoneProd.Product__c = zProduct.id;
+         zoneProd.Effective_Start_Date__c = Date.Today();
+         zoneProd.Postage_Charge__c = 5;
+         insert zoneProd;
+         
+         
+         zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
+         prdRatePlan.zqu__ZProduct__c = zProduct.Id;
+         prdRatePlan.RatePlanType__c= 'Bill Plan';
+         prdRatePlan.SubscriptionFrequency__c = '1';
+         prdRatePlan.RatePlanCode__c = 'CHGPOS';
+         prdRatePlan.zqu__Deleted__c = false;
+  
+         database.insert(prdRatePlan);
+         
+         Package_Item__c pItem = TestDataFactory.createPackageItem(1,'Base Product')[0];
+         pItem.Package__c = pack.id;
+         pItem.Product_Rate_Plan__c = prdRatePlan.Id;
+         database.insert(pItem);
+         
+         Publication__c pub = TestDataFactory.createPublication(1)[0];
+         pub.Earliest_Start_Date__c = date.today()+1;
+         pub.Direct_Sub_Delivery_Method__c = 'Mailing Agent';
+         insert pub;
+         
+         Product_Publication__c pp = TestDataFactory.createProductPublication(1)[0];
+         pp.ZProduct__c = zProduct.Id;
+         pp.Publication_Code__c = pub.Id;
+         insert pp;
+         
+         Order__c order = TestDataFactory.createOrder(1)[0];
+         order.Account__c = acc.Id;
+         order.Payment_Mode__c = 'Other';
+         order.Other_Payment_Mode__c = 'External Parties';
+         order.Billing_Account__c = billAcc.id;
+         order.Billing_Type__c = 'Full Prepaid';
+         order.Order_Type__c = 'Start';
+         order.Recipient_Contact__c = con.id;
+         order.Billing_Contact__c = con.id;
+         insert order;
+         
+         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+         orderline.Order__c = order.Id;
+         orderline.Main_Package_ID__c = pack.Id;
+         orderline.Delivered_By__c = 'Mailing Agent';
+         orderline.Qty__c = 1;
+         orderline.Main_Package_Frequency__c = 'Default';
+         insert orderline;
+         
+       
+         BulkOrderUploadController bulkorder = new BulkOrderUploadController();
+         bulkorder.orderFile = doc;
+         bulkorder.verifyDocument();         
+         bulkorder.processDocument();
+         bulkorder.retrieveReferenceDoc();
+         bulkorder.cancel();
+         //bulkorder.testCoveragePatch();
          
          BulkOrderUploadController bulkorder2 = new BulkOrderUploadController();
          bulkorder2.orderFile = NULL;
@@ -623,6 +1313,221 @@ private class BulkOrderUploadControllerTest {
         
      }
      
+     static testmethod void unitTest6() {
+        User testUser = createUser();
+           
+        System.runAs(testUser) {   
+        // setUpTestData(); 
+                 /*  Bulk_Order_Configuration__c config = new Bulk_Order_Configuration__c();
+          config.Name = 'Test';
+          config.Field_Name__c = 'Test';
+         config.Object_Name__c = 'Test';
+         config.Identifier__c = 'Test';
+         insert config;*/
+       /*  List<Product_Frequency__c> prodfreqs = CustomSettingsDataFactory.createProduct_Frequency();
+         insert prodfreqs;
+         List <Billing_Batch__c> billingBatches = new List <Billing_Batch__c>();
+         billingBatches = CustomSettingsDataFactory.createBillingBatch();
+         insert billingBatches;
+        List<Bulk_Order_Configuration__c>  boc = new List<Bulk_Order_Configuration__c>();
+        boc = CustomSettingsDataFactory.createBulkOrder();*/
+         
+        // insert boc;
+         Test.startTest();
+         
+         
+         Zone__c zone = new Zone__c();
+         zone.Name = '0';
+         insert zone;
+      
+        
+        Packing_Grp__c  pckgrp = new Packing_Grp__c();
+        pckgrp.Name = 'Packing';
+        pckgrp.Packing_Group_Code__c = 'Packing';
+        insert pckgrp;
+        
+         Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+         postal.Name = '123';
+         postal.Name = '100044';
+         postal.House_Block_Number__c = '1';
+         postal.Address_Type__c = 'A';
+         insert postal;
+         
+        
+         Country__c co = [Select Id,Name, Code__c, Country_Name__c, Zonal_Code__c, Zone__c From Country__c WHERE Name = 'SG' Limit 1];
+       //  co.Code__c =  'SG';
+      //   co.Name = 'SG';
+    //   co.Zonal_Code__c = '0';
+       
+      //  insert co;
+      
+        City__c city = new City__c();
+        city.Name = 'City';
+        city.City_Legacy_ID__c = 'City';
+        city.Flight_Number_1__c = 'City';
+        insert city;
+         
+         Address__c addressRec = TestDataFactory.createAddress(1)[0];
+         addressRec.Address_Type__c = 'A';
+         addressRec.Postal_Code__c = postal.Id;
+         addressRec.Block_House_Number__c ='TEST';
+         addressRec.Level_Number__c ='xx';
+         addressRec.Unit_Number__c = 'yy';
+         addressRec.Country__c = co.Id;
+         addressRec.Address_1__c = 'address1';
+         addressRec.Address_2__c = 'address2';
+         addressRec.Address_3__c = 'address3';
+         addressRec.Address_4__c = 'address4';
+         addressRec.City__c = city.id;
+         addressRec.Packing_Code__c = pckgrp.id;
+         addressRec.RecordTypeId = ConstantsSLB.getKeyId('Address_Airline');
+         
+         insert addressRec;
+         
+         Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+         acc.AccountNumber = '91411551';
+         acc.Name = 'Bulk Upload Test 1';
+         acc.Email__c = 'sample@sph.com';
+         acc.Acknowledgement_Letter__c = 'Email';
+         acc.Renewal_Letter__c = 'Hard Copy';
+         acc.Airline_Indicator__c = false;
+         System.debug('account beforeinserted' + acc.AccountNumber);
+         acc.Status__c = 'Active';
+         acc.Generate_Account_Number__c = false;
+         insert acc;
+         
+         
+         Contact con = TestDataFactory.createContact(1)[0];
+         con.FirstName = 'Water';
+         con.LastName = 'Monkey';
+         con.Billing_Account_Name_2__c = 'Bulk Upload Test 1';
+         con.Address__c = addressRec.Id;
+         con.AccountId = acc.Id;
+         con.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
+         con.Email__c = 'sample@sph.com';
+         con.HomePhone__c = '9999222';
+         con.Billing_Indicator__c = true;
+         con.Recipient_Indicator__c = true;
+         insert con; 
+         
+         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
+         billAcc.Zuora__Account__c = acc.id;
+         billAcc.Billing_Contact__c = con.Id;
+         billAcc.Billing_Type__c = 'Full Prepaid';
+         billAcc.Zuora__AccountNumber__c = '91411551';
+         billAcc.Zuora__DefaultPaymentMethod__c = 'Other';
+         billAcc.Other_PaymentMethod__c = 'Internal Storage';
+         insert billAcc;
+        // System.debug('account inserted' + billAcc.id);
+         //String stringVal1 = 'PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,RCAddressRecordType,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,GiftCodes,PromotionCode,GiftCodes,RCAddressRecordType,RCCityCode,RCPackingCode,BCAddressRecordType,BCCityCode,BCPackingCode';
+         String stringVal1 = 'AccountNumber,BillingAccountNumber,AccountRecordType,AccountName,DateSince,AccountDateOfBirth,Designation,AccountNRIC,Passport,AccountGender,ContactPerson,AttentionSeekingSubs,AttentionToCareOfIndicator,AttentionToCareOfSalutation,AttentionToCareOf,SubGroup,VipStaffHomePhone,VipStaffMobilePhone,VipStaffEmail,AccountEmail,EmailSecondary,Education,Language,Race,GstOutOfScope,GstInvoice,CreditAlert,AcknowledgementLetter,RenewalLetter,SmsRenewalNotification,VendorCommunicationPreference,EshopRefNo,AirlineIndicator,StaffId,UniqueEntityNumber,IncomeRange,RCSalutation,RCFirstName,RCLastName,RCNRIC,RCPassport,RCAttnToName,RCAccountName2,RCBusinessAddressIndicator,RCHomeNumber,RCFax,RCMobileNumber,RCMobileNumber2,RCOfficeNumber,RCOfficeExtension,RCEmail,RCEmailSecondary,RCAddressRecordType,RCPostalCode,RCLevelNumber,RCUnitNumber,RCCountryCode,RCAddress1,RCAddress2,RCAddress3,RCAddress4,RCCompanyCode,RCDepartmentCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCPackingCode,RCCityCode,RCAdditionalInfo,BCSalutation,BCFirstName,BCLastName,BCNRIC,BCPassport,BCAttnToName,BCAccountName2,BCBusinessAddressIndicator,BCHomeNumber,BCFax,BCMobileNumber,BCMobileNumber2,BCOfficeNumber,BCOfficeExtension,BCEmail,BCEmailSecondary,BCAddressRecordType,BCPostalCode,BCLevelNumber,BCUnitNumber,BCCountryCode,BCAddress1,BCAddress2,BCAddress3,BCAddress4,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,BCPackingCode,BCCityCode,BCAdditionalInfo,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,ArmsAccountNumber,ArmsBusinessProfile,ArmsDebtManagementTreatment,CashAmountPaid,CheckAmount,CheckDated,CheckIssuingBank,CheckNumber,CheckRemarks,CostCentre,CreditCardAddress1,CreditCardCity,CreditCardCountry,CreditCardCVV,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardNumber,CreditCardType,DeliveryAmount,DeliveryChargeType,GlCode,Sponsor,VendorSmsRemark,SuppressAcknoweledgementLetter,SuppressRenewalAndReminderLetter,SuppressVendorNotification,GenerateInvoice,AutoRenew,PromotionCode,PackageCode,AddonPackageCode,GiftCodes,StartDate,NewContractPeriod,Quantity,DeliveredBy,MailingAgentCode';
+         //String stringVal2 = 'PackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,123456,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,Other,Invoice,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,Quantity,Internal,BCCompanyCode,BCDepartmentCode,BCDivisionCode,BCLocationCode,BCSectionCode,Internal,RCCompanyCode,RCDivisionCode,RCLocationCode,RCSectionCode,RCDepartmentCode,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy,Gift Codes,PromotionCode,GiftCodes,Test,Airline,RCCityCode,RCPackingCode,Airline,BCCityCode,BCPackingCode';
+         String stringVal2 = ',,Direct Individual,Bulk Upload Test 1,,,,,,,,,,,,,,,, sample@sph.com,,,,,,,,Email,Hard Copy,,,,,,,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Airline,100044,03,03,TestCountry,,,,,,,,,,Packing,City,,,Account,New,,,,,,9999222,,,,,,sample@sph.com,,Airline,100044,03,03,TestCountry,,,,,,,,,,Packing,City,,Other,External Parties,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AddonPackageCode,,,,,1,Mailing Agent,';
+         //Test.setMock(WebServiceMock.class, new zLoginMock());
+                 
+         Document doc = new Document();
+         doc.FolderId = UserInfo.getUserId();
+         doc.Name = 'BulkOrderUploadTemplate';
+         //Blob bodyBlob = Blob.valueOf('PromotionCode,PackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,RCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy\nPackageCode,AddonPackageCode,AddonPackageCode,BCPostalCode,BCCountryCode,AccountName,AccountNumber,RCFirstName,RCLastName,BCFirstName,BCLastName,BillingAccountNumber,Payment Mode,OtherPaymentMode,ArmsCustomerNumber,RCPostalCode,CashAmountPaid,StartDate,NewContractPeriod,BCAddressRecordType,RCAddressRecordType,Quantity,AccountRecordType,DeliveryAmount,DeliveryChargeType,Payment Mode,DeliveredBy');
+         Blob bodyBlob = Blob.valueOf(stringVal1 + '\n' + stringVal2);
+         doc.body = bodyBlob;
+         doc.Type = 'csv';
+         doc.ContentType = 'application/vnd.ms-excel';
+         insert doc;
+          
+         
+         //Promotion__c
+         prom = TestDataFactory.createPromotion(1)[0];
+         prom.Promotion_Code__c = 'PackageCode';
+         prom.Contract_Period__c = '30';
+         insert prom;
+         
+         Package__c pack = TestDataFactory.createPackage(1)[0];
+         pack.Package_Code__c = 'AddonPackageCode';
+         pack.Billing_Type__c = 'Full Prepaid';
+         pack.Subscription_Type__c = 'TERMED';
+         pack.Package_Price__c = 3;
+         pack.Subscription_Period__c = '30';
+         insert pack;
+         
+         Promotion_Package__c promPack = TestDataFactory.createPromotionPackage(1)[0];
+         promPack.Promotion__c = prom.Id;
+         promPack.Package_Name__c = pack.ID;
+         insert promPack;
+         
+         zqu__ZProduct__c zProduct = TestDataFactory.createZProduct(1)[0];
+         zProduct.ProductPlatform__c = 'All-In-One';
+         zProduct.ProductCode__c = 'POSCHG';
+         database.insert(zProduct);
+         
+         Zone_Product__c zoneProd = new Zone_Product__c();
+         zoneProd.Zone__c = zone.id;
+         zoneProd.Product__c = zProduct.id;
+         zoneProd.Effective_Start_Date__c = Date.Today();
+         zoneProd.Postage_Charge__c = 5;
+         insert zoneProd;
+         
+         
+         zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
+         prdRatePlan.zqu__ZProduct__c = zProduct.Id;
+         prdRatePlan.RatePlanType__c= 'Bill Plan';
+         prdRatePlan.SubscriptionFrequency__c = '1';
+         prdRatePlan.RatePlanCode__c = 'CHGPOS';
+         prdRatePlan.zqu__Deleted__c = false;
+  
+         database.insert(prdRatePlan);
+         
+         Package_Item__c pItem = TestDataFactory.createPackageItem(1,'Base Product')[0];
+         pItem.Package__c = pack.id;
+         pItem.Product_Rate_Plan__c = prdRatePlan.Id;
+         database.insert(pItem);
+         
+         Publication__c pub = TestDataFactory.createPublication(1)[0];
+         pub.Earliest_Start_Date__c = date.today()+1;
+         pub.Direct_Sub_Delivery_Method__c = 'Mailing Agent';
+         insert pub;
+         
+         Product_Publication__c pp = TestDataFactory.createProductPublication(1)[0];
+         pp.ZProduct__c = zProduct.Id;
+         pp.Publication_Code__c = pub.Id;
+         insert pp;
+         
+         Order__c order = TestDataFactory.createOrder(1)[0];
+         order.Account__c = acc.Id;
+         order.Payment_Mode__c = 'Other';
+         order.Other_Payment_Mode__c = 'External Parties';
+         order.Billing_Account__c = billAcc.id;
+         order.Billing_Type__c = 'Full Prepaid';
+         order.Order_Type__c = 'Start';
+         order.Recipient_Contact__c = con.id;
+         order.Billing_Contact__c = con.id;
+         insert order;
+         
+         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+         orderline.Order__c = order.Id;
+         orderline.Main_Package_ID__c = pack.Id;
+         orderline.Delivered_By__c = 'Mailing Agent';
+         orderline.Qty__c = 1;
+         orderline.Main_Package_Frequency__c = 'Default';
+         insert orderline;
+         
+       
+         BulkOrderUploadController bulkorder = new BulkOrderUploadController();
+         bulkorder.orderFile = doc;
+         bulkorder.verifyDocument();         
+         bulkorder.processDocument();
+         bulkorder.retrieveReferenceDoc();
+         bulkorder.cancel();
+         //bulkorder.testCoveragePatch();
+         
+         BulkOrderUploadController bulkorder2 = new BulkOrderUploadController();
+         bulkorder2.orderFile = NULL;
+         bulkorder2.verifyDocument();
+         Test.stopTest();
+         
+         }
+        
+     }
     
 
      //static testmethod void unitTest3() { 

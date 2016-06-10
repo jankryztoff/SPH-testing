@@ -294,13 +294,16 @@ global class SP_CancelSubscriptionInZuora implements Database.Batchable<sObject>
     }
     
     global void finish (Database.BatchableContext BC){ 
+        //START D-4652 FrancisBenzon 19Apr16 : cancel ondemand sync as there is already real time sync
         //Perform Zuora Sync
-        Zuora.OnDemandSyncManager syncManager = new Zuora.OnDemandSyncManager();
+        /*Zuora.OnDemandSyncManager syncManager = new Zuora.OnDemandSyncManager();
         syncManager.syncObjectType = Zuora.OnDemandSyncManager.ObjectType.BILLING_ACCOUNT;
         syncManager.syncObjectIdSet  = setBillingAccountId;
         syncManager.emailNotificationEnabled = false;
         
         List<Zuora.SyncResult> syncResult = syncManager.sendRequest();
+        */
+        //END D-4652 FrancisBenzon 19Apr16 : cancel ondemand sync as there is already real time sync
         
         //Update Job Status
         //START D-3675 10/14/2015 Added By C. Lin - Enable on demand batch call for recovery

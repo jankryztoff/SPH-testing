@@ -7,14 +7,21 @@
 * 
 */
 
-@isTest(seeAllData = true)
+@isTest
 public class StopSubCaseOfferControllerTest{
 
     static List<Case> caseList = null;
     static Package__c packageRec = null;
     static Promotion__c promotion = null;
     static Promotion_Package__c promotionPackage = null;
-
+    
+     @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createPlannerSched();
+        //insert CustomSettingsDataFactory.createKey_Id();
+        //insert CustomSettingsDataFactory.createOther(); 
+    } 
+    
     //initializing all methods
     static testMethod void test01(){
     
@@ -39,6 +46,8 @@ public class StopSubCaseOfferControllerTest{
             sscoc.redirectToOfferAddOn();
         
         Test.startTest();   
+            
+            
         
             sscoc.packId = ''+ packageRec.id;
             sscoc.getSelectedPackage();
@@ -70,12 +79,14 @@ public class StopSubCaseOfferControllerTest{
           
     }
     
+    
     //mock data
     static void mockData01(){
         
         
         
         caseList = TestDataFactory.createCase(1,'Complaint - Newspaper');
+        caselist[0].Urgent_Request__c = True;
         Database.insert(caseList);
         
         packageRec = new Package__c(Name='Test Package', Package_Type__c='Base',

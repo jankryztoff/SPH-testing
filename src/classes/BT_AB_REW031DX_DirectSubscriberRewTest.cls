@@ -5,7 +5,7 @@ Date: 02/11/2015
 Project/Requirement: SPH Integration - ARM063DX Interface 
 @description This class is test class for BT_AB_REW031DX_DirectSubscriberRewards
 **/
-@isTest //(Seealldata = true)
+@isTest (Seealldata = false)
 private class BT_AB_REW031DX_DirectSubscriberRewTest {
 
     static testmethod void unitTest1(){
@@ -26,25 +26,53 @@ private class BT_AB_REW031DX_DirectSubscriberRewTest {
         database.insert(other);
         
         Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        
+        RecordType rs = [SELECT Id FROM RecordType WHERE SObjectType='Account' 
+                                AND Name = 'Direct Individual'];
+        acc.RecordTypeId = rs.Id;        
+        acc.Date_of_Birth__c = date.today();
+                           
         insert acc;
+        
+        
+        
+        Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
+        postal.Name = 'Test Name';
+        insert postal;
         
         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
         billAcc.Zuora__Account__c = acc.Id;
         insert billAcc;
         
+        Address__c addressRec = TestDataFactory.createAddress(1)[0];
+        addressRec.Address_Type__c='P';
+        addressRec.Postal_Code__c = postal.Id;
+        addressRec.Block_House_Number__c = '123';
+        addressRec.Level_Number__c = '123';
+        insert addressRec;
+        
+        Contact con = TestDataFactory.createContact(1)[0];
+        con.Address__c = addressRec.Id;
+        con.AccountId = acc.Id;     
+        RecordType rt = [SELECT id, name FROM RecordType WHERE name = 'Customer Contact'];
+        con.RecordTypeId = rt.id;
+        con.Recipient_Indicator__c = true;
+        con.NRIC__c = 'T1234567R';
+        con.Phone = '123456';
+        con.Email__c = 'email@test.com';      
+        insert con;
+        
         Zuora__Subscription__c subRecs = TestDataFactory.createSubscription(1)[0];
         subRecs.Zuora__CustomerAccount__c = billAcc.Id;
         subRecs.Zuora__Account__c = acc.Id;
+        subRecs.Subscriber_Contact__c = con.Id;
+        subRecs.Recipient_Contact__c = con.Id;
+        subRecs.Zuora__SubscriptionEndDate__c = date.today()+1;
         insert subRecs;
         
-        Zuora__SubscriptionProductCharge__c zspc = new Zuora__SubscriptionProductCharge__c();
-        zspc.name = 'dfdsf';
-        zspc.Zuora__ProductSKU__c = 'SKU01';
-        zspc.Zuora__Zuora_Id__c = 'dfgdfg';
-        zspc.Zuora__Subscription__c = subRecs.Id;
-        zspc.Zuora__Account__c = acc.Id;
-        insert zspc;
+        //system.assertNotEquals(null, subRecs.Zuora__Account__r.RecortypeId);
         
+        List<zqu__ZProduct__c> zzpList = new List<zqu__ZProduct__c>();
         zqu__ZProduct__c zzp = new zqu__ZProduct__c();
         zzp.name = 'dfdfdf';
         zzp.zqu__ZuoraId__c = 'ret45r';
@@ -52,14 +80,28 @@ private class BT_AB_REW031DX_DirectSubscriberRewTest {
         zzp.ProductCode__c = 'dfd';
         zzp.ProductSubType__c = 'Newspaper';
         insert zzp;
+        zzpList.add(zzp);
+        
+        Set<String> skuSet = new Set<String>(); 
+        skuSet.add('zzp.Id');
+        
+        Zuora__SubscriptionProductCharge__c zspc = new Zuora__SubscriptionProductCharge__c();
+        zspc.name = 'REW031DX';
+        zspc.Zuora__ProductSKU__c = zzp.zqu__SKU__c;
+        zspc.Zuora__Zuora_Id__c = 'dfgdfg';
+        zspc.Zuora__Subscription__c = subRecs.Id;
+        zspc.Zuora__Account__c = acc.Id;
+        insert zspc;
         
         BA_INT_DATA_POOL__c bidp = new BA_INT_DATA_POOL__c();
-        bidp.name = 'dfdf';
+        bidp.name = 'REW031DX';
         bidp.job_id__c = 'sdfsdf';
         bidp.group_id__c = 'sdfse';
         bidp.run_for_date__c = system.today();
         bidp.insert_time__c = system.now();
         insert bidp;
+        
+        //system.assertequals(null, zspc.Zuora__ProductSKU__c);
         
         test.starttest();   
         BT_AB_REW031DX_DirectSubscriberRewards dsr = new BT_AB_REW031DX_DirectSubscriberRewards();

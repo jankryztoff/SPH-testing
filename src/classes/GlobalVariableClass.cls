@@ -955,6 +955,9 @@
     global static final string ACCRECTYPEDI = 'Direct Individual';
     global static final string ACCRECTYPEDC = 'Direct Corporate';
     //END D-4346 1/28/2016 Added by Manolo Valena
+    //START PD-0354 7June2016 FrancisBenzon: vars
+    global static final string ACCRECTYPEDSID = 'Direct SPH Inter-Division';
+    //END PD-0354 7June2016 FrancisBenzon: vars
     
     //START: UD-3819 1/26/16 Added by Manolo Valena
     global static final string RESPONSE_ENABLE_ACCOUNT = 'Enable-Account';

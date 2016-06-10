@@ -67,13 +67,13 @@ private class BT_TH_VSS085DX_ManageSubVenPubTest{
         importVenSub.Batch_Run_Date__c = date.today();
         importVenSub.subscriptionCopies__c = '123456789123456789123456789';
         importVenSub.HdsSubscriptionId__c = '12345';
-        importVenSub.SubscriptionUpdateIndicator__c = 'U';
+        importVenSub.SubscriptionUpdateIndicator__c = 'U';       
         importVenSub.crsmVendorSubscriptionId__c = [SELECT Name FROM Subscription_Vendor__c WHERE id=:subVen.Id].Name;
         importVenSub.PublicationCode__c = '01';
         importVenSub.HdsRecipientId__c = null;
         
         importVenSubList.add(importVenSub);
-        
+                
         //START PD-0081 11-May-2016 Added by Raviteja - insert the record to increase the BT_TH_VSS085DX_ManageSubVenPublications code coverage
         BT_CO_VSS_ImportVendorSubscription__c importVenSub2 = new BT_CO_VSS_ImportVendorSubscription__c();
         importVenSub2.Name = 'VSS085DX';
@@ -181,7 +181,8 @@ private class BT_TH_VSS085DX_ManageSubVenPubTest{
         importVenSub.PublicationCode__c = '01';
         importVenSub.HdsRecipientId__c = null;
         
-        importVenSubList.add(importVenSub);
+        importVenSubList.add(importVenSub);        
+        
         database.insert(importVenSub);
         
         Set<String> setVendorSub = new Set<String>();

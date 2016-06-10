@@ -1,9 +1,15 @@
-@isTest(seeAllData = true)
+@isTest
 private class LP_CreditCardFailureControllerTesty{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+    }   
 
     static testmethod void testLocal(){
     
-        List<Account> acc = TestDataFactory.createAccount(1, 'Direct Corporate');
+        List<Account> acc = TestDataFactory.createAccount(1, 'Direct Individual');
         insert acc;
         
         List<Address__c> addrs = TestDataFactory.createAddress(1);

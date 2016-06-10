@@ -106,6 +106,7 @@ public class StopSubOrderEntryDirectViewController {
      */
     public void getOrder(){
         String orderId = ApexPages.currentPage().getParameters().get(GlobalVariableClass.PARAMETER_ORDERID);    
+        system.debug('>>>>>CHA getOrder orderId ' + orderId);
         if(orderId != null){    
         // START : D-1359 2/12/2015 Alyana Navarro
             order = [SELECT id, name, ownerId, status__c, case_record_type__c, category__c, sub_category__c, Eligible_for_Retention__c, Account__c, 
@@ -114,6 +115,7 @@ public class StopSubOrderEntryDirectViewController {
                     WHERE id =: orderId];
         // END : D-1359 2/12/2015           
         }
+        system.debug('>>>>>CHA getOrder order ' + order);
     }
     
     /* Description: Method for getting Order Line Item Records
@@ -125,6 +127,7 @@ public class StopSubOrderEntryDirectViewController {
         Set<String> SVCSet = new Set<String>();
         subscriptionId = new Set<String>();
         //Start 2/17/2015 - Joban - Code Review Activity : Added null check
+        system.debug('>>>>>CHA getOrderLineItem order.Id ' + order.Id);
         if(order.Id!=null){ 
         //START UD-1676 Wenjun 22/06/15 : Add subscription__r.Order_Line_Item_Number_1__c
             orderLineItemList = [SELECT id, name, subscription__c, earliest_stop_date__c, stop_request_date__c, terminating_reason__c,subscription__r.Order_Line_Item_Number_1__c,
@@ -135,6 +138,7 @@ public class StopSubOrderEntryDirectViewController {
         //END UD-0364 4/8/2015 MGaelo added feeOverrideAmount                                               
         }
         //End 2/17/2015 - Joban - Code Review Activity : Added null check
+        system.debug('>>>>>CHA getOrderLineItem orderLineItemList ' + orderLineItemList);
         for(Order_Line_Item__c oLineItem : orderLineItemList){
         
         //Start 2/17/2015 - Joban - Code Review Activity : Added null check
@@ -375,17 +379,20 @@ public class StopSubOrderEntryDirectViewController {
         Boolean isExisting;
         try{
             //Start 2/17/2015 - Joban - Code Review Activity : Added null check
+            system.debug('>>>>>CHA order.id ' + order.id);
             if(order.id!=null){ 
                 existingCase = [SELECT id, Sub_Status__c FROM Case WHERE Order_Number__c =: order.id];
             }
             //End 2/17/2015 - Joban - Code Review Activity : Added null check
             isExisting = true;
         } catch(Exception e){
+            system.debug('>>>>>CHA e ' + e);
             isExisting = false;
         }
-
+        system.debug('>>>>>CHA isExisting ' + isExisting);
         if(!isExisting){
         // END : D-1359 2/10/2015
+            
             //call method to create case
             //populate parentId if applicable
             CreateCase cCase = new CreateCase(); 
@@ -398,18 +405,21 @@ public class StopSubOrderEntryDirectViewController {
             //START: D-1625,1406, 1356 1/23/2015 Added by Kristine Campang - commented out lines    
                 //caseRecord.Send_to_Retention__c = order.Send_to_Retention__c;
             //END: D-1625,1406, 1356 1/23/2015 Added by Kristine Campang
+            system.debug('>>>>>CHA orderLineItemList.size() ' + orderLineItemList.size());
             if(orderLineItemList.size() > 0){
 
                 //Start UD-1642 Vpernicia 6/12/2015
                 setEarliestStopDateAndIndex(orderLineItemList);
-                
+                system.debug('>>>>>CHA orderLineItemList ' + orderLineItemList);
                 for (Order_Line_Item__c Oli: orderLineItemList) {
-                    
+                    system.debug('>>>>>CHA Oli ' + Oli);
                     RefundAmount += Oli.amount_to_refund__c;
                     // Start UD-1742 Dags 27/06/2015
                     //START:D-3683 10/2/15 Added by Manolo Valena - Updated from = to ==.
+                    system.debug('>>>>>CHA Oli.fee_override__c ' + Oli.fee_override__c);
                     if(Oli.fee_override__c == true) {
                     //END:D-3683 10/2/15 Added by Manolo Valena
+                        system.debug('>>>>>CHA Oli.fee_override_amount__c ' + Oli.fee_override_amount__c);
                         if (Oli.fee_override_amount__c != null){
                             AdminChargeAmount += Oli.fee_override_amount__c;
                         }else{
@@ -420,6 +430,7 @@ public class StopSubOrderEntryDirectViewController {
                             //END:D-3683 10/2/15 Added by Manolo Valena
                         }
                     }else{
+                        system.debug('>>>>>CHA Oli.admin_charge__c ' + Oli.admin_charge__c);
                         //START:D-3683 10/2/15 Added by Manolo Valena - Added condition to not process if admin charge is null.
                         if(Oli.admin_charge__c != null) {
                             AdminChargeAmount += Oli.admin_charge__c;
@@ -456,6 +467,7 @@ public class StopSubOrderEntryDirectViewController {
             caseRecord = cCase.createCaseForStopSubscription(new List<Order__c>{order}, true)[0];           
             caseRecord = setCaseStatus(caseRecord, order);
             Database.update(caseRecord);            
+            system.debug('>>>>>CHA caseRecord.Sub_Status__c ' + caseRecord.Sub_Status__c);
             if(caseRecord.Sub_Status__c == GlobalVariableClass.SUB_STATUS_READY_FOR_SUBMISSION){
                 getCase(caseRecord.id);
             }

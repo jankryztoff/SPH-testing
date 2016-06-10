@@ -142,15 +142,15 @@ public class CAM_CreateModifyContactAddressController {
             thisContact.RecordTypeId = ConstantsSLB.getKeyId('Contact_Customer Contact');
         }
         //End D-2270 02/18/2015 Added by ABanaag - set Customer Contact as default record type if null in renewal of sub page iFrame
-        
+       
        stagedAddress = new Address__c();
        countryCodeCountryNameMap = new Map<String, String>();
        countries = new List<SelectOption>();
-       countries.add(new SelectOption('', '--select one--'));
-       for(Country__c country : [SELECT Id, Country_Name__c,  Name FROM Country__c ORDER BY Country_Name__c]) {
+       countries.add(new SelectOption('', '--select one--')); 
+       for(Country__c country : [SELECT Id, Country_Name__c,  Name FROM Country__c ORDER BY Country_Name__c]) {        
            countryCodeCountryNameMap.put(country.Id, country.Name); //START/END D-2924 MGaelo 5/21/15 Arrange countries in order
-           countries.add(new SelectOption(country.Id, Country.Country_Name__c));
-       }
+           countries.add(new SelectOption(country.Id, country.Country_Name__c));
+       }      
        checked = FALSE;
        if(ApexPages.currentPage().getUrl().contains('CreateModifyContactAddress')) {
            onOwnWindow = TRUE;
@@ -173,8 +173,15 @@ public class CAM_CreateModifyContactAddressController {
     }
 
     public void search() {
+        
         thisContact.Address__c = null;
-        searchquery = 'Select name, Postal_Code__c, Postal_Code__r.Name, Block_House_Number__c, Street_Name__c, Building_Name__c,Level_Number__c, Unit_Number__c, Address_Type__c From Address__c where RecordtypeId in (Select Id from Recordtype where SObjectType = \'Address__c\' and Name = \'Local\') and '
+        //START UD-3665 17Mar16 FrancisBenzon : Pop validation if postal code is null to prevent soql error
+        if(stagedAddress.Postal_Code__c == null)
+        {   
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ConstantsSLB.getErrorMessage('CAMPostalCodeError')));
+        }
+        else {
+            searchquery = 'Select name, Postal_Code__c, Postal_Code__r.Name, Block_House_Number__c, Street_Name__c, Building_Name__c,Level_Number__c, Unit_Number__c, Address_Type__c From Address__c where RecordtypeId in (Select Id from Recordtype where SObjectType = \'Address__c\' and Name = \'Local\') and '
                                 + (stagedAddress.Postal_Code__c != null ? 'Postal_Code__c = \'' + stagedAddress.Postal_Code__c + '\' and ' : '')
                                 /*+ (stagedAddress.Name != null && stagedAddress.Name != '' ? ' Name like \'' + stagedAddress.Name + '%\' and ' : '')
                                 + (stagedAddress.Block_House_Number__c != null && stagedAddress.Block_House_Number__c != '' ? ' Block_House_Number__c like \'' + stagedAddress.Block_House_Number__c + '%\' and ' : '')*/
@@ -184,11 +191,13 @@ public class CAM_CreateModifyContactAddressController {
                                 + (stagedAddress.Unit_Number__c != null && stagedAddress.Unit_Number__c != '' ? 'Unit_Number__c like \''+stagedAddress.Unit_Number__c+'%\' and ' : '')
                                 /*+ (stagedAddress.Address_Type__c != null && stagedAddress.Address_Type__c != '' ? 'Address_Type__c like \''+stagedAddress.Address_Type__c+'%\' and ' : '')*/;
                                 
-        searchquery =  searchquery.endsWith('and ')? searchquery.substring(0, (searchquery.length() - 4)): searchquery ;                  
+            searchquery =  searchquery.endsWith('and ')? searchquery.substring(0, (searchquery.length() - 4)): searchquery ;                  
 
-        system.debug('soql has this value: ' + searchquery);
-        addressMap = new Map<Id, Address__c>((List<Address__c>) Database.query(searchquery));
-        add = addressMap.values();
+            system.debug('soql has this value: ' + searchquery);
+            addressMap = new Map<Id, Address__c>((List<Address__c>) Database.query(searchquery));
+            add = addressMap.values();
+        }
+        //END UD-3665   17Mar16 FrancisBenzon : Pop validation if postal code is null to prevent soql error
     }  
     
     //populate cuntry code based on selected country -- airline

@@ -186,6 +186,19 @@ public virtual class BulkOrderUploadDeclarator {
     public final string FIELD_AIRLINE_IND = 'Airline_Indicator__c';
     public final string FIELD_DATE_OF_BIRTH = 'Date_of_Birth__c';
     public final string FIELD_DATE_SINCE = 'Date_Since__c';
+    // Start UD-3660 14Apr16 JohnD - added variable for credit card
+    public final string FIELD_CC_EXP_MONTH = 'CreditCardExpirationMonth';
+    public final string FIELD_CC_EXP_YEAR = 'CreditCardExpirationYear';
+    public final string FIELD_CC_HOLDER_NAME = 'CreditCardHolderName';
+    public final string FIELD_CC_NUMBER = 'CreditCardNumber';
+    public final string FIELD_CC_TYPE = 'CreditCardType';
+    public final string FIELD_CC_EMAIL = 'CreditCardEmail';
+    public final string FIELD_CC_ADDRESS = 'CreditCardAddress1';
+    public final string FIELD_CC_CITY = 'CreditCardCity';
+    public final string FIELD_CC_COUNTRY = 'CreditCardCountry';
+    public final string FIELD_CC_SEC_CODE = 'CreditCardSecurityCode';  
+    
+    // End UD-3660 14Apr16 JohnD - added variable for credit card
 
     // start column identifier
     public final string IDE_ACC_RECORDTYPEID = OBJECT_ACCOUNT + S_FIELD_RECORDTYPEID;
@@ -237,6 +250,18 @@ public virtual class BulkOrderUploadDeclarator {
     public final string IDE_ORDER_ARMS_ACC_NUM = OBJECT_ORDER + FIELD_ARMS_ACC_NUM;
     public final string IDE_ORDER_CHECK_DATED = OBJECT_ORDER + FIELD_CHECK_DATED;
     
+    // Start UD-3660 14Apr16 JohnD - added variable for credit card
+    public final string IDE_ORDER_CC_EXP_MONTH = OBJECT_ORDER + FIELD_CC_EXP_MONTH;
+    public final string IDE_ORDER_CC_EXP_YEAR = OBJECT_ORDER + FIELD_CC_EXP_YEAR;
+    public final string IDE_ORDER_CC_HOLDER_NAME = OBJECT_ORDER + FIELD_CC_HOLDER_NAME;
+    public final string IDE_ORDER_CC_NUMBER = OBJECT_ORDER + FIELD_CC_NUMBER;
+    public final string IDE_ORDER_CC_TYPE = OBJECT_ORDER + FIELD_CC_TYPE;
+    public final string IDE_ORDER_CC_EMAIL = OBJECT_ORDER + FIELD_CC_EMAIL;
+    public final string IDE_ORDER_CC_ADDRESS = OBJECT_ORDER + FIELD_CC_ADDRESS;
+    public final string IDE_ORDER_CC_CITY = OBJECT_ORDER + FIELD_CC_CITY;
+    public final string IDE_ORDER_CC_COUNTRY = OBJECT_ORDER + FIELD_CC_COUNTRY;
+    public final string IDE_ORDER_CC_SEC_CODE = OBJECT_ORDER + FIELD_CC_SEC_CODE;
+    // End UD-3660 14Apr16 JohnD - added variable for credit card
     
     public final string IDE_OLI_PROMOTION_ID = OBJECT_OLI + FIELD_PROMOTION_ID;
     public final string IDE_OLI_PACKAGE_ID = OBJECT_OLI + FIELD_MAIN_PACKAGE_ID;
@@ -345,6 +370,7 @@ public virtual class BulkOrderUploadDeclarator {
     
     public boolean isErrorEncountered = false;
     
+    public string creditCardPaymentMethodId;	// Start/End UD-3660 14Apr16 JohnD
     
     public void clearAllData() {
         
@@ -422,4 +448,4 @@ public virtual class BulkOrderUploadDeclarator {
         packageCode_productIdSet = new map<string, set<id>>();
     }
         
-}
+}        // End D-4456 07Mar16 JohnD - credit card validation

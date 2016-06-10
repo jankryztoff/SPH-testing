@@ -637,17 +637,17 @@ global class SP_MidMonthTempStopBatch implements Database.Batchable<sObject>, Da
         }
         //END D-4670 12Apr16 FrancisBenzon : consider tempstop for same sub within same month
         // Start UD-4145 28Dec15 JohnD - revised logic
-			//START D-4270 1/19/2016 Added by J.Sarion - Set isFinal to true
+            //START D-4270 1/19/2016 Added by J.Sarion - Set isFinal to true
             if (subscriptionTempStopId_stopType.get(subTempStop.Id) == TSTOP_CONVERT) {
                 isFinal = true; // moved to else
                 isConvert = true;
             }
-			/*
-			else if (subscriptionTempStopId_stopType.get(subTempStop.Id) == TSTOP_FINAL) {
-				isFinal = true;
-			}
-			*/
-			//END D-4270 1/19/2016 Added by J.Sarion - Set isFinal to true
+            /*
+            else if (subscriptionTempStopId_stopType.get(subTempStop.Id) == TSTOP_FINAL) {
+                isFinal = true;
+            }
+            */
+            //END D-4270 1/19/2016 Added by J.Sarion - Set isFinal to true
         // End UD-4145 28Dec15 JohnD - revised logic
         
         if (subIdToRefundQtyWrapperMap.containsKey(subTempStop.Subscription__c)) {
@@ -919,7 +919,7 @@ global class SP_MidMonthTempStopBatch implements Database.Batchable<sObject>, Da
                 usage.StopType__c = TSTOP_CONVERT;
             }
             usage.Usage_Type__c = UsageHelper.USAGE_TYPE_TSTOP;
-            usage.Case__c = subTempStop.Temp_Stop__r.Case__c;	// Start/End D-4470 05Apr16 JohnD
+            usage.Case__c = subTempStop.Temp_Stop__r.Case__c;   // Start/End D-4470 05Apr16 JohnD
              
         }
         return usage;

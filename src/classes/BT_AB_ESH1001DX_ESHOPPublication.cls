@@ -128,7 +128,7 @@ global class BT_AB_ESH1001DX_ESHOPPublication implements Database.Batchable<sObj
      */ 
     global void finish(Database.BatchableContext BC)
     {  
-		//START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
+        //START D-1882 05-Feb-2015 Added by Raviteja -INSERTING Tali(last) record into BA_INT_DATA_POOL__c 
         BA_INT_DATA_POOL__c datapoolTRecord = new BA_INT_DATA_POOL__c();
         datapoolTRecord.name = interfaceName;
         datapoolTRecord.job_id__c = interfaceName;
@@ -139,9 +139,9 @@ global class BT_AB_ESH1001DX_ESHOPPublication implements Database.Batchable<sObj
         insert datapoolTRecord;
         //End D-1882 05-Feb-2015 Added by Raviteja
         
-		//start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
+        //start Nitin/D-2087/6Feb2015 callout moved to a chained batch class
         BT_AT_BatchCalloutHandler calloutHandler = new BT_AT_BatchCalloutHandler(interfaceName);
         Database.executeBatch(calloutHandler); 
-		//end Nitin/D-2087/6Feb2015
+        //end Nitin/D-2087/6Feb2015
     }
 }

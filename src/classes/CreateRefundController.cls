@@ -6,7 +6,11 @@
  * @description Controller of CreateRefund page
  *History: D-1707 / 2-26-2015/ K. Tan  /Rollback of Components of D-1929
  *History: D-1929 / 3-2-2015/ K. Tan  / Re- deployment of Rolled Back Components of 1929
- */
+ 
+
+*/
+
+
 
 public class CreateRefundController {
 
@@ -322,11 +326,10 @@ public class CreateRefundController {
         boolean isError = false;
         if(thisCase.Id != NULL) {
         returnId = thisCase.Id;
-        Boolean updateBillAcc = false; //START-END: UD-0573 04/27/2015 J.Abolac
-                        
+        Boolean updateBillAcc = false; //START-END: UD-0573 04/27/2015 J.Abolac            
             //Insert new Refund record
             if (thisCase.Payment_Mode__c == Paypal1) { //D-1929 2/11/2015 KLorica globalvariableclass for paypal
-                
+             //system.assertequals(thisRefund.Subscription__c, null);   
                 // retrieve billing account
                 
                 if (thisRefund.Subscription__c != null) {
@@ -341,15 +344,17 @@ public class CreateRefundController {
                         //END 11/19/2015 UD-3287 K. Tan
                         thisRefund.Zuora__BillingAccount__c = sub.Zuora__CustomerAccount__c;
                         
+                        //START UD-3092 3/10/2016 Added by J.Sarion - Check if no existing payment for paypal
                         //START UD-3287 11/29/2015 Added by J.Sarion - Check if there's an existing Payment with PayPal
-                        Zuora__Payment__c payment;
+                        List<Zuora__Payment__c> payment = new List<Zuora__Payment__c>();
                         payment = [SELECT Id, Zuora__ReferenceId__c FROM Zuora__Payment__c WHERE Zuora__PaymentMethod__c LIKE '%PayPal%' AND Zuora__ReferenceId__c != null AND Zuora__BillingAccount__c =: sub.Zuora__CustomerAccount__c Order by Zuora__CreatedDate__c DESC LIMIT 1];
                         
-                        if(payment == null) {
+                        if(payment.isEmpty()) {
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ConstantsSLB.getErrorMessage('NoExistingPaymentForPayPal')));
                             return null;
                         }
                         //END UD-3287 11/29/2015 Added by J.Sarion - Check if there's an existing Payment with PayPal
+                        //END UD-3092 3/10/2016 Added by J.Sarion - Check if no existing payment for paypal
                         
                         try {
                         
@@ -421,13 +426,18 @@ public class CreateRefundController {
                 
                 for(BillingAccountWrapper ba : wrappedBillingAcctList){
             //START: UD-0573 04/27/2015 J.Abolac
-            //START: D-4686�04/14/2016 jason
+            //START: D-4686 04/14/2016 jason
             if(Test.isRunningTest()){
                 ba.amountToRefund = 20.00;
             }
-            //END: D-4686�04/14/2016 jason
+            //END: D-4686 04/14/2016 jason
+            //system.assertequals(ba.amountToRefund , null);
+            System.debug('Francis Nasalita >>>>> thisCase.Payment_Mode__c: ' + thisCase.Payment_Mode__c);
+            System.debug('Francis Nasalita >>>>> ba.amountToRefund: ' + ba.amountToRefund);
                     if(thisCase.Payment_Mode__c <> 'Cheque' && ba.amountToRefund > 0){
+                        
                         if(ba.billingAcct.Payment_Mode__c <> thisCase.Payment_Mode__c ){
+                                    //system.assertequals(ba.billingAcct.Other_PaymentMethod__c, null);                     
                             if(ba.billingAcct.Other_PaymentMethod__c<>thisCase.Payment_Mode__c){
                                 if(ba.billingAcct.Payment_Mode__c == 'Other'){
                                     isErrormsg = true;

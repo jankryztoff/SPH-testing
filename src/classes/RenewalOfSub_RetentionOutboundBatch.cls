@@ -13,49 +13,49 @@ global class RenewalOfSub_RetentionOutboundBatch implements Database.Batchable<s
 //END D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
 
 ////START-END KRITHIKA DHARMARAJAN 4/17/2015 D-2770
-	//START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
-	Date referenceDate = Date.Today();
-	Set<Id> subscriptionIds = null;
+    //START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
+    Date referenceDate = Date.Today();
+    Set<Id> subscriptionIds = null;
     
     Boolean isApexJobSuccessful = true;
-	//START PD-0248 31May2016 Added By C. Lin
+    //START PD-0248 31May2016 Added By C. Lin
     final Static String CHANGE_OF_SUBSCRIPTION = GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION;
     final Static String STOP_SUBSCRIPTION = GlobalVariableClass.RECTYPE_STOP_SUBSCRIPTION;
     //END PD-0248 31May2016 Added By C. Lin
-	
-	// Default Constructor 
+    
+    // Default Constructor 
     global RenewalOfSub_RetentionOutboundBatch(){
-	}
+    }
     
-	// Constructor for adhoc batch run using specific date
+    // Constructor for adhoc batch run using specific date
     global RenewalOfSub_RetentionOutboundBatch(Date batchRunDate){
-		this.referenceDate = batchRunDate;
-	}
-	
-	// Constructor for adhoc batch run using specific subscriptionIds
-	global RenewalOfSub_RetentionOutboundBatch(Set<Id> subscriptionIds){
-		this.subscriptionIds = subscriptionIds;
-	}
-	//END D-3667 LISEN 10/6/2015 - Enable on demand batch call
+        this.referenceDate = batchRunDate;
+    }
     
-	global Database.QueryLocator start(Database.BatchableContext BC){       
+    // Constructor for adhoc batch run using specific subscriptionIds
+    global RenewalOfSub_RetentionOutboundBatch(Set<Id> subscriptionIds){
+        this.subscriptionIds = subscriptionIds;
+    }
+    //END D-3667 LISEN 10/6/2015 - Enable on demand batch call
+    
+    global Database.QueryLocator start(Database.BatchableContext BC){       
         Id recordTypeAcctDirect = ConstantsSLB.getKeyId('Account_Direct Individual');
-		// START: UD-1094  5/4/2015 K. Tan - Updated Custom Settings 
-		Integer configurableNumberOfDays = Integer.valueOf(ConstantsSLB.getKeyId('RetentionOutboundSixWeeks'));
-		// END: UD-1094 5/4/2015 K. Tan - Updated Custom Settings       
+        // START: UD-1094  5/4/2015 K. Tan - Updated Custom Settings 
+        Integer configurableNumberOfDays = Integer.valueOf(ConstantsSLB.getKeyId('RetentionOutboundSixWeeks'));
+        // END: UD-1094 5/4/2015 K. Tan - Updated Custom Settings       
         Date sixWeeksBefore = referenceDate.addDays(configurableNumberOfDays);
         //START D-2497 &&   Added by J. Sarion 04/27/2015 - Only Publication Subscriptions are eligible for Retention Outbound
-		//START PD-0248 31May2016 Added By C. Lin
+        //START PD-0248 31May2016 Added By C. Lin
         List<Zuora__Subscription__c> subList = new List<Zuora__Subscription__c>();
         Set<Id> subIdSet = new Set<Id>();
         Set<Id> subIdWithStopCOSSet = new Set<Id>();
         //END PD-0248 31May2016 Added By C. Lin
-		
+        
         //START D-3667 LISEN 10/6/2015 - Enable on demand batch call
-		String query = '';
-		if(subscriptionIds == null){
-		// run by using list of subscriptionIds
-		//START PD-0248 31May2016 Added By C. Lin
+        String query = '';
+        if(subscriptionIds == null){
+        // run by using list of subscriptionIds
+        //START PD-0248 31May2016 Added By C. Lin
         subList = [SELECT Id, Name FROM Zuora__Subscription__c WHERE Zuora__Account__r.RecordTypeId = :recordTypeAcctDirect AND Zuora__SubscriptionEndDate__c = :sixWeeksBefore AND RenewalRequestDateNull__c = true AND Zuora__AutoRenew__c = FALSE AND Subscription_Type_1__c = 'Publication' AND Grace_Period_Subscription__c = null];
         
         if(!subList.isEmpty()){
@@ -78,28 +78,28 @@ global class RenewalOfSub_RetentionOutboundBatch implements Database.Batchable<s
             }
         }
         //END PD-0248 31May2016 Added By C. Lin
-			// START: UD-1094  5/4/2015 K. Tan - Add Main Package field
-			query = 'SELECT Id, Name,  Zuora__Account__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Renewal_Request_Date__c, '+ 
-							'Order_Number__c, Zuora__AutoRenew__c, Main_Package_1__r.Name, Main_Package__c, Subscriber_Contact__c, Recipient_Contact__c, Full_Address__c, Order_Number_1__c FROM Zuora__Subscription__c '+
-							'WHERE Zuora__Account__r.RecordTypeId = :recordTypeAcctDirect AND Zuora__SubscriptionEndDate__c = :sixWeeksBefore '+ 
-							'AND RenewalRequestDateNull__c = true AND Zuora__AutoRenew__c = FALSE AND Subscription_Type_1__c = \'Publication\' AND Grace_Period_Subscription__c = null AND Id NOT IN :subIdWithStopCOSSet'; //START END PD-0248 31May2016 Added By C. Lin
-			// END: UD-1094 5/4/2015 K. Tan - Add Main Package field
-		}else{
-		// run by using referenceDate
-			query = 'SELECT Id, Name,  Zuora__Account__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Renewal_Request_Date__c, '+ 
-							'Order_Number__c, Zuora__AutoRenew__c, Main_Package_1__r.Name, Main_Package__c, Subscriber_Contact__c, Recipient_Contact__c, Full_Address__c, Order_Number_1__c FROM Zuora__Subscription__c '+
-							'WHERE Zuora__Account__r.RecordTypeId = :recordTypeAcctDirect AND Id IN :subscriptionIds '+ 
-							'AND RenewalRequestDateNull__c = true AND Zuora__AutoRenew__c = FALSE AND Subscription_Type_1__c = \'Publication\' AND Grace_Period_Subscription__c = null';
-		}
+            // START: UD-1094  5/4/2015 K. Tan - Add Main Package field
+            query = 'SELECT Id, Name,  Zuora__Account__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Renewal_Request_Date__c, '+ 
+                            'Order_Number__c, Zuora__AutoRenew__c, Main_Package_1__r.Name, Main_Package__c, Subscriber_Contact__c, Recipient_Contact__c, Full_Address__c, Order_Number_1__c FROM Zuora__Subscription__c '+
+                            'WHERE Zuora__Account__r.RecordTypeId = :recordTypeAcctDirect AND Zuora__SubscriptionEndDate__c = :sixWeeksBefore '+ 
+                            'AND RenewalRequestDateNull__c = true AND Zuora__AutoRenew__c = FALSE AND Subscription_Type_1__c = \'Publication\' AND Grace_Period_Subscription__c = null AND Id NOT IN :subIdWithStopCOSSet'; //START END PD-0248 31May2016 Added By C. Lin
+            // END: UD-1094 5/4/2015 K. Tan - Add Main Package field
+        }else{
+        // run by using referenceDate
+            query = 'SELECT Id, Name,  Zuora__Account__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Renewal_Request_Date__c, '+ 
+                            'Order_Number__c, Zuora__AutoRenew__c, Main_Package_1__r.Name, Main_Package__c, Subscriber_Contact__c, Recipient_Contact__c, Full_Address__c, Order_Number_1__c FROM Zuora__Subscription__c '+
+                            'WHERE Zuora__Account__r.RecordTypeId = :recordTypeAcctDirect AND Id IN :subscriptionIds '+ 
+                            'AND RenewalRequestDateNull__c = true AND Zuora__AutoRenew__c = FALSE AND Subscription_Type_1__c = \'Publication\' AND Grace_Period_Subscription__c = null';
+        }
         //END D-3667 LISEN 10/6/2015 - Enable on demand batch call
         //END D-2497 &&   Added by J. Sarion 04/27/2015 - Only Publication Subscriptions are eligible for Retention Outbound
         return Database.getQueryLocator(query);
     }
-	
+    
     global void execute(Database.BatchableContext BC, List<Zuora__Subscription__c> scope){  
-		//START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
-		Logger logger = new Logger(RenewalOfSub_RetentionOutboundBatch.class.getName(), 'SP042', BC.getJobID());
-		
+        //START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
+        Logger logger = new Logger(RenewalOfSub_RetentionOutboundBatch.class.getName(), 'SP042', BC.getJobID());
+        
         Savepoint sp = Database.setSavepoint();
         try{
             List<Case> casesToBeCreated = new List<Case>();
@@ -149,20 +149,20 @@ global class RenewalOfSub_RetentionOutboundBatch implements Database.Batchable<s
         }catch(Exception e){
             Database.rollback(sp);
             logger.logBatchFailure(e, scope);
-			logger.save();
-			
-			isApexJobSuccessful = false;
+            logger.save();
+            
+            isApexJobSuccessful = false;
         }
-		//END D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
+        //END D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
     }
     
     global void finish(Database.BatchableContext BC){
-		//START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
+        //START D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
         if(!isApexJobSuccessful){
-        	BatchJobHelper.updateJobStatus(BC.getJobId(), false); //START-END KRITHIKA DHARMARAJAN 4/17/2015 D-2770
+            BatchJobHelper.updateJobStatus(BC.getJobId(), false); //START-END KRITHIKA DHARMARAJAN 4/17/2015 D-2770
         }else{
             BatchJobHelper.updateJobStatus(BC.getJobId(), true);
         }
-		//END D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
+        //END D-3667 LISEN 10/6/2015 - Enable on demand batch call for recovery
     }
 }

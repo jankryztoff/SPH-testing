@@ -37,10 +37,10 @@ public class CreditCardFailure_InboundEmailHandTest {
                               '<PaymentMethodPaypalEmail>recuerdo.bregente@gmail.com</PaymentMethodPaypalEmail>' +
                               '<PaymentMethodPaypalBaid>test</PaymentMethodPaypalBaid>' +
                               '</CreditCardDetails>';
-            
-            if(text == null){
-                email.plainTextBody = '<CreditCardDetails></CreditCardDetails></CreditCardDetails>';
-            } //joy
+        
+        if(text == null){
+            email.plainTextBody = '<CreditCardDetails></CreditCardDetails></CreditCardDetails>';
+        } //joy
         
         Test.startTest();
         
@@ -48,6 +48,7 @@ public class CreditCardFailure_InboundEmailHandTest {
         try{
             
             ccf_ieh.handleInboundEmail(email, null);
+
         }catch(Exception e){}
         
         Test.stopTest();
@@ -118,8 +119,6 @@ public class CreditCardFailure_InboundEmailHandTest {
         Database.insert(con);
         sObjectData.put('Contact',con);
         
-                        
-        
         Zuora__CustomerAccount__c billingAcct = TestDataFactory.createBillingAccount(1)[0];
         billingAcct.Billing_Contact__c = con.Id;
         billingAcct.Zuora__Credit_Balance__c = 1;
@@ -143,14 +142,12 @@ public class CreditCardFailure_InboundEmailHandTest {
         
         insert pm;
         
-         Document doc = new Document();
-         doc.FolderId = UserInfo.getUserId();
-         doc.Name = 'Test Document Name';
-         doc.body = Blob.valueOf('Test Document Body') ;
-         insert doc;
+        Document doc = new Document();
+        doc.FolderId = UserInfo.getUserId();
+        doc.Name = 'Test Document Name';
+        doc.body = Blob.valueOf('Test Document Body') ;
+        insert doc;
          
-        
-        
     }
     
     //---4/10/16 JMG-----------------

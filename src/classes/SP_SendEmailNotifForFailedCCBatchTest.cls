@@ -5,8 +5,14 @@
 /* Date Last Modified: 02/23/2015
 /**********************************************************************/
 
-@isTest(seeAllData = TRUE)
+@isTest
 private class SP_SendEmailNotifForFailedCCBatchTest {
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createBatchInterface();        
+    }  
 
     /************************************/
     /*This method is to execute all the methods in SP_SendEmailNotifForFailedCCBatch Class

@@ -609,7 +609,7 @@ public class ComplaintMagazineExtensionEdit {
                         Case_Subscription__c caseSub = new Case_Subscription__c();
                         caseSub = caseSubWrapper.caseSubs;
                         caseSub.Case__c = cas.id;
-						//START UD-2741 9/15/2015 Added by Manolo Valena
+                        //START UD-2741 9/15/2015 Added by Manolo Valena
                         if(cas.Replacement_Required__c == true) {
                             caseSub.Replacement_Required__c = true;
                         }

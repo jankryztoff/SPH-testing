@@ -50,7 +50,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
         orderFile.AuthorId = UserInfo.getUserId();
         orderFile.FolderId = UserInfo.getUserId();
         
-        if (orderFile.BodyLength <= FILE_SIZE_LIMIT) {
+       // if (orderFile.BodyLength <= FILE_SIZE_LIMIT) {
             try {
                 
                 upsert orderFile;
@@ -60,9 +60,9 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                 ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, e.getMessage()));
             }
             
-        } else {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, ERROR_FILE_SIZE));
-        }
+        //} else {
+        //    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, ERROR_FILE_SIZE));
+       // }
     }
     
     
@@ -190,7 +190,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                 if (rowDataList[fieldIdentifier_index.get(IDE_ACC_ACCNUMBER)].trim() != EMPTY_STR) {
                     
                     accountNumber_account.put(rowDataList[fieldIdentifier_index.get(IDE_ACC_ACCNUMBER)], null);
-                    
+
                     // start recipient contact
                     contactAddressRecordTypeName = rowDataList[fieldIdentifier_index.get(IDE_RC_ADDRESS_RECORDTYPEID)].trim();
                     contactFirstName = rowDataList[fieldIdentifier_index.get(IDE_RC_FIRST_NAME)].trim();
@@ -357,6 +357,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
         set<string> billingAccountNumberSet;
         set<string> invoiceBillingTypeSet;
         set<string> zoneCodeSet = new set<string>();
+      
         for (Account acc : [select Id, AccountNumber, Name, RecordType.DeveloperName, Airline_Indicator__c, 
                 (select Id, Zuora__AccountNumber__c, Billing_Type__c, Zuora__DefaultPaymentMethod__c, 
                 Other_PaymentMethod__c from R00N40000001kyLcEAI) 
@@ -664,6 +665,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
             rowDataList.add(rowData.trim());
         }
         
+        
         integer totalColumnTrails = columnIndex_fieldName.size() - rowDataList.size();
         if (totalColumnTrails > 0) {
             for (integer i = 1; i <= totalColumnTrails; i++) {
@@ -803,7 +805,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                             
                             pCode = rowDataList[index];
                             Singpost_Address__c postal = postalCode_singpostAddress.get(pCode);
-                            
+                            //system.assertEquals('AddressType ' , postal.Address_Type__c);
                             recipientAddressType = postal.Address_Type__c;
                             objectValue = postal.Id;
                             recipientAddress.put(FIELD_BUILDING_NAME_2, postal.Building_Name__c);
@@ -882,7 +884,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                             
                             pCode = rowDataList[index];
                             Singpost_Address__c postal = postalCode_singpostAddress.get(pCode);
-                            
+                            //system.assertEquals('AddressType ' , postal.Address_Type__c);
                             objectValue = postal.Id;
                             billingAddress.put(FIELD_BUILDING_NAME_2, postal.Building_Name__c);
                             billingAddress.put(FIELD_BLOCK_HOUSE_NUM, postal.House_Block_Number__c);
@@ -1062,7 +1064,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                         deliveryChargeType = (string)objectValue;
                         // Start D-4334 19Jan16 JohnD - added logic if not delivered by vender charge type must be Z
                         if ((deliveryChargeType == null || deliveryChargeType == EMPTY_STR) 
-                                && rowDataList[fieldIdentifier_index.get(IDE_OLI_DELIVERED_BY)] == DELIVERED_BY_VENDOR) {
+                                && rowDataList[fieldIdentifier_index.get(IDE_OLI_DELIVERED_BY)] == DELIVERED_BY_VENDOR) { 
                             //START PD-0041 FrancisBenzon 16May16 : default to H if recipientAddType is null
                             if(recipientAddressType != null)
                             {
@@ -1453,7 +1455,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                 while (isLocked) {
                     
                     isLocked = false;
-                    
+                   
                     try {
                         insert orderLineItemIdentifier_orderLineItem.values();
                     } catch (exception oliEx) {
@@ -1494,12 +1496,11 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
                 update orderLineItemIdentifier_orderLineItem.values();
             
             } catch (exception e) {
-                
                 Database.rollback(sp);
                 isErrorEncountered = true;
                 
                 string message = System.Label.BO_ERR_CREATION_FAILURE + e.getMessage();
-                
+
                 orderFile = null;
 
                 ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, message));
@@ -1509,7 +1510,6 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
     }
     
     private void addExistingAccount() {
-        
         if (!accountNumber_account.isEmpty()) {
             for (Account acc : accountNumber_account.values()) {
                 accountIdentifier_account.put(acc.AccountNumber, acc);
@@ -1888,6 +1888,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
             }
             
             caseList.add(casex);
+            System.debug('caselist ' + caseList);
         }
     }
     
@@ -2465,7 +2466,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
             
             string zoneCode = countryCode_zoneCode.get(rowDataListParam[fieldIdentifier_index.get(IDE_RC_ADDRESS_COUNTRY)]);
             for (id productId : packageCode_productIdSet.get(rowDataListParam[fieldIdentifier_index.get(IDE_OLI_PACKAGE_ID)])) {
-                
+       
                 string zoneProductIdentifier = zoneCode.toUpperCase() + productId;
                 
                 if (zoneProduct_postageCharge.get(zoneProductIdentifier) == null) {
@@ -2512,6 +2513,7 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
         warningList.add(BRACKET_O + string.valueOf(rowNumberParam) + BRACKET_C + SPACE + msgParam);
     }
     
+    /*
      //START PD-0041 FrancisBenzon 21May16: for test class coverage only
         public void testCoveragePatch() {
             integer i = 0;
@@ -5605,7 +5607,8 @@ public class BulkOrderUploadController extends BulkOrderUploadDeclarator {
             i++;
             i++;
         }
+        
             //END PD-0041 FrancisBenzon 21May16: for test class coverage only
-    
+        */
 }
 // End UD-3541 18Jan16 JohnD - fix implemented and optimized the whole class

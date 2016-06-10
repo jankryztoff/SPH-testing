@@ -1126,7 +1126,7 @@ public class EmailNotificationCreation{
         if(subscription instanceof Zuora__Subscription__c){
             if(subIdPubCodeSetMap.containskey(subscription.id)){                
         // START : UD-0985 7/8/2015 Alyana Navarro             
-                sub = groupPubPerSub(subscription.id, subIdPubCodeSetMap.get(subscription.Id), String.valueOf(subscription.get('Frequency_1__c')), String.valueOf(caseSubMap.get(subscription.id).Complaint_Copies__c), true); //Start-End: D-4466 15-march-2016 
+                sub = groupPubPerSub(subscription.id, subIdPubCodeSetMap.get(subscription.Id), String.valueOf(subscription.get('Frequency_1__c')), String.valueOf(caseSubMap.get(subscription.id).Complaint_Copies__c), true); //Start-END: D-4466 15-march-2016 added by Jason A. 
             }           
         } else if(subscription instanceof Subscription_Vendor__c){      
             String copies = getSubVenCopies(subIdSubVenListMap.get(subscription.id), integer.valueof(caseVenSubmap.get(subscription.id).Complaint_Copies__c));  //Start-End: D-4466 15-march-2016 added by Jason A. 

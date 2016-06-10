@@ -51,8 +51,9 @@ public class GiftLetterNTUC{
     //END D-3722 3/11/2015 Gdelrosario: change of call of address format
 
     public GiftLetterNTUC() {
-        try
+       try
         {
+     system.debug('gio >>:' + ApexPages.currentPage().getParameters().get('id'));
             DateToday = Date.Today();            
             
             //START:D-2217 2/13/15 Added by Manolo Valeña - Added Unique Number field to the query. 
@@ -118,7 +119,8 @@ public class GiftLetterNTUC{
             //END: D-1189 01/15/2014 Added by P.Villarica
             //END: D-2156 02/11/2015 Added by Manolo Valena 
             //END:D-2217 2/13/15 Added by Manolo Valeña - Added Unique Number field to the query. 
-
+            system.debug('gio >>:' + OrderLineItemGift );
+            system.debug('gio >>:' + OrderLineItemGift.Order_Line_Item__r.Main_Package_ID__c != null );
             //START UD-2995 10/5/2015 Gdelrosario : to call the method to format address
             //START D-3722 3/11/2015 Gdelrosario: change of call of address format
             finalAddress = AddressHelper.formatGiftAddress(OrderLineItemGift); 
@@ -136,6 +138,7 @@ public class GiftLetterNTUC{
                 if(OrderLineItemGift.Order_Line_Item__c != null && OrderLineItemGift.Order_Line_Item__r.Main_Package_ID__c != null){
                     //START UD-2214 24/8/2015 GdelRosario : added specific fields in the query
                     // START : UD-2214 10/12/2015 Alyana Navarro
+                    system.debug('gio >>: pasok sa if' );
                     subscription = [SELECT id, name, Main_Package_1__r.name, Zuora__SubscriptionStartDate__c, Main_Package_1__r.Package_Code__c,Zuora__CustomerAccount__c, Recipient_Contact__r.Recipient_Number__c, 
                                         Zuora__CustomerAccount__r.Billing_Contact__r.Recipient_Number__c,Zuora__CustomerAccount__r.Billing_Contact__r.Billing_Indicator__c
                                         FROM Zuora__Subscription__c 
@@ -144,9 +147,10 @@ public class GiftLetterNTUC{
                                         LIMIT 1];
                     // END : UD-2214 10/12/2015 Alyana Navarro
                     //END UD-2214 24/8/2015 GdelRosario : query
+             
                 }
             }
-
+            system.debug('gio >>:' + subscription );
             //START UD-2993 5/10/2015 : added to billing account attention to field 
                 contactName = OrderLineItemGift.Order_Line_Item__r.Order__r.Account__r.Attention_To_Care_Of__c; 
                 billingContactName = OrderLineItemGift.Order_Line_Item__r.Order__r.Billing_Contact__r.Name;
@@ -154,6 +158,7 @@ public class GiftLetterNTUC{
             //START UD-2214 Gdelrosario 24/8/2015
                 //START UD-2214 Gdelrosario 19/10/2015 : change the sub_accn from recipient number to account number
                 //sub_accn =  OrderLineItemGift.Order_Line_Item__r.Order__r.Account__r.Recipient_Number__c;
+                
                 sub_accn =  OrderLineItemGift.Order_Line_Item__r.Order__r.Account__r.AccountNumber;
                 //END UD-2214 Gdelrosario 19/10/2015 : change the sub_accn from recipient number to account number
             // START : UD-2214 10/12/2015 Alyana Navarro
@@ -242,7 +247,7 @@ public class GiftLetterNTUC{
         catch(Exception e)
         {   
             // START : D-1141 2/6/2015 Alyana Navarro
-            system.debug('Error : ' + e);
+           system.debug('Error : ' + e);
             // END : D-1141 2/6/2015
         }
     }

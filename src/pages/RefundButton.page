@@ -1,3 +1,0 @@
-<apex:page standardController="Case" action="{!activateRefund}" extensions="RefundButtonExtension" sidebar="false" showHeader="false">
-    <apex:pageMessages />
-</apex:page>

@@ -56,7 +56,7 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
      */ 
     global Database.QueryLocator start(Database.BatchableContext bc)
     {
-		//START 02 May 2016 UD-3872 Kevin Evasco - Added Is PDF Generated = false
+        //START 02 May 2016 UD-3872 Kevin Evasco - Added Is PDF Generated = false
         //START: D-3663 10/08/2015 Added by Kristine Balaoing - batch recovery
         String query = '';
         if(isAdhocDate){
@@ -72,7 +72,7 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
             query += 'SELECT Id, CreatedDate FROM External_Payment__c ';
             query += 'WHERE Payment_Type__c = :creditCard AND CreatedDate = TODAY AND Is_PDF_Generated__c = false'; //START UD-3316 Gdelrosario: changed to yesterday
         }
-		//END 02 May 2016 UD-3872 Kevin Evasco - Added Is PDF Generated = false
+        //END 02 May 2016 UD-3872 Kevin Evasco - Added Is PDF Generated = false
         return Database.getQueryLocator(query);
         //END: D-3663 10/08/2015 Added by Kristine Balaoing - batch recovery
         //END UD-2556 08/31/2015 added by Jason A./Alyana N.
@@ -101,8 +101,8 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
         Savepoint sp = Database.setSavepoint();
         try{
             letterPrintRequests = new List<Letter_Print_Request__c>(); //START/END 04/15/2015 D-2740 Kevin Evasco - Needs to initiliaze list to avoid inserting records with IDs already
-			
-			//START 02 May 2016 UD-3872 Kevin Evasco - Generate CCF PDFs only once by marking IS PDF Generated = true
+            
+            //START 02 May 2016 UD-3872 Kevin Evasco - Generate CCF PDFs only once by marking IS PDF Generated = true
             for(External_Payment__c batchObject : scope)
             {
                 Letter_Print_Request__c letterPrintRequest = new Letter_Print_Request__c();
@@ -111,15 +111,15 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
                 letterPrintRequest.Status__c = SP_GenerateLetterPrintBatch.newValue;
 
                 letterPrintRequests.add(letterPrintRequest);
-				batchObject.Is_PDF_Generated__c = true;
+                batchObject.Is_PDF_Generated__c = true;
             }
 
             if(letterPrintRequests.size() > 0)
             {
                 insert letterPrintRequests;
-				update scope;
-            }			
-			//END 02 May 2016 UD-3872 Kevin Evasco - Generate CCF PDFs only once by marking IS PDF Generated = true
+                update scope;
+            }           
+            //END 02 May 2016 UD-3872 Kevin Evasco - Generate CCF PDFs only once by marking IS PDF Generated = true
         }catch(Exception e){
             Database.rollback(sp);
             logger.logBatchFailure(e, scope);
@@ -146,8 +146,7 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
         List<Exception> exceptionList = new List<Exception>();
         try{
             //Start D-4482 - Raviteja Kumar - calling updateBatchJobScheduler method 
-            /*
-            if(!isApexJobSuccessful){
+            /*if(!isApexJobSuccessful){
                 BatchJobHelper.updateJobStatus(BC.getJobId(), false);
             }else{
                 BatchJobHelper.updateJobStatus(BC.getJobId(), true);

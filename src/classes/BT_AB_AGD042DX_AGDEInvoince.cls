@@ -339,9 +339,7 @@ global class BT_AB_AGD042DX_AGDEInvoince implements Database.Batchable<sObject>,
                     lineCtr++;
                     String exportData2 = '';
                     exportData2 += lineCtr + ','; //Invoice Line Number                 
-					//START 17 May 2016 PD-0213 Kevin Evasco - Set scale to 5 to fix decimal precision issue
                     exportData2 += lineItemWrapperRecord.unitPrice.setScale(5)  + ','; //Unit Price 
-					//END 17 May 2016 PD-0213 Kevin Evasco - Set scale to 5 to fix decimal precision issue
                     exportData2 += lineItemWrapperRecord.quantity + ','; //Quantity 
                     exportData2 += lineItemWrapperRecord.taxAmount.setScale(2) + ','; //GST Amount 
                     exportData2 += lineItemWrapperRecord.merchandiseAmount.setScale(2) + ','; //Merchandise Amount 

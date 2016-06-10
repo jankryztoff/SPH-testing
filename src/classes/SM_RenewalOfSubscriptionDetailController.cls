@@ -1,17 +1,8 @@
-/**
-     * Class Name: SM_RenewalOfSubscriptionDetailController
-     * @author: john dacutan
-     * Date: 09/29/2014
-     * Requirement/Project Name: SPH Project
-     * @description : this class is use as a controller for the renewal detailed page of SM_RenewalOfSubscriptionDetail visualforce page
-     * 
-     */
 // Start UD-2039 22Jul15 JohnD - removed "with sharing" keyword
 public class SM_RenewalOfSubscriptionDetailController extends SM_SubscriptionHelper {
 // End UD-2039 22Jul15 JohnD - removed "with sharing" keyword    
     final id orderId = ApexPages.currentPage().getParameters().get('id');
     final id accountId = ApexPages.currentPage().getParameters().get('accountId');
-    
     public list<Order_Line_Item__c> orderLineItemList { get; set; }
     public string selectedOrderLineItem { get; set; }
     public Order__c thisOrder { get; set; }
@@ -34,110 +25,77 @@ public class SM_RenewalOfSubscriptionDetailController extends SM_SubscriptionHel
     //END D-3316 08/06/2015 Added by J.Sarion - 
 
     public void retrieveOrder() {
-
         list<SObject> orderList = new list<SObject>();
         string queryStr = generateOrderSoqlStr();
         if((string)orderId ==  ' ' || (string)orderId == 'null' || (string)orderId == null) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, ConstantsSLB.getErrorMessage('No Order in Retention Record'));
             ApexPages.addMessage(myMsg);
             //ApexPages.addMessage(ApexPages.Message(ApexPages.Severity.WARNING, ConstantsSLB.getErrorMessage('No Order in Retention Record')));
-        }
-        else {          
+        }else {          
             queryStr += ' where (Order_Type__c = \'Renewal\' and Account__c = \'' + accountId + '\' and Status__c =\'Draft\')';
             queryStr += ' or Id = \'' + orderId + '\' limit 1';
         }
-       
-       try {
-           
-           	orderList = database.query(queryStr);
-           	// Start D-1345 01/19/2015 JohnD proceed only when orderlist has a value
-           	if (orderList.size() > 0) {
-           		
-	           	thisOrder = (Order__c)orderList[0];
-	           	dtlDate = getDtlDate();            
-	           	retrieveActiveSubscriptions();
-	           	retrieveOrderLineItems();
-	            
-	           	// Start D-1345 01/19/2015 JohnD retrieve the subscription package name
-	           	if (thisOrder.Base_Subscription__c != null) {
-		           	
-		           // START D2642 5/18/2015 GDELROSARIO : added varibale for the id of seletedPackage
-                    list<Zuora__Subscription__c> tempList = [select Main_Package_1__r.Name,Main_Package_1__c from Zuora__Subscription__c 
-                            where Id = :thisOrder.Base_Subscription__c];
-                            
+        try {
+            orderList = database.query(queryStr);
+            // Start D-1345 01/19/2015 JohnD proceed only when orderlist has a value
+            if (orderList.size() > 0) {
+                thisOrder = (Order__c)orderList[0];
+                dtlDate = getDtlDate();            
+                retrieveActiveSubscriptions();
+                retrieveOrderLineItems();
+                // Start D-1345 01/19/2015 JohnD retrieve the subscription package name
+                if (thisOrder.Base_Subscription__c != null) {
+                   // START D2642 5/18/2015 GDELROSARIO : added varibale for the id of seletedPackage
+                    list<Zuora__Subscription__c> tempList = [select Main_Package_1__r.Name,Main_Package_1__c from Zuora__Subscription__c where Id = :thisOrder.Base_Subscription__c];  
                     if (tempList.size() > 0) {
                         selectedSubsriptionPackageName = tempList[0].Main_Package_1__r.Name;
                         selectedPackageId = tempList[0].Main_Package_1__c;
                     }
                     // END D2642 5/18/2015 GDELROSARIO
-	           	}
-	            // End D-1345 01/19/2015 John
-           	}
-           	// End D-1345 01/19/2015 JohnD
-    
+                }
+                // End D-1345 01/19/2015 John
+            }
+            // End D-1345 01/19/2015 JohnD
         } catch (exception e) {
             ApexPages.addMessages(e);           
         }
-        
     }
-
-    /**
-    * @description : This method will retrieve all active subscriptions of the account
-    *       and display in the existing subscriptin for renewal section of vf page
-    */
-	//START: D-4659 4-11-2016 Added by Kristine Balaoing - added @Tsvisible to private methods 
-     @TestVisible private void retrieveActiveSubscriptions() {
-        
-        subscriptionList = [select Id, Name, Main_Package_1__c, Subscription_Type_1__c, Recipient_Contact__r.Address__r.Building_Name__c, 
-                Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Recipient_Contact__c, 
-                Recipient_Contact__r.Address__r.Address_1__c, Recipient_Contact__r.Address__r.Address_2__c, 
-                Recipient_Contact__r.Address__r.Address_3__c, Recipient_Contact__r.Address__r.Address_4__c,
-                Recipient_Contact__r.Address__r.C_O_Company__c,
-                Recipient_Contact__r.Address__r.City__c, Recipient_Contact__r.HomePhone 
-                from Zuora__Subscription__c where Id = :thisOrder.Base_Subscription__c];
-        
-    }
-
-
-
     /*
-     * Description: This method will retrieve all the order line items related to the Order.
-     *      The list will be displayed on the Line Items section of the VF page
+    description: This method will retrieve all active subscriptions of the accountnand display in the existing subscriptin for renewal section of vf page
     */
-    @TestVisible private void retrieveOrderLineItems() {
-
+    private void retrieveActiveSubscriptions(){
+        subscriptionList = [select Id, Name, Main_Package_1__c, Subscription_Type_1__c, Recipient_Contact__r.Address__r.Building_Name__c, 
+                                    Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Recipient_Contact__c, 
+                                    Recipient_Contact__r.Address__r.Address_1__c, Recipient_Contact__r.Address__r.Address_2__c, 
+                                    Recipient_Contact__r.Address__r.Address_3__c, Recipient_Contact__r.Address__r.Address_4__c,
+                                    Recipient_Contact__r.Address__r.C_O_Company__c,
+                                    Recipient_Contact__r.Address__r.City__c, Recipient_Contact__r.HomePhone 
+                            from Zuora__Subscription__c where Id = :thisOrder.Base_Subscription__c];
+    }
+    /*
+    Description: This method will retrieve all the order line items related to the Order. The list will be displayed on the Line Items section of the VF page
+    */
+    private void retrieveOrderLineItems(){
         orderLineItemList = getOrderLineItems(thisOrder.Id);
         selectedOrderLineItem = orderLineItemList[0].Id;
         retrieveOrderLineItem();
     } 
-
-	//END: D-4659 4-11-2016 Added by Kristine Balaoing
     /*
-     * Description: This method will retrieve the information of the selected Order Line Item and 
-     *      populate the data on the Subscription Details Section of the VF page.
-     *      This will allow the user to update the Order Line Item. Invoke when user click on the
-     *      specific Order Line Item from the Line Item section of the VF page
+    Description: This method will retrieve the information of the selected Order Line Item and populate the data on the Subscription Details Section of the VF page.
+    This will allow the user to update the Order Line Item. Invoke when user click on them specific Order Line Item from the Line Item section of the VF page
     */
-    public void retrieveOrderLineItem() {
-        
+    public void retrieveOrderLineItem(){
         orderLineItem = getOrderLineItem(selectedOrderLineItem);
-                
         // populate getter-setter variables
         promotionGifts = orderLineItem.Order_Line_Item_Gifts__r;
-        
         if (promotionGifts.size() > 0) {
             isFromPromotion = true;
         }
-         
         if (orderLineItem.Is_Digital__c == true) {
-            
             isDigital = true;
             asia1Subscriptions = getAsia1s(orderLineItem.Asia1_Subscriptions__r);
         }
     }
-
-
-
     // START D2642 5/18/2015 GDELROSARIO : Method for Callout of ASIA1 during SUMBIT of renewal
         // Start UD-3452 19Jan16 JohnD - commented out. no longer in used
         /*
@@ -236,13 +194,22 @@ public class SM_RenewalOfSubscriptionDetailController extends SM_SubscriptionHel
         // End UD-3452 19Jan16 JohnD - commented out. no longer in used
     // END D2642 5/18/2015 GDELROSARIO
 
-    
+    //start GSantos - added for D-0585
+    public void updateOrderLineItemGifts(List<Order_Line_Item__c> orderItemList){
+        List<Order_Line_Item_Gift__c> OrderLineItemGifts= [SELECT Id, Hidden_Status__c FROM Order_Line_Item_Gift__c WHERE Order_Line_Item__c =:orderItemList];
+        if(!OrderLineItemGifts.isEmpty()){
+            for(Order_Line_Item_Gift__c OrderLineItemGift : OrderLineItemGifts){
+                OrderLineItemGift.Hidden_Status__c = 'Provisioning';
+            }
+            update OrderLineItemGifts;
+        }
+    }
+    //end GSantos
     
     public PageReference submit() {
-        
         PageReference pgRef;
         boolean isError = false;
-		Order_Line_Item__c tmp;
+        Order_Line_Item__c tmp;
         
         // Start UD-3452 19Jan16 JohnD - re-used the registerAsia1Accounts from sm_subscriptionhelper
         try {
@@ -251,10 +218,8 @@ public class SM_RenewalOfSubscriptionDetailController extends SM_SubscriptionHel
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, e.getMessage());
             ApexPages.addMessage(myMsg);
             isError = true;
-            
         }
         // End UD-3452 19Jan16 JohnD - re-used the registerAsia1Accounts from sm_subscriptionhelper
-        
         //START D-3316 08/06/2015 Added by J.Sarion - Create Asia1 account
         // Start UD-3452 19Jan16 JohnD - commented out
         //try{
@@ -269,76 +234,69 @@ public class SM_RenewalOfSubscriptionDetailController extends SM_SubscriptionHel
         //END D-3316 08/06/2015 Added by J.Sarion - Create Asia1 account
 
         try {
-            
             tmp = [select id from Order_Line_Item__c where Order__c = :thisOrder.Id limit 1];
-
-        
-        } catch (exception e) {
+        }catch (exception e) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, ConstantsSLB.getErrorMessage('No Order Line Item'));
             ApexPages.addMessage(myMsg);
             isError = true;
         }
         
         if (isError == false) {
-            
             thisOrder.Status__c = 'Pending';
             //START D-1407 Added by FrancisBenzon Autopopulation of DTL Date
             thisOrder.DTL_Date__c = dtlDate;
             //END D-1407 Added by FrancisBenzon Autopopulation of DTL Date
             update thisOrder;
-            
             //START D-3166 24-26-2015 Marvin Gatchalian
-            List<Order_Line_Item__c> orderLIst = [SELECT id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];
-            if(!orderLIst.isEmpty())
-            {
-                for(Order_Line_Item__c orderLI : orderLIst )
-                {
+            /*List<Order_Line_Item__c> orderList = [SELECT id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];
+            if(!orderList.isEmpty()){
+                for(Order_Line_Item__c orderLi : orderList ){
                     orderLi.DTL_Date__c = dtlDate;
                 }
-                update orderLIst;
+                update orderList;
+            }*/
+            List<Order_Line_Item__c> orderList = [SELECT Id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];/////
+            if(!orderList.isEmpty()){
+                for(Order_Line_Item__c orderLi : orderList){
+                    orderLi.DTL_Date__c = dtlDate;
+                }
+                //start GSantos - added for D-0585
+                updateOrderLineItemGifts(orderList);
+                //end GSantos
+            }
+            //D-896 Added try catch
+            try {
+                update orderList;/////
+            }catch (exception e) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));      
             }
             //END D-3166 24-26-2015 Marvin Gatchalian
-            
             //Start UD-678 VPernicia/MGatchalian 4/06/2015
             Quote_Handler QH = new Quote_Handler();
             QH.Create_Quotes(thisOrder, 'Renewal Subscription', tmp.id);
             //End UD-678 VPernicia/MGatchalian 4/06/2015
-            
             Subscription_Handler sh = new Subscription_Handler();
             sh.origin = 'Renewal of Subscription';
             sh.Subscription_Handler_Direct(thisOrder);
             Renewal_CancelSubscription.getSubscriptionParams(thisOrder.Base_Subscription__c);
-                
             pgRef = new PageReference('/' + thisOrder.Account__c);
             pgRef.setRedirect(true);
-            
         }
-        
         return pgRef;
     }
-    
     
     public PageReference void() {
-        
         thisOrder.Status__c = 'Void';
-        
         update thisOrder;
-        
         PageReference pgRef = new PageReference('/' + thisOrder.Account__c);
         pgRef.setRedirect(true);
-        
         return pgRef;
-        
     }
-
     
-    public PageReference edit() {
-        
+    public PageReference edit(){
         string retUrl = '/apex/SM_RenewalOfSubscriptionEntry?subscriptionId=' + thisOrder.Base_Subscription__c + '&accountId=' + thisOrder.Account__c;
         PageReference pgRef = new PageReference(retUrl);
         pgRef.setRedirect(true);
-        
         return pgRef;
-        
     }    
 }

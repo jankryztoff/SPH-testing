@@ -4,7 +4,7 @@
  * @Date: 04/11/2014
  * @Description: This class is for updating billing account details sent from ARMS
  */    
-  @isTest(SeeAllData = True) // JURNA ADDED //JMG changed SeeAllData to TRUE since we're querying in the database
+  @isTest
   private class EshopFetchSubscriptionDetailsTest{
        
     static testmethod void testFetchSubscriptionDetailsForSubs()

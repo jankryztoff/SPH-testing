@@ -61,19 +61,19 @@ public class BulkQuoteHandler {
     Map<Id, String> mapPackItemToQuoteName = new Map<Id, String>();
     Map<Id, Date> package_oliStartDateMap = new Map<Id, Date>();
     Map<String, DiscountChargeWrapper> mapDiscountCharges = new Map<String, DiscountChargeWrapper>();
-  map<id, list<Package_Item__c>> basePackageItemId_discountPackageItemList = new map<id, list<Package_Item__c>>();
+    map<id, list<Package_Item__c>> basePackageItemId_discountPackageItemList = new map<id, list<Package_Item__c>>();
     //END UD-3660 4March2016 FrancisBenzon : variables for discount
     
     // Start UD-3660 JohnD 11Apr16
     map<id, id> quoteId_packageItemId = new map<id, id>();
     map<id, id> packageItemId_productRatePlanId = new map<id, id>();
-  list<zqu__Quote__c> quote2CleanList = new list<zqu__Quote__c>();
-  map<id, list<id>> quoteId_ratePlanIdList = new map<id, list<id>>();
-  list<zqu__Quote__c> consolidatedQuoteList = new list<zqu__Quote__c>();
-  set<id> consolidatedProductIdSet = new set<id>();
-  map<id, id> pckageItemId_productId = new map<id, id>();
-  map<id, decimal> orderLineItemId_postageChargeAmount = new map<id, decimal>();
-  Logger logger = new Logger(BulkQuoteHandler.class.getName());
+    list<zqu__Quote__c> quote2CleanList = new list<zqu__Quote__c>();
+    map<id, list<id>> quoteId_ratePlanIdList = new map<id, list<id>>();
+    list<zqu__Quote__c> consolidatedQuoteList = new list<zqu__Quote__c>();
+    set<id> consolidatedProductIdSet = new set<id>();
+    map<id, id> pckageItemId_productId = new map<id, id>();
+    map<id, decimal> orderLineItemId_postageChargeAmount = new map<id, decimal>();
+    Logger logger = new Logger(BulkQuoteHandler.class.getName());
     // End UD-3660 JohnD 11Apr16
     public set<string> bulkQuoteCreation(set<id> orderIdSet, String origin) {
 
@@ -106,7 +106,8 @@ public class BulkQuoteHandler {
         boolean isRecordLock = true;
         
         orderList = getOrder(orderIdSet);       
-       
+       system.debug('===>TEST orderIdSet: ' + orderIdSet);
+       system.debug('===>TEST orderList: ' + orderList);
         for (Order__c order : orderList) {            
             orderIdToOrderMap.put(order.Id, order);
             accountIDset.add(order.Account__c);
@@ -115,6 +116,7 @@ public class BulkQuoteHandler {
 
         orderIdOrderLineItemMap = getOrderLineItem(orderIdSet);                     
         
+       system.debug('===>TEST orderIdOrderLineItemMap.keySet(): ' + orderIdOrderLineItemMap.keySet());
         for (Id orderId : orderIdOrderLineItemMap.keySet()) {                             
 
             hasVendorDelivery = false;  // Start/End UD-3541 18Jan16 JohnD
@@ -137,6 +139,7 @@ public class BulkQuoteHandler {
             }
             
             orderId_hasVendorDelivery.put(orderId, hasVendorDelivery);  // Start/End UD-3541 18Jan16 JohnD
+       system.debug('===>TEST orderId_hasVendorDelivery: ' + orderId_hasVendorDelivery);
         }
         
         prepareProrationVariables(orderLineItemList);
@@ -163,23 +166,23 @@ public class BulkQuoteHandler {
             {
                 mapRatePlanIDToDisc.put(charge.zqu__ProductRatePlan__c, charge.sum__c);
             }
-      system.debug(':::MapRpToDISC ' + mapRatePlanIDToDisc);
+            system.debug(':::MapRpToDISC ' + mapRatePlanIDToDisc);
         }   
         //END UD-3660 4March2016 FrancisBenzon :  Query Discount Percentage
-    
-    // start create delivery quote
+        
+        // start create delivery quote
         for (Id orderId : orderIdOrderLineItemMap.keySet()) {                             
 
             for (Order_Line_Item__c orderLineItem : orderIdOrderLineItemMap.get(orderId)) {
                 
                 bCreateDeliverySubscription = false;
-
+                 system.debug(':::DeliveredBy ' + orderLineItem.Delivered_By__c + ' :::ratePlanDelivery ' + ratePlanDelivery);
                 if (orderLineItem.Delivered_By__c == 'Vendor' && ratePlanDelivery != NULL) {
                     bCreateDeliverySubscription = true;    
                 }
 
                 if (bCreateDeliverySubscription == true) {
-                    
+                    system.debug(':::DELIVERYPARAMS ' + orderIdToOrderMap.get(orderId) + ' :::OLI '  + orderLineItem + ' ' + ConstantsSLB.getkeyid('SubTypeDel') + ' orig ' + origin);
                     quoteReturn = new zqu__Quote__c ();
                     quoteReturn = createQuoteDelivery(orderIdToOrderMap.get(orderId), orderLineItem, ConstantsSLB.getkeyid('SubTypeDel'), origin );
                     
@@ -190,8 +193,8 @@ public class BulkQuoteHandler {
                 }
             }
         }
-    // end create delivery quote
-    
+        // end create delivery quote
+        
         // Start UD-3660 11Apr16 JohnD - new method created for record locking issue
         // Start - insist insertion
         /*
@@ -202,43 +205,54 @@ public class BulkQuoteHandler {
                 insert zQuoteListRet;
                 isRecordLock = false;
             
-              consolidatedQuoteList.addAll(zQuoteListRet);  // Start/End UD-3660 11Apr16 JohnD 
+                consolidatedQuoteList.addAll(zQuoteListRet);    // Start/End UD-3660 11Apr16 JohnD 
             } catch (dmlexception e) {
                 isRecordLock = e.getMessage().contains('UNABLE_TO_LOCK_ROW');
             }               
         }
         */
         // End - insist insertion
+        if(!zQuoteListRet.isEmpty()){
+            zQuoteListRet = insertQuotes(zQuoteListRet);
+        	consolidatedQuoteList.addAll(zQuoteListRet);
+        }
         
-        zQuoteListRet = insertQuotes(zQuoteListRet);
-        consolidatedQuoteList.addAll(zQuoteListRet);
         // End UD-3660 11Apr16 JohnD - revised approach on retry mechanism
         
         // Start UD-3660 11Apr16 JohnD - revised approach, create quote charges in one execution
-        for (zqu__Quote__c zquoret :zQuoteListRet) {
+        //if(!zQuoteListRet.isEmpty() ){
+        if(!zQuoteListRet.isEmpty() ){
+            for (zqu__Quote__c zquoret :zQuoteListRet) {
 
-            if (quoteId_ratePlanIdList.get(zquoret.Id) == null) {
-              quoteId_ratePlanIdList.put(zquoret.Id, new list<id>());
+                if (quoteId_ratePlanIdList.get(zquoret.Id) == null) {
+                    quoteId_ratePlanIdList.put(zquoret.Id, new list<id>());
+                }
+                
+                quoteId_ratePlanIdList.get(zquoret.Id).add(orderIdToProductRatePlanMap.get(Id.valueOf(zquoret.Order_Number__c)).Id);
+                /* commented out
+                try {
+                
+                    list<zqu.zChargeGroup> lstChargeGroups = new list<zqu.zChargeGroup>();
+    
+                    zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(zquoret.Id, orderIdToProductRatePlanMap.get(Id.valueOf(zquoret.Order_Number__c)).Id);
+                    lstChargeGroups.add(chargeGroup); 
+                    zqu.zQuoteUtil.addChargeGroups(lstChargeGroups); 
+                
+                } catch(exception e) {
+                    exceptionList.add(e);
+                }
+                */              
             }
-            
-            quoteId_ratePlanIdList.get(zquoret.Id).add(orderIdToProductRatePlanMap.get(Id.valueOf(zquoret.Order_Number__c)).Id);
-            /* commented out
-            try {
-            
-                list<zqu.zChargeGroup> lstChargeGroups = new list<zqu.zChargeGroup>();
-
-                zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(zquoret.Id, orderIdToProductRatePlanMap.get(Id.valueOf(zquoret.Order_Number__c)).Id);
-                lstChargeGroups.add(chargeGroup); 
-                zqu.zQuoteUtil.addChargeGroups(lstChargeGroups); 
-            
-            } catch(exception e) {
-                exceptionList.add(e);
-            }
-            */              
         }
+            
+           
+       // }
+        
         // End UD-3660 11Apr16 JohnD - revised approach, create quote charges in one execution
         
+        system.debug('===>TEST orderIdOrderLineItemMap: ' + orderIdOrderLineItemMap);
         quoteIdToQuoteMap = createQuote(orderIdOrderLineItemMap, packIdToPackItemListMap, orderLineToGiftMap, orderIdToOrderMap, orderIdToSubZuoraIdMap);
+        system.debug('===>TEST quoteIdToQuoteMap: ' + quoteIdToQuoteMap);
         addQuoteChargeToQuote(orderLineItemList, packIdToPackItemListMap, quoteIdToQuoteMap, prpIdToprpcListMap, ratePlanChargeTierMap, prpIdToPrpMap);    
         
         //START UD-3660 4March2016 FrancisBenzon : setup discount charges
@@ -275,23 +289,24 @@ public class BulkQuoteHandler {
                     mapDiscountCharges.put(key, new DiscountChargeWrapper(startMonth, duration, oli.Start_Date__c, isNone));
                 }
             }
-      system.debug(':::MapQuoteIdToDisc ' + mapQuoteIdToDisc);
-      system.debug(':::mapDiscountCharges ' + mapDiscountCharges);
+            system.debug(':::MapQuoteIdToDisc ' + mapQuoteIdToDisc);
+            system.debug(':::mapDiscountCharges ' + mapDiscountCharges);
          }
             
         //END UD-3660 4March2016 FrancisBenzon : setup discount charges
-        
+        System.debug('#$# quoteIdToQuoteMap.keySet():' + quoteIdToQuoteMap.keySet());
         for (String quoteName :quoteIdToQuoteMap.keySet()) {
             quoteNameSet.add(quoteName);
         }
+        System.debug('#$# quoteNameSet:' + quoteNameSet);
         // Start UD-3660 JohnD 08Apr16
         // 11Apr16 quoteList = [SELECT Id, zqu__ZuoraAccountID__c, Frequency__c, Order_Number__c, zqu__Description__c  FROM zqu__Quote__c WHERE Id IN :result_createdQuoteIdSet];   // Start/End UD-2865
         // End UD-3660 JohnD 08Apr16
         
-    // Start UD-3660 11Apr16 JohnD - proration quotes
+        // Start UD-3660 11Apr16 JohnD - proration quotes
         result_productRatePlanList = [SELECT Id, zqu__ZProduct__c, SubscriptionFrequency__c, RatePlanSubType__c  
                 FROM zqu__ProductRatePlan__c WHERE zqu__ZProduct__c IN :consolidatedProductIdSet 
-                AND RatePlanType__c = 'Proration' and zqu__Deleted__c = false];   // Start UD-3660 11Apr16 JohnD - changed variable reference
+                AND RatePlanType__c = 'Proration' and zqu__Deleted__c = false];     // Start UD-3660 11Apr16 JohnD - changed variable reference
         
 
         for (zqu__ProductRatePlan__c prp : result_productRatePlanList) {
@@ -310,17 +325,17 @@ public class BulkQuoteHandler {
             } else {
                 productId_nonChargeableProrationRatePlanId.put(prp.zqu__zProduct__c, prp.Id);
             }
-      
-      // Start UD-3660 11Apr16 JohnD - revised logic
-      if (result_product_productRatePlanList_map.get(prp.zqu__ZProduct__c) == null) {
-        result_product_productRatePlanList_map.put(prp.zqu__ZProduct__c, new list<id>());
-      }
-      
-      result_product_productRatePlanList_map.get(prp.zqu__ZProduct__c).add(prp.Id);
-      // End UD-3660 11Apr16 JohnD - revised logic
+            
+            // Start UD-3660 11Apr16 JohnD - revised logic
+            if (result_product_productRatePlanList_map.get(prp.zqu__ZProduct__c) == null) {
+                result_product_productRatePlanList_map.put(prp.zqu__ZProduct__c, new list<id>());
+            }
+            
+            result_product_productRatePlanList_map.get(prp.zqu__ZProduct__c).add(prp.Id);
+            // End UD-3660 11Apr16 JohnD - revised logic
         }
         
-    /* Start UD-3660 11Apr16 JohnD - commented out
+        /* Start UD-3660 11Apr16 JohnD - commented out
         if (result_productRatePlanList != null) {
 
             for (zqu__ProductRatePlan__c result_productRatePlan : result_productRatePlanList) {
@@ -339,11 +354,11 @@ public class BulkQuoteHandler {
             string quoteFrequency = frequencyName_frequencyCode.get(quote.Frequency__c);
             list<id> result_corresponding_productRatePlanList = new list<id>(); // Start/End UD-2865 22Sep15 JohnD - instantiated
             
-      // Start UD-3660 11Apr16 JohnD - 
+            // Start UD-3660 11Apr16 JohnD - 
             if (quote.zqu__Description__c instanceOf id && packageItemId_productId.containsKey(quote.zqu__Description__c)) {
                 result_productId = packageItemId_productId.get(quote.zqu__Description__c);
             }
-      // End UD-3660 11Apr16 JohnD - 
+            // End UD-3660 11Apr16 JohnD - 
             if (result_product_productRatePlanList_map.containsKey(result_productId)) {
                 result_corresponding_productRatePlanList = result_product_productRatePlanList_map.get(result_productId);
             }
@@ -362,7 +377,7 @@ public class BulkQuoteHandler {
                 }
                 
                 if (quoteId_ratePlanIdList.get(quote.Id) == null) {
-                  quoteId_ratePlanIdList.put(quote.Id, new list<id>());
+                    quoteId_ratePlanIdList.put(quote.Id, new list<id>());
                 }
                 
                 quoteId_ratePlanIdList.get(quote.Id).addAll(ratePlanIdList);
@@ -370,22 +385,28 @@ public class BulkQuoteHandler {
                 //zqu.zQuoteUtil.addChargeGroups(cg1);    
             }  
         }
-      // End UD-3660 11Apr15 JohnD - prorations quotes
-      
-      // Start UD-3660 11Apr15 JohnD - create quote charges
-      
-      system.debug('Johnxxxxxxx :: ' + quoteId_ratePlanIdList);
-      for (id quoteId : quoteId_ratePlanIdList.keySet()) {
+        // End UD-3660 11Apr15 JohnD - prorations quotes
+        
+        // Start UD-3660 11Apr15 JohnD - create quote charges
+        
+        system.debug('Johnxxxxxxx :: ' + quoteId_ratePlanIdList);
+        if(quoteId_ratePlanIdList != null && !quoteId_ratePlanIdList.isEmpty()){
+            for (id quoteId : quoteId_ratePlanIdList.keySet()) {
+            system.debug('===>BQH quoteId: ' + quoteId + '\n quoteId_ratePlanIdList.get(quoteId): ' + quoteId_ratePlanIdList.get(quoteId) + '\n quoteId_ratePlanIdList: ' + quoteId_ratePlanIdList);
+            
             // Start UD-3660 24May2016 JC Aduan : to avoid manage package class callout upon test class
             if(!test.isRunningTest()){
                 zqu.zQuoteUtil.addChargeGroups(zqu.zQuoteUtil.getChargeGroups(quoteId, quoteId_ratePlanIdList.get(quoteId)));
             }
             // End UD-3660 24May2016 JC Aduan : and to throw a return value for this method       
         }
-      // End UD-3660 11Apr15 John
-      
-      
-      // start override prices
+            
+        }
+        
+        // End UD-3660 11Apr15 John
+        
+        
+        // start override prices
         /* Start UD-3660 11Apr16 commented out - not in use
         for (zqu__Quote__c quote :quoteList) {
             quoteAccountZuoraIdSet.add(quote.zqu__ZuoraAccountID__c);
@@ -404,6 +425,7 @@ public class BulkQuoteHandler {
             
             result_productIdSet.add(result_quoteCharge.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Id);
             result_quote_product_map.put(result_quoteCharge.zqu__Quote__r.Id, result_quoteCharge.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Id);
+            
             //START PD-0041 FrancisBenzon 19May16 : set correct quoteChargeQty
             if(result_quoteCharge.zqu__Quantity__c != NULL && result_quoteCharge.zqu__Quantity__c > 0)
                     result_quoteCharge.zqu__Quantity__c = result_quoteCharge.zqu__Quote__r.Qty1__c;
@@ -420,15 +442,15 @@ public class BulkQuoteHandler {
                 }
             }
             // Start UD-3660 11Apr16 JohnD 
-      else if (result_quoteCharge.zqu__Quote__r.Subscription_Type__c == 'Postage'
-          && result_quoteCharge.zqu__UOM__c <> GlobalVariableClass.DUMMY_CHARGE) {
+            else if (result_quoteCharge.zqu__Quote__r.Subscription_Type__c == 'Postage'
+                    && result_quoteCharge.zqu__UOM__c <> GlobalVariableClass.DUMMY_CHARGE) {
                 //Overwrite Postage Charge Value
                 Decimal postageAmt = result_quoteCharge.zqu__Quote__r.Order_Line_Item_Number_1__r.Postage_Charge__c;
                 result_quoteCharge.zqu__EffectivePrice__c = 
                     (ConstantsSLB.getUOM('PostageCharge') == result_quoteCharge.zqu__UOM__c) ?  postageAmt: -postageAmt;
-      }
-      // End UD-3660 11Apr16 JohnD
-      
+            }
+            // End UD-3660 11Apr16 JohnD
+            
              else
             {
                 String key = result_quoteCharge.zqu__Quote__r.Name + '-'+ result_quoteCharge.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c;
@@ -541,10 +563,10 @@ public class BulkQuoteHandler {
             // End UD-3660 JohnD 08Apr16 - clean up
         }
         */
-    // Start UD-3660 JohnD 11Apr16 - cleanup
+        // Start UD-3660 JohnD 11Apr16 - cleanup
         for (zqu__Quote__c quote2Clean : consolidatedQuoteList) {
-          quote2Clean.zqu__Description__c = null;
-          quote2CleanList.add(quote2Clean);
+            quote2Clean.zqu__Description__c = null;
+            quote2CleanList.add(quote2Clean);
         }
         
         try {
@@ -557,12 +579,14 @@ public class BulkQuoteHandler {
             ExceptionLogger.log(exceptionList);
         }
         
+        System.debug('## quoteNameSet: ' + quoteNameSet);
         return quoteNameSet;
     }
     
     
     private map<id, list<Order_Line_Item__c>> getOrderLineItem(set<id> orderIdSet) {
 
+       system.debug('===>TEST getOrderLineItem orderIdSet: ' + orderIdSet);
         map<id, list<Order_Line_Item__c>> orderIdOrderLineItemMap = new map<id, list<Order_Line_Item__c>>();
         list<Order_Line_Item__c> orderLineItemList = new list<Order_Line_Item__c>();
 
@@ -579,6 +603,7 @@ public class BulkQuoteHandler {
                              FROM Order_Line_Item__c 
                              WHERE order__c IN : orderIdSet];
 
+       system.debug('===>TEST orderLineItemList: ' + orderLineItemList);
         for (Order_Line_Item__c orderLineItem : orderLineItemList) {
             if (orderIdOrderLineItemMap.containsKey(orderLineItem.order__c)) {
                 orderIdOrderLineItemMap.get(orderLineItem.order__c).add(orderLineItem);
@@ -587,7 +612,7 @@ public class BulkQuoteHandler {
             }
             
             oliIdToOliMap.put(orderLineItem.Id, orderLineItem);
-      orderLineItemId_postageChargeAmount.put(orderLineItem.Id, orderLineItem.Postage_Charge__c);  // Start/End UD-3660 11Apr16 JohnD
+            orderLineItemId_postageChargeAmount.put(orderLineItem.Id, orderLineItem.Postage_Charge__c); // Start/End UD-3660 11Apr16 JohnD
         }
         
         return orderIdOrderLineItemMap;
@@ -646,7 +671,7 @@ public class BulkQuoteHandler {
                            FROM Package_Item__c
                            WHERE Package__c IN: packageIdSet
                            ORDER BY Bundle_Item_No__c ASC, Base_Package_Item__c ASC];
-      system.debug(':::PACKAGEItems ' + packageItemList);
+        system.debug(':::PACKAGEItems ' + packageItemList);
         //END UD-3660 4March2016 FrancisBenzon : added fields
         for (Package_Item__c packageItem : packageItemList) {
             if (packageItemMap.containsKey(packageItem.Package__c)) {
@@ -657,9 +682,9 @@ public class BulkQuoteHandler {
             //START UD-3660 4March2016 FrancisBenzon : get discount packageItems
             if(RT_ID_DISC == packageItem.RecordTypeId || RT_ID_BUNDLE_DISC == packageItem.RecordTypeId || RT_ID_EXT_DISC == packageItem.RecordTypeId)
                 setDiscRatePlanIDs.add(packageItem.Product_Rate_Plan__c);   
-      
-      if (packageItem.Base_Package_Item__c != null) 
-      {
+            
+            if (packageItem.Base_Package_Item__c != null) 
+            {
                 
                 if (basePackageItemId_discountPackageItemList.containsKey(packageItem.Base_Package_Item__c)) {
                     basePackageItemId_discountPackageItemList.get(packageItem.Base_Package_Item__c).add(packageItem);
@@ -669,10 +694,10 @@ public class BulkQuoteHandler {
             }
             //END UD-3660 4March2016 FrancisBenzon : get discount packageItems
             
-      // Start UD-3660 11Apr16 JohnD
+            // Start UD-3660 11Apr16 JohnD
             packageItemId_productRatePlanId.put(packageItem.Id, packageItem.Product_Rate_Plan__c);
-      packageItemId_productId.put(packageItem.Id, packageItem.Product_Rate_Plan__r.zqu__ZProduct__c);
-      // End UD-3660 11Apr16 JohnD
+            packageItemId_productId.put(packageItem.Id, packageItem.Product_Rate_Plan__r.zqu__ZProduct__c);
+            // End UD-3660 11Apr16 JohnD
         } 
 
         return packageItemMap;
@@ -700,7 +725,7 @@ public class BulkQuoteHandler {
         
         for (zqu__ProductRatePlan__c prodratePlan : prodRatePlanList) {
             ratePlanMap.put(prodRatePlan.id, prodRatePlan);
-            consolidatedProductIdSet.add(prodratePlan.zqu__ZProduct__c);  // Start/End UD-3660 11Apr16 JohnD
+            consolidatedProductIdSet.add(prodratePlan.zqu__ZProduct__c);    // Start/End UD-3660 11Apr16 JohnD
             if (prodratePlan.RatePlanCode__c == 'CHGPOS' && prodratePlan.zqu__Deleted__c == false) {
                 postagePrpIdToPrpMap.put(prodratePlan.Id, prodratePlan);
             }
@@ -771,12 +796,13 @@ public class BulkQuoteHandler {
                 }
             }
         }
-        
+
         //SET Delivery Rate Plan to Use
         for (Order__c ord : ordList) {
             
             defaultDeliveryChargeType = ConstantsSLB.getDefaultDeliveryChargeType(ord.Recipient_Add_Type__c);
-            
+
+             system.debug('\n\n ***DEBUG ord.Recipient_Type__c ' + ord.Recipient_Type__c + '\n\n **** ' + ADDRESS_TYPE_INTERNAL + '\n\n'  );
             if (ord.Recipient_Type__c == ADDRESS_TYPE_INTERNAL) {
                 ratePlanDelivery = deliveryRatePlan_Internal;
             } else if (ord.Recipient_Type__c == ADDRESS_TYPE_LOCAL || ord.Recipient_Type__c == ADDRESS_TYPE_AIRLINE) {
@@ -790,8 +816,10 @@ public class BulkQuoteHandler {
                 }    
             }
             
+
             orderIdToProductRatePlanMap.put(ord.id, ratePlanDelivery);
-            
+            system.debug('\n\n ***DEBUG ratePlanDelivery ' + ratePlanDelivery + '\n\n' );
+             system.debug('\n\n ***DEBUG orderId_hasVendorDelivery.get(ord.Id) ' + orderId_hasVendorDelivery.get(ord.Id) + '\n\n' );
             // Start UD-3541 18Jan16 JohnD
             if (orderId_hasVendorDelivery.get(ord.Id) && ratePlanDelivery == null) {
                 throw new CustomException(System.Label.ERR_NO_DELIVERY_RATE_PLAN);
@@ -846,8 +874,10 @@ public class BulkQuoteHandler {
         String packageType;
         Integer iTerm;
         
+        system.debug('===>TEST orderIdToOliListMap.keySet(): ' + orderIdToOliListMap.keySet());
         for (Id orderId :orderIdToOliListMap.keySet()) {
             
+        system.debug('===>TEST orderIdToOliListMap.get(orderId): ' + orderIdToOliListMap.get(orderId));
             for (Order_Line_Item__c oli :orderIdToOliListMap.get(orderId)) {
                 zQuote = new zqu__Quote__c();
                 Order__c order = orderIdToOrderMap.get(orderId);
@@ -994,20 +1024,21 @@ public class BulkQuoteHandler {
             // End UD-3660 11Apr16 JohnD - revised approach on retry mechanism
         }
         
-    // Start UD-3660 11Apr16 JohnD - commented out to avoid redundant iteration
-    /*
+        // Start UD-3660 11Apr16 JohnD - commented out to avoid redundant iteration
+        /*
         for (zqu__Quote__c quote :zQuoteList) {
             if (quote.Subscription_Type__c == 'Postage') {
                 postageQuoteToOliMap.put(quote.Id, quote.Order_Line_Item_Number__c);
             }
         }
-    */
-    // End UD-3660 11Apr16 JohnD - commented out to avoid redundant iteration
+        */
+        // End UD-3660 11Apr16 JohnD - commented out to avoid redundant iteration
         
         map<string, set<id>> quoteIdToQuoteMap = new map<string, set<id>>();
         
         result_createdQuoteIdSet = new set<id>();
         
+        system.debug('===>TEST zQuoteList: ' + zQuoteList);
         for (zqu__Quote__c zQuotes : zQuoteList) {
             // Start UD-3660 JohnD 08Apr16 - package item mapping
             if (zQuotes.zqu__Description__c != null && !zQuotes.zqu__Description__c.startsWith('Free') 
@@ -1019,6 +1050,7 @@ public class BulkQuoteHandler {
             // End UD-3660 JohnD 08Apr16 - package item mapping
             if (zQuotes.Subscription_Type__c != 'Postage') {
                 
+        system.debug('===>TEST quoteIdToQuoteMap.containsKey(zQuotes.name): ' + quoteIdToQuoteMap.containsKey(zQuotes.name));
                 if (quoteIdToQuoteMap.containsKey(zQuotes.name)) {
                     quoteIdToQuoteMap.get(zQuotes.name).add(zQuotes.id);
                 }
@@ -1029,12 +1061,12 @@ public class BulkQuoteHandler {
             
             if (zQuotes.Subscription_Type__c == 'Postage') {
                 quoteIdToQuote.put(zQuotes.Id, zQuotes);
-        postageQuoteToOliMap.put(zQuotes.Id, zQuotes.Order_Line_Item_Number__c);  // Start/End UD-3660 11Apr16 JohnD
+                postageQuoteToOliMap.put(zQuotes.Id, zQuotes.Order_Line_Item_Number__c);    // Start/End UD-3660 11Apr16 JohnD
             }
             
             result_createdQuoteIdSet.add(zQuotes.id);           
         }
-        
+        system.debug('===>TEST END quoteIdToQuoteMap: ' + quoteIdToQuoteMap);
         return quoteIdToQuoteMap;
     }
 
@@ -1067,7 +1099,7 @@ public class BulkQuoteHandler {
         q1.zqu__Currency__c = CURRENCY_SGD;
         q1.zqu__InvoiceProcessingOption__c = INVOICE_PROC_OPTION;
         q1.zqu__PaymentTerm__c = PAYMENT_TERM;
-        q1.zqu__Description__c = packageItemIdParam;  // Start/End UD-3660 JohnD 08Apr16 - temporary store the package item
+        q1.zqu__Description__c = packageItemIdParam;    // Start/End UD-3660 JohnD 08Apr16 - temporary store the package item
         //Check if New Billing Account or Existing Billing Account
         
         if (oli.Main_Package_ID__r.Subscription_Type__c == TERM_TYPE_TERMED) {
@@ -1183,9 +1215,11 @@ public class BulkQuoteHandler {
         
         map<id, list<zqu__QuoteCharge__c>>  quoteToquoteChargeMap = new map<id, list<zqu__QuoteCharge__c>>();
         
+        system.debug('===>TEST oliList: ' + oliList);
         // Start UD-3660 JohnD 08Apr16 - update logic
-    for (Order_Line_Item__c oli :oliList) 
+        for (Order_Line_Item__c oli :oliList) 
         {
+        system.debug('===>TEST oliNameToQuoteId.get(oli.Name): ' + oliNameToQuoteId.get(oli.Name));
             //START UD-3660 4March2016 FrancisBenzon : update quoteCharge with discount
             for (Id quoteId :oliNameToQuoteId.get(oli.Name)) {
                 
@@ -1207,7 +1241,7 @@ public class BulkQuoteHandler {
                 productRatePlanIdList.add(packageItemId_productRatePlanId.get(pkgItemId));
                 
                 if (quoteId_ratePlanIdList.get(quoteId) == null) {
-                  quoteId_ratePlanIdList.put(quoteId, new list<id>());
+                    quoteId_ratePlanIdList.put(quoteId, new list<id>());
                 }
                 
                 quoteId_ratePlanIdList.get(quoteId).addAll(productRatePlanIdList);
@@ -1237,12 +1271,12 @@ public class BulkQuoteHandler {
                     // Postage Charge is required for each publication
                     if (quote.Subscription_Type__c == 'Postage' && oli.Delivered_By__c == 'Mailing Agent') {
 
-            // Start UD-3660 11Apr16 JohnD - revised approach
-            if (quoteId_ratePlanIdList.get(quote.Id) == null) {
-              quoteId_ratePlanIdList.put(quote.Id, new list<id>());
-            }
-            quoteId_ratePlanIdList.get(quote.Id).add(ratePlanPostage.Id);
-            /* commented out
+                        // Start UD-3660 11Apr16 JohnD - revised approach
+                        if (quoteId_ratePlanIdList.get(quote.Id) == null) {
+                            quoteId_ratePlanIdList.put(quote.Id, new list<id>());
+                        }
+                        quoteId_ratePlanIdList.get(quote.Id).add(ratePlanPostage.Id);
+                        /* commented out
                         zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(quote.Id, ratePlanPostage.Id);     
                         if (mapQuoteIdToChargeGroups.get(quote.Id) == null)
                         {
@@ -1278,7 +1312,7 @@ public class BulkQuoteHandler {
         }
         */
         // End UD-3660 11Apr16 JohnD - revised approach         
-    //END UD-3660 4March2016 FrancisBenzon : update quoteCharge with discount
+        //END UD-3660 4March2016 FrancisBenzon : update quoteCharge with discount
     }
     
     
@@ -1295,6 +1329,7 @@ public class BulkQuoteHandler {
         quote.zqu__Currency__c                         = CURRENCY_SGD;
         quote.zqu__InvoiceProcessingOption__c          = INVOICE_PROC_OPTION;
         quote.zqu__PaymentTerm__c                      = PAYMENT_TERM;
+        
         //START PD-0041 FrancisBenzon 20May16 : start date for recurring 1st of month
         if(itemObj.Main_Package_Billing_Type__c == GlobalVariableClass.BILLING_TYPE_MR_PRE && itemObj.Start_Date__c.day() == 1)
             quote.zqu__StartDate__c                    = itemObj.Start_Date__c.addDays(-1);
@@ -1303,6 +1338,7 @@ public class BulkQuoteHandler {
         //quote.zqu__StartDate__c                        = itemObj.Start_Date__c;
         quote.zqu__TermStartDate__c                    = itemObj.Start_Date__c;
         //END PD-0041 FrancisBenzon 20May16 : start date for recurring 1st of month
+        
         quote.zqu__Service_Activation_Date__c          = itemObj.Start_Date__c;
         quote.Acquisition_Type__c                      = orderObj.Acquisition_Type__c;      
         quote.zqu__Account__c                          = orderObj.Account__c;        
@@ -1403,7 +1439,7 @@ public class BulkQuoteHandler {
     //END UD-3660 AddedBy FrancisBenzon 18Mar16 : commented out as method not used
     
     private zqu__Quote__c createQuoteDelivery(Order__c orderObj, Order_Line_Item__c ordItem, String sSubType, String origin) {
-        
+        system.debug(':::DELIVERY QUOTE METHOD');
         zqu__Quote__c q1 = new zqu__Quote__c ();    
         q1.Name                                     = ordItem.Name;
         q1.zqu__SubscriptionType__c                 = NEW_SUBSCRIPTION;                    
@@ -1430,6 +1466,7 @@ public class BulkQuoteHandler {
         else {
             q1.zqu__PaymentTerm__c              = GlobalVariableClass.PAYMENT_TERM_NORM;
         }
+        
         //START PD-0041 FrancisBenzon 20May16 : start date for recurring 1st of month
         if(ordItem.Main_Package_Billing_Type__c == GlobalVariableClass.BILLING_TYPE_MR_PRE && ordItem.Start_Date__c.day() == 1)
             q1.zqu__StartDate__c                    = ordItem.Start_Date__c.addDays(-1);
@@ -1438,6 +1475,7 @@ public class BulkQuoteHandler {
         //quote.zqu__StartDate__c                        = ordItem.Start_Date__c;
         q1.zqu__TermStartDate__c                    = ordItem.Start_Date__c;
         //END PD-0041 FrancisBenzon 20May16 : start date for recurring 1st of month             
+        
         q1.zqu__Service_Activation_Date__c          = orderObj.Delivery_Start_Date__c;
         q1.Acquisition_Type__c                      = orderObj.Acquisition_Type__c;      
         q1.zqu__Account__c                          = orderObj.Account__c;        
@@ -1539,35 +1577,35 @@ public class BulkQuoteHandler {
     
     // Start UD-3660 10Apr16 JohnD - temporary retry mechanism. 
     private list<zqu__Quote__c> insertQuotes(list<zqu__Quote__c> quoteListParam) {
-      
-    try {
-      insert quoteListParam;
-    } catch (exception firstEx) {
-      if (firstEx.getMessage().contains(ERR_RECORD_LOCK)) {
+        
         try {
-          insert quoteListParam;
-        } catch (exception secondEx) {
-          if (secondEx.getMessage().contains(ERR_RECORD_LOCK)) {
-            try {
-              insert quoteListParam;
-            } catch (exception thirdEx) {
-              logger.log(thirdEx);
+            insert quoteListParam;
+        } catch (exception firstEx) {
+            if (firstEx.getMessage().contains(ERR_RECORD_LOCK)) {
+                try {
+                    insert quoteListParam;
+                } catch (exception secondEx) {
+                    if (secondEx.getMessage().contains(ERR_RECORD_LOCK)) {
+                        try {
+                            insert quoteListParam;
+                        } catch (exception thirdEx) {
+                            logger.log(thirdEx);
+                        }
+                    } else {
+                        logger.log(secondEx);
+                    }
+                }
+            } else {
+                logger.log(firstEx);
             }
-          } else {
-            logger.log(secondEx);
-          }
         }
-      } else {
-        logger.log(firstEx);
-      }
-    }
-    
-    if (!logger.isEmpty()) {
-      logger.save();
-      throw new CustomException(System.Label.BO_ERR_RECORD_LOCK);
-    }
+        
+        if (!logger.isEmpty()) {
+            logger.save();
+            throw new CustomException(System.Label.BO_ERR_RECORD_LOCK);
+        }
 
-      return quoteListParam;
+        return quoteListParam;
     }
     // End UD-3660 10Apr16 JohnD
 }

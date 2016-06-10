@@ -150,7 +150,8 @@ global class SP_SendEmailNotifForFailedPayPalBatch implements Database.Batchable
             query += 'Billing_Account__r.Billing_Contact__r.LastName ';    
             query += 'FROM External_Payment__c ';  
             query += 'WHERE Payment_Type__c = \'PayPal\' '; 
-            query += 'AND CreatedDate = TODAY AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' '; // changed YESTERDAY to Today
+            //query += 'AND CreatedDate = YESTERDAY AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
+            query += 'AND CreatedDate = TODAY AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
             //END D-3952 Gdelrosario 19/11/15 : change the variables to external payment
         }
         return Database.getQueryLocator(query);
@@ -316,6 +317,7 @@ global class SP_SendEmailNotifForFailedPayPalBatch implements Database.Batchable
             // END : D-3468 9/1/2015 Alyana Navarro
             for (Zuora__Subscription__c sub :subsList) {              
                 subIdToSubMap.put(sub.Id, sub);
+                
                 //START D-4447 Gdelrosario 26.2.2016 added for filtering of per account per billing account per sub
                 if(realBillAcctToSUBlist2.containsKey(realBillAcctToSUBlist.get(sub.Id))){
                     realBillAcctToSUBlist2.get(realBillAcctToSUBlist.get(sub.Id)).add(sub);
@@ -330,14 +332,14 @@ global class SP_SendEmailNotifForFailedPayPalBatch implements Database.Batchable
                     //billAccIdToSubListMap = new Map<Id, List<Zuora__Subscription__c>>();
                     billAccIdToSubListMap.put(sub.Zuora__Account__c, new List<Zuora__Subscription__c>{sub});
                 }
-				
+                
                 for (Zuora__SubscriptionProductCharge__c spc :sub.Zuora__Subscription_Product_Charges__r) {
                     if (spc.PublicationCode__c != null) {
                         pubCodeSet.add(spc.PublicationCode__c);
                     }
                 }
             }
-			
+            
             if (!pubCodeSet.isEmpty()) {
                 pubList = [SELECT Id, Name, Publication_Code__c FROM Publication__c WHERE Publication_Code__c IN :pubCodeSet];
             }

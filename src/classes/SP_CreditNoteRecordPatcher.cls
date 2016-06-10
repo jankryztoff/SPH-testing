@@ -20,8 +20,8 @@ global class SP_CreditNoteRecordPatcher implements Database.Batchable<sObject>, 
                             FROM BATCH_JOB_SCHEDULER__c 
                             WHERE Batch_Code__c = 'SP043' AND Status__c = 'SUCCESS'
                             ORDER BY CreatedDate DESC LIMIT 1];
-							
-		//START D-4588 04 April 2016 Kevin Evasco - Changed immediate CB data type and value
+                            
+        //START D-4588 04 April 2016 Kevin Evasco - Changed immediate CB data type and value
         //Start UD-3253 29-Feb-2016 Added By S.Puli                   
         if(batchJobSchedulerList.size() == 1){
             DateTime lastExecution = batchJobSchedulerList[0].Start_Time__c;            
@@ -31,8 +31,8 @@ global class SP_CreditNoteRecordPatcher implements Database.Batchable<sObject>, 
             return Database.getQueryLocator([SELECT Id, Is_PDF_Generated__c, To_ARMS_Time__c, CreatedDate, Source_Invoice__r.Immediate_CB__c FROM Credit_Note__c WHERE Is_PDF_Generated__c = false OR (To_ARMS_Time__c = null AND Source_Invoice__r.Immediate_CB__c != 'Y')]);
         }
         //END 26 October 2015 UD-3056 Kevin Evasco - ARMS Interface Timestamp patch
-        //End UD-3253 29-Feb-2016 Added By S.Puli		
-		//END D-4588 04 April 2016 Kevin Evasco - Changed immediate CB data type and value
+        //End UD-3253 29-Feb-2016 Added By S.Puli       
+        //END D-4588 04 April 2016 Kevin Evasco - Changed immediate CB data type and value
     }
 
     global void execute(Database.BatchableContext BC, List<Credit_Note__c> scope){

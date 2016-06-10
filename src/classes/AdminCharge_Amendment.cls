@@ -55,7 +55,7 @@ public with sharing class AdminCharge_Amendment {
         
         // Properties to set
         amendment.setValue('RatePlanData', createRatePlanData(sProductRatePlanId, sProductRatePlanChargeId, AdminCharge));
-        
+        system.debug('-----CHA amendment ' + amendment);
         return amendApiCall(amendment);
     }
 
@@ -91,11 +91,11 @@ public with sharing class AdminCharge_Amendment {
 
     public static Boolean amendApiCall(Zuora.zObject amendment) {
         Zuora.zApi zuorApi = new Zuora.zApi();
-		//START D-3268 Modified By C.I.Salas - Test Coverage
-		if (!Test.isRunningTest()) {
-			zuorApi.zlogin();
-		}
-		//END D-3268 Modified By C.I.Salas - Test Coverage
+        //START D-3268 Modified By C.I.Salas - Test Coverage
+        if (!Test.isRunningTest()) {
+            zuorApi.zlogin();
+        }
+        //END D-3268 Modified By C.I.Salas - Test Coverage
         
         Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
         Zuora.zObject[] amendments = new List < Zuora.zObject > {
@@ -113,7 +113,14 @@ public with sharing class AdminCharge_Amendment {
         Zuora.zApi.AmendResult result = zuorApi.zamend(new List < Zuora.zApi.AmendRequest > {
           amendRequest
         });
-    
+        
+        //CHA
+        if(!result.success){
+            system.debug('-----CHA FAIL AMEND Result ' + result);
+        }else{
+            system.debug('-----CHA SUCCESS AMEND Result ' + result);
+        }
+        //CHA
         return result.success;
     }
 
@@ -140,11 +147,16 @@ public with sharing class AdminCharge_Amendment {
         List<Map<String, Object>> amendmentMapList = new List<Map<String, Object>>();
         
         GetRatePlan_And_RatePlanCharge_Id();
+        system.debug('>>>>>sProductRatePlanId ' + sProductRatePlanId);
+        system.debug('>>>>>sProductRatePlanChargeId ' + sProductRatePlanChargeId);
         
         for(String subZuoraId :subZuoraIdToAdminChargeMap.keySet()) {
             Decimal adminCharge = subZuoraIdToAdminChargeMap.get(subZuoraId);
+            system.debug('>>>>>adminCharge ' + adminCharge);
             if(subZuoraIdToStopDateMap.containsKey(subZuoraId)) {
-                Date stopDate = subZuoraIdToStopDateMap.get(subZuoraId);
+                //START PD-0289 5/31/2016 Added by J.Sarion - Set to stop date - 1
+                Date stopDate = subZuoraIdToStopDateMap.get(subZuoraId).addDays(-1);
+                //END PD-0289 5/31/2016 Added by J.Sarion - Set to stop date - 1
                 
                 amendmentMap = new Map<String, Object>();
                 

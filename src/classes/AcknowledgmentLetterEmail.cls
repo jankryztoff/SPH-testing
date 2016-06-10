@@ -219,6 +219,9 @@ global class AcknowledgmentLetterEmail implements Database.Batchable<sObject>, D
                         //END UD-2013 22-July-2015 Added by S.Puli - address based on record type
                         
                         //START: UD-2416 19-Aug-2015 Added By S.Puli
+                        //String baseURL = string.valueOf(System.URL.getSalesforceBaseUrl().toExternalForm()) + '/resource/SPHlogov2';
+                        //fieldValueMap.put('baseURL', 'http://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N00000007u0U&oid=00DN0000000OdC2');  
+                        //fieldValueMap.put('baseURL', string.valueOf(System.URL.getSalesforceBaseUrl().toExternalForm()));  
                         fieldValueMap.put('baseURL', finalLink);
                         //END: UD-2416 19-Aug-2015 Added By S.Puli
                     }
@@ -685,9 +688,9 @@ global class AcknowledgmentLetterEmail implements Database.Batchable<sObject>, D
                             , Main_Package_1__r.Package_Type__c
                             FROM Zuora__Subscription__c
                             WHERE (CreatedDate >: ReferenceDateFrom AND CreatedDate <=:ReferencedateTo) 
-								//START PD-0186 25May2016 Added By C. Lin - Include Active and Future Active Subscription only
+                                //START PD-0186 25May2016 Added By C. Lin - Include Active and Future Active Subscription only
                                 AND Zuora__CustomerAccount__c IN: billingAccountIdSet AND Supressed_Acknowledgement_Letter_1__c = false AND (Status_Formula__c = 'Active' OR Status_Formula__c = 'Future Active')];
-								//END PD-0186 25May2016 Added By C. Lin
+                                //END PD-0186 25May2016 Added By C. Lin
     //END UD-3758 02-23-2016 added by Jason A.
         //END UD-3141 10/22/2015 Jason A. - Added for Supressed Acknowledgement                     
         //END D-3689 10/05/2015 Jason A. - Remove filter for Active Subscription.                       

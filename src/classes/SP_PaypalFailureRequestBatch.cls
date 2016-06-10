@@ -54,7 +54,7 @@ global class SP_PaypalFailureRequestBatch implements Database.Batchable<sObject>
             query += 'FROM External_Payment__c ';
             query += 'WHERE Id IN :failedRecIds AND Payment_Type__c = \'PayPal\' ';
             query += 'AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
-            //query += 'AND Is_PDF_Generated__c = false AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
+            //query += 'AND      = false AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
             //END D-3952 Gdelrosario 19/11/15 : change the query to external payment
             //END D-3930 Gdelrosario 23/11/2015 : added to cater a new parameter
         }else{
@@ -63,7 +63,8 @@ global class SP_PaypalFailureRequestBatch implements Database.Batchable<sObject>
             query += 'SELECT id, name, CreatedDate ';
             query += 'FROM External_Payment__c ';
             query += 'WHERE Payment_Type__c = \'PayPal\' ';
-            query += 'AND CreatedDate  = TODAY AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' '; // Changed to Today from Yesterday
+            //query += 'AND CreatedDate  = YESTERDAY AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
+            query += 'AND CreatedDate  = Today AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
             //query += 'AND Is_PDF_Generated__c = false AND Billing_Account__r.Zuora__PaymentMethod_Type__c = \'PayPal\' ';
             //END D-3952 Gdelrosario 19/11/15 : change the query to external payment
             //END D-3930 Gdelrosario 23/11/2015 : added to cater a new parameter
@@ -138,10 +139,10 @@ global class SP_PaypalFailureRequestBatch implements Database.Batchable<sObject>
                                                                 WHERE CreatedDate <: lastExecution AND Letter_Type__c = :letterType AND Status__c = :SP_GenerateLetterPrintBatch.newValue LIMIT 1];
             }
             else{
-				//START D-4449 14April2016 Added By C. Lin - Change SP_GenerateLetterPrintBatch.newValue to GlobalVariableClass.STATUS_PENDING
+                //START D-4449 14April2016 Added By C. Lin - Change SP_GenerateLetterPrintBatch.newValue to GlobalVariableClass.STATUS_PENDING
                 letterRequests_LIST = [SELECT Id,Letter_Type__c,Status__c FROM Letter_Print_Request__c 
                                                                 WHERE Letter_Type__c = :letterType AND Status__c = :GlobalVariableClass.STATUS_PENDING LIMIT 1];
-				//END D-4449 14April2016 Added By C. Lin
+                //END D-4449 14April2016 Added By C. Lin
             }
         //START D-3930 Gdelrosario 23/11/2015 : added to cater a new parameter
             if(letterRequests_LIST.size()>0 && !isAdhoc){

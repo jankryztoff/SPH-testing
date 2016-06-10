@@ -6,9 +6,15 @@
  * @description Third Test Class for SM_RenewalOfSubscriptionEntryController
  *
  */
-@isTest ( seeAllData = true )
+@isTest 
 public class SM_RenewalOfSubscriptionEntryTest3 {
-
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+    }  
+    
+    
     // Test Data
     static Account acc;
     static Singpost_Address__c postal;
@@ -215,14 +221,14 @@ public class SM_RenewalOfSubscriptionEntryTest3 {
                 discountRatePlan = TestDataFactory.createProductRatePlan(1);
                 discountRatePlan[0].zqu__ZProduct__c = zProduct[0].Id;
                 discountRatePlan[0].RatePlanType__c = 'Discount';
-                insert discountRatePlan;
+                //insert discountRatePlan;
             }
             prdRatePlans.addAll(discountRatePlan);
             
             prdRatePlans[0].BillingPeriod__c = packageObject.Subscription_Period__c;
             prdRatePlans[1].BillingPeriod__c = packageObject.Subscription_Period__c;
             
-            update prdRatePlans;
+            //update prdRatePlans;
         
         List<Package_Item__c> toDeleteItem = [SELECT Id FROM Package_Item__c WHERE Package__c = :packageObject.id];
         
@@ -302,7 +308,7 @@ public class SM_RenewalOfSubscriptionEntryTest3 {
             orderRec[0].Recipient_Contact__c = recConId;
             orderRec[0].Subscriber_Charge__c = 15;
             orderRec[0].Billing_Account__c = testSubscription[0].Zuora__CustomerAccount__c;
-            orderRec[0].Billing_Type__c = testSubscription[0].Zuora__CustomerAccount__r.Billing_Type__c;
+            orderRec[0].Billing_Type__c = 'Recurring Prepaid';//testSubscription[0].Zuora__CustomerAccount__r.Billing_Type__c;
             insert orderRec;
         }
         oli = [SELECT Id FROM Order_Line_Item__c WHERE Main_Package_ID__c =:packageObject.id AND Order__c = :orderRec[0].id];

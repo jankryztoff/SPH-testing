@@ -241,15 +241,15 @@ public class StringUtility
         }
         return zResult;
     }
-	
-	//START 25 February 2016 NCR015-5 Kevin Evasco - Packing Label CR
-	public static string wrapEscape(String mainStr, String specialChar, String wrapper){
-		String result = mainStr;
-		if(result != null)
-			result = result.replaceAll(specialChar, wrapper + specialChar + wrapper);
-		else
-			result = ' ';
-		return result;
-	}
-	//END 25 February 2016 NCR015-5 Kevin Evasco - Packing Label CR
+    
+    //START 25 February 2016 NCR015-5 Kevin Evasco - Packing Label CR
+    public static string wrapEscape(String mainStr, String specialChar, String wrapper){
+        String result = mainStr;
+        if(result != null)
+            result = result.replaceAll(specialChar, wrapper + specialChar + wrapper);
+        else
+            result = ' ';
+        return result;
+    }
+    //END 25 February 2016 NCR015-5 Kevin Evasco - Packing Label CR
 }

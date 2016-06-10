@@ -52,7 +52,9 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
     
     //START PD-0354 31May16 FrancisBenzon : variables
     Set<Id> acctIdSet = new Set<Id>();
+    Set<String> acctRecTypeSet = new Set<String>{GlobalVariableClass.ACCRECTYPEDI, GlobalVariableClass.ACCRECTYPEDC, GlobalVariableClass.ACCRECTYPEDSID};
     //END PD-0354 31May16 FrancisBenzon : variables
+    
     // Default Constructor
     global SP_CreateDelChargeUsageBatch(){
     }
@@ -65,7 +67,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
             referenceIdsAsId = new Set<Id>();
             for(String refId :referenceIds){
                 referenceIdsAsId.add(Id.valueOf(refId));
-            }           
+            } 
             //START PD-0354 31May16 FrancisBenzon : get sub accts instead of contacts
             for(Zuora__Subscription__c sub :[SELECT Id, Recipient_Contact__c, Zuora__Account__c FROM Zuora__Subscription__c WHERE Id IN :referenceIdsAsId]){
                 acctIdSet.add(sub.Zuora__Account__c);
@@ -89,7 +91,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
      */
     global Database.QueryLocator start(Database.BatchableContext BC){
         //START PD-0354 31May16 FrancisBenzon : query from account to avoid duplicate del usages
-        String  query = 'SELECT ID FROM Account Where Status__c = \'active\'';
+        String  query = 'SELECT ID FROM Account Where RecordType.Name IN :acctRecTypeSet';
         // START D-3647 LISEN 10/8/2015 - Enable on demand batch call
         //START D-3647 10/14/2015 Added by J.Sarion - Run batch for selected billing accounts/Ids
         if(!acctIdSet.isEmpty()){
@@ -106,15 +108,16 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
      * @param scope - a list of sObjects from the initial database query
      * @return void     
      */
-        //START PD-0354 31May16 FrancisBenzon : variables
     global void execute(Database.BatchableContext BC, List<Account> scope1){
         // START D-3647 LISEN 10/8/2015 - Enable on demand batch call for recovery
         Logger logger = new Logger(SP_CreateDelChargeUsageBatch.class.getName(), 'SP004', BC.getJobID()); //START-END D-3647 10/14/2015 Added by J.Sarion - Run batch for selected billing accounts/Ids
         Savepoint sp = Database.setSavepoint();
         
+        //START PD-0354 31May16 FrancisBenzon : variables
         Set<Id> setAcctIds = new Set<Id>();
         List<Contact> scope = new List<Contact>();
         //END PD-0354 31May16 FrancisBenzon : variables
+        
         try{
             //map of <account Id> + <Delivery address> and matching delivery Charge Subscription
             //create 1 usage for every subscription added to this map
@@ -141,7 +144,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
             Set<String> subIdFirtsofMonthSet = new Set<String>();
             List<Invoice_Line_Item__c> invoiceLineItemList = new List<Invoice_Line_Item__c>();
             Map<String, String> subZuoraIdToNameMap = new Map<String, String>();
-            //END UD-1522 06/21/2015 Added by J.Sarion - Set of subscription Id start date first day of month
+            //END UD-1522 06/21/2015 Added by J.Sarion - Set of subscription Id start date first day of month           
             
             if(referenceDate != null) {
                 firstDayOfMonth = referenceDate.toStartOfMonth();
@@ -155,7 +158,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
                 lastDayOfNextMonth = firstDayOfNextMonth.addDays(Date.daysInMonth(firstDayOfNextMonth.year(), firstDayOfNextMonth.month()) - 1); 
             }
             //END 03/30/2015 D-2606 Kevin Evasco added condition for Custom Setting for Reference Date for all month-end batches    
-        
+            
             //START PD-0354 31May16 FrancisBenzon : uery from account to avoid duplicate del usages
             for (Account acc : scope1) {
                 setAcctIds.add(acc.Id);
@@ -454,7 +457,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
                                 //START 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                                 Start_Date__c = startDate,
                                 Usage_Type__c = UsageHelper.USAGE_TYPE_DELIVERY_CHARGE,
-								Case__c = null // Start/End D-4470 05Apr16 JohnD
+                                Case__c = null // Start/End D-4470 05Apr16 JohnD
                                 //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                                 //END: D-1568 01/12/2015 Added By Jayson Sarion
                             )
@@ -515,7 +518,7 @@ global class SP_CreateDelChargeUsageBatch implements Database.Batchable<sObject>
                                 Case__c = null // Start/End D-4470 05Apr16 JohnD
                                 //END 03/31/2015 D-2610 Kevin Evasco - Insert unique usages only
                                 //END: D-1568 01/12/2015 Added By Jayson Sarion
-                            )
+                            ) 
                         );
                     }
                 }

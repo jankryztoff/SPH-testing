@@ -37,6 +37,42 @@ public class ResponseUtility {
         return results;
     }
     
+    //START PD-0506 6/9/2016 Added by J.Sarion - set delete results
+    public List<Zuora.zApi.DeleteResult> getZuoraNegativeResultsDelete () {
+        Zuora.zObject error = new Zuora.zObject('Error');
+        Zuora.zObject[] errors = new List<Zuora.zObject>();
+        error.setValue ('Code', 'test error');
+        error.setValue ('Message', 'test message');
+        errors.add(error);
+                
+        List<Zuora.zApi.DeleteResult> results = new List<Zuora.zApi.DeleteResult>();
+        Zuora.zApi.DeleteResult res = new Zuora.zApi.DeleteResult();
+        res.Success = false; 
+        res.id = null;
+        res.Errors = errors;
+        results.add(res);
+        return results;
+    }
+    
+    public List<Zuora.zApi.DeleteResult> getZuoraPositiveResultsDelete () {
+         
+        List<Zuora.zApi.DeleteResult> results = new List<Zuora.zApi.DeleteResult>();
+        system.debug('xxxJohnxxx : ' + usedNegativeResponse);
+        if (!usedNegativeResponse) {            
+            Zuora.zApi.DeleteResult res = new Zuora.zApi.DeleteResult();
+            res.Success = true; 
+            res.id = generateExternalId();
+            res.Errors = null;
+            results.add(res );
+        } else {
+            results = getZuoraNegativeResultsDelete();
+        }
+        
+        usedNegativeResponse = false;
+        return results;
+    }
+    //END PD-0506 6/9/2016 Added by J.Sarion - set delete results
+    
     public Zuora.zApi.AmendResult getZuoraPositiveAmendResults () {
         Zuora.zApi.AmendResult res = new Zuora.zApi.AmendResult();
         res.Success = true;
@@ -85,14 +121,19 @@ public class ResponseUtility {
             if (field.trim() == 'Balance') {
                 responseObject.setValue(field.trim(), 10);
             } else if (field.trim() == 'Amount') {
-            	responseObject.setValue(field.trim(), 10);
-            } else {
+              responseObject.setValue(field.trim(), 10);
+            } else if (field.trim() == 'ChargeAmount') {
+                responseObject.setValue(field.trim(), 105);
+            }else if (field.trim() == 'TaxAmount') {
+                responseObject.setValue(field.trim(), 10);
+            } 
+            else {
                 responseObject.setValue(field.trim(), 'test data');
             }
         }
         
         if (zuoraAccountId != null)
-        	responseObject.setValue('AccountId', zuoraAccountId);
+          responseObject.setValue('AccountId', zuoraAccountId);
         returnResult.add(responseObject);
         zuoraAccountId = null;
         return returnResult;

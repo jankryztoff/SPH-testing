@@ -10,6 +10,10 @@
 public class AddressHelper {
     
     public static String finalAddressOutput = '';
+    //Start D-4695 Gdelrosario : code review implementation
+    private static final String ADDRESS_LOCAL = 'Local';
+    private static final String ADDRESS_INTERNAL = 'Internal';
+    //END D-4695 Gdelrosario : code review implementation
         
     //Start D-3722 VPernicia 10/20/15
      public static String formatAddress(Contact con, Boolean isAck, Boolean isPackingLabel){
@@ -33,7 +37,7 @@ public class AddressHelper {
     
     //Start D-3722 VPernicia 10/20/15
     public static void constructAddress(Contact selectedContact, Boolean isAck, Boolean isPackingLabel){
-
+    
         String address1 = '';
         String address2 = '';
         String address3 = '';
@@ -42,7 +46,7 @@ public class AddressHelper {
         String address6 = '';
         String finalAddress = '';
 
-        
+
         if(selectedContact.Id != null){
             if(selectedContact.Address__r.RecordTypeId == ConstantsSLB.getKeyId('Address_Local')){                       
                 String bhN = '';
@@ -205,7 +209,7 @@ public class AddressHelper {
             String address5 = '';  
             String finalGiftAddress = '';
 
-            if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Local'){
+            if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == ADDRESS_LOCAL){ //START - END D-4695 Gdelrosario
                         
                         String bhN = '';
                         String stN = '';
@@ -255,8 +259,8 @@ public class AddressHelper {
                             
                         }
                     }
-
-                    if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Overseas'){
+                    //START D-4695 Gdelrosario : removed the overseas and airline in address for gifts
+                    /*if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Overseas'){
                         if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Address_1__c <> null){
                             address1 = oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Address_1__c + '&nbsp'+'<br/>';
                         }
@@ -272,9 +276,9 @@ public class AddressHelper {
                         if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Country__r.Country_Name__c <> null){
                             address5 = oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Country__r.Country_Name__c;
                         }
-                    }
-
-                    if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Internal'){
+                    } */
+                    //END D-4695 Gdelrosario : removed the overseas and airline in address for gifts
+                    if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == ADDRESS_INTERNAL){ //START - END D-4695 Gdelrosario
                         if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Section_Code__r.Section_Name__c <> null){
                             address1 = oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Section_Code__r.Name + '&nbsp'+'<br/>';
                         }
@@ -291,8 +295,8 @@ public class AddressHelper {
                             address5 = oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.Location_Code__r.Name;
                         }
                     }
-
-                    if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Airline'){
+                    //START D-4695 Gdelrosario : removed the overseas and airline in address for gifts
+                    /*if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.recordType.developerName == 'Airline'){
                         if(oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.City_Name__c <> null){
                             address1 += (oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.City_Name__c.length() > 40 ? oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.City_Name__c.subString(0,40) : oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.City_Name__c ) ;
                             address1 += '&nbsp'+'<br/>';
@@ -311,8 +315,8 @@ public class AddressHelper {
                             address5 = oligift.Order_Line_Item__r.Order__r.Recipient_Contact__r.Address__r.City__r.Country__c;
                         }
                         //End UD-2517 VPernicia 08/27/15
-                    }
-
+                    }*/
+                    //END D-4695 Gdelrosario : removed the overseas and airline in address for gifts
                     if(address1 <> null && address1 <> '' && address1 <> 'null'){
                         finalGiftAddress += address1;
                     }
@@ -334,5 +338,25 @@ public class AddressHelper {
         //Start D-3722 Gdelrosario 3/11/15
 
 
+    // Start D-Singpost Database JohnD 
+    /*
+    @param: addressIdentifierSetParam = singpostAddressId + levelNumber + unitNumber
+    */
+    public static map<string, boolean> validate(set<string> addressIdentifierSetParam) {
+        
+        map<string, boolean> addressIdentifier_isExist = new map<string, boolean>();
+        addressIdentifierSetParam.remove(null);
+        
+        for (string identfier : addressIdentifierSetParam) {
+            addressIdentifier_isExist.put(identfier, false);
+        }
+        
+        for (Address_Details__c addressDetail : [select Identifier__c from Address_Details__c where Identifier__c in :addressIdentifierSetParam]) {
+            addressIdentifier_isExist.put(addressDetail.Identifier__c, true);
+        }
+        
+        return addressIdentifier_isExist;
+    }
+    // End D-Singpost Database JohnD
 
 }

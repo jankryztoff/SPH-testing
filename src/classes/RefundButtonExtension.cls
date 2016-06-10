@@ -24,7 +24,7 @@ String SysAdminProfile = ConstantsSLB.getOther('System Administrator');
 String SysAdmin2Profile = ConstantsSLB.getOther('SPH System Admin 2');
 //End 06/13/2015 UD-1537 James
 
-final static string CREDIT_CARD = 'CreditCard';	// Start/End D-4592 07Apr16 JohnD
+final static string CREDIT_CARD = 'CreditCard'; // Start/End D-4592 07Apr16 JohnD
 
 public RefundButtonExtension(ApexPages.StandardController controller) {
 
@@ -590,16 +590,16 @@ public RefundButtonExtension(ApexPages.StandardController controller) {
                                 for(Zuora__CustomerAccount__c ba : cAccounts){
                                     //START UD-3092 16Mar16 FrancisBenzon :added condition
                                     if(ba.Refund_Amount__c != null && ba.Refund_Amount__c != 0 && ba.Credit_Balance_Incl_Goodwill__c != 0 
-                                    		&& ba.Zuora__DefaultPaymentMethod__c == CREDIT_CARD){	// Start/End D-4592 07Apr16 JohnD - added Zuora__DefaultPaymentMethod__c
+                                            && ba.Zuora__DefaultPaymentMethod__c == CREDIT_CARD){   // Start/End D-4592 07Apr16 JohnD - added Zuora__DefaultPaymentMethod__c
                                     //END UD-3092 16Mar16 FrancisBenzon :added condition
                                         Map<String,Object> refundMap = new Map<String, Object>();
-										refundMap.put('AccountId', ba.Zuora__External_Id__c);
-										refundMap.put('PaymentMethodId', ba.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);                     
-										refundMap.put('Amount', ba.Refund_Amount__c);                                   
-										refundMap.put('SourceType', 'CreditBalance');                    
-										refundMap.put('Type', 'Electronic' );     
-										//refundMap.put('MethodType', thisCase.Payment_Mode__c );                                     
-										refundMap.put('Payee__c', thisCase.Payee_Name__c);      
+                                        refundMap.put('AccountId', ba.Zuora__External_Id__c);
+                                        refundMap.put('PaymentMethodId', ba.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);                     
+                                        refundMap.put('Amount', ba.Refund_Amount__c);                                   
+                                        refundMap.put('SourceType', 'CreditBalance');                    
+                                        refundMap.put('Type', 'Electronic' );     
+                                        //refundMap.put('MethodType', thisCase.Payment_Mode__c );                                     
+                                        refundMap.put('Payee__c', thisCase.Payee_Name__c);      
                                         //START UD-2252 AddedBy FrancisBenzon 10/23/15 : populate case field in refund record 
                                         refundMap.put('Case_1__c', thisCase.id);
                                         //END UD-2252 AddedBy FrancisBenzon 10/23/15 : populate case field in refund record  
@@ -611,7 +611,7 @@ public RefundButtonExtension(ApexPages.StandardController controller) {
 
                                 List<Map<String,String>> resultMap = RefundCallOut.loadZObjects(listMap, 'Refund');
 
-								system.debug('JohnD ::: ' + resultMap);
+                                system.debug('JohnD ::: ' + resultMap);
 
                                 for(Map<String, String> rMap: resultMap) {
                                     if (rMap.get('Status') == 'Success') {                          

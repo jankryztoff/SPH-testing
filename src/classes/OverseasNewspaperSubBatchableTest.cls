@@ -7,8 +7,14 @@
 @reference <none>
 */
 
-@isTest(seeAllData = true)//(seeAllData = false)
+@isTest
 public class OverseasNewspaperSubBatchableTest{
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther();
+    }
 
     static void setCustomSettings() {
     
@@ -80,7 +86,7 @@ public class OverseasNewspaperSubBatchableTest{
             */
             
             User u = TestDataFactory.prepareTestusers('Standard User');
-            
+            u.UserName = 'standardSPX12@test.com';
             System.runAs(u){
                 //Create Account
                 //List<Account> acc = TestDataFactory.createAccount(1, 'Direct Corporate');
@@ -255,7 +261,7 @@ public class OverseasNewspaperSubBatchableTest{
             );
             */
             User u = TestDataFactory.prepareTestusers('Standard User');
-            
+            u.UserName = 'standardSPX13@test.com';
             System.runAs(u){
                 //Create Account
                 //List<Account> acc = TestDataFactory.createAccount(1, 'Direct Corporate');

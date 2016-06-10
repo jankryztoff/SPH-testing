@@ -86,13 +86,13 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
                 paymentMethodCreditCardType = root.getChildElement('PaymentMethodCreditCardType', null).getText();
                 system.debug('>>>>>> 8');
                 paymentErrorMessage = root.getChildElement('PaymentErrorMessage', null).getText();
-				//START D-4684 4/19/2016 Added by J.Sarion - Trim error message to 255 characters only
-				if(paymentErrorMessage != null) {
-					if(paymentErrorMessage.length() > 255) {
-						paymentErrorMessage = paymentErrorMessage.substring(0, 255);
-					}
-				}
-				//END D-4684 4/19/2016 Added by J.Sarion - Trim error message to 255 characters only
+                //START D-4684 4/19/2016 Added by J.Sarion - Trim error message to 255 characters only
+                if(paymentErrorMessage != null) {
+                    if(paymentErrorMessage.length() > 255) {
+                        paymentErrorMessage = paymentErrorMessage.substring(0, 255);
+                    }
+                }
+                //END D-4684 4/19/2016 Added by J.Sarion - Trim error message to 255 characters only
                 system.debug('>>>>>> 9');
                 paymentMethodExpirationDate = root.getChildElement('PaymentMethodExpirationDate', null).getText();
                 paymentAmount = root.getChildElement('PaymentAmount', null).getText();
@@ -169,7 +169,7 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
             //END D-3236 10-07-2015 Marvin Gatchalian  - will use existing logic for creation of ARMS
             
             //else {
-			//START UD-2549 3/23/2016 Added by J.Sarion - uncommented if condition
+            //START UD-2549 3/23/2016 Added by J.Sarion - uncommented if condition
             if(billingAcct.Billing_Type__c != GlobalVariableClass.BILLING_TYPE_FULL_PRE){ //START-END UD-1544 10/06/2015 Added by K.Tan/J.Sarion
                 External_Payment__c extPayment = instantiateExternalPayment(accountName, accountNumber, billToContactWorkEmail, billToContactFirstName, billToContactLastName,
                                                                         paymentMethodCardHolderName, paymentMethodCreditCardType, paymentErrorMessage, 
@@ -188,7 +188,7 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
                 
                 result.success = true;
             } //START-END UD-1544 10/06/2015 Added by K.Tan/J.Sarion
-			//END UD-2549 3/23/2016 Added by J.Sarion - uncommented if condition
+            //END UD-2549 3/23/2016 Added by J.Sarion - uncommented if condition
             //}
         //}
         // END : D-3554, D-3556, and D-3593 9/25/2015 Alyana Navarro
@@ -197,7 +197,7 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
     }
     
     
-    // Start�D-3920 10/11/2015 D-3920�by Ana Fe Dumangas to comment out unused method
+    // Startï¿½D-3920 10/11/2015 D-3920ï¿½by Ana Fe Dumangas to comment out unused method
     //Create ARMS
  /*   private boolean CreateARMSCustomer (Zuora__CustomerAccount__c billingAcct) {
         boolean isARMSSucess;
@@ -239,7 +239,7 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
         return isARMSSucess;
        
     } */
-    // End 10/11/2015 D-3920�by Ana Fe Dumangas�to comment out unused method
+    // End 10/11/2015 D-3920ï¿½by Ana Fe Dumangasï¿½to comment out unused method
     
     
     //utility method to construct external payment record
@@ -316,12 +316,12 @@ Global class CreditCardFailure_InboundEmailHandler implements Messaging.inboundE
         if(billingAcct.Zuora__PaymentMethod_Type__c == 'PayPal'){
             extPayment.Payment_Method__c = PAYPAL;
             extPayment.Payment_Type__c = PAYPAL;
-			extPayment.Transaction_Type__c = 'C'; //START-END UD-2806 11/09/2015 Added by J.Sarion - Set transaction type for PayPal: C
+            extPayment.Transaction_Type__c = 'C'; //START-END UD-2806 11/09/2015 Added by J.Sarion - Set transaction type for PayPal: C
         }
         else{
             extPayment.Payment_Method__c = CREDIT_CARD;
             extPayment.Payment_Type__c = CREDIT_CARD;
-			extPayment.Transaction_Type__c = 'F'; //START-END UD-2806 11/09/2015 Added by J.Sarion - Set transaction type only for Credit Card: F
+            extPayment.Transaction_Type__c = 'F'; //START-END UD-2806 11/09/2015 Added by J.Sarion - Set transaction type only for Credit Card: F
         }
         
        

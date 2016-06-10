@@ -357,31 +357,49 @@ public class SM_SubscriptionCancellationHelper {
         // End D-2593 26Mar15 JohnD moved code here
         
         //START D-2567 6/29/2015 Added By C. Lin - Remove && isSuccess == true
+        system.debug('-----CHA subsIdSet ' + subsIdSet);
+        system.debug('-----CHA subsIdSet.size() ' + subsIdSet.size());
         if(subsIdSet.size() > 0) {
         //END D-2567 6/29/2015 Added By C. Lin
             //START D-1545 1/29/2015 Added By C. Lin - Admin Charge Ammendment function for the subscription.             
+            system.debug('-----CHA currentSubsList ' + currentSubsList);
             for(Zuora__Subscription__c subs : currentSubsList){
                 //Admin Fee
+                system.debug('-----CHA subs ' + subs);
+                system.debug('-----CHA subs.Promotion_1__c ' + subs.Promotion_1__c);
+                system.debug('-----CHA mapSubsId_OLI.containsKey(subs.Id) ' + mapSubsId_OLI.containsKey(subs.Id));
                 if(subs.Promotion_1__c != Null && mapSubsId_OLI.containsKey(subs.Id)){ //START/END UD-2152 AddedBy FrancisBenzon 7/28/15 : added map checking to void attempt to dereference null
                     //START D-3278 7/27/2015 Added By C. Lin - Check if Fee_Waiver__c is false
                     //START: D-3941 11/16/15 Added by Manolo Valena - Updated condition.
+                    system.debug('-----CHA mapSubsId_OLI.get(subs.Id).Fee_Waiver__c ' + mapSubsId_OLI.get(subs.Id).Fee_Waiver__c);
+                    system.debug('-----CHA mapSubsId_OLI.get(subs.Id).Fee_Override__c ' + mapSubsId_OLI.get(subs.Id).Fee_Override__c);
                     if(mapSubsId_OLI.get(subs.Id).Fee_Waiver__c == false && mapSubsId_OLI.get(subs.Id).Fee_Override__c == false){
                     //END: D-3941 11/16/15 Added by Manolo Valena
-                        
+                        system.debug('-----CHA mapSubsId_ZuoraId.get(subs.Id) ' + mapSubsId_ZuoraId.get(subs.Id));
+                        system.debug('-----CHA mapSubsId_OLI.get(subs.Id).Admin_Charge__c ' + mapSubsId_OLI.get(subs.Id).Admin_Charge__c);
+                        system.debug('-----CHA subscriptionId_effectiveDate.get(subs.Id).addDays(-1) ' + subscriptionId_effectiveDate.get(subs.Id).addDays(-1));
                         //START D-3411 Wenjun 03/Sep/15 : Code Optimization - No future call for Admin Charge by reviewing all scenarios
+                        try{ //CHA
                         AdminCharge_Amendment adminChargeCall = new AdminCharge_Amendment();
                         adminChargeCall.amendForNewProduct(mapSubsId_ZuoraId.get(subs.Id), mapSubsId_OLI.get(subs.Id).Admin_Charge__c,
                                     subscriptionId_effectiveDate.get(subs.Id).addDays(-1), subscriptionId_effectiveDate.get(subs.Id).addDays(-1), 
                                     subscriptionId_effectiveDate.get(subs.Id).addDays(-1), subscriptionId_effectiveDate.get(subs.Id).addDays(-1));
+                        }catch(Exception e){ //CHA
+                            system.debug('-----CHA ADMIN CHARGE ERROR ' + e);
+                        }
                        //END D-3411 Wenjun 03/Sep/15 : Code Optimization
                     }
                     //END D-3278 7/27/2015 Added By C. Lin
                     //START: D-3941 11/16/15 Added by Manolo Valena - Added condition.
                     else if(mapSubsId_OLI.get(subs.Id).Fee_Waiver__c == false && mapSubsId_OLI.get(subs.Id).Fee_Override__c == true) {
+                        try{ //CHA
                         AdminCharge_Amendment adminChargeCall = new AdminCharge_Amendment();
                         adminChargeCall.amendForNewProduct(mapSubsId_ZuoraId.get(subs.Id), mapSubsId_OLI.get(subs.Id).Fee_Override_Amount__c,
                                     subscriptionId_effectiveDate.get(subs.Id).addDays(-1), subscriptionId_effectiveDate.get(subs.Id).addDays(-1), 
                                     subscriptionId_effectiveDate.get(subs.Id).addDays(-1), subscriptionId_effectiveDate.get(subs.Id).addDays(-1));
+                        }catch(Exception e){ //CHA
+                            system.debug('-----CHA ADMIN CHARGE ERROR2 ' + e);
+                        }
                     }
                     //END: D-3941 11/16/15 Added by Manolo Valena
                 }
@@ -718,8 +736,7 @@ public class SM_SubscriptionCancellationHelper {
     //START D-2330 Added By K.Campang - Cancel selected Subscriptions
     /**
     * Create basic infomation for amendment.
-    */
-    private static Map<String, Object> generateZuoraAmendmentObjectMap(string zuoraId, date stopDate) {
+    /*private static Map<String, Object> generateZuoraAmendmentObjectMap(string zuoraId, date stopDate) {
         String zuoraDate =  Zuora.Zutil.getZuoraDate(stopDate);  //START END UD-2738 Wenjun 21/Sep/15 : Code Optimization  
         Map<String, Object> amendMap = new Map<String, Object>();
         amendMap.put(globalvariableclass.CONTRACT_EFFECTIVEDATE, zuoraDate);

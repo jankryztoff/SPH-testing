@@ -11,7 +11,7 @@ public with sharing class BulkStopOrderCreationQueueable implements Queueable {
     map<id, id> subscriptionId_caseId = new map<id, id>();
     
     public BulkStopOrderCreationQueueable(set<id> subscriptionIdSetParam) {
-    	this.subscriptionIdSet = subscriptionIdSetParam;
+        this.subscriptionIdSet = subscriptionIdSetParam;
     }
     
     public void execute(QueueableContext qc) {
@@ -21,11 +21,11 @@ public with sharing class BulkStopOrderCreationQueueable implements Queueable {
                                 Zuora__SubscriptionEndDate__c, Main_Package_1__r.Package_Type__c, Subscriber_Contact__c, Zuora__CustomerAccount__c, Zuora__CustomerAccount__r.Zuora__DefaultPaymentMethod__c, Subscription_Type_1__c, Order_Line_Item_Number_1__c, Zuora__SubscriptionStartDate__c FROM Zuora__Subscription__c WHERE Id IN :subscriptionIdSet];
         //END UD-2549 4/10/2016 Added by J.Sarion - update query
 
-		if (!subscriptionList.isEmpty()) {
+        if (!subscriptionList.isEmpty()) {
                 
             BulkStopOrderCreationHandler bulkStop = new BulkStopOrderCreationHandler();
             subscriptionId_caseId = bulkStop.createRelatedRecords(subscriptionList);
-		}
+        }
     }
 }
 //START UD-2549 4/6/2016 Added by J.Dacutan

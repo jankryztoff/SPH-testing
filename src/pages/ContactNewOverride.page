@@ -1,3 +1,0 @@
-<apex:page standardController="Contact" extensions="ContactNewOverrideController" action="{!redirect}">
-<apex:pageMessages ></apex:pageMessages>
-</apex:page>

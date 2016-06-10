@@ -261,7 +261,7 @@ public class MigrationNewSubscriptionTriggerHandler implements TriggerHandlerInt
             if(sub.Promotion_1__c != null && (sub.Contract_End_Date__c == null || sub.Contract_End_Date__c == '')){
                 
                 Promotion__c promo = PromotionMap.get(sub.Promotion_1__c);
-                System.Debug('@@@@' + String.valueof(promo.Effective_End_Date__c)); 
+                System.Debug('@@@@' + String.valueof(promo.Effective_End_Date__c));
                 sub.Contract_End_Date__c = String.valueof(promo.Effective_End_Date__c); 
                 sub.Contract_End_Date_1__c = promo.Effective_End_Date__c; 
                   

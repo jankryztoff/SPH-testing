@@ -79,6 +79,7 @@ public with sharing class AdjustmentExtensionEdit {
         boolean isSubscriptionRelatedToInvoice = false;
         boolean isInvoiceLineItemAvailable = false;
     	// End PD-0353 31May16 JohnD
+
         //Validation : Adjustment Amount must be PositivesubmitAdjustment
 		
         if(adjustment.Adjustment_Amount__c <= 0)

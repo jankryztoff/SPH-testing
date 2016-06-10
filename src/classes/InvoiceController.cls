@@ -10,8 +10,8 @@
 
 public class InvoiceController {    
     
-	Logger logger = new Logger('InvoiceController');//Start/End PD-0349 29-May-2016 Added By S.Puli
-	
+    Logger logger = new Logger('InvoiceController');//Start/End PD-0349 29-May-2016 Added By S.Puli
+    
     public String address1 { get; set; }
     public String address2 { get; set; }
     public String address3 { get; set; }
@@ -164,6 +164,7 @@ public class InvoiceController {
         // END : UD-1257 5/1/2015 Alyana Navarro
             // End D-2934 14May15 K.Tan - added Zuora__DueDate__c field
             // END : D-2828 5/7/2015 Alyana Navarro
+            
             if(invoice <> null){
                 
                 if(invoice.ARMS_Invoice_ID__c <> null){
@@ -185,7 +186,7 @@ public class InvoiceController {
                 }
                 //END UD-1695 14 July 2015 Kevin Evasco - GIRO
             }
-                        
+                       
             //END: D-2802 24/04/15 Added by S.Puli - adding ARMS Invoice ID
             if(invoice != null){
                 //getTaxRate(); //START/END D-3327 04 August 2015 Kevin Evasco - GST Rate will be based from custom settings only if tax amount is not 0.
@@ -285,12 +286,12 @@ public class InvoiceController {
                     //START PD-0212 5-23-2016 Changes by Jason A
                     //Start PD-0349 29-May-2016 Added by S.Puli - Previous balance is null for some scenarios and needs to be computed i.e. Recurring
                     decimal tempvalue = 0;
-					if(invoice.Previous_Balance__c <> null){	
-						tempvalue = decimal.valueof(invoice.Previous_Balance__c) + invoice.Zuora__TotalAmount__c;
+                    if(invoice.Previous_Balance__c <> null){    
+                        tempvalue = decimal.valueof(invoice.Previous_Balance__c) + invoice.Zuora__TotalAmount__c;
                     }else{
-						tempvalue = billingAccount.Zuora__Balance__c + invoice.Zuora__PaymentAmount__c;
-					}
-					//End PD-0349 29-May-2016 Added by S.Puli
+                        tempvalue = billingAccount.Zuora__Balance__c + invoice.Zuora__PaymentAmount__c;
+                    }
+                    //End PD-0349 29-May-2016 Added by S.Puli
                     String tempAmount = String.valueOf(tempvalue * 100);
                     //END PD-0212 5-23-2016 Changes by Jason A
                     tempAmount = tempAmount.substring(0, tempAmount.length() - 3);
@@ -306,7 +307,7 @@ public class InvoiceController {
                     } else {
                         invoiceNumber = invoice.name.substring(3, invoice.name.length());
                     }
-                                                                
+                                                               
                     for(Integer counter = 0; counter < dateTodayString.length(); counter++){
                         if(dateTodayString.substring(counter, counter+1) != '-'){
                             dateTotal += Integer.valueOf(dateTodayString.substring(counter, counter+1)) * baseDigitsDate[counter];
@@ -325,7 +326,7 @@ public class InvoiceController {
                         billingAccountNumber = billingAccount.Zuora__AccountNumber__c;
                     }
                     //END UD-1766 14 July 2015 Kevin Evasco - Billing Account Number
-                     
+                    
                     if(invoice.ARMS_Invoice_ID__c != null){
                         String docNumber = invoice.ARMS_Invoice_ID__c; // To be replaced.
                         docNumber = docNumber.substring(2, docNumber.length());
@@ -364,10 +365,10 @@ public class InvoiceController {
                         }
                         //START 31 August 2015 UD-1819 Kevin Evasco - New Total Concurrent Charges Payment Details Formula for ARMS
                         //totalOutstanding = invoice.Zuora__TotalAmount__c;
-                        //START UD-2987 10/02/2015 added by Jason A. for Total Current Charge Due = Total Outstanding Amount = �Amount� (on the bottom of PDF � highlighted) = invoice.Zuora__PaymentAmount__c.
+                        //START UD-2987 10/02/2015 added by Jason A. for Total Current Charge Due = Total Outstanding Amount = “Amount” (on the bottom of PDF – highlighted) = invoice.Zuora__PaymentAmount__c.
                         totalCurrentChargesPaymentDetails = invoice.Zuora__PaymentAmount__c;  
                         totalOutstanding = totalCurrentChargesPaymentDetails;
-                        //END UD-2987 10/02/2015 added by Jason A. for Total Current Charge Due = Total Outstanding Amount = �Amount� (on the bottom of PDF � highlighted) = invoice.Zuora__PaymentAmount__c.
+                        //END UD-2987 10/02/2015 added by Jason A. for Total Current Charge Due = Total Outstanding Amount = “Amount” (on the bottom of PDF – highlighted) = invoice.Zuora__PaymentAmount__c.
                         totalOutstanding = totalCurrentChargesPaymentDetails;
                         //END 31 August 2015 UD-1819 Kevin Evasco - New Total Concurrent Charges Payment Details Formula for ARMS  
                         
@@ -460,6 +461,7 @@ public class InvoiceController {
                 }
             }
             //END UD-2819 19-Sept-2015 Added By S.Puli
+            
             for(Invoice_Line_Item__c invoiceLineItem : invoiceLineItemList) {
                 //START D-3114 HOTFIX Kevin 06/15/2015: Changed Subscription Identifier from Subscription External Id to Subscription Name
                 if(invoiceLineItem.Subscription_Number__c != null) {
@@ -788,7 +790,8 @@ public class InvoiceController {
             BillingAccountPONumber = subEarliestMap.get('earliestSub').PO_Number__c;
                 //END UD-3306 11/25/2015 added by Jason A.
             
-            //Start D-3112 Hotfix 06/15 added by Jason A./ Von P.          
+            //Start D-3112 Hotfix 06/15 added by Jason A./ Von P.  
+            
             if(billingAccount != null) {  
                 //START D-3722 Gdelrosario 23/10/2015: change parameter of address             
                 finalOutputAddress = AddressHelper.formatAddress(billingAccount.Billing_Contact__r,false,false);
@@ -1037,9 +1040,9 @@ public class InvoiceController {
         }       
         catch(Exception e) {
             system.debug('Error message : ' + e);
-			logger.log(e);//Start/End PD-0349 29-May-2016 Added By S.Puli
+            logger.log(e);//Start/End PD-0349 29-May-2016 Added By S.Puli
         }
-		logger.save();//Start/End PD-0349 29-May-2016 Added By S.Puli
+        logger.save();//Start/End PD-0349 29-May-2016 Added By S.Puli
     }
     
     public void initialize() {  

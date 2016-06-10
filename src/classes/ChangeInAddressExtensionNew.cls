@@ -180,11 +180,9 @@ public class ChangeInAddressExtensionNew{
         List<Case> caseWFVAList = new List<Case>();
         
         if(changeInAddress.AccountId != null){
-            //START PD-0218 6/3/2016 Added By C. Aragon - Check if status is void
             caseWFVAList = [SELECT Id, Status FROM Case WHERE AccountId = :changeInAddress.AccountId AND Sub_Status__c = :GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN];
-        	//END PD-0218 6/3/2016 Added By C. Aragon
         }
-        
+ 
         if(!caseWFVAList.isEmpty() || caseWFVAList.size() > 1){
             //START PD-0218 6/3/2016 Added By C. Aragon - Check if status is void
             for(Case c: caseWFVAList){
@@ -195,6 +193,7 @@ public class ChangeInAddressExtensionNew{
             }
             //END PD-0218 6/3/2016 Added By C. Aragon
         }
+        
         //END D-3861 11/4/2015 Added By C. Lin
         
         //START D-2905 05/12/2015 Added by J. Sarion - Check Vendor if applicable to Postal Code        
@@ -293,6 +292,16 @@ public class ChangeInAddressExtensionNew{
         //END UD-3356 04Dec2015 Added By C. Lin
         
             
+            System.debug('##### subWrapperList:' + subWrapperList);
+            System.debug('##### subWrapperList.size:' + subWrapperList.size());
+            System.debug('##### subList:' + subList);
+            System.debug('##### subList.size:' + subList.size());
+            System.debug('##### cas:' + cas);
+            System.debug('##### cas.size:' + cas.size());
+            System.debug('##### changeInAddress.Change_of_Address_Type__c:' + changeInAddress.Change_of_Address_Type__c);
+            System.debug('##### changeInAddress.Effective_Date__c:' + changeInAddress.Effective_Date__c);
+            System.debug('##### changeInAddress.POP_Start_Date__c:' + changeInAddress.POP_Start_Date__c);
+            
             if(changeInAddress.Effective_Date__c == NULL ){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Effective Date must not be null'));
                 return null;
@@ -351,6 +360,9 @@ public class ChangeInAddressExtensionNew{
                 //START UD-3555 11Jan2016 Added By C. Lin - Validation for Bundle Subs should be COA together
                 Boolean bundleSubsSelected = true;
                 //END UD-3555 11Jan2016 Added By C. Lin
+                //START PD-0284 6/3/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                Boolean isAllDeliveredByMailingAgent = false;
+                //END PD-0284 6/3/2016 Added By L. Valencia
                 
                 for (SubscriptionWrapper sub :subWrapperList) {
                     if (sub.selectSub == true) {
@@ -379,6 +391,19 @@ public class ChangeInAddressExtensionNew{
                     }
                 }
                 //END UD-3356 04Dec2015 Added By C. Lin
+                
+                //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                Integer subCount = 0;
+                for (SubscriptionWrapper subWrapper : subWrapperList) {
+                    if (subWrapper.deliveredBy == GlobalVariableClass.OLIDELIVEREDBY_VENDOR) {
+                        isAllDeliveredByMailingAgent = false;
+                        break;
+                    }
+                    ++subCount;
+                }
+                isAllDeliveredByMailingAgent = (subCount >  0 && subCount == subWrapperList.size());
+                //END PD-0284 6/9/2016 Added By L. Valencia
+                
 				//START UD-3799 22Jan2016 Added By C. Lin - Map subId to if selected or not
                 for(SubscriptionWrapper sub :subWrapperList){
                     if(sub.subId != null){
@@ -415,17 +440,27 @@ public class ChangeInAddressExtensionNew{
                 system.debug('>>>>>vendorSet ' + vendorSet);
                 if(changeInAddress.Effective_Date__c >= changeInAddress.POP_Start_Date__c){
                     if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.DELIVERYADDLOC){
-                        if(vendorSet.size() > 1 || vendorSet.size() == 0){
-                            //START D-3301 7/31/2015 Added By C. Lin - Set Status to Pending
-                            changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
-                            //END D-3301 7/31/2015 Added By C. Lin
-                            changeInAddress.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
-                        }else if(vendorSet.size() == 1){
+                        //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                        if (isAllDeliveredByMailingAgent) {
                             changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
-                            //START UD-3356 04Dec2015 Added By C. Lin - Fix Sub Status when case is closed
                             changeInAddress.Sub_Status__c = null;
-                            //END UD-3356 04Dec2015 Added By C. Lin
+                        } else {
+                        //END PD-0284 6/9/2016 Added By L. Valencia
+                            if(vendorSet.size() > 1 || vendorSet.size() == 0){
+                                //START D-3301 7/31/2015 Added By C. Lin - Set Status to Pending
+                                changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
+                                //END D-3301 7/31/2015 Added By C. Lin
+                            
+                                changeInAddress.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
+                            }else if(vendorSet.size() == 1){
+                                changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
+                                //START UD-3356 04Dec2015 Added By C. Lin - Fix Sub Status when case is closed
+                                changeInAddress.Sub_Status__c = null;
+                                //END UD-3356 04Dec2015 Added By C. Lin
+                            }
+                        //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
                         }
+                        //END PD-0284 6/9/2016 Added By L. Valencia
                     }
                     else {
                         changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
@@ -529,6 +564,7 @@ public class ChangeInAddressExtensionNew{
             }
             //END D-0974 1/21/2015 Added By J. Sarion
             else{
+                
                 //START UD-0521 3/25/2015 Added By C. Lin - Fix same case already exist error
                 if (cas.isEmpty()) {
                     //START UD-2016 8/10/2015 Added By C. Lin - Populate POP Start Date
@@ -542,17 +578,39 @@ public class ChangeInAddressExtensionNew{
                     }
                     if(changeInAddress.Effective_Date__c >= changeInAddress.POP_Start_Date__c){
                         if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.BILLDELIVERYADD){
-                            if(vendorSet.size() > 1 || vendorSet.size() == 0){
-                                //START D-3301 7/31/2015 Added By C. Lin - Set Status to Pending
-                                changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
-                                //END D-3301 7/31/2015 Added By C. Lin
-                                changeInAddress.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
-                            }else if(vendorSet.size() == 1){
-                                changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
-                                //START UD-3356 04Dec2015 Added By C. Lin - Fix Sub Status when case is closed
-                                changeInAddress.Sub_Status__c = null;
-                                //END UD-3356 04Dec2015 Added By C. Lin
+                            
+                            //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                            Boolean isAllDeliveredByMailingAgent = false;
+                            
+                            Integer subCount = 0;
+                            for (SubscriptionWrapper subWrapper : subWrapperList) {
+                                if (subWrapper.deliveredBy == GlobalVariableClass.OLIDELIVEREDBY_VENDOR) {
+                                    isAllDeliveredByMailingAgent = false;
+                                    break;
+                                }
+                                ++subCount;
                             }
+                            isAllDeliveredByMailingAgent = (subCount >  0 && subCount == subWrapperList.size());
+
+                            if (isAllDeliveredByMailingAgent) {
+                                changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
+                                changeInAddress.Sub_Status__c = null;
+                            } else {
+                            //END PD-0284 6/9/2016 Added By L. Valencia
+                                if(vendorSet.size() > 1 || vendorSet.size() == 0){
+                                    //START D-3301 7/31/2015 Added By C. Lin - Set Status to Pending
+                                    changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
+                                    //END D-3301 7/31/2015 Added By C. Lin
+                                    changeInAddress.Sub_Status__c = GlobalVariableClass.SUB_STATUS_WAITING_FOR_VENDOR_ASSIGN;
+                                }else if(vendorSet.size() == 1){
+                                    changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
+                                    //START UD-3356 04Dec2015 Added By C. Lin - Fix Sub Status when case is closed
+                                    changeInAddress.Sub_Status__c = null;
+                                    //END UD-3356 04Dec2015 Added By C. Lin
+                                }
+                            //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                            }
+                            //END PD-0284 6/9/2016 Added By L. Valencia
                         }
                         //START D-2956 5/27/2015 Added By C. Lin - Close COA Billing Address after save
                         else if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.BILLINGADD){
@@ -612,6 +670,9 @@ public class ChangeInAddressExtensionNew{
                                     //START D-3026 5/29/2015 Added By C. Lin - Add Create Case Sub for Change of Billing Address
                                     createCaseSubscription();
                                     //END D-3026 5/29/2015 Added By C. Lin
+                                    //START PD-0284 6/8/2016 Added By L. Valencia - Set status as pending to trigger approval process
+                                    changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
+                                    //END PD-0284 6/4/2016 Added By L. Valencia
                                 }
                                 //END D-2905 5/12/2015 Added By C. Lin
                             }
@@ -707,6 +768,9 @@ public class ChangeInAddressExtensionNew{
         //START D-3709 10/12/2015 Added By C. Lin - Save Old Vendor Credit of Sub in Case Subscription
         public Decimal vendorCredit {get; set;}
         //END D-3709 10/12/2015 Added By C. Lin
+        //START PD-0284 6/3/2016 Added By L. Valencia - Do not set for Waiting for Vendor Assignment when subscription is delivered by Mailing Agent
+        public String deliveredBy {get; set;}
+        //END PD-0284 6/3/2016 Added By L. Valencia
     }
     
     public void getSubscriptions() {
@@ -813,7 +877,6 @@ public class ChangeInAddressExtensionNew{
                 //START UD-2206 9/24/2015 Added By C. Lin - populate address using recipient contact address
                 subscriptionWrapper.recipientAddress = (sub.Recipient__r.Address__c != null ? sub.Recipient__r.Address__c : null);
                 //END UD-2206 9/24/2015 Added By C. Lin
-                
                 subWrapperList.add(subscriptionWrapper);
                 
                 //START D-2905 05/12/2015 Added by: J.Sarion - Subscription list for Change of Vendor depends on Contact to Update
@@ -834,13 +897,15 @@ public class ChangeInAddressExtensionNew{
                     if(changeInAddress.ContactId != null){
                         //START UD-3356 04Dec2015 Added By C. Lin - Fix hotfix code for UD-3270
                         //START UD-3270 30Nov2015 Added By C. Lin - get subList depending on the Change of Address Type selected
+                        //START PD-0284 6/9/2016 Added By L. Valencia - Added Delivered_By_1__c field in query
                         if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.BILLINGADD){
-                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c FROM Zuora__Subscription__c WHERE Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
+                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
                         }else if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.BILLDELIVERYADD){
-                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c FROM Zuora__Subscription__c WHERE (Recipient_Contact__c =:changeInAddress.ContactId OR Contact__c =:changeInAddress.ContactId) and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
+                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE (Recipient_Contact__c =:changeInAddress.ContactId OR Contact__c =:changeInAddress.ContactId) and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
                         }else if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.DELIVERYADDLOC){
-                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c FROM Zuora__Subscription__c WHERE Recipient_Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
+                            subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE Recipient_Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
                         }
+                        //END PD-0284 6/9/2016 Added By L. Valencia
                         //END UD-3270 30Nov2015 Added By C. Lin
                         //END UD-3356 04Dec2015 Added By C. Lin
                     }
@@ -851,7 +916,9 @@ public class ChangeInAddressExtensionNew{
                     //START UD-2070 11Nov2015 Added By C. Lin - change filter to Contact instead of Account
                     if(changeInAddress.ContactId != null){
                         //START UD-3356 04Dec2015 Added By C. Lin - Fix hotfix code for UD-3270
-                        subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c FROM Zuora__Subscription__c WHERE Recipient_Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
+                        //START PD-0284 6/9/2016 Added By L. Valencia - Added Delivered_By_1__c field in query
+                        subList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Vendor_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE Recipient_Contact__c =:changeInAddress.ContactId and Zuora__Status__c = 'Active' AND Subscription_Type_1__c = 'Publication' AND (Zuora__SubscriptionEndDate__c > :changeInAddress.Effective_Date__c OR Zuora__TermSettingType__c = 'EVERGREEN')];
+                        //END PD-0284 6/9/2016 Added By L. Valencia
                         //END UD-3356 04Dec2015 Added By C. Lin
                     }
                     //END UD-2070 11Nov2015 Added By C. Lin
@@ -920,7 +987,9 @@ public class ChangeInAddressExtensionNew{
                 //START UD-2206 9/17/15 AddedBy FrancisBenzon : added recipient contact address in query
                 //START UD-1566 6/17/2015 Added By C. Lin - Add Main_Package_1__r.Name
                 //START D-3709 10/12/2015 Added By C. Lin - Save Old Vendor Credit of Sub in Case Subscription
-                sList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Main_Package_1__r.Name, Recipient_Contact__r.Address__c, Vendor_Credit_1__c FROM Zuora__Subscription__c WHERE Id IN :sIdSet];
+                //START PD-0284 6/3/2016 Added By L. Valencia - Added Delivered_By_1__c field
+                sList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Main_Package_1__r.Name, Recipient_Contact__r.Address__c, Vendor_Credit_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE Id IN :sIdSet];
+                //END PD-0284 6/3/2016 Added By L. Valencia
                 //END D-3709 10/12/2015 Added By C. Lin
                 //END UD-1566 6/17/2015 Added By C. Lin
                 //END UD-2206 9/17/15 AddedBy FrancisBenzon : added recipient contact address in query
@@ -948,6 +1017,9 @@ public class ChangeInAddressExtensionNew{
                 //START D-3709 10/12/2015 Added By C. Lin - Save Old Vendor Credit of Sub in Case Subscription
                 subscriptionWrapper.vendorCredit = (sub.Vendor_Credit_1__c != null ? sub.Vendor_Credit_1__c : null);
                 //END D-3709 10/12/2015 Added By C. Lin
+                //START PD-0284 6/3/2016 Added By L. Valencia - Do not set for Waiting for Vendor Assignment when subscription is delivered by Mailing Agent
+                subscriptionWrapper.deliveredBy = (String.isNotBlank(sub.Delivered_By_1__c) ? sub.Delivered_By_1__c :  null);
+                //END PD-0284 6/3/2016 Added By L.Valencia
                 
                 subWrapperList.add(subscriptionWrapper);
                 
@@ -1117,8 +1189,12 @@ public class ChangeInAddressExtensionNew{
                     
                     //START D-2979 5/20/2015 Added By C. Lin - assign vendor for non magazine subscriptions only
                     if(!magazineSubSet.contains(sub.subId)){
+                        System.debug('##### inside magazinesubset: ' + vendorSet.size());
+                        System.debug('##### vendorSet: ' + vendorSet);
                         if(vendorSet.size() == 1){
+                            System.debug('##### inside vendor size is one');
                             for(Id ven : vendorSet){
+                                System.debug('##### ven:' + ven);
                                 addressAssignment.Vendor__c = ven;
                             }
                         }

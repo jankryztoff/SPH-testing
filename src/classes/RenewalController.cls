@@ -56,6 +56,7 @@ public class RenewalController
     public Static String LD_LINEBREAK= 'LineBreak';
     
     public RenewalController(){
+        //system.assertEquals(1,2);
         idParam = ApexPages.currentPage().getParameters().get('id');
         
         LastRows = new list<string>();
@@ -324,7 +325,7 @@ public class RenewalController
             Decimal subTotal = 0;
 
             Set<Id> orderLineItemIdList = recipientId_orderLineItemIds_map.get(recipientId);            
-            
+            //system.assertEquals(orderLineItemIdList, null);
             lineDetails.add(recipientLine);
             for(Id orderLineItemIdElem : orderLineItemIdList){
                 List<Zuora__Subscription__c> orderLineItemSubscriptionList = renewalGroup.orderLineItemId_subscriptionList_map.get(orderLineItemIdElem);
@@ -390,7 +391,8 @@ public class RenewalController
                 }
                 //End UD-3701 13-Jan-2015 Added by S.Puli/Alyana
                 lineDetails.add(subscriptionLine);
-                
+                //system.assertEquals(subscriptionLine, null);
+                //system.assertEquals(1,2);
                 // Start UD-3503
                 if(masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.firstRenewalReminderForNewspaper || 
                      masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.secondRenewalReminderForNewspaper){

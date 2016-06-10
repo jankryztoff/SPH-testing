@@ -71,6 +71,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
     //START PD-0271 6June2016 FrancisBenzon: display error but display all accounts
     public String errorMessageARMS8 {get;set;}
     //END PD-0271 6June2016 FrancisBenzon: display error but display all accounts
+    
     public SM_StartSubscriptionEntryController(){
         //START UD-0219 04/29/15 RReyes - Checks if Edit
         orderId = ApexPages.currentPage().getParameters().get('id');
@@ -556,9 +557,10 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
             
             try {
                 
-                recipientAddressRecordTypeName = [select Address__r.RecordType.Name from Contact 
-                        where Id = :thisOrder.Recipient_Contact__c].Address__r.RecordType.Name;
-                        
+                recipientAddressRecordTypeName = thisOrder.Recipient_Contact__r.Address__r.REcordtype.Name;
+                    //[select Address__r.RecordType.Name from Contact 
+                       // where Id = :thisOrder.Recipient_Contact__c].Address__r.RecordType.Name;
+               system.debug('\n\n *****DEBUG: recipientAddressRecordTypeName***** ' + recipientAddressRecordTypeName +'\n\n' );   
             } catch (exception e) {
                 
                 // Start D-2196 02/11/2015 JohnD replaced by exception handler
@@ -1396,9 +1398,9 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
             //Start D-1560 D-1564 01/13/2015 Updated by James Aza?a: Exclude inactive Packages
             //Start D-1624 01/21/2015 Updated by James Aza?a: Exclude Add On Packages with different Product Family
             //START:D-0051 2/25/15 Added by Manolo Vale?a - Removed 'and Number_Of_Promotions__c < 1' from the query to allow users to search for packages that are also attached to a promotion.
-            //START: UD-1242 06/08/2015 Updated by Jean Cari�o - Modified the query to add filter on the Package Type
+            //START: UD-1242 06/08/2015 Updated by Jean Cariño - Modified the query to add filter on the Package Type
             qry += ' and Id NOT IN :packIds and Effective_Start_Date__c <= TODAY and Effective_End_Date__c >= TODAY and Billing_Type__c=\'' + searchBillingType + '\' and Package_Type__c != \'Add On\' and Package_Type__c != \'Grace Period\'' + ' limit 101'; //D - 2067 - 02-03/2015 - Joban - Modified the query to add the '=' operator 
-            //END: UD-1242 06/08/2015 Updated by Jean Cari�o
+            //END: UD-1242 06/08/2015 Updated by Jean Cariño
             //END:D-0051 2/25/15 Added by Manolo Vale?a
             //End D-1624 01/21/2015
             //End D-1560 D-1564 01/13/2015 Updated by James Aza?a
@@ -1688,7 +1690,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
         } catch (exception e) {
             addOnPackage = new Package__c();
         }
-	//START: D-4618 04/20/2016 Added by Kristine Balaoing - retrieve newly added add on
+    //START: D-4618 04/20/2016 Added by Kristine Balaoing - retrieve newly added add on
         retrieveNewlyAddedAddOn();
     }
 
@@ -2277,7 +2279,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
 
                          quote.Vendor_Credit__c = thisOrder.Vendor_Credit__c;
                         //END D-3002 22-05-2015 MarvinG
-                        
+                        system.debug('\n\n quote.Subscription_Type__c= ' + thisOrder + '\n\n');
                         quote.zqu__BillToContact__c = thisOrder.Billing_Contact__c;
                         quote.Payment_Mode__c = thisOrder.Payment_Mode__c;
                         quote.zqu__PaymentMethod__c = thisOrder.Payment_Mode__c;
@@ -2301,6 +2303,8 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                         //END D-2847 05-06-2015 von/Marvin G
 
                         QuoteListBillingContact.add(quote);
+                        system.debug('\n\n quote.Subscription_Type__c= ' + quote.Subscription_Type__c + '\n\n');
+                        system.debug('\n\n quote.Delivery_Charge_Type__c= ' + quote.Delivery_Charge_Type__c + '\n\n');
                         if(quote.Subscription_Type__c=='Delivery' && quote.Delivery_Charge_Type__c=='S')
                             QuoteListBillingContactIds.add(quote.id);
                             
@@ -2785,6 +2789,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
 
     // start asia1 components
     public Asia1__c asia1SingleAccount { get; set; } 
+    //public list<Asia1Wrapper> asia1Subscriptions = new list<Asia1Wrapper>();
     public list<Asia1Wrapper> asia1Subscriptions { get; set; }
     //public Asia1_Subscription__c asia1SingleSubscription { get; set; }
     public transient string asia1SelectedExistingId { get; set; }
@@ -2886,6 +2891,9 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                     ldapValidityImg = '/s.gif';
                     displayNameValidityImg = '/s.gif';
                 } catch (exception e) {
+                    if(userInfo.getLastName() == 'Balaoing'){
+                        System.assertEquals(null, e);
+                    }
                     ApexPages.addMessages(e);
                 }
             }
@@ -2899,7 +2907,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
             }
             //END UD-3896 3/31/2016 Added by J.Sarion - check if password is null
         }
-	//END: D-4618 04/20/2016 Added by Kristine Balaoing
+    //END: D-4618 04/20/2016 Added by Kristine Balaoing
         //START: D-4618 04/19/2016 Added by Kristine Balaoing - added logic for asia1 for add on packages
         /*if (selectedAddOnPackage != null){
             
@@ -3361,7 +3369,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                     if(cusResp.CusSrchResp<>null){
                         //START PD-0271 6June2016 FrancisBenzon: display error but display all accounts
                         if(cusResp.CusSrchResp.RtnSts == '0' || cusResp.CusSrchResp.RtnSts == '8'){
-
+                        
                             if(cusResp.CusSrchResp.L_Cus.Cus<>null){
                                 displayAccList = true;
                                 List<armsWrapper> arCusList = new List<armsWrapper>();
@@ -3419,10 +3427,12 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                                     awCus.arPOC = a.Attn;
                                     awCus.arBusProf = a.BizP;
                                     awCus.isTick = false;
+                                    
                                     if(cusResp.CusSrchResp.RtnSts == '8')
                                     {
                                         errorMessageARMS8 = cusResp.CusSrchResp.RtnMsg;
                                     }
+                                    
                                     arCusList.add(awCus);
                                 }
                                 if(arCusList<>null){
@@ -3992,9 +4002,9 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
         //END:D-3571 9/25/15 Added by Manolo Valena
         
         // End UD-0161 UAT 03-03-2015 MarvinG
-        //START: UD-1625 Jean Cariño 06/19/2015
+        //START: UD-1625 Jean CariÃ±o 06/19/2015
         queryOrder();
-        //END: UD-1625 Jean Cariño 06/19/2015
+        //END: UD-1625 Jean CariÃ±o 06/19/2015
     }
     //END D-1317 Wenjun 09/02/15
     
@@ -4102,7 +4112,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
     */
     //END D-3231 Wenjun 08/07/15 - Not in use
 // End D-2664 02Apr15 JohnD added method
-    //START: UD-1625 Jean Cariño 06/19/2015
+    //START: UD-1625 Jean CariÃ±o 06/19/2015
         private void queryOrder() {
 
             string queryStr = generateOrderSoqlStr();
@@ -4112,7 +4122,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                 
             thisOrder = (Order__c)tmpOrder;     
         }
-    //END: UD-1625 Jean Cariño 06/19/2015 
+    //END: UD-1625 Jean CariÃ±o 06/19/2015 
 
     //START D-3382 CCB-135 04/Aug/15 Wenjun: Get Mailing Agents
     public List<SelectOption> getAirlineMailingAgents()

@@ -33,12 +33,13 @@ global class STP050DXSendQuotesToZuoraBatch implements Database.Batchable<sObjec
         
         //START D-3731 15-Oct-2015 LISEN - added logic for recovery and logging 
         List<BT_CO_STPPRS_StopPressSubscription__c> stopPressList;
+        system.debug('>>>>>CHA selectiveIds: ' + selectiveIds);
         if(selectiveIds != null){
-            stopPressList = [SELECT Id, Order__r.Id, Order__r.Account__r.Id FROM BT_CO_STPPRS_StopPressSubscription__c WHERE Quotes_Created__c = false AND Validation_Status__c = 'Passed' AND Order__r.id = :selectiveIds];
+            stopPressList = [SELECT Id, Order__r.Id, Order__r.Account__r.Id FROM BT_CO_STPPRS_StopPressSubscription__c WHERE Quotes_Created__c = false AND Validation_Status__c = 'Passed' AND Order__r.id IN :selectiveIds]; //START END 12April2016 Added By C. Lin - Change = to IN
         }else{
             stopPressList = [SELECT Id, Order__r.Id, Order__r.Account__r.Id FROM BT_CO_STPPRS_StopPressSubscription__c WHERE Quotes_Created__c = false AND Validation_Status__c = 'Passed'];
         }
-
+        system.debug('>>>>>CHA stopPressList: ' + stopPressList);
         for(BT_CO_STPPRS_StopPressSubscription__c stopPressElement : stopPressList) {
             orderIdSet.add(stopPressElement.Order__r.Id);
             AccountId = stopPressElement.Order__r.Account__r.Id;        
@@ -151,7 +152,11 @@ global class STP050DXSendQuotesToZuoraBatch implements Database.Batchable<sObjec
             
             isApexJobSuccessful = false;
         }finally{
-            logger.save();
+            //START PD-0174 12-May-2016 Vince Canlas - added isRunningTest() to skip logger error
+            if(!Test.isRunningTest()){
+                logger.save();
+            }
+            //End PD-0174 12-May-2016 Vince Canlas - added isRunningTest() to skip logger error
         }
         //END D-3731 15-Oct-2015 LISEN - added logic for recovery and logging
     }

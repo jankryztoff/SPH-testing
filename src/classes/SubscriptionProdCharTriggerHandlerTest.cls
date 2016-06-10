@@ -6,9 +6,15 @@
 * @description<Test Class for SubscriptionProductChargeTriggerHandlerTest>
 */
 
-@isTest (SeeAllData = TRUE)
+@isTest
 private class SubscriptionProdCharTriggerHandlerTest{
-
+    @testSetup 
+    static void setupData() {
+        //insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+    }  
+    
+    
     /*
     //@Description: tests if updating the zuora subscription will trigger methods
     //              before and after trigger update is set to FALSE.

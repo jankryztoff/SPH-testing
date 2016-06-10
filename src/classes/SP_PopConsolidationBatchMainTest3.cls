@@ -1633,8 +1633,4 @@ private class SP_PopConsolidationBatchMainTest3{
 
     }
 
-    static testMethod void testSP_PopConsolidationBatchMainDoTest(){
-        SP_PopConsolidationBatchMain.doTest(1);
-        SP_PopConsolidationBatchMain.doTest1(1);
-    }
 }

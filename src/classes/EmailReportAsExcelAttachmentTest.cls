@@ -14,6 +14,7 @@ private class EmailReportAsExcelAttachmentTest {
         @return void
         @description tests the execute method
     */
+    /*
     public static testMethod void executeTest() {
         
         Test.StartTest();   
@@ -26,6 +27,7 @@ private class EmailReportAsExcelAttachmentTest {
         Test.StopTest();  
               
     }
+    */
     
    /**
         @name GetUserIdsFromGroupTest
@@ -48,7 +50,7 @@ private class EmailReportAsExcelAttachmentTest {
         Test.StopTest();
     }
     
-    
+    /*
      public static testMethod void executeTest2() {
         
         Test.StartTest();   
@@ -71,5 +73,6 @@ private class EmailReportAsExcelAttachmentTest {
            
              
     }
+    */
      
      }

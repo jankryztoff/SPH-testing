@@ -10,14 +10,15 @@ public with sharing class CreditBalanceAdjustmentCallout {
         integer counter = 0;
         string invoiceType;
         
-        //START PD-0236 11May16 VinceCanlas - Adjusted condition to only cover the lines that will throw an exception.
+        //START 11May16 VinceCanlas - Adjusted condition to only cover the lines that will throw an exception.
         if (!Test.isRunningTest()) {
             
             Zuora.zApi zApiInstance = new Zuora.zApi();
             zApiInstance.zlogin();
             
         }
-        //END PD-0236 11May16 VinceCanlas - Adjusted condition to only cover the lines that will throw an exception.
+        //END 11May16 VinceCanlas - Adjusted condition to only cover the lines that will throw an exception.
+        
             for (Zuora__ZInvoice__c invoice : [select Id, Name, Zuora__BillingAccount__r.Zuora__Credit_Balance__c, 
                     Zuora__Balance2__c from Zuora__ZInvoice__c where Id in :invoiceIdSetParam 
                     and Zuora__BillingAccount__r.Other_PaymentMethod__c != :GlobalVariableClass.PAYPAL
@@ -71,7 +72,6 @@ public with sharing class CreditBalanceAdjustmentCallout {
             if (!exceptionList.isEmpty()) {
                 ExceptionLogger.log(exceptionList);
             }
-        //} START/End PD-0236 11May16 VinceCanlas - Adjusted condition to only cover the lines that will throw an exception.
-
+        
     }
 }

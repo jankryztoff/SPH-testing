@@ -14,7 +14,7 @@ global class SP_loadMonthlyUsageDataBatch implements Database.Batchable<sObject>
     Set<Id> usageIdSet = new Set<Id>();
     final static String STATUS_NEW = GlobalVariableClass.STATUS_NEW;
     final static String STOPTYPE_NONDELIVERY = GlobalVariableClass.NON_DELIVERY;
-	final static String Closed = GlobalVariableClass.STATUS_CLOSED;//Start/End D-4452 04-Apr-2016 Added By S.Puli - do not exclude non delivery
+    final static String Closed = GlobalVariableClass.STATUS_CLOSED;//Start/End D-4452 04-Apr-2016 Added By S.Puli - do not exclude non delivery
     
     //START D-3495 LISEN 10/9/2015 - Enable on demand batch based on selective usages or accounts
   Boolean isApexJobSuccessful = true;
@@ -45,7 +45,7 @@ global class SP_loadMonthlyUsageDataBatch implements Database.Batchable<sObject>
         //START D-3495 LISEN 10/9/2015 - Enable on demand batch based on selective usages or accounts
         //Start D-4452 02-Apr-2016 Added By S.Puli - do not exclude non delivery
         //Start D-4452 04-Apr-2016 Added By S.Puli - do not exclude non delivery
-		//Start D-4452 05-Apr-2016 Added By S.Puli
+        //Start D-4452 05-Apr-2016 Added By S.Puli
         if(selectiveIds != null && !selectiveIds.isEmpty()){
             if(type == SELECTIVE_USAGES){
                 //START D-3495 10/16/2015 Added by C. Lin - Update Query
@@ -60,9 +60,9 @@ global class SP_loadMonthlyUsageDataBatch implements Database.Batchable<sObject>
         else{
             query   += 'Status__c = :STATUS_NEW AND ( Case__r.RecordType.DeveloperName != \'Complaint_Newspaper\' OR Case__r.Status = :Closed)';
         }
-		//End D-4452 05-Apr-2016 Added By S.Puli
+        //End D-4452 05-Apr-2016 Added By S.Puli
         //End D-4452 04-Apr-2016 Added By S.Puli
-		//End D-4452 02-Apr-2016 Added By S.Puli
+        //End D-4452 02-Apr-2016 Added By S.Puli
         //END D-3495 LISEN 10/9/2015 - Enable on demand batch based on selective usages or accounts
         
         return Database.getQueryLocator(query);
@@ -73,6 +73,7 @@ global class SP_loadMonthlyUsageDataBatch implements Database.Batchable<sObject>
     global void execute(Database.BatchableContext bc, list<Usage__c> usageList) {
         //START D-3495 LISEN 10/9/2015 - Enable on demand batch based on selective usages or accounts for batch recovery
         //Start D-4452 02-Apr-2016 Added By S.Puli - do not exclude non delivery
+
     Logger logger = new Logger(SP_loadMonthlyUsageDataBatch.class.getName(), 'SP008', BC.getJobID());
         try{
             set<id> usageIdSet = new set<id>();
@@ -87,6 +88,7 @@ global class SP_loadMonthlyUsageDataBatch implements Database.Batchable<sObject>
             }
       isApexJobSuccessful = false;
         //End D-4452 02-Apr-2016 Added By S.Puli - do not exclude non delivery
+
         //END D-3495 LISEN 10/9/2015 - Enable on demand batch based on selective usages or accounts for batch recovery
     }
     

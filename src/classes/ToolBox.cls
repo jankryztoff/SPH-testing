@@ -97,4 +97,160 @@ public class ToolBox
         Subscription_Handler hanlder = new Subscription_Handler();
         hanlder.CreateQuotes(lOrder,'Change of Subscription');
     }
+    
+    public static void testInvAdj(String strInvID)
+    {
+        Set<String> setInvZuoraIDs = new Set<String>();
+        setInvZuoraIDs.add(strInvID);
+        ZuoraCallOut zCallout = new ZuoraCallOut();
+        List<Map<String, Object>> lstILIAdjMap= new List<Map<String, Object>>();
+        Date adjDate = Date.Today();
+        String queryStr = '';
+        List<IliItemObj> lstInvItems = new List<IliItemObj>();
+        List<TaxItemObj> lstTaxItems = new List<TaxItemObj>();
+        /*
+        List<Invoice_Line_Item__c> lstILI = 
+            [SELECT Id, Charge_Amount__c, Invoice_ID__c, ID__c, Subscription_ID__c FROM Invoice_Line_Item__c WHERE Invoice_ID__c IN :setInvZuoraIDs];
+            */
+
+        for(String invZuoraID :setInvZuoraIDs) {
+            queryStr += ' OR InvoiceId=\'' + invZuoraID + '\'';
+        }
+
+        queryStr = queryStr.substring(4);
+        String adjustmentZuoraDate = zuora.zUtil.getZuoraDate(adjDate);
+
+        String zoqlString1 = 'SELECT Id, ChargeAmount, InvoiceId FROM InvoiceItem Where ' + queryStr;
+        List<Zuora.ZObject> iliItemList = zCallout.bulkQueryZObjects(zoqlString1); 
+
+        String zoqlString = 'SELECT Id, TaxAmount, InvoiceItemId, InvoiceId FROM TaxationItem Where ' + queryStr;
+        List<Zuora.ZObject> taxationItemList = zCallout.bulkQueryZObjects(zoqlString); 
+        
+        for(Zuora.ZObject obj : iliItemList)
+            lstInvItems.add(new IliItemObj(obj));
+        
+        for(Zuora.ZObject obj : taxationItemList)
+            lstTaxItems.add(new TaxItemObj(obj));
+        
+        lstInvItems.sort();
+        lstTaxItems.sort();
+        /*
+        for(Invoice_Line_Item__c ili : lstILI)
+        {
+            if(ili.Charge_Amount__c != 0)
+            {
+                String type = (ili.Charge_Amount__c >0) ? 'Credit' : 'Charge';
+                Map<String, Object> mapAdjMap = new Map<String, Object>();
+                mapAdjMap.put('InvoiceId', ili.Invoice_ID__c);
+                mapAdjMap.put('SourceId', ili.ID__c);
+                mapAdjMap.put('SourceType', 'InvoiceDetail');
+                mapAdjMap.put('Type', type);
+                mapAdjMap.put('AdjustmentDate', adjustmentZuoraDate);
+                mapAdjMap.put('Amount', Math.abs(ili.Charge_Amount__c));
+                mapAdjMap.put('Comment', 'Payment failure - Credit card / Paypal');
+                lstILIAdjMap.add(mapAdjMap);
+            }
+        }
+        */
+        for(IliItemObj iliItem : lstInvItems)
+        {
+            Decimal chargeAmt = (Decimal) iliItem.objRec.getValue('ChargeAmount');
+            if(chargeAmt != 0)
+            {
+                String type = (chargeAmt >0) ? 'Credit' : 'Charge';
+                Map<String, Object> mapAdjMap = new Map<String, Object>();
+                mapAdjMap.put('InvoiceId', iliItem.objRec.getValue('InvoiceId'));
+                mapAdjMap.put('SourceId', iliItem.objRec.getValue('Id'));
+                mapAdjMap.put('SourceType', 'InvoiceDetail');
+                mapAdjMap.put('Type', type);
+                mapAdjMap.put('AdjustmentDate', adjustmentZuoraDate);
+                mapAdjMap.put('Amount', Math.abs(chargeAmt));
+                mapAdjMap.put('Comment', 'Payment failure - Credit card / Paypal');
+                lstILIAdjMap.add(mapAdjMap);
+            }
+        }
+
+        for(TaxItemObj taxItem : lstTaxItems)
+        {
+            Decimal taxAmt = (Decimal) taxItem.objRec.getValue('TaxAmount');
+            if(taxAmt != 0)
+            {
+                String type = (taxAmt >0) ? 'Credit' : 'Charge';
+                Map<String, Object> mapAdjMap = new Map<String, Object>();
+                mapAdjMap.put('InvoiceId', taxItem.objRec.getValue('InvoiceId'));
+                mapAdjMap.put('SourceId', taxItem.objRec.getValue('Id'));
+                mapAdjMap.put('SourceType', 'Tax');
+                mapAdjMap.put('Type', type);
+                mapAdjMap.put('AdjustmentDate', adjustmentZuoraDate);
+                mapAdjMap.put('Amount', Math.abs(taxAmt));
+                mapAdjMap.put('Comment', 'Payment failure - Credit card / Paypal');
+                lstILIAdjMap.add(mapAdjMap);
+            }
+        }
+
+        if(!lstILIAdjMap.isEmpty()) {
+        system.debug('===========> lstILIAdjMap: ' + lstILIAdjMap);
+            List<Map<String, String>> resultMapList = zCallOut.loadZObjects(lstILIAdjMap, 'InvoiceItemAdjustment');
+            system.debug('===========> resultMapList: ' + resultMapList);
+        }
+    }
+    
+    class IliItemObj implements Comparable {
+
+    public Zuora.ZObject objRec;
+    
+    // Constructor
+    public IliItemObj(Zuora.ZObject obj) {
+        objRec = obj;
+    }
+    
+    // Compare IliItemObj based on the Charge amount.
+    public Integer compareTo(Object compareTo) {
+        // Cast argument to OpportunityWrapper
+        IliItemObj compareToRec = (IliItemObj)compareTo;
+        
+        // The return value of 0 indicates that both elements are equal.
+        Integer returnValue = 0;
+        Decimal chargeAmt = (Decimal) objRec.getValue('ChargeAmount');
+        Decimal compareToAmt = (Decimal) compareToRec.objRec.getValue('ChargeAmount');     
+        if (chargeAmt > compareToAmt) {
+            // Set return value to a positive value.
+            returnValue = -1;
+        } else if (chargeAmt < compareToAmt) {
+            // Set return value to a negative value.
+            returnValue = 1;
+        }
+        
+        return returnValue;       
+    }
+    }
+    
+    class TaxItemObj implements Comparable {
+        public Zuora.ZObject objRec;
+        
+        // Constructor
+        public TaxItemObj(Zuora.ZObject obj) {
+            objRec = obj;
+        }
+        
+        // Compare IliItemObj based on the Charge amount.
+        public Integer compareTo(Object compareTo) {
+            // Cast argument to OpportunityWrapper
+            TaxItemObj compareToRec = (TaxItemObj)compareTo;
+            
+            // The return value of 0 indicates that both elements are equal.
+            Integer returnValue = 0;
+            Decimal taxAmt = (Decimal) objRec.getValue('TaxAmount');
+            Decimal compareToAmt = (Decimal) compareToRec.objRec.getValue('TaxAmount');        
+            if (taxAmt > compareToAmt) {
+                // Set return value to a positive value.
+                returnValue = -1;
+            } else if (taxAmt < compareToAmt) {
+                // Set return value to a negative value.
+                returnValue = 1;
+            }
+            
+            return returnValue;       
+        }
+    }
 }

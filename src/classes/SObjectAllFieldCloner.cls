@@ -77,6 +77,7 @@ public class SObjectAllFieldCloner {
     //@Param: sObjectIds - A list of IDs representing the objects to clone
     public static Map<Id,sObject> cloneObjects(List<Id> sObjectIds,Schema.SObjectType objectType)
     {
+        system.debug('*****@@sObjectIds: '+sObjectIds.size());
         // A list of fields for the sObject being cloned
         List<String> sObjectFields = new List<String>{};
         
@@ -104,7 +105,7 @@ public class SObjectAllFieldCloner {
             }
 
             allSObjectFieldsQuery += ' FROM ' + objectType.getDescribe().getName() + ' WHERE ID IN (\'' + sObjectIds.get(0) + '\'';
-
+            system.debug('*****@@sObjectIds1: '+sObjectIds.size());
             for (Integer i=1 ; i < sObjectIds.size() ; i++)
             {
                 allSObjectFieldsQuery += ', \'' + sObjectIds.get(i) + '\'';

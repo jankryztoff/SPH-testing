@@ -254,8 +254,11 @@ public class OrderLineItemTriggerHandler
             }
             // end added for vendor conversion scenario
         // change of subscription quantity
+        // Start PD-0136 02Jun16 JohnD - added logic for sub classification
         } else if (orderType == ConstantsSLB.getOther('Order_Type COS_Quantity') 
-            || orderType == ConstantsSLB.getOther('Order_Type COS_Package')) {
+            || orderType == ConstantsSLB.getOther('Order_Type COS_Package') 
+            || ordertype == ConstantsSLB.getOther('Order_Type COS_Others')) {
+            	
             if (orderLineItem.Based_Order_Line_Item__c != null) {
                 Order_Line_Item__c basedOrderLineItem =  orderLineItemId_basedOrderLineItem.get(orderLineItem.Based_Order_Line_Item__c);
                 
@@ -269,14 +272,17 @@ public class OrderLineItemTriggerHandler
                 } else if (orderType == ConstantsSLB.getOther('Order_Type COS_Package')) {
                     orderLineItem.Sub_classification__c = subClassifyProductCategory
                     (basedOrderLineItem.Publication_Product_Category__c, orderLineItem.Publication_Product_Category__c);
+                
+                } else {
+                	orderLineItem.Sub_Classification__c = orderLineItem.Subscribed_As__c;
                 }
             }
             // [JohnD 12/11] D-0636
             // added for vendor conversion scenario
             orderlineItem.Reason_Code__c = null;
             // end added for vendor conversion scenario
-        } else if (orderType == ConstantsSLB.getOther('Order_Type Renewal')) 
-        {
+        } else if (orderType == ConstantsSLB.getOther('Order_Type Renewal')) {
+        // End PD-0136 02Jun16 JohnD - added logic for sub classification
             orderLineItem.Sub_classification__c = ConstantsSLB.getOther('Order_Line_Item Neutral');
             
             if (orderLineItem.Auto_Renew__c == true) {
@@ -516,20 +522,23 @@ public class OrderLineItemTriggerHandler
         Map<Id, Id> mapItemIdToOrderId = new Map<Id, Id>();
         //START Code Review 2/17/2015 J.Sarion - Null in where clause causes Full Table scans
         Map<Id, Order__c> mapRelatedOrders = new Map<Id, Order__c>();
-        
         for(Order_Line_Item__c item : lstItems)
             mapItemIdToOrderId.put(item.Id, item.order__c);
 
+        System.debug('>>>>>mapItemIdToOrderId ' + mapItemIdToOrderId);
         if (mapItemIdToOrderId.values().size() > 0) {
             mapRelatedOrders = new Map<Id, Order__c> ([SELECT id, Base_Subscription__r.Zuora__SubscriptionEndDate__c, 
                                                 Order_Type__c FROM Order__c WHERE Id in : mapItemIdToOrderId.values()]); 
         }
         //END Code Review 2/17/2015 J.Sarion
-        
+        System.debug('>>>>>mapRelatedOrders ' + mapRelatedOrders);
         for(Order_Line_Item__c newOli : lstItems){
             Order__c relatedOrder = mapRelatedOrders.get(newOli.Order__c);
+            //System.debug('>>>>>relatedOrder.Order_Type__c ' + relatedOrder.Order_Type__c);
+            System.debug('test class ----------------------------------> ' + relatedOrder + ' - ' + mapRelatedOrders);
             if(relatedOrder != null && relatedOrder.Order_Type__c == ConstantsSLB.getOther('Order_Type Renewal'))
             {
+              
                 //Start UD-0441 James 03/25/2015 - start date of renewal is equal to end date of previous subscription + 1
                 if(newOli.Start_Date__c != relatedOrder.Base_Subscription__r.Zuora__SubscriptionEndDate__c.addDays(1)){
                     newOli.addError('Renewal Start Date must be day after the End Date of subscription to be renewed.');

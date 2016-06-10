@@ -414,12 +414,17 @@ global class EshopTaggingLDAPTest {
             postal.Address_Type__c = 'A';
             insert postal;
             
+            Country__c country = new Country__c();
+            country.Name = 'Singapore';
+            insert country;
+            
             Address__c addressRec =  new Address__c();
             addressRec.Address_Type__c = 'A';
             addressRec.Postal_Code__c = postal.Id;
             addressRec.Block_House_Number__c ='TEST';
             addressRec.Level_Number__c ='xx';
             addressRec.Unit_Number__c = 'yy';
+            addressRec.Country__c  = country.Id;
             insert addressRec;
             
             Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
@@ -582,7 +587,8 @@ global class EshopTaggingLDAPTest {
             Account accountNum = [Select Account_Auto_Number__c From Account Where Id =: acc.Id];        
             
             //joyax
-           /* Asia1__c as1 = TestDataFactory.createAsiaOne(1)[0];
+            /*
+           Asia1__c as1 = TestDataFactory.createAsiaOne(1)[0];
             as1.Display_Name__c = 'test';
             insert as1;
             
@@ -593,7 +599,8 @@ global class EshopTaggingLDAPTest {
             insert asia1Sub;
             
             Set<Id> zSubsId = new Set<Id>();
-            zSubsId.add(subRecs.Id);*/
+            zSubsId.add(subRecs.Id);
+            */
             //joyax
              
             test.starttest();
@@ -601,13 +608,14 @@ global class EshopTaggingLDAPTest {
                 Request req = new Request();
                 //req.subscriberId = acc.AccountNumber;
                 req.subscriberId = accountNum.Account_Auto_Number__c;
-                system.assertEquals(null,accountNum.Account_Auto_Number__c);
+                //system.assertEquals(null,accountNum.Account_Auto_Number__c);
                 req.asiaOneLdapId = '2A.BCXYZ23';
                 String JSONData = JSON.serialize(req);
                 EshopTaggingLDAP.Request requ = (EshopTaggingLDAP.Request) JSON.deserialize(JSONData, EshopTaggingLDAP.Request.class);
-                EshopTaggingLDAP.Response respo = EshopTaggingLDAP.processRequest(requ);
+
                 
                 EshopTaggingLDAP.checkMandatoryFields(requ);
+            	EshopTaggingLDAP.createAsia1('2A.BCXYZ23');
                 
             test.stoptest();
             
