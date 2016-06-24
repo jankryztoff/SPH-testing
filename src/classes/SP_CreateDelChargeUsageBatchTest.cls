@@ -1,17 +1,20 @@
 @isTest(seeAllData = false)
 
 public class SP_CreateDelChargeUsageBatchTest {
-
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+    }
     static void defaultCustomSetting(){
         String invoiceId = '0x00x0x00x00x000000x0x000xx00x00';
-        Key_Id__c keyId;
+        // keyId;
         Other__c otherC;
 
         String[] keyIdNameArray = new String[]{'Account_Direct Individual','Account_Vendor Subscriber','Address_Local','Contact_Customer Contact','Package Item_Base Product','Package Item_Bundle Product','Package Item_Discount','Package Item_Extension Discount','UpdateARMSInfoResultId','NEXT_RECIPIENT_NUMBER','Account_Direct Corporate','Account_Direct SPH Inter-Division','Case_Change of Subscription','Case_Start Sub','Case_Stop','Case_Temp Stop','CSO Asst. Manager/ Manager Queue','CSO TL Queue','Head of Customer Service Queue','Case Renewal of Subscription','Case_Change in Address','Complaint_Newspaper','Case_Complaint Magazine','SubTypeDel','SubTypePostage','SubTypePub','Address_Airline','Address_Internal','Address_Overseas'};
         String[] keyIdIdcArray = new String[]{'012N00000008ic1IAA','012N00000008ibwIAA','012N00000008idiIAA','012N00000008r43IAA','012N00000008jCOIAY','012N00000008jCdIAI','012N00000008jCTIAY','012N00000008jCsIAI','123vd','123457177','012N00000008ic6IAA','012N00000008icBIAQ','012N00000008lpwIAA','012N00000008jvYIAQ','012N00000008k09IAA','012N00000008k0EIAQ','00GN0000000mMcJ','00GN0000000lUNp','00GN0000000mUXw','012N00000008lqG','012N00000008lAoIAI','012N00000008kI8IAI','012N00000008kIDIAY','Delivery','Postage','Publication','012N00000008idx','012N00000008idnIAA','012N00000008idsIAA'};
         String[] keyIdTypeArray = new String[]{'Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Id','Number','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Id','Id','Id','Record Type','Record Type','Record Type','Record Type','Name','Name','Name','Record Type','Record Type','Record Type'};
 
-        List<Key_Id__c> keyList = new List<Key_Id__c>();
+        //List<Key_Id__c> keyList = new List<Key_Id__c>();
         /*
         for(Integer i = 0 ; i < keyIdNameArray.size(); i++ )
         {
@@ -80,8 +83,8 @@ public class SP_CreateDelChargeUsageBatchTest {
         add.Address_Unique_ID__c = '123152test';
         insert add; 
 
-        Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
-        insert key;
+        //Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
+        //insert key;
 
         Contact con = TestDataFactory.createContact(1)[0];
         con.Recipient_Indicator__c = true;
@@ -128,8 +131,8 @@ public class SP_CreateDelChargeUsageBatchTest {
         acct = TestDataFactory.createAccount(5, 'Direct Individual')[0];
         insert acct;
 
-        Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
-        insert key;
+        //Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
+        //insert key;
 
         Address__c add = TestDataFactory.createAddress(1)[0];
         add.Address_Unique_ID__c = '123152test';
@@ -191,8 +194,8 @@ public class SP_CreateDelChargeUsageBatchTest {
         acct = TestDataFactory.createAccount(5, 'Direct Individual')[0];
         insert acct;
 
-        Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
-        insert key;
+        //Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
+        //insert key;
 
         Address__c add = TestDataFactory.createAddress(1)[0];
         add.Address_Unique_ID__c = '123152test';
@@ -247,8 +250,8 @@ public class SP_CreateDelChargeUsageBatchTest {
         acct = TestDataFactory.createAccount(5, 'Direct Individual')[0];
         insert acct;
 
-        Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
-        insert key;
+        //Key_Id__c key = new Key_Id__c(Name = 'NEXT_RECIPIENT_NUMBER', Id__c = '123462697', Type__c = 'Number');
+        //insert key;
 
         Address__c add = TestDataFactory.createAddress(1)[0];
         add.Address_Unique_ID__c = '123152test';

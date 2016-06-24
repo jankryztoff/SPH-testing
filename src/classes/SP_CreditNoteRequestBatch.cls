@@ -43,14 +43,18 @@ global class SP_CreditNoteRequestBatch implements Database.Batchable<sObject>, D
         if(isAdhoc){
             //Start D-4614 02-Apr-2016 Added By S.Puli - to prevent download of LPR
             //START UD-3656 Gdelrosario : removed as per defect solution presented in the attach email of defect. Updatng of the custom setting is moved to SP043
-            //START PD-0036 05042016 Gdelrosario : added query on the creation of letterPrintRequest becuase we need to check GST Invoice on account level          
-            query += 'SELECT Id, Is_PDF_Generated__c,Source_Invoice__r.Immediate_CB__c, Billing_Account__r.Zuora__Account__r.GST_Invoice__c ';
+            //START PD-0036 05042016 Gdelrosario : added query on the creation of letterPrintRequest becuase we need to check GST Invoice on account level
+            //START PD-0442 Fritz : prnt for Account GST Invoice indicator
+            query += 'SELECT Id, Is_PDF_Generated__c,Source_Invoice__r.Immediate_CB__c, Billing_Account__r.Zuora__Account__r.GST_Invoice__c,';
+            query += ' Billing_Account__r.Other_PaymentMethod__c ';
             query += 'FROM Credit_Note__c ';
             query += 'WHERE ID IN :failedRecs';
         }else{
-            query = 'SELECT Id, Is_PDF_Generated__c,Source_Invoice__r.Immediate_CB__c, Billing_Account__r.Zuora__Account__r.GST_Invoice__c ';
+            query = 'SELECT Id, Is_PDF_Generated__c,Source_Invoice__r.Immediate_CB__c, Billing_Account__r.Zuora__Account__r.GST_Invoice__c, ';
+            query += ' Billing_Account__r.Other_PaymentMethod__c ';
             query += 'FROM Credit_Note__c ';
             query += 'WHERE Is_PDF_Generated__c = false';
+            //END PD-0442 Fritz : prnt for Account GST Invoice indicator
             //END PD-0036 05042016 Gdelrosario : added query on the creation of letterPrintRequest becuase we need to check GST Invoice on account level
             //END UD-3656 Gdelrosario : removed as per defect solution presented in the attach email of defect. Updatng of the custom setting is moved to SP043
             //End D-4614 02-Apr-2016 Added By S.Puli - to prevent download of LPR
@@ -83,7 +87,10 @@ global class SP_CreditNoteRequestBatch implements Database.Batchable<sObject>, D
                 //END D-4588 04 April 2016 Kevin Evasco - Changed immediate CB data type and value
                 //End D-4614 02-Apr-2016 Added By S.Puli
                 //START PD-0036 05042016 Gdelrosario : added filter on the creation of letterPrintRequest becuase we need to check GST Invoice on account level
-                if(cnRec.Billing_Account__r.Zuora__Account__r.GST_Invoice__c == GlobalVariableClass.TS_YES  ){  //used only available yes from GlobalVariableClass regardless of module
+                //START PD-0442 Fritz : prnt for Account GST Invoice indicator
+                if(cnRec.Billing_Account__r.Zuora__Account__r.GST_Invoice__c == GlobalVariableClass.TS_YES 
+                || cnRec.Billing_Account__r.Other_PaymentMethod__c == GlobalVariableClass.INVOICE){  //used only available yes from GlobalVariableClass regardless of module
+                //END PD-0442 Fritz : prnt for Account GST Invoice indicator
                     letterPrintRequest.Printable__c = true;
                     if(cnRec.Source_Invoice__r.Immediate_CB__c == 'Y'){
                         letterPrintRequest.Downloaded__c = false;

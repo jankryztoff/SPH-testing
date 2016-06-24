@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__CustomerAccount__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Zuora__Account__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Zuora__AccountNumber__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Id</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Zuora__AccountNumber__c</column>
+            <operator>equals</operator>
+            <value>BA00469846</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Billing Account w/ Account Numbers</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Billing_Accounts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__CustomerAccount__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_Batch_Run_Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_Batch_Run_Requests</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Time --></label>
+        <name>End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Interface ID --></label>
+        <name>Interface_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

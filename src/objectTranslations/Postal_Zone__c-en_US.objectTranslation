@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Postal Sector</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Postal Sectors</value>
+    </caseValues>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Sector --></label>
+        <name>Postal_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Zone Name --></label>
+        <name>Postal_Zone_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Zone --></label>
+        <name>Postal_Zone__c</name>
+    </fields>
+    <layouts>
+        <layout>MIG - Postal Zone Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Postal Zone Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

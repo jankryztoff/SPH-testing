@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Report Scheduler</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Report Scheduler</value>
+    </caseValues>
+    <fields>
+        <help><!-- it should have end with its extension name like report.csv or report.xls --></help>
+        <label><!-- Attachment File Name --></label>
+        <name>Attachment_File_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Body --></label>
+        <name>Email_Body__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Recipients --></label>
+        <name>Email_Recipients__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Subject --></label>
+        <name>Email_Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report ID --></label>
+        <name>Report_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

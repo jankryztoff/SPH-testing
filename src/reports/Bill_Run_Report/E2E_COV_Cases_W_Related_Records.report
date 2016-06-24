@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <block>
+        <blockInfo>
+            <blockId>B1</blockId>
+            <joinTable>s</joinTable>
+        </blockInfo>
+        <columns>
+            <field>STATUS</field>
+        </columns>
+        <columns>
+            <field>Case.Contact_To_Update__c</field>
+        </columns>
+        <columns>
+            <field>Case.Vendor__c</field>
+        </columns>
+        <columns>
+            <field>Case.Category__c</field>
+        </columns>
+        <columns>
+            <field>Case.Sub_Status__c</field>
+        </columns>
+        <columns>
+            <field>Case.Sub_Category__c</field>
+        </columns>
+        <columns>
+            <field>Case.Change_of_Address_Type__c</field>
+        </columns>
+        <filter>
+            <criteriaItems>
+                <column>RECORDTYPE</column>
+                <operator>equals</operator>
+                <value>Case.Change_of_Address</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Case.Sub_Status__c</column>
+                <operator>equals</operator>
+                <value>Waiting for Vendor Assignment</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Case.Change_of_Address_Type__c</column>
+                <operator>equals</operator>
+                <value>Change of Vendor</value>
+            </criteriaItems>
+        </filter>
+        <format>Summary</format>
+        <name>Change of Address Case</name>
+        <params>
+            <name>units</name>
+            <value>h</value>
+        </params>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>CaseList</reportType>
+        <scope>organization</scope>
+        <timeFrameFilter>
+            <dateColumn>CREATED_DATEONLY</dateColumn>
+            <interval>INTERVAL_CUSTOM</interval>
+        </timeFrameFilter>
+    </block>
+    <block>
+        <blockInfo>
+            <blockId>B0</blockId>
+            <joinTable>s</joinTable>
+        </blockInfo>
+        <columns>
+            <field>CUST_NAME</field>
+        </columns>
+        <columns>
+            <field>FK_NAME</field>
+        </columns>
+        <filter>
+            <criteriaItems>
+                <column>RECORDTYPE</column>
+                <operator>equals</operator>
+                <value>Case.Change_of_Address</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Case.Sub_Status__c</column>
+                <operator>equals</operator>
+                <value>Waiting for Vendor Assignment</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Case.Change_of_Address_Type__c</column>
+                <operator>equals</operator>
+                <value>Change of Vendor</value>
+            </criteriaItems>
+        </filter>
+        <format>Summary</format>
+        <name>Case Subscriptions</name>
+        <params>
+            <name>units</name>
+            <value>h</value>
+        </params>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>CaseCustomEntity$Case_Subscription__c@Case_Subscription__c.Subscription__c</reportType>
+        <scope>organization</scope>
+        <timeFrameFilter>
+            <dateColumn>CREATED_DATEONLY</dateColumn>
+            <interval>INTERVAL_CUSTOM</interval>
+        </timeFrameFilter>
+    </block>
+    <blockInfo>
+        <blockId xsi:nil="true"/>
+        <joinTable>s</joinTable>
+    </blockInfo>
+    <format>MultiBlock</format>
+    <name>E2E COV Cases W/ Related Records</name>
+    <reportType>CaseList</reportType>
+    <showDetails>true</showDetails>
+</Report>

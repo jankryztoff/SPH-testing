@@ -366,6 +366,10 @@ global class SP_MidMonthTempStopBatch implements Database.Batchable<sObject>, Da
                                     if(currentYear != 0) {
                                         refundCounter += currentYear;
                                     }
+                                    //START PD-0448 06/23/2015 Added by E. Yatar - Prevent refundCounter to raise beyond 30 days.
+                                    if(refundCounter > 30)
+                                        refundCounter = 30;
+                                    //END PD-0448 06/23/2015 Added by E. Yatar - Prevent refundCounter to raise beyond 30 days.
                                 }
                             }                   
                         }
@@ -375,7 +379,7 @@ global class SP_MidMonthTempStopBatch implements Database.Batchable<sObject>, Da
             }
 
         //START UD-1575 06/12/2015 Added by J. Sarion - Filter out Subscriptions with All-In-One packages
-                for (Subscription_Temp_Stop__c subTempStop :scope) { //START-END UD-3221 11/17/2015 Added by J.Sarion - set list to scope
+            for (Subscription_Temp_Stop__c subTempStop :scope) { //START-END UD-3221 11/17/2015 Added by J.Sarion - set list to scope
         //END UD-1575 06/12/2015 Added by J. Sarion - Filter out Subscriptions with All-In-One packages
                 if (subTempStop.Temp_Stop__r.Restart_Date__c.monthsBetween(referenceDate) == 0) {
                     isRefundable = false;
@@ -506,7 +510,7 @@ global class SP_MidMonthTempStopBatch implements Database.Batchable<sObject>, Da
             }
 
         //START UD-1575 06/12/2015 Added by J. Sarion - Filter out Subscriptions with All-In-One packages
-                for (Subscription_Temp_Stop__c subTempStop :scope) { //START-END UD-3221 11/17/2015 Added by J.Sarion - set list to scope
+            for (Subscription_Temp_Stop__c subTempStop :scope) { //START-END UD-3221 11/17/2015 Added by J.Sarion - set list to scope
         //END UD-1575 06/12/2015 Added by J. Sarion - Filter out Subscriptions with All-In-One packages
                 year = referenceDate.year(); //START/END 03/30/2015 D-2606 Kevin Evasco added condition for Custom Setting for Reference Date for all month-end batches 
                 month = referenceDate.month();  //START/END 03/30/2015 D-2606 Kevin Evasco added condition for Custom Setting for Reference Date for all month-end batches  

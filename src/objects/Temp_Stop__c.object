@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>EditErrorPage</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Cancelled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Cancelled?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Temp Stops</relationshipLabel>
+        <relationshipName>Temp_Stops</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_Create_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Create By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Create_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Create Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Update_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Update By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Update_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Update Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order__c</referenceTo>
+        <relationshipLabel>Temp Stops</relationshipLabel>
+        <relationshipName>Temp_Stops</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>POP_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.POP_Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>POP Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Pop_Start__c</fullName>
+        <externalId>false</externalId>
+        <label>Pop Start</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Qty__c</fullName>
+        <externalId>false</externalId>
+        <label>Qty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Request_Total_Credit__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Total Credit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Request_Total_Issue__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Total Issue</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Restart_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Restart Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TEMP_CON__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.Subscription_End_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TEMP CON</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Temp_Stop_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Temp Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Temp_Stop_Legacy_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Temp Stop Legacy Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Temp_Stop_Qty__c</fullName>
+        <externalId>false</externalId>
+        <label>Temp Stop Qty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Temp_Stop_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Cancelled__c , &apos;Cancelled&apos;, IF(Temp_Stop_Date__c &gt;  TODAY(), &apos;Not Started&apos;,  IF(Temp_Stop_Date__c&lt;= TODAY() &amp;&amp;  Restart_Date__c &gt; TODAY(), &apos;On-going&apos;,  IF(Restart_Date__c &lt;= TODAY(), &apos;Completed&apos;, null) ) )  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Temp Stop Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Year_To_Date_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Year To Date Count</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Temp Stop</label>
+    <nameField>
+        <displayFormat>TS-{0000000000}</displayFormat>
+        <label>Temp Stop</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Temp Stops</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Validate_Restart_Date_1</fullName>
+        <active>true</active>
+        <description>Restart date must be greater than start date</description>
+        <errorConditionFormula>( Restart_Date__c &lt; Case__r.Subscription_Name__r.Zuora__SubscriptionStartDate__c  )</errorConditionFormula>
+        <errorMessage>Restart date Should be greater than or equal to sub start date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Restart_Date_2</fullName>
+        <active>true</active>
+        <description>Restart date must be less than or equal to sub stop date</description>
+        <errorConditionFormula>( Restart_Date__c &gt; Case__r.Subscription_Name__r.Zuora__SubscriptionEndDate__c  )</errorConditionFormula>
+        <errorMessage>Restart date Should be less than or equal to sub stop date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Restart_Date_3</fullName>
+        <active>true</active>
+        <description>Restart date must  not be greater than subscription end date</description>
+        <errorConditionFormula>( Restart_Date__c &gt; Case__r.Subscription_Name__r.Zuora__SubscriptionEndDate__c  )</errorConditionFormula>
+        <errorDisplayField>Cancelled__c</errorDisplayField>
+        <errorMessage>Restart date Should not be greater than request stop date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Restart_Date_4</fullName>
+        <active>false</active>
+        <description>Should be greater than or equal to sub start date</description>
+        <errorConditionFormula>( Restart_Date__c &lt;  Case__r.Subscription_Name__r.Zuora__SubscriptionStartDate__c  )</errorConditionFormula>
+        <errorMessage>Should be greater than or equal to sub start date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Restart_Date_5</fullName>
+        <active>false</active>
+        <description>Restart date should be publication day</description>
+        <errorConditionFormula>( Restart_Date__c != POP_Start_Date__c )</errorConditionFormula>
+        <errorMessage>Restart date should be publication day</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Temp_Stop_Date_1</fullName>
+        <active>false</active>
+        <description>Temp Stop date must be greater than the current date</description>
+        <errorConditionFormula>(Temp_Stop_Date__c &lt;= TODAY() )</errorConditionFormula>
+        <errorDisplayField>Cancelled__c</errorDisplayField>
+        <errorMessage>Tempstop date should be greater than current date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Temp_Stop_Date_2</fullName>
+        <active>true</active>
+        <description>Temp Stop date must be less that the subscription end date</description>
+        <errorConditionFormula>( Temp_Stop_Date__c &gt;  Case__r.Subscription_Name__r.Zuora__SubscriptionEndDate__c  )</errorConditionFormula>
+        <errorDisplayField>Cancelled__c</errorDisplayField>
+        <errorMessage>Tempstop date should be less than sub stop date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Temp_Stop_Date_3</fullName>
+        <active>true</active>
+        <description>Temp Stop date must be within the subscription date</description>
+        <errorConditionFormula>( Temp_Stop_Date__c &lt;=  Case__r.Subscription_Name__r.Zuora__SubscriptionStartDate__c )</errorConditionFormula>
+        <errorDisplayField>Cancelled__c</errorDisplayField>
+        <errorMessage>Tempstop date Should be greater than or equal to sub start date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Temp_Stop_Date_4</fullName>
+        <active>true</active>
+        <description>Temp Stop date must be less than the Restart date</description>
+        <errorConditionFormula>Temp_Stop_Date__c    &gt;=   Restart_Date__c</errorConditionFormula>
+        <errorDisplayField>Restart_Date__c</errorDisplayField>
+        <errorMessage>Restart date should be greater than Temp Stop date</errorMessage>
+    </validationRules>
+</CustomObject>

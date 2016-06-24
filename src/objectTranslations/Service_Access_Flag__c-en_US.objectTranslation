@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Access Flag</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Access Flags</value>
+    </caseValues>
+    <fields>
+        <label><!-- Flag Code Ext --></label>
+        <name>Flag_Code_Ext__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag Description --></label>
+        <name>Flag_Description__c</name>
+    </fields>
+    <layouts>
+        <layout>Service Access Flag Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

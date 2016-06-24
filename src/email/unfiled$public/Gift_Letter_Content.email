@@ -1,0 +1,47 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Today}}</font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><font style="color: rgb(0, 0, 0);">{{Contact.FirstName}}&nbsp;</font>{{Contact.LastName}}</font></div><div><font face="Verdana, Helvetica, sans-serif" size="2">{{Contact.MailingAddress}}</font></div>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<p class="MsoHeader" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">Dear Subscriber,<b><o:p></o:p></b></font></p><p class="MsoHeader" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></p><p class="MsoHeader" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);"><b>Notification for the
+collection of Gift for the&nbsp;</b></font><font face="Verdana, Helvetica, sans-serif" size="2"><b>{{Zuora__SubscriptionProductCharge__c.PublicationCode__c}}<i>.</i></b></font></p><p class="MsoHeader"><b style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">Account no:&nbsp;</font></b><font face="Verdana, Helvetica, sans-serif" size="2">{{Account.AccountNumber}}</font></p><p class="MsoHeader" style="color: rgb(0, 0, 0);"><b><i><u><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></u></i></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: left;"><font face="Verdana, Helvetica, sans-serif" size="2">Thank you for subscribing to&nbsp;{{Zuora__SubscriptionProductCharge__c.PublicationCode__c}}.&nbsp;</font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify;"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);">As a token of our appreciation, we are pleased to present
+you&nbsp;<font face="Verdana, Helvetica, sans-serif" size="2"><span class="MsoCommentReference"></span></font></font><font face="Verdana, Helvetica, sans-serif" size="2">{{Gift__c.Name}}</font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Promotion_Gift__c.Redemption_Letter_Details__c}}</font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font size="2" face="Verdana, Helvetica, sans-serif">We trust
+that you will enjoy your upcoming issues of <b>{{Zuora__SubscriptionProductCharge__c.PublicationCode__c}}</b>.</font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font size="2" face="Verdana, Helvetica, sans-serif">______________________________________________________________________</font></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[<div style="color: rgb(0, 0, 0); text-align: center;"><u><b><font face="Verdana, Helvetica, sans-serif" size="2">ACKNOWLEDGEMENT</font></b></u></div><div style="color: rgb(0, 0, 0); text-align: center;"><u><b><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></b></u></div><div style="text-align: left;"><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);">I hereby acknowledge receipt of&nbsp;</font><font face="Verdana, Helvetica, sans-serif" size="2"><b>{{Gift__c.Name}}</b><i>.</i></font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2"><b><i><br></i></b></font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2">Name: __________________________________ &nbsp; NRIC: ________________________</font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2">_____________________________</font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Signature/Date</font></p><p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2"><b><i><br></i></b></font></p><div style="font-size: 12pt; font-family: arial; color: rgb(0, 0, 0);"><div><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div></div>]]></td>
+</tr>
+</table>

@@ -323,7 +323,7 @@ public class AsiaOneServicesController{
                     //}
                     if (packageType_packageId.get('main') == pkgFlags.Package__c) {
                         mainSubAccessFlagSet.add(pkgFlags.Package_Service_Access_Flag__c);
-                    } else if (packageType_packageId.get('addon') != null && packageType_packageId.get('addon') == pkgFlags.Package__c) {
+                    }else if (packageType_packageId.get('addon') != null && packageType_packageId.get('addon') == pkgFlags.Package__c) {
                         addOnSubAccessFlagSet.add(pkgFlags.Package_Service_Access_Flag__c);
                     }
                         
@@ -335,7 +335,7 @@ public class AsiaOneServicesController{
                 System.debug('ADD ON SUBS ID >> ' + addOnSubcriptionId);
                 System.debug('ASIA1 SET >> ' + asia1SubscriptionIdSet);
                 System.debug('Request >> ' + request);
-          
+                
                 //START:D-2510 3/12/15 Added by Manolo Valena - If success, the Asia1 Subscription records are updated accordingly.
                 if (request.get(ACTIVATE_R) == SUCCESS ) {
                      System.debug('\n\n ***DEBUG ON request ****  ' + request.get(ACTIVATE_R) + '\n\n');
@@ -347,15 +347,23 @@ public class AsiaOneServicesController{
                         asia1Subscription.Status__c = GlobalVariableClass.ASIA1_SUBSCRIPITON_STATUS_ENABLED;
                         //asia1Subscription.Subscription__c = subscriptionId;
                         System.debug('FLAG INSIDE >> ' + asia1Subscription.Service_Access_Flag__c);
-                        if (mainSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c)) {
+                        //START:PD-0035 6/22/16 Added by Christopher Camilon - Assigning of Correct Subscription to Asiaone Sub
+                        if(addOnSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c) && mainSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c)){
+                            
+                            asia1Subscription.Subscription__c = subscriptionId;
+                            
+                        }else{
+                            if (mainSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c)) {
                             //asia1Subscription.Subscription__c = packageType_packageId.get('main');
                             asia1Subscription.Subscription__c = mainSubscriptionId;
                             //mainSubAccessFlagSet.remove(asia1Subscription.Service_Access_Flag__c);
-                        } else if (addOnSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c)) {
+                            } else if (addOnSubAccessFlagSet.contains(asia1Subscription.Service_Access_Flag__c)) {
                             //asia1Subscription.Subscription__c = packageType_packageId.get('addon');
                             asia1Subscription.Subscription__c = addOnSubcriptionId;
                             //addOnSubAccessFlagSet.remove(asia1Subscription.Service_Access_Flag__c);
+                            }
                         }
+                        //END:PD-0035 6/22/16 Added by Christopher Camilon - Assigning of Correct Subscription to Asiaone Sub
 
                         asia1SubscriptionList.add(asia1Subscription);
                     }

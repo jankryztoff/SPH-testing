@@ -799,13 +799,15 @@ global with sharing class NewSubscriptionService {
         //START 20 October 2015 D-3726 Kevin EVasco - Home Phone assignment
         contactRecord.HomePhone__c = contactDetails.homeNumber;
         //END 20 October 2015 D-3726 Kevin EVasco - Home Phone assignment
-        
-        Address__c addressRecord = searchAddress(contactDetails.address);       
+        system.debug(':::contactDetails.address ' + contactDetails.address);
+        Address__c addressRecord = searchAddress(contactDetails.address);  
+        system.debug(':::addressRecord1 ' + addressRecord);
         if(addressRecord == null)
         {
             addressRecord = createAddress(contactDetails.address);
+            
         }         
-        
+        system.debug(':::addressRecord2 ' + addressRecord);
         contactRecord.Address__c = addressRecord.Id;
         
         if(contactDetails.billingIndicator == 'Y' && type == 'Billing Contact')
@@ -885,11 +887,11 @@ global with sharing class NewSubscriptionService {
         Address__c addressRecord;  
         List<Address__c> addressList;
         if(addressDetails.country == GlobalVariableClass.SINGAPORE_CODE) //START/END: D-3066 06/19/2015 Kevin Evasco: Changed country code from SIN to SG
-        {
+        {           
             addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c WHERE Country__r.Code__c = :addressDetails.country AND Postal_Code__r.Name = :addressDetails.postalCode AND Unit_Number__c = :addressDetails.unitNumber AND Level_Number__c = :addressDetails.levelNumber];
         }
         else
-        {
+        {           
             addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c WHERE Country__r.Code__c = :addressDetails.country AND Address_1__c = :addressDetails.Address1 AND Address_2__c = :addressDetails.Address2 AND Address_3__c = :addressDetails.Address3 AND Address_4__c = :addressDetails.Address4];
         }
         
@@ -954,6 +956,7 @@ global with sharing class NewSubscriptionService {
           // Start D-1766 01/23/2015 JohnD add buildingName as parameter 
             Singpost_Address__c singpostAddress = getSingpostAddress(addressDetails.postalCode, addressDetails.buildingName, addressDetails.houseBlockNumber);
             // End D-1766 01/23/2015 JohnD
+            system.debug(':::SINGADDRESS ' + singpostAddress);
             if(singpostAddress != null)
             {
                 newAddress.Postal_Code__c = singpostAddress.Id;
@@ -979,7 +982,7 @@ global with sharing class NewSubscriptionService {
         {
             newAddress.Country__c = countryRecord.Id;  
         }
-        
+        system.debug(':::newAddress ' + newAddress);
         insert newAddress;
         
         return newAddress;
@@ -1012,16 +1015,16 @@ global with sharing class NewSubscriptionService {
         
         if (postalCode != null && postalCode.containsOnly('1234567890') && postalCode.length() == 6 ) { // D- 1851 Changes made by Joban
           
-          singpostAddressList = [SELECT Id, Building_Name__c FROM Singpost_Address__c WHERE Name = :postalCode AND House_Block_Number__c = :houseBlockNumberParam LIMIT 1];
-                   
-          if (singpostAddressList.size() > 0) {            
-            singpostAddressRecord = singpostAddressList.get(0);            
+            singpostAddressList = [SELECT Id, Building_Name__c FROM Singpost_Address__c WHERE Name = :postalCode AND House_Block_Number__c = :houseBlockNumberParam LIMIT 1];
+            system.debug(':::singpostAddressList ' + singpostAddressList);
+            if (singpostAddressList.size() > 0) {            
+                singpostAddressRecord = singpostAddressList.get(0);            
             if (buildingName != singpostAddressRecord.Building_Name__c && buildingName != '' && buildingName != null)                
                 isValidAddress = false;         
-          } else {            
+            } else {            
               isValidAddress = false;            
-          }
-        
+            }
+
         } else {
             isValidAddress = false;  
         }
@@ -2454,7 +2457,7 @@ system.debug('>>>>>CHA productRatePlanMap.get(package_packageItemMap.get(pckId)[
         accountIdList.add(newBillingAccountZIDParam);
         
         Zuora.zapi zApiInstance = new Zuora.zapi();
-        List<Zuora.zApi.DeleteResult> deleteResults = zApiInstance.zdelete('Account',accountIdList);
+        List<Zuora.zApi.DeleteResult> deleteResults = zApiInstance.zdelete('Account',accountIdList);        
     }
     //END 03 February 2016 UD-3844 Kevin Evasco - Rollback Zuora records
 }

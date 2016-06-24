@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Batch Configuration Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Batch Configuration Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch Size --></label>
+        <name>Batch_Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- Maximum retries to fire the same batch Job. --></help>
+        <label><!-- Max Retries --></label>
+        <name>Max_Retries__c</name>
+    </fields>
+    <fields>
+        <help><!-- Semi-colon separated email addresses of notification recipients for Batch Apex Classes --></help>
+        <label><!-- Notification Recipients --></label>
+        <name>Notification_Recipients__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used in Text Literals to set the number of days to be included in query filter. --></help>
+        <label><!-- Number Of Days To Retrieve --></label>
+        <name>Number_Of_Days_To_Retrieve__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

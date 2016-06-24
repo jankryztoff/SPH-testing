@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>[Kristine Campang 10/30/2014] Created to hold Courier Charge for each Specific day to be used by Complaint NewPaper</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Courier_Fee__c</fullName>
+        <description>[Kristine Campang 10/30/2014] created to hold the specific courier fee.</description>
+        <externalId>false</externalId>
+        <label>Courier Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Courier Charge</label>
+    <visibility>Protected</visibility>
+</CustomObject>

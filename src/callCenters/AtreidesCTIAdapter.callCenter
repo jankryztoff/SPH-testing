@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CallCenter xmlns="http://soap.sforce.com/2006/04/metadata">
+    <displayName>Atreides Call Center Adapter (Avaya)</displayName>
+    <displayNameLabel>Display Name</displayNameLabel>
+    <internalNameLabel>Internal Name</internalNameLabel>
+    <sections>
+        <items>
+            <label>Description</label>
+            <name>reqDescription</name>
+            <value>Atreides Call Center Adapter (Avaya)</value>
+        </items>
+        <items>
+            <label>CTI Connector ProgId</label>
+            <name>reqProgId</name>
+            <value>AtreidesCTIAdapter.AtsapiAdapter.1</value>
+        </items>
+        <label>General Information</label>
+        <name>reqGeneralInfo</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Server</label>
+            <name>ServerName</name>
+            <value>AVAYA#S8700#CSTA#PBXAES04</value>
+        </items>
+        <items>
+            <label>Login</label>
+            <name>LoginName</name>
+            <value>ctiuser</value>
+        </items>
+        <items>
+            <label>Password</label>
+            <name>LoginPassword</name>
+            <value>atreides</value>
+        </items>
+        <label>CTI Server Information</label>
+        <name>ServerInfo</name>
+    </sections>
+    <sections>
+        <items>
+            <label>License1 Address</label>
+            <name>AddressA</name>
+            <value>10.120.151.4</value>
+        </items>
+        <items>
+            <label>License1 Port</label>
+            <name>PortA</name>
+            <value>9876</value>
+        </items>
+        <items>
+            <label>License1 SSL</label>
+            <name>SSLA</name>
+            <value>true</value>
+        </items>
+        <items>
+            <label>License2 Address</label>
+            <name>AddressB</name>
+            <value>10.120.151.4</value>
+        </items>
+        <items>
+            <label>License2 Port</label>
+            <name>PortB</name>
+            <value>9876</value>
+        </items>
+        <items>
+            <label>License2 SSL</label>
+            <name>SSLB</name>
+            <value>true</value>
+        </items>
+        <label>License Server Information</label>
+        <name>LicenseServer</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Outside Prefix</label>
+            <name>reqOutsidePrefix</name>
+            <value>9</value>
+        </items>
+        <items>
+            <label>Long Distance Prefix</label>
+            <name>reqLongDistPrefix</name>
+            <value>1</value>
+        </items>
+        <items>
+            <label>International Prefix</label>
+            <name>reqInternationalPrefix</name>
+            <value>01</value>
+        </items>
+        <label>Dialing Options</label>
+        <name>reqDialingOptions</name>
+    </sections>
+    <sections>
+        <items>
+            <label>UUIDelimiter</label>
+            <name>UUIDelimiter</name>
+            <value>,</value>
+        </items>
+        <items>
+            <label>UUIUseObjectMap</label>
+            <name>UUIUseObjectMap</name>
+            <value>false</value>
+        </items>
+        <items>
+            <label>UUIObjectMap</label>
+            <name>UUIObjectMap</name>
+            <value>Account.AccountNumber=$Data01,Contact.Phone=$Data02</value>
+        </items>
+        <label>Telephony Options</label>
+        <name>TelOptions</name>
+    </sections>
+    <sections>
+        <items>
+            <label>FallbackOnAniSearch</label>
+            <name>FallbackOnAniSearch</name>
+            <value>true</value>
+        </items>
+        <label>Search Options</label>
+        <name>SearchOptions</name>
+    </sections>
+</CallCenter>

@@ -96,7 +96,9 @@
          //lstAsia1 = new List<Asia1_Subscription__c>();
         //END D-3332 11/16/15 RReyes
         if(Trigger.isInsert || Trigger.isUpdate) {
+            System.debug('calling trigger isInsert/Update');
             for(SObject newSpc : trigger.new){
+                System.debug('calling trigger new');
                 Zuora__SubscriptionProductCharge__c spc = (Zuora__SubscriptionProductCharge__c)newSpc;
                 //Start : 23/06/2015 To populate data into Publication Charge : Arockia Presilda
                 if(spcMap.containsKey(spc.Zuora__Subscription__c)) {            
@@ -250,10 +252,21 @@ zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__SKU__c FROM zqu__ProductRatePlanCh
             
         }
         //END D-3332 11/16/15 RReyes    
+        
     }
 
     public void bulkAfter() {
-                                                                              
+        Set<Id> subIdSet = new Set<Id>();
+        
+        if(trigger.isInsert || trigger.isUpdate){
+            for(SObject newSpc : trigger.new){
+                Zuora__SubscriptionProductCharge__c spc = (Zuora__SubscriptionProductCharge__c)newSpc;
+                subIdSet.add(spc.Zuora__Subscription__c);
+            }
+                       
+            System.debug('Calling SPC Future method');
+            SubscriptionProductChargeTriggerFuture.updateSubscriptionChargePublication(subIdSet);
+        }                                                                             
     }            
           
     public void beforeInsert(SObject so) {

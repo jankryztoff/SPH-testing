@@ -1,0 +1,11 @@
+Hi, 
+
+The status of the defect {!Defect__c.Name} has change to "{!Defect__c.Status__c}". 
+Please make a necessary action. 
+
+{!Defect__c.Detailed_Description__c} 
+
+You can contact your leads for further inquiries. 
+
+Regards, 
+UAT Triage Team

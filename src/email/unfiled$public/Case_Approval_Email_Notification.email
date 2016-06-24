@@ -1,0 +1,11 @@
+*** Approval Request Alert ***
+
+Below case is pending for your approval :
+
+Case : {!Case.CaseNumber}
+Owner : {!Case.OwnerFullName}
+Amount: {!Case.Goodwill_Amount_Newspaper__c}
+Case Type : {!Case.RecordType}
+Date Created : {!Case.CreatedDate}
+
+Please click on link to access the case : {!Case.Link}

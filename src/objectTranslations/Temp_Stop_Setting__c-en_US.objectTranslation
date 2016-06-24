@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Temp Stop Setting</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Temp Stop Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- TemStop Max Days --></label>
+        <name>TemStop_Max_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- TemStop Max Issues --></label>
+        <name>TemStop_Max_Issues__c</name>
+    </fields>
+    <fields>
+        <label><!-- TemStop Min Days --></label>
+        <name>TemStop_Min_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- TemStop Min Issues --></label>
+        <name>TemStop_Min_Issues__c</name>
+    </fields>
+    <fields>
+        <label><!-- TempStop Min Gap (Days) --></label>
+        <name>TempStop_Min_Gap_Days__c</name>
+    </fields>
+    <layouts>
+        <layout>Temp Stop Setting Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

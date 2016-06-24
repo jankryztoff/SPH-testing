@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Asia1_Subscription</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Asia1_Subscriptions</value>
+    </caseValues>
+    <fields>
+        <label><!-- ASIAONE Subscription Legacy Id --></label>
+        <name>ASIAONE_Subscription_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Asia1 --></label>
+        <name>Asia1__c</name>
+        <relationshipLabel><!-- Asia1_Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Concurrent --></label>
+        <name>Concurrent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Line Item --></label>
+        <name>Order_Line_Item__c</name>
+        <relationshipLabel><!-- Asia1_Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reason for Failure --></label>
+        <name>Reason_for_Failure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Access Flag --></label>
+        <name>Service_Access_Flag__c</name>
+        <relationshipLabel><!-- Asia1_Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enabled</masterLabel>
+            <translation><!-- Enabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error Creation</masterLabel>
+            <translation><!-- Error Creation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service Activation Error</masterLabel>
+            <translation><!-- Service Activation Error --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription History --></label>
+        <name>Subscription_History__c</name>
+        <relationshipLabel><!-- Asia1_Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Asia1_Subscriptions --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Asia1_Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Asia1_Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

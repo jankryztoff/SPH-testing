@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Subscription Temp Stop</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Subscription Temp Stops</value>
+    </caseValues>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Temp Stop Legacy Id --></label>
+        <name>Subscription_Temp_Stop_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Subscription Temp Stops --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop --></label>
+        <name>Temp_Stop__c</name>
+        <relationshipLabel><!-- Subscription Temp Stops --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>MIG - Subscription Temp Stop Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Subscription Temp Stop Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Restart Date must not be greater than or equal to Subscription End Date --></errorMessage>
+        <name>Restart_Date</name>
+    </validationRules>
+</CustomObjectTranslation>

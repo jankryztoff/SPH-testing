@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Historical Case Comment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Historical Case Comments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Case Comment Legacy ID --></label>
+        <name>Case_Comment_Legacy_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- CommentBody --></label>
+        <name>CommentBody__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsDeleted --></label>
+        <name>IsDeleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsPublished --></label>
+        <name>IsPublished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ParentId --></label>
+        <name>ParentId__c</name>
+        <relationshipLabel><!-- Historical Case Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remarks Date --></label>
+        <name>Remarks_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Route From --></label>
+        <name>Route_From__c</name>
+    </fields>
+    <layouts>
+        <layout>MIG - Historcal Case Comment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

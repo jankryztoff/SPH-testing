@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_VSS_CreditDebit</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_VSS_CreditDebits</value>
+    </caseValues>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- BT_CO_VSS_CreditDebits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Fee --></label>
+        <name>Commission__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copies --></label>
+        <name>Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit/Debit Indicator --></label>
+        <name>Credit_Debit__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Debit Note No --></label>
+        <name>Debit_Note_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Fee --></label>
+        <name>Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- FreeGift/Sponsor Indicator --></label>
+        <name>FreeGift_Sponsor_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- From --></label>
+        <name>From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grand Total --></label>
+        <name>Grand_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Handling Fee --></label>
+        <name>Handling_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- House Block No --></label>
+        <name>House_Block_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insertion Fee --></label>
+        <name>Insertion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Id --></label>
+        <name>Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level Number --></label>
+        <name>Level_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual Credit/Debit Amount --></label>
+        <name>Manual_Amt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual VDC reason code --></label>
+        <name>Manual_VDC_reason_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit / Debit Note Number --></label>
+        <name>Note_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination Fee --></label>
+        <name>Pagination__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Posting Date --></label>
+        <name>Posting_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Contact --></label>
+        <name>Recipient_Contact__c</name>
+        <relationshipLabel><!-- BT_CO_VSS_CreditDebits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipient Name --></label>
+        <name>Recipient_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>Street_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Total --></label>
+        <name>Sub_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- BT_CO_VSS_CreditDebits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- To --></label>
+        <name>To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Number --></label>
+        <name>Unit_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>BT_CO_VSS_CreditDebit Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

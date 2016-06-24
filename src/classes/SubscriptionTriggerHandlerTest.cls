@@ -5381,7 +5381,7 @@ Boolean expectedExceptionThrown =  e.getMessage().contains('Vendor cannot be emp
             ProfileId = profile.Id,            
             //ProfileId = (Id) ConstantsSLB.getKeyId('Standard_User User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standard_assignCS@test.com'
         );
         //System.runAs(u) {
               
@@ -5594,7 +5594,7 @@ Boolean expectedExceptionThrown =  e.getMessage().contains('Vendor cannot be emp
             /*Subscription_Vendor__c SubVend = TestDataFactory.createSubscriptionVendor(1)[0];          
             insert SubVend; */
             Test.startTest();
-            System.runAs(u){
+            //System.runAs(u){
             
             insert sub;
             
@@ -5656,7 +5656,7 @@ Boolean expectedExceptionThrown =  e.getMessage().contains('Vendor cannot be emp
             csc.Case__c = caseSub[0].Id; 
             insert csc; 
             
-          }
+          //}
                
             Test.stopTest();
 

@@ -11,7 +11,8 @@ private class RenewalControllerTest {
     static void setupData() {
         insert CustomSettingsDataFactory.createKey_Id();
         insert CustomSettingsDataFactory.createPlannerSched(); 
-        insert CustomSettingsDataFactory.createOther(); 
+        insert CustomSettingsDataFactory.createOther();
+        insert CustomSettingsDataFactory.createRenewal_Notifications(); 
     }  
     
      static testmethod void magazineRenewal() {
@@ -33,7 +34,12 @@ private class RenewalControllerTest {
         
         Account venAccount = TestDataFactory.createAccount(1, 'Vendor')[0];
         Package__c pack = TestDataFactory.createPackage(1)[0];
-        
+        pack.Subscription_Period_1__c = '3';
+        pack.Subscription_Period__c = '3';
+        pack.Same_Pck_Renewal_Mag_1_Yr_Base__c = true;
+        pack.Same_Pck_Renewal_Mag_1_Yr_Disc__c = true;
+        pack.Same_Pck_Renewal_Mag_2_Yr_Base__c = true;
+        pack.Same_Pck_Renewal_Mag_2_Yr_Disc__c = true;
         Subscription_Vendor__c subsVen = TestDataFactory.createSubscriptionVendor(1)[0];
         insert new List<sObject>{venAccount, pack, subsVen};           
     List<RecordType> casrt = [SELECT Id, Name FROM RecordType WHERE SobjectType = 'Case' AND Name = 'Renewal of Subscription'];            
@@ -78,7 +84,7 @@ private class RenewalControllerTest {
         
         Case cas = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
             cas.Order__c = orderRec.Id;
-      cas.recordtypeid = casrt[0].Id;
+            cas.recordtypeid = casrt[0].Id;
             insert cas;
             
         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
@@ -126,13 +132,16 @@ private class RenewalControllerTest {
             sub.Zuora__Status__c = 'Active';
             sub.Order_Line_Item_Number_1__c = orderline.id;
             sub.Subscription_Type__c = 'Delivery';
+            sub.Zuora__SubscriptionStartDate__c = date.today() - 42;
+            sub.Term_Length1__c = '6';
+            sub.Term_Length__c = 6;
             sub.Zuora__SubscriptionEndDate__c = date.today();          
             sub.Frequency_1__c = 'Mon - Fri';
-            sub.Number_of_Copies__c = 3;  
+            sub.Number_of_Copies__c = 3; 
+            sub.Number_of_Copies1__c = '3';         
             sub.Zuora__CustomerAccount__c = billAcc.id; //jurna added   
             //insert sub; 
-            
-        Test.startTest();            
+                        
         
         /*************************** Creation of Test User ******************************/
         //User testUser = TestDataFactory.prepareTestusers();
@@ -141,7 +150,7 @@ private class RenewalControllerTest {
              //This creates a new Heap block Dedicated to your test Run of actual lines in Base Class.
             insert sub;
             
-            Letter_Print_Request__c letterPrintRequest = new Letter_Print_Request__c();
+         Letter_Print_Request__c letterPrintRequest = new Letter_Print_Request__c();
          letterPrintRequest.Billing_Account__c = billAcc.Id;
          letterPrintRequest.Type__c = 'Master';
          letterPrintRequest.Letter_Type__c = SP_GenerateLetterPrintBatch.firstRenewalReminderForMagazine;
@@ -149,6 +158,7 @@ private class RenewalControllerTest {
          //letterPrintRequest.Record_Id__c = 'Email';
          letterPrintRequest.Record_Id__c = String.ValueOf(sub.Id);
          letterPrintRequest.Language_Medium__c = 'C';
+         Test.startTest();
          insert letterPrintRequest;
          
          Letter_Print_Request__c letterPrintRequest2 = new Letter_Print_Request__c();
@@ -161,7 +171,7 @@ private class RenewalControllerTest {
          letterPrintRequest2.Record_Id__c = 'Email';
          letterPrintRequest2.Record_Id__c = String.ValueOf(sub.Id);
          insert letterPrintRequest2;
-         
+                         
          letterPrintRequest2.Parent_Letter_Print_Request__c = letterPrintRequest.Id;
          letterPrintRequest.Parent_Letter_Print_Request__c = letterPrintRequest2.Id;
          update letterPrintRequest2;
@@ -171,10 +181,12 @@ private class RenewalControllerTest {
             Test.setCurrentPage(pageRef);
             ApexPages.currentPage().getParameters().put('id',letterPrintRequest.id); //add this statement if Base Class contains  "ApexPages.currentPage().getParameters().put"
             RenewalController controller = new RenewalController();
-           try{controller.setFields();
-            }catch(Exception e){}
+            //try{
+               
+            //}catch(Exception e){}
             controller.initializeMZ();
             controller.initializeNP();
+            ////controller.setFields();
             /*try
             {
                 controller.initializeCHNP();
@@ -228,6 +240,13 @@ private class RenewalControllerTest {
         
         Account venAccount = TestDataFactory.createAccount(1, 'Vendor')[0];
         Package__c pack = TestDataFactory.createPackage(1)[0];
+        pack.Subscription_Period_1__c = '3';
+        pack.Subscription_Period__c = '3';
+        pack.Same_Pck_Renewal_Mag_1_Yr_Base__c = true;
+        pack.Same_Pck_Renewal_Mag_1_Yr_Disc__c = true;
+        pack.Same_Pck_Renewal_Mag_2_Yr_Base__c = true;
+        pack.Same_Pck_Renewal_Mag_2_Yr_Disc__c = true;
+        
         Subscription_Vendor__c subsVen = TestDataFactory.createSubscriptionVendor(1)[0];
         insert new List<sObject>{venAccount, pack, subsVen};
     List<RecordType> casrt = [SELECT Id, Name FROM RecordType WHERE SobjectType = 'Case' AND Name = 'Renewal of Subscription'];   
@@ -272,7 +291,7 @@ private class RenewalControllerTest {
         
         Case cas = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
             cas.Order__c = orderRec.Id;
-           cas.recordtypeid = casrt[0].Id;        
+            cas.recordtypeid = casrt[0].Id;        
             insert cas;
             
         Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
@@ -321,9 +340,13 @@ private class RenewalControllerTest {
             sub.Zuora__Status__c = 'Active';
             sub.Order_Line_Item_Number_1__c = orderline.id;
             sub.Subscription_Type__c = 'Delivery';
+            sub.Zuora__SubscriptionStartDate__c = date.today() - 42;
+            sub.Term_Length1__c = '6';
+            sub.Term_Length__c = 6;
             sub.Zuora__SubscriptionEndDate__c = date.today();          
             sub.Frequency_1__c = 'Mon - Fri';
             sub.Number_of_Copies__c = 3;  
+            sub.Number_of_Copies1__c = '3';
             sub.Zuora__CustomerAccount__c = billAcc.id; //jurna added   
             //insert sub; 
         
@@ -357,24 +380,25 @@ private class RenewalControllerTest {
          letterPrintRequest2.Status_Email__c = 'Tagged';
          letterPrintRequest2.Status__c = 'Tagged';
          letterPrintRequest2.Parent_Letter_Print_Request__c = letterPrintRequest.Id;
-         //letterPrintRequest2.Record_Id__c = 'Email';
+         letterPrintRequest2.Record_Id__c = 'Email';
          letterPrintRequest2.Record_Id__c = String.ValueOf(sub.Id);
          insert letterPrintRequest2;
          
          letterPrintRequest2.Parent_Letter_Print_Request__c = letterPrintRequest.Id;
          letterPrintRequest.Parent_Letter_Print_Request__c = letterPrintRequest2.Id;
          update letterPrintRequest2;
-         update letterPrintRequest;
+         //update letterPrintRequest;
           
             PageReference pageRef = Page.LP_MagazineRenewal;
             Test.setCurrentPage(pageRef);
-            ApexPages.currentPage().getParameters().put('id',letterPrintRequest2.id); //add this statement if Base Class contains  "ApexPages.currentPage().getParameters().put"
+            ApexPages.currentPage().getParameters().put('id',letterPrintRequest.id); //add this statement if Base Class contains  "ApexPages.currentPage().getParameters().put"
             RenewalController controller = new RenewalController();
-            //controller.setFields();
+            
             //controller.initializeMZ();
             //controller.initializeNP();
             controller.initializeCHNP();
             controller.initializeCHMZ();
+            //controller.setFields();
             //karen 04.13.15 compile error fixed
             //controller.initialize();
             
@@ -547,6 +571,11 @@ private class RenewalControllerTest {
             sub.Frequency_1__c = 'Default';
             sub.Zuora__CustomerAccount__c = billAcc.id;
             sub.Zuora__SubscriptionEndDate__c = date.today();
+            sub.Zuora__SubscriptionStartDate__c = date.today() - 42;
+            sub.Term_Length1__c = '6';
+            sub.Term_Length__c = 6;
+            sub.Number_of_Copies__c = 3;
+            sub.Number_of_Copies1__c = '3';
             Test.startTest();
           insert sub; 
               RenewalController cont = new RenewalController();

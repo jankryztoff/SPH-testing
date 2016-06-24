@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Asia1_Subscription__c$Id</field>
+    </columns>
+    <columns>
+        <field>Asia1_Subscription__c$Name</field>
+    </columns>
+    <columns>
+        <field>Asia1_Subscription__c$ASIAONE_Subscription_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Asia1_Subscription__c$Service_Access_Flag__c</field>
+    </columns>
+    <columns>
+        <field>Asia1_Subscription__c$LastModifiedDate</field>
+    </columns>
+    <columns>
+        <field>Asia1_Subscription__c$LastModifiedBy</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Asia1_Subscription__c$ASIAONE_Subscription_Legacy_Id__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Asia1_Subscription__c$LastModifiedDate</column>
+            <operator>lessThan</operator>
+            <value>8/1/2015 12:00 AM</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>UD-1885 Asia1_Sub To Delete</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Asia1_Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Asia1_Subscription__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

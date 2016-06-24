@@ -1,0 +1,33 @@
+<apex:page controller="ADM_PubCopiesController" title="Admin Tool - Pub Copies Calculator" applyHtmlTag="true" sidebar="false" docType="html-5.0">
+
+    <apex:sectionHeader title="Admin Tool" subtitle="Pub Copies Calculator"/>
+    <apex:form >
+        <apex:pageBlock title="Enter your search criteria:" mode="edit">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!calculateCopies}" value="Calculate" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:input value="{!startDate}" id="startDT" type="date" label="Start Date (dd/mm/yyyy):"/>
+                <apex:input value="{!endDate}" id="endDT" type="date" label="End Date (dd/mm/yyyy):"/>
+                <apex:input value="{!subName}" id="subName" type="text" label="Subscription Name:"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Result:" mode="view" rendered="{!lstPubCopies.size > 0}">
+            <table border = "1" style="width:100%; border: 1px solid black; border-collapse: collapse;">
+              <tr>
+                <apex:repeat value="{!setHeaders}" var="header">
+                    <th>{!header}</th>
+                </apex:repeat>
+              </tr>
+            <apex:repeat value="{!lstPubCopies}" var="pubCopy">
+             <tr>
+                <td>{!pubCopy.pubCode}</td>
+                <apex:repeat value="{!pubCopy.lstMthCopies}" var="mthCopy">
+                    <td>{!mthCopy.intCopies}</td>
+                </apex:repeat> 
+              </tr>
+            </apex:repeat> 
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

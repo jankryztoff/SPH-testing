@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Zuora__CustomerAccount__c.Zuora__PaymentMethod_Type__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Zuora__CustomerAccount__c.Other_PaymentMethod__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Zuora__CustomerAccount__c.Billing_Type__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <description>List of Billing Accounts with Active Monthly Recurring Subscriptions</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Zuora__Status__c</column>
+            <operator>equals</operator>
+            <value>Active</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FK_$Zuora__CustomerAccount__c.Billing_Type__c</column>
+            <operator>notEqual</operator>
+            <value>Full Prepaid</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Zuora__SubscriptionEndDate__c</column>
+            <operator>greaterOrEqual</operator>
+            <value>12/1/2015</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$Zuora__CustomerAccount__c.Zuora__Batch__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$Zuora__CustomerAccount__c.Zuora__AccountNumber__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Accts with Active Monthly Recurring Subs</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Zuora__CustomerAccount__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>FK_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

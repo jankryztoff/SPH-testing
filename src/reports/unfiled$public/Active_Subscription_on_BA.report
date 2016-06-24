@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Zuora__Account__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Zuora__CustomerAccount__c.Zuora__AccountNumber__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Is_Active__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>FK_$Zuora__CustomerAccount__c.Zuora__AccountNumber__c</column>
+            <operator>equals</operator>
+            <value>BA00718098,BA00718094,BA00718092,BA00631910,BA00617216,BA00718221,BA00695113,BA00473349,BA00684031,BA00490495,BA00492190,BA00498469,BA00678001,BA00552526,BA00675097,BA00696436,BA00701824,BA00619445,BA00469846,BA00683827,BA00684150,BA00643483,BA00705413,BA00611038,BA00645037,BA00602647,BA00617281,BA00622380,BA00718065,BA00718068,BA00718072,BA00718105</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Active Subscription on BA</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Zuora__CustomerAccount__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Zuora__ContractAcceptanceDate__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,7 @@
+Hi, 
+
+An email has been received from customer for closed case {!Case.CaseNumber}. However the owner of the case is inactive. Please click on the link below to access the email.
+
+{!Case.Link} 
+
+Thanks

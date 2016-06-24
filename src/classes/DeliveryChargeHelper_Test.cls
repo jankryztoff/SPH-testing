@@ -6,7 +6,7 @@
  * @description: Test Class for DeliveryChargeHelper
  */
 
-@isTest
+@isTest(seeAllData=true)
 global class DeliveryChargeHelper_Test
 {
     /*
@@ -27,7 +27,7 @@ global class DeliveryChargeHelper_Test
     static Set<Id> idSet;
     
     //isHigherInHierarchyTest
-    @isTest(seeAllData= true)
+    @isTest
     static void test01(){
         
         setAllData();
@@ -48,7 +48,7 @@ global class DeliveryChargeHelper_Test
     }
     
     //isSubOnContractTest
-    @isTest(seeAllData= true)
+    @isTest
     static void test02() {
 
         setAllData();
@@ -77,7 +77,7 @@ global class DeliveryChargeHelper_Test
      * 
 */
 
-    @isTest(seeAllData= true)
+    @isTest
     static void test03() {
         
         setAllData();
@@ -104,7 +104,7 @@ global class DeliveryChargeHelper_Test
     }
     
     //updateDelSubsActiveFlagTest
-    @isTest(seeAllData= true)
+    @isTest
     static void test04() {
         
         setAllData();
@@ -135,7 +135,7 @@ global class DeliveryChargeHelper_Test
     }
     
     //updateAllSubsActiveFlagTest
-    @isTest(seeAllData= true)
+    @isTest
     static void test05() {
 
         setAllData();
@@ -152,7 +152,7 @@ global class DeliveryChargeHelper_Test
     }
     
     //createCODCAmendmentReqsTest1
-    @isTest(seeAllData= true)
+    @isTest
     static void test06(){
         
         setAllData();
@@ -174,7 +174,7 @@ global class DeliveryChargeHelper_Test
     }
     
     //createCODCAmendmentReqsTest2
-    @isTest(seeAllData= true)
+    @isTest
     static void test07() {
 
         setAllData();
@@ -298,7 +298,7 @@ global class DeliveryChargeHelper_Test
         zSubs[1].Sponsor_1__c = true;
         zSubs[1].Name = 'Subscription 2';
         zSubs[1].Billing_Type__c = 'Recurring Postpaid';
-        zSubs[0].Contract_End_Date_1__c = date.today()+30;//
+        zSubs[1].Contract_End_Date_1__c = date.today()+30;//
                 
         zSubs[2].Zuora__Account__c = acc.id;
         zSubs[2].Order_Line_Item_Number__c = oli.Id;
@@ -325,7 +325,7 @@ global class DeliveryChargeHelper_Test
         //zSubs[2].Subscription_Type_1__c = 'Delivery';
         zSubs[2].Subscription_Type__c = 'Delivery';
         zSubs[2].Subscription_End_Date__c = String.valueof(system.today());
-        zSubs[0].Contract_End_Date_1__c = date.today()+30;//
+        zSubs[2].Contract_End_Date_1__c = date.today()+30;//
         
         zSubs[3].Zuora__Account__c = acc.id;
         zSubs[3].Order_Line_Item_Number__c = oli.Id;
@@ -351,7 +351,7 @@ global class DeliveryChargeHelper_Test
         zSubs[3].Subscription_Type__c = 'Delivery';
         zSubs[3].Subscription_End_Date__c = String.valueof(system.today());
         zSubs[3].Is_Active__c = true;
-        zSubs[0].Contract_End_Date_1__c = date.today()+30;//
+        zSubs[3].Contract_End_Date_1__c = date.today()+30;//
         
         sObjectListMap.put('Zuora__SubscriptionList__c0', zSubs);     
         sObjectMap.put('Zuora__Subscription__c0', zSubs[0]);

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Publication Daily Issue Data</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Publication Daily Issue Data</value>
+    </caseValues>
+    <fields>
+        <label><!-- Consolidation Date --></label>
+        <name>Consolidation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Daily Page Value --></label>
+        <name>Daily_Page_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Closed Date --></label>
+        <name>Order_Closed_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Closed Indicator --></label>
+        <name>Order_Closed_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination --></label>
+        <name>Pagination__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Issue Date --></label>
+        <name>Publication_Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Issue Number --></label>
+        <name>Publication_Issue_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Publication Daily Issue Data --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Publication Daily Issue Data Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

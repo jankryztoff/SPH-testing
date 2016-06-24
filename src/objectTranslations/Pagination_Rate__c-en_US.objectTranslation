@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Pagination Rate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Pagination Rates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination Range - LL --></label>
+        <name>Pagination_Range_LL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination Range - UL --></label>
+        <name>Pagination_Range_UL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Paginaton Rate --></label>
+        <name>Paginaton_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Pagination Rates --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Pagination Rate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

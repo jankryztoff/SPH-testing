@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>this is use for the setup of the Report Scheduler</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Attachment_File_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>it should have end with its extension name like report.csv or report.xls</inlineHelpText>
+        <label>Attachment File Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Body__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Body</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Recipients__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Recipients</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Subject</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Report ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Report Scheduler</label>
+    <visibility>Public</visibility>
+</CustomObject>

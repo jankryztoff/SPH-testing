@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Billing_Summary__c.Transaction_Type__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Copies__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Out_of_Scope_GST__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Zero_Rated_GST__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Standard_Rated_GST__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Subscription_AMT_Before_GST__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.GST_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Billing_Summary__c.Subscription_AMT_After_GST__c</field>
+    </columns>
+    <description>Billing Summary Report By Publication</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Billing_Summary__c.Publication__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Billing Summary Report By Publication</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Billing_Summary__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Billing_Summary__c.Subscription_End_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

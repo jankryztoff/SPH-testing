@@ -1,0 +1,17 @@
+Dear {!Asia1__c.Account_Name__c},
+
+Thank you for registering with SPH.
+
+Your account details are as follows :
+User Id: {!Asia1__c.User_ID_LDAP_ID__c} 
+
+Your default password is " {!Asia1__c.Password__c} " if you have not created one.
+
+To complete your registration, please activate your account by clicking on the below link. Alternatively, you may copy and paste the link on your web browser to activate your account:
+
+{!$Label.Asia1_Activation_Page}?id={!Asia1__c.Id}
+
+Please note that you must complete the account activation process to read the digital publication.You will automatically be included in the SPH Rewards Programme - our way of saying thank you for subscribing directly with us. Login with the same username and password to start redeeming your rewards at www.sphrewards.com and experience dining delights, retail indulgence, wellness therapy, entertainment and getaways specially lined up for you.
+
+
+This is a computer generated email. Please do not reply to it.

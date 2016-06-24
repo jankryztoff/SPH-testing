@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Invoice History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Invoice Histories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Legacy ID --></label>
+        <name>Account_Legacy_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Number --></label>
+        <name>Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Approval Code --></label>
+        <name>Bank_Approval_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Transaction Date --></label>
+        <name>Bank_Transaction_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copies --></label>
+        <name>Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By Id --></label>
+        <name>Created_By_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Fee --></label>
+        <name>Delivery_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- From Date --></label>
+        <name>From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Legacy Id --></label>
+        <name>Invoice_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Number --></label>
+        <name>Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By Id --></label>
+        <name>Legacy_Created_By_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By Id --></label>
+        <name>Legacy_Update_By_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Outstanding Amount --></label>
+        <name>Outstanding_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Number --></label>
+        <name>Payment_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Date --></label>
+        <name>Processed_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pub Code --></label>
+        <name>Pub_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recurring Mode --></label>
+        <name>Recurring_Mode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber --></label>
+        <name>Subscriber__c</name>
+        <relationshipLabel><!-- Invoice Histories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription Amount --></label>
+        <name>Subscription_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Date --></label>
+        <name>To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Date --></label>
+        <name>Transaction_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Type --></label>
+        <name>Transaction_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update By Id --></label>
+        <name>Update_By_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Updated Date --></label>
+        <name>Updated_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Invoice History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Invoice History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

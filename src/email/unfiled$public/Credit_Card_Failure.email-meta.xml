@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Credit Card Failure</name>
+    <style>none</style>
+    <subject>Credit Card Failure</subject>
+    <textOnly>{{Today}}
+
+{{Contact.FirstName}} {{Contact.LastName}}
+
+{{Contact.MailingAddress}}
+
+{{Contact.FirstName}} {{Contact.LastName}}
+
+Subscription		  : {{Publication__c.Name}}
+Description		  : SPH {{Zuora__Subscription__c.Zuora__SubscriptionStartDate__c}} {{Publication__c.Publication_Code__c}} SUB
+Account No		  : {{Zuora__CustomerAccount__c.Zuora__AccountNumber__c}}
+Amount			  : {{External_Payment__c.Payment_amount__c}}
+Declined Credit Card  	  : {{Zuora__PaymentMethod__c.Zuora__CreditCardMaskNumber__c}}
+Card Expiry Date	  : {{External_Payment__c.Expiration_Date__c}}
+
+Thank you for supporting our publication.
+
+We wish to inform that your credit card deduction was unsuccessful on {{CC FAILURE DATE}}.
+
+Please advise us of any changes in your credit card number and the expiry date by completing the form
+below and mail it back to us in the attached self-addressed envelope or fax in to us at 6744 4875.
+To ensure an undisrupted delivery of your subscription, your prompt response by {{Today+7}} is greatly
+appreciated. Please also be informed that early termination of subscription contract(s) will incur
+administrative and other processing charges whenever applicable.
+
+For further clarification, please contact our Customer Service officers at 6388 3838 or fax in to us at (65) 6744 4875.
+Thank you
+
+(This is a computer generated letter and does not require any signature)
+
+Please fill in this portion and fax back to us at 6744 4875 by {{Today+7}}
+
+{{Contact.FirstName}} {{Contact.LastName}}
+
+{{Contact.MailingAddress}}
+{{Publication__c.Name}}
+Account No: {{Zuora__CustomerAccount__c.Zuora__AccountNumber__c}}
+Description: SPH {{Zuora__Subscription__c.Zuora__SubscriptionStartDate__c}} {{Publication__c.Publication_Code__c}} SUB
+Declined Credit Card  	  : {{Zuora__PaymentMethod__c.Zuora__CreditCardMaskNumber__c}}
+
+
+
+
+Please charge to my new credit card as indicated below:
+
+Credit Card no. (Visa / Master): ______________________ Expiry Date : ___________________
+
+____________________ 													 ____________________
+	Signature   																Date
+
+
+To allow us to serve you better, please update your contact details if there are any changes.
+Tel: (H) 62463809		(O) 		(Mobile) 97267213</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Case Vendor Subscription</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Case Vendor Subscriptions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Case Vendor Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- Case Vendor Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CASE Vendor Subscription Legacy Id --></label>
+        <name>CASE_Vendor_Subscription_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Record Type --></label>
+        <name>Case_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Replacement Required --></label>
+        <name>Case_Replacement_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Within Cir Schedule --></label>
+        <name>Case_Within_Cir_Schedule__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Subscriptions (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Complaint Copies --></label>
+        <name>Complaint_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint From --></label>
+        <name>Complaint_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint To --></label>
+        <name>Complaint_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Copies --></label>
+        <name>Credit_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount --></label>
+        <name>Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Copies --></label>
+        <name>Goodwill_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issue No. --></label>
+        <name>Issue_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month --></label>
+        <name>Month__c</name>
+        <picklistValues>
+            <masterLabel>April</masterLabel>
+            <translation><!-- April --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>August</masterLabel>
+            <translation><!-- August --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>December</masterLabel>
+            <translation><!-- December --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>February</masterLabel>
+            <translation><!-- February --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>January</masterLabel>
+            <translation><!-- January --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>July</masterLabel>
+            <translation><!-- July --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>June</masterLabel>
+            <translation><!-- June --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>March</masterLabel>
+            <translation><!-- March --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May</masterLabel>
+            <translation><!-- May --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>November</masterLabel>
+            <translation><!-- November --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>October</masterLabel>
+            <translation><!-- October --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>September</masterLabel>
+            <translation><!-- September --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Replace From --></label>
+        <name>Replace_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replace To --></label>
+        <name>Replace_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replacement Copies --></label>
+        <name>Replacement_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replacement Required --></label>
+        <name>Replacement_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Status --></label>
+        <name>Sub_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Start Date --></label>
+        <name>Subscription_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) --></label>
+        <name>Subscription_Vendor__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Debit --></label>
+        <name>Vendor_Debit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <layouts>
+        <layout>Case Vendor Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Complaint Dates cannot be greater than today --></errorMessage>
+        <name>Complaint_Dates_cannot_be_future_dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CSO Admin cant edit subscription. Please contact CSO. --></errorMessage>
+        <name>Complaint_SubCantBeEditedByCSOAdmin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Copies cannot be greater than Complaint Copies --></errorMessage>
+        <name>Credit_Copies_cannot_be_negative</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement From should be within Complaint Period. --></errorMessage>
+        <name>ReplacementFromDateWithinComplaintPeriod</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue From Date should not be older than  14 days. --></errorMessage>
+        <name>ReplacementFromNotGreaterThan14</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementFromfieldRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Dates are required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementIssueDateFieldsRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Required checkbox is unchecked, Replacement Copies should be blank or zero. --></errorMessage>
+        <name>ReplacementReqReplacementCopies</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement To should be within Complaint Period --></errorMessage>
+        <name>ReplacementToDateIsNotToday</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementTofieldRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- User cannot update subscription. --></errorMessage>
+        <name>SubscriptionEdit</name>
+    </validationRules>
+</CustomObjectTranslation>

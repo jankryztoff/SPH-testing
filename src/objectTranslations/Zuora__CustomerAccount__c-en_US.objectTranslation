@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>MIG - Customer Account Layout</layout>
+        <sections>
+            <label><!-- ARMS Related Information --></label>
+            <section>ARMS Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address --></label>
+            <section>Address</section>
+        </sections>
+        <sections>
+            <label><!-- Billing and Payment Terms --></label>
+            <section>Billing and Payment Terms</section>
+        </sections>
+        <sections>
+            <label><!-- Check Related Information --></label>
+            <section>Check Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- GIRO Account Information --></label>
+            <section>GIRO Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Key Metrics --></label>
+            <section>Key Metrics</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

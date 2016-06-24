@@ -1,0 +1,95 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Today}}</font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div><font face="Verdana, Helvetica, sans-serif" size="2">{{Contact.MailingAddress}}</font></div>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<font style="color: rgb(0, 0, 0);" face="Verdana, Helvetica, sans-serif" size="2">Dear&nbsp;{{Contact.FirstName}}&nbsp;{{Contact.LastName}},</font><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div style="color: rgb(0, 0, 0);"><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify; border: none;"><font face="Verdana, Helvetica, sans-serif" size="2"><span style="color: rgb(0, 0, 0); line-height: 12pt;">Thank you for
+subscribing to&nbsp;</span><span style="line-height: 16px;">{{Package__c.Name}}</span><span style="color: rgb(0, 0, 0); line-height: 12pt;">. Your subscription details are as follows:</span></font></p><table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="594" style="color: rgb(0, 0, 0); border-collapse: collapse; border: none;">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.0pt">
+  <td width="252" valign="top" style="width:189.0pt;border:solid black 1.0pt;
+  mso-border-alt:solid black .5pt;padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+  line-height:12.0pt;border:none;mso-padding-alt:0in 0in 0in 0in"><font face="Verdana, Helvetica, sans-serif" size="2"><b>SPH Order Number</b><o:p></o:p></font></p>
+  </td>
+  <td width="342" valign="top" style="width:256.5pt;border:solid black 1.0pt;
+  border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt;
+  padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align: justify; border: none;"><span style="line-height: 16px;"><font face="Verdana, Helvetica, sans-serif" size="2">{{Order__c.Name}}</font></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:8.0pt">
+  <td width="252" valign="top" style="width:189.0pt;border:solid black 1.0pt;
+  border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt;
+  padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+  line-height:12.0pt;border:none;mso-padding-alt:0in 0in 0in 0in"><font face="Verdana, Helvetica, sans-serif" size="2"><b>Monthly
+  Subscription Fee</b><o:p></o:p></font></p>
+  </td>
+  <td width="342" valign="top" style="width:256.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt;
+  mso-border-alt:solid black .5pt;padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align: justify; border: none;"><span style="line-height: 16px;"><font face="Verdana, Helvetica, sans-serif" size="2">{{Order__c.Total_Monthly_Recurring_Charge__c}}</font></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:8.0pt">
+  <td width="252" valign="top" style="width:189.0pt;border:solid black 1.0pt;
+  border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt;
+  padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+  line-height:12.0pt;border:none;mso-padding-alt:0in 0in 0in 0in"><font face="Verdana, Helvetica, sans-serif" size="2"><b>Monthly Delivery
+  Fee</b><o:p></o:p></font></p>
+  </td>
+  <td width="342" valign="top" style="width:256.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt;
+  mso-border-alt:solid black .5pt;padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align: justify; border: none;"><font face="Verdana, Helvetica, sans-serif" size="2"><span style="line-height: 16px;">{{Order__c.Monthly_Delivery_Charge_for_Full_Payment__c}}</span></font></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;mso-yfti-lastrow:yes;height:8.0pt">
+  <td width="252" valign="top" style="width:189.0pt;border:solid black 1.0pt;
+  border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt;
+  padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+  line-height:12.0pt;border:none;mso-padding-alt:0in 0in 0in 0in"><font face="Verdana, Helvetica, sans-serif" size="2"><b>Contract Period</b><o:p></o:p></font></p>
+  </td>
+  <td width="342" valign="top" style="width:256.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt;
+  mso-border-alt:solid black .5pt;padding:4.0pt 4.0pt 4.0pt 4.0pt;height:8.0pt">
+  <p class="MsoNormal" style="text-align: justify; border: none;"><font size="2" face="Verdana, Helvetica, sans-serif"><span style="line-height: 16px;">{{Promotion__c.Contract_Period__c}}</span></font></p></td></tr></tbody></table><div><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 22.5pt; text-align: justify; text-indent: -22.5pt; border: none;"><!--[if !supportLists]--><font face="Verdana, Helvetica, sans-serif" size="2"><span style="color: rgb(0, 0, 0);">1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><!--[endif]--><span style="color: rgb(0, 0, 0);">For collection of the</span><span class="MsoCommentReference" style="color: rgb(0, 0, 0);">&nbsp;</span>{{Gift__c.Name}}<span style="color: rgb(0, 0, 0); text-indent: -22.5pt;">, please
+produce this original letter</span><span style="color: rgb(0, 0, 0); text-indent: -22.5pt;">
+and</span><span style="color: rgb(0, 0, 0); text-indent: -22.5pt;"> your original NRIC (for
+verification)</span><span style="color: rgb(0, 0, 0); text-indent: -22.5pt;"> </span><span style="color: rgb(0, 0, 0); text-indent: -22.5pt;">in person to collect your gift at the below address</span><span style="color: rgb(0, 0, 0); text-indent: -22.5pt;">es</span></font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 22.5pt; text-align: justify; text-indent: -22.5pt; border: none;"><span style="text-align: left; text-indent: -22.5pt;"><font face="Verdana, Helvetica, sans-serif" size="2">{{Promotion_Gift__c.Redemption_Letter_Details__c}}</font></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 22.5pt; text-align: justify; text-indent: -22.5pt; border: none;"><!--[if !supportLists]--><font face="Verdana, Helvetica, sans-serif" size="2">6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--[endif]-->Please complete your credit card details for
+billing purposes:</font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 22.5pt; text-align: justify; text-indent: -22.5pt; border: none;"><font face="Verdana, Helvetica, sans-serif" size="2">Credit Card Type: MasterCard / Visa / Amex</font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 22.5pt; text-align: justify; text-indent: -22.5pt; border: none;"><font face="Verdana, Helvetica, sans-serif" size="2">Credit Card No: _ _ _ _ - _ _ _ _ - _ _ _ _ - _ _ _ _ Expiry Date: _ _ / _ _ (MM / YY)</font></p>
+
+<font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">We thank you for your support and should you
+require further assistance on your subscription, please call our Customer
+Service Hotline at 6388 3838 from 6am to 6pm on Monday to Friday, or 6am to
+12pm on Saturday, Sunday. The hotline will not be available on Public Holidays.
+Alternatively, you may email <a href="mailto:circs@sph.com.sg">circs@sph.com.sg</a>.</span>
+
+</font></div></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify; border: none;"><font face="Verdana, Helvetica, sans-serif" size="2">Marketing <o:p></o:p></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); border: none;"><font face="Verdana, Helvetica, sans-serif" size="2">Circulation<o:p></o:p></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); border: none;"><font face="Verdana, Helvetica, sans-serif" size="2">Singapore Press
+Holdings Limited<o:p></o:p></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify; border: none;"><i><font face="Verdana, Helvetica, sans-serif" size="2">&nbsp;</font></i></p>
+
+<p class="MsoNormal" style="text-align: justify; border: none;"><i><font face="Verdana, Helvetica, sans-serif" size="2">Please note that this is a&nbsp;computerized&nbsp;printout. No signature is required.<o:p></o:p></font></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify; border: none;"><i><font face="Verdana, Helvetica, sans-serif" size="2">______________________________________________________________________________</font></i></p></div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[<div style="color: rgb(0, 0, 0); text-align: center;"><b><u><font face="Verdana, Helvetica, sans-serif" size="2">SECTION A: ACKNOWLEDGEMENT</font></u></b></div><div style="color: rgb(0, 0, 0); text-align: center;"><b><u><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></u></b></div><div style="text-align: left;"><font face="Verdana, Helvetica, sans-serif" size="2"><span style="color: rgb(0, 0, 0);"><span class="Apple-tab-span" style="white-space:pre">	</span>I hereby acknowledge
+receipt of&nbsp;</span>{{Gift__c.Name}}.</font></div><div style="text-align: left;"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div style="text-align: left;"><font size="2" face="Verdana, Helvetica, sans-serif">___________________________<span class="Apple-tab-span" style="white-space:pre">	</span>______________________________________________</font></div><div style="text-align: left;"><font size="2" face="Verdana, Helvetica, sans-serif">&nbsp; &nbsp; Recipient's Name &amp; NRIC<span class="Apple-tab-span" style="white-space: pre;">		</span>Recipient's Signature/Redemption Date/Contact Number</font></div>]]></td>
+</tr>
+</table>

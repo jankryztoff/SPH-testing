@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Publication</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Publications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active Date --></label>
+        <name>Active_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available For Vendor Subscriptions --></label>
+        <name>Available_For_Vendor_Subscriptions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Fri --></label>
+        <name>Commission_Rate_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Mon --></label>
+        <name>Commission_Rate_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate PHD --></label>
+        <name>Commission_Rate_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate PHE --></label>
+        <name>Commission_Rate_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate PHW --></label>
+        <name>Commission_Rate_PHW__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Sat --></label>
+        <name>Commission_Rate_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Fri --></label>
+        <name>Commission_Rate_Special_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Mon --></label>
+        <name>Commission_Rate_Special_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) PHD --></label>
+        <name>Commission_Rate_Special_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) PHE --></label>
+        <name>Commission_Rate_Special_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) PHW --></label>
+        <name>Commission_Rate_Special_PHW__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Sat --></label>
+        <name>Commission_Rate_Special_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Sun --></label>
+        <name>Commission_Rate_Special_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Thu --></label>
+        <name>Commission_Rate_Special_Thu__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Tue --></label>
+        <name>Commission_Rate_Special_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Wed --></label>
+        <name>Commission_Rate_Special_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Sun --></label>
+        <name>Commission_Rate_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Thu --></label>
+        <name>Commission_Rate_Thu__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Tue --></label>
+        <name>Commission_Rate_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Wed --></label>
+        <name>Commission_Rate_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Fri --></label>
+        <name>Cover_Price_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Mon --></label>
+        <name>Cover_Price_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price PHD --></label>
+        <name>Cover_Price_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price PHE --></label>
+        <name>Cover_Price_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price PHW --></label>
+        <name>Cover_Price_PHW__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Sat --></label>
+        <name>Cover_Price_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Sun --></label>
+        <name>Cover_Price_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Thu --></label>
+        <name>Cover_Price_Thu__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Tue --></label>
+        <name>Cover_Price_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Wed --></label>
+        <name>Cover_Price_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Rate/Fee? --></label>
+        <name>Delivery_Rate_Fee__c</name>
+        <picklistValues>
+            <masterLabel>Fee</masterLabel>
+            <translation><!-- Fee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rate</masterLabel>
+            <translation><!-- Rate --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Direct Sub Delivery Method --></label>
+        <name>Direct_Sub_Delivery_Method__c</name>
+        <picklistValues>
+            <masterLabel>Mailing Agent</masterLabel>
+            <translation><!-- Mailing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor or Mailing Agent</masterLabel>
+            <translation><!-- Vendor or Mailing Agent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Direct Sub Mailing Agent --></label>
+        <name>Direct_Sub_Mailing_Agent__c</name>
+        <relationshipLabel><!-- Publications (Direct Sub Mailing Agent) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Earliest Start Date --></label>
+        <name>Earliest_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiry Date --></label>
+        <name>Expiry_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Free Publication --></label>
+        <name>Free_Publication__c</name>
+    </fields>
+    <fields>
+        <label><!-- Frequency Code --></label>
+        <name>Frequency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Sunday Pub --></label>
+        <name>Has_Sunday_Pub__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insert Rate --></label>
+        <name>Insert_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insertion? --></label>
+        <name>Insertion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Language Medium --></label>
+        <name>Language_Medium__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Migration Code --></label>
+        <name>Migration_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Online Publication --></label>
+        <name>Online_Publication__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination? --></label>
+        <name>Pagination__c</name>
+    </fields>
+    <fields>
+        <label><!-- Platform Type --></label>
+        <name>Platform_Type__c</name>
+        <picklistValues>
+            <masterLabel>All in One (AIO)</masterLabel>
+            <translation><!-- All in One (AIO) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone</masterLabel>
+            <translation><!-- Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet</masterLabel>
+            <translation><!-- Tablet --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Category --></label>
+        <name>Product_Category__c</name>
+        <picklistValues>
+            <masterLabel>All in One (AIO)</masterLabel>
+            <translation><!-- All in One (AIO) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Digital</masterLabel>
+            <translation><!-- Digital --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family_Lookup__c</name>
+        <relationshipLabel><!-- Publications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+    </fields>
+    <fields>
+        <label><!-- Public Holiday (Weekday) Pub Indicator --></label>
+        <name>Public_Holiday_Weekday_Pub_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Public Holiday (Weekend) Pub Indicator --></label>
+        <name>Public_Holiday_Weekend_Pub_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Next Start Date --></label>
+        <name>Publication_Next_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Platform (AIO) --></label>
+        <name>Publication_Platform_AIO__c</name>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone</masterLabel>
+            <translation><!-- Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet</masterLabel>
+            <translation><!-- Tablet --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Publication Type --></label>
+        <name>Publication_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publish Pattern --></label>
+        <name>Publish_Pattern__c</name>
+        <picklistValues>
+            <masterLabel>MWF</masterLabel>
+            <translation><!-- MWF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTh</masterLabel>
+            <translation><!-- TTh --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekdays</masterLabel>
+            <translation><!-- Weekdays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekends</masterLabel>
+            <translation><!-- Weekends --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Published Days --></label>
+        <name>Published_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publisher Code --></label>
+        <name>Publisher_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sph Publication Indicator --></label>
+        <name>Sph_Publication_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sunday Publication --></label>
+        <name>Sunday_Publication__c</name>
+        <relationshipLabel><!-- Publications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Sub Delivery Method --></label>
+        <name>Vendor_Sub_Delivery_Method__c</name>
+        <picklistValues>
+            <masterLabel>Mailing Agent</masterLabel>
+            <translation><!-- Mailing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor or Mailing Agent</masterLabel>
+            <translation><!-- Vendor or Mailing Agent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Vendor Sub Mailing Agent --></label>
+        <name>Vendor_Sub_Mailing_Agent__c</name>
+        <relationshipLabel><!-- Publications (Vendor Sub Mailing Agent) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Publication Layout</layout>
+        <sections>
+            <label><!-- Commission Rates --></label>
+            <section>Commission Rates</section>
+        </sections>
+        <sections>
+            <label><!-- Cover Price --></label>
+            <section>Cover Price</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Earliest Start Date must must be a future date. --></errorMessage>
+        <name>Earliest_Start_Date_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Exactly 7 characters, consisting of either &quot;N&quot; or &quot;Y&quot; only, are permitted for this field. --></errorMessage>
+        <name>NOrYOnly</name>
+    </validationRules>
+</CustomObjectTranslation>

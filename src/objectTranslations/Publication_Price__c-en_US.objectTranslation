@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Publication Price</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Publication Prices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Cover Price --></label>
+        <name>Cover_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Day of Week --></label>
+        <name>Day_of_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Publication Prices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Type --></label>
+        <name>Sales_Type__c</name>
+    </fields>
+    <layouts>
+        <layout>Publication Price Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

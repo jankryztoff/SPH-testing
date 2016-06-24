@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contact$Name</field>
+    </columns>
+    <columns>
+        <field>Contact$Contact_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Contact$Address_Unique_Id__c</field>
+    </columns>
+    <columns>
+        <field>Contact$Address__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Contact$Address__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Contact$RecordType</column>
+            <operator>equals</operator>
+            <value>Contact.Customer_Contact</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>MIG_CHECK - NoAddresForContacts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Contacts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Contact$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

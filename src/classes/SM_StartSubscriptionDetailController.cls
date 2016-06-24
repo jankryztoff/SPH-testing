@@ -115,6 +115,7 @@ public class SM_StartSubscriptionDetailController extends SM_SubscriptionHelper 
     }
     
     //start GSantos - added for D-0585
+    //Start PD-0200 6/23/16 -L.Reyes Added to decrease Quantity Balance
     public void updateOrderLineItemGifts(List<Order_Line_Item__c> orderItemList){
         List<Order_Line_Item_Gift__c> OrderLineItemGifts= [SELECT Id, Hidden_Status__c FROM Order_Line_Item_Gift__c WHERE Order_Line_Item__c =:orderItemList];
         if(!OrderLineItemGifts.isEmpty()){
@@ -124,6 +125,7 @@ public class SM_StartSubscriptionDetailController extends SM_SubscriptionHelper 
             update OrderLineItemGifts;
         }
     }
+    //End PD-0200 6/23/16 -L.Reyes Added to decrease Quantity Balance
     //end GSantos
     
     public PageReference submit() {
@@ -196,6 +198,7 @@ public class SM_StartSubscriptionDetailController extends SM_SubscriptionHelper 
             }
             //}//Start/End UD-2523 29Aug15 JohnD - moved this inside the loop
             //End UD-2211 20Aug15 JohnD - updated related quotes
+            //Start PD-0200 6/15/16 -L.Reyes Added to decrease Quantity Balance
             List<Order_Line_Item__c> orderList = [SELECT Id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];/////
             if(!orderList.isEmpty()){
                 for(Order_Line_Item__c orderLi : orderList){
@@ -205,9 +208,10 @@ public class SM_StartSubscriptionDetailController extends SM_SubscriptionHelper 
                 updateOrderLineItemGifts(orderList);
                 //end GSantos
             }
+            //End PD-0200 6/15/16 -L.Reyes Added to decrease Quantity Balance 
             //D-896 Added try catch
             try {
-                update orderList;/////
+                update orderList;
             }catch (exception e) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));      
             }

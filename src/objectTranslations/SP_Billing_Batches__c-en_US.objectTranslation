@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SP Billing Batches</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SP Billing Batches</value>
+    </caseValues>
+    <fields>
+        <label><!-- INSTANCE_1_BATCHES --></label>
+        <name>INSTANCE_1_BATCHES__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSTANCE_2_BATCHES --></label>
+        <name>INSTANCE_2_BATCHES__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSTANCE_3_BATCHES --></label>
+        <name>INSTANCE_3_BATCHES__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSTANCE_4_BATCHES --></label>
+        <name>INSTANCE_4_BATCHES__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSTANCE_5_BATCHES --></label>
+        <name>INSTANCE_5_BATCHES__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

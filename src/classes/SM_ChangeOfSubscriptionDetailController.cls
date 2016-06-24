@@ -6,27 +6,52 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
     final String MR_PRE = GlobalVariableClass.BILLING_TYPE_MR_PRE;
     final String MR_POS = GlobalVariableClass.BILLING_TYPE_MR_POST;
     //END D-3226 JTeves 4-July-2015 - PSTOP/COS Process Updates
+
+    public transient boolean isFromPromotion { get; set; }
+    public transient boolean isDigital { get; set; }
     
-    public list<Order_Line_Item__c> orderLineItemList { get; set; }
-    public string selectedOrderLineItem { get; set; }
+    public Zuora__Subscription__c sub { get; set;}
+    public Zuora__Subscription__c zs;
     public Order__c thisOrder { get; set; }
     public Order_Line_Item__c orderLineItem { get; set; }
     public Order_Line_Item__c oli { get; set; }
+    
+    public list<Order_Line_Item__c> orderLineItemList { get; set; }
     public list<Order_Line_Item_Gift__c> promotionGifts { get; set; }
-    public list<Asia1Wrapper> asia1Subscriptions { get; set; }
-    public date dtlDate { get; set; }
-    public transient boolean isFromPromotion { get; set; }
-    public transient boolean isDigital { get; set; }
-    public Zuora__Subscription__c sub { get; set;}
+    public list<Asia1__c> asia1List;
+    
     public SubscriptionWrapper selectedSubscription { get; set; }
+    
+    public list<Asia1Wrapper> asia1Subscriptions { get; set; }
     public list<SubscriptionWrapper> relatedSubscriptionList { get; set; }
+    
+    public date dtlDate { get; set; }
     public string selectedPackageId { get; set; }
-    public Zuora__Subscription__c zs;
+    
     //added 10242014
     public Map<Id, Date> mapId_StartDate = new Map<Id, Date>();
     //START UD-2193 07/31/2015 Added by J.Sarion - List of Asia1
-    List<Asia1__c> asia1List = new List<Asia1__c>();
     //END UD-2193 07/31/2015 Added by J.Sarion - List of Asia1
+    
+    public SM_ChangeOfSubscriptionDetailController(){
+        sub = new Zuora__Subscription__c();
+        zs = new Zuora__Subscription__c();
+        thisOrder = new Order__c();
+        orderLineItem = new Order_Line_Item__c();
+        oli = new Order_Line_Item__c();
+        
+        selectedSubscription = new SubscriptionWrapper();
+        
+        orderLineItemList = new list<Order_Line_Item__c>();
+        promotionGifts = new list<Order_Line_Item_Gift__c>();
+        asia1List = new list<Asia1__c>();
+        
+        asia1Subscriptions = new list<Asia1Wrapper>();
+        relatedSubscriptionList = new list<SubscriptionWrapper>();
+        
+        dtlDate = null;
+        selectedPackageId = '';
+    }
     
     public void retrieveOrder() {
         list<SObject> orderList = new list<SObject>();
@@ -37,6 +62,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
        try{
             orderList = database.query(queryStr);
             thisOrder = (Order__c)orderList[0];
+            System.debug(thisOrder);
             //START UD-1831 7/14/15 AddedBy FrancisBenzon : to populate DTL Date
             dtlDate = SM_SubscriptionHelper.getDtlDate();
             //END UD-1831 7/14/15 AddedBy FrancisBenzon : to populate DTL Date
@@ -51,20 +77,6 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
             ApexPages.addMessages(e);           
         }
     }
-
-    public class SubscriptionWrapper {
-        public string publicationName { get; set; }
-        public string publicationPrintPattern { get; set; }
-        public date subscriptionStartDate { get; set; }
-        public date subscriptionEndDate { get; set; }
-        public integer quantity { get; set; }
-        public id mainPackage { get; set; }
-        public id SubscriptionId {get; set;}
-        //START UD-0622 RReyes 05/06/15 - Added variable for main package name
-        public string packageName { get; set; }
-        //END UD-0622 RReyes 05/06/15 - Added variable for main package name
-    }
-    
     /*
     Description: This method will retrieve all the order line items related to the Order. The list will be displayed on the Line Items section of the VF page
     */
@@ -107,10 +119,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
     } 
     
     /* 
-     * By: <FrancisMartinBenzon>
-     * @Descrption: Method gets selected UserIds and Service Flags to be disabled in Asia1.
-     * @Parameters: String subscriptionId
-     * @Return: Boolean Status of the Response of Callout.
+    Descrption: Method gets selected UserIds and Service Flags to be disabled in Asia1.
     */
     public void getUserIdDisableSvcInAsia1(Id subscriptionId) {
         String UserNameId;
@@ -139,9 +148,9 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
     Description: This method will retrieve all active subscriptions of the account and display in the existing subscriptin for renewal section of vf page
     */
     public void retrieveRelatedSubscriptions() {
-        map<id, string> packageId_publicationName = new map<id, string>();
-        map<id, string> packageId_publicationPattern = new map<id, string>();
-        map<id, id> productId_packageId = new map<id, id>();
+        map<id,string> packageId_publicationName = new map<id,string>();
+        map<id,string> packageId_publicationPattern = new map<id,string>();
+        map<id,id> productId_packageId = new map<id,id>();
         set<id> productIds = new set<id>();
         set<id> packageIds = new set<id>();
         list<SubscriptionWrapper> tmpSwList = new list<SubscriptionWrapper>();
@@ -152,9 +161,8 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
         // retrieve recipient contact detai of the selected subscription
         try {
             //START UD-0622 05/06/15 RReyes - Added Main_Package_1__r.Name in the query
-            zs = [select Id, Recipient_Contact__c, Cost_Center__c, Number_of_Copies__c,Main_Package_1__c, 
-                         Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Order_Number_1__c, 
-                         Delivery_Charge_Type_1__c, Zuora__CustomerAccount__r.Name,Zuora__CustomerAccount__r.Payment_Mode__c, Main_Package_1__r.Name  
+            zs = [select Id, Recipient_Contact__c, Cost_Center__c, Number_of_Copies__c, Main_Package_1__c, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,
+                         Order_Number_1__c, Delivery_Charge_Type_1__c, Zuora__CustomerAccount__r.Name, Zuora__CustomerAccount__r.Payment_Mode__c, Main_Package_1__r.Name  
                   from Zuora__Subscription__c where Id = :thisOrder.Subscription__c];
             //END UD-0622 05/06/15 RReyes - Added Main_Package_1__r.Name in the query
             selectedPackageId = zs.Main_Package_1__c;
@@ -261,6 +269,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
     }
     
     //start GSantos - added for D-0585
+    //Start PD-0200 6/23/16 - L.Reyes Added to decrease Quantity Balance 
     public void updateOrderLineItemGifts(List<Order_Line_Item__c> orderItemList){
         List<Order_Line_Item_Gift__c> OrderLineItemGifts= [SELECT Id, Hidden_Status__c FROM Order_Line_Item_Gift__c WHERE Order_Line_Item__c =:orderItemList];
         if(!OrderLineItemGifts.isEmpty()){
@@ -270,6 +279,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
             update OrderLineItemGifts;
         }
     }
+    //End PD-0200 6/23/16 - L.Reyes Added to decrease Quantity Balance 
     //end GSantos
     
     //START : D-1853 1/21/2015 JLedesma - Change of Subscription removal of radio buttons 
@@ -353,6 +363,7 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
                         }
                         update orderList;
                     }*/
+                    //Start PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance
                     List<Order_Line_Item__c> orderList = [SELECT Id, DTL_Date__c from Order_Line_Item__c where Order__c = :thisOrder.Id];/////
                     if(!orderList.isEmpty()){
                         for(Order_Line_Item__c orderLi : orderList){
@@ -362,9 +373,10 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
                         updateOrderLineItemGifts(orderList);
                         //end GSantos
                     }
+                    //End PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance 
                     //D-896 Added try catch
                     try {
-                        update orderList;/////
+                        update orderList;
                     }catch (exception e) {
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));      
                     }
@@ -546,7 +558,6 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
                 cashId = ConstantsSLB.getKeyId('PaymentMethodId_Cash');
                 checkId = ConstantsSLB.getKeyId('PaymentMethodId_Check'); 
                 Map<String,Object> p = new Map<String, Object>();  
-
                 if(totalRefund != 0){
                     p.put('AccountId', order.Billing_Account__r.Zuora__Zuora_Id__c);
                     p.put('Amount', totalRefund);
@@ -556,7 +567,6 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
                     p.put('EffectiveDate', startDate);                
                     p.put('PaymentMethodId', cashId);
                 }
-                
                 try{
                     Map<String,String> resultMap2 = creditBalanceCallOut.createZObject(p, 'Payment');
                     if (resultMap2!=null){
@@ -576,4 +586,28 @@ public class SM_ChangeOfSubscriptionDetailController extends SM_SubscriptionHelp
         }   
     }
     //END D-2588 [MD- 12] KEstoya - Processing of CreditBalance 3/17/15
+    
+    public class SubscriptionWrapper {
+        public string publicationName {get;set;}
+        public string publicationPrintPattern {get;set;}
+        public date subscriptionStartDate {get;set;}
+        public date subscriptionEndDate {get;set;}
+        public integer quantity {get;set;}
+        public id mainPackage {get;set;}
+        public id subscriptionId {get;set;}
+        //START UD-0622 RReyes 05/06/15 - Added variable for main package name
+        public string packageName {get;set;}
+        //END UD-0622 RReyes 05/06/15 - Added variable for main package name
+        
+        /*public SubscriptionWrapper(String pubName, String pubPrint, Date subSDate, Date subEDate, Integer quantity, Id mainPackId, Id subId, String packName){
+            this.publicationName = pubName;
+            this.publicationPrintPattern = pubPrint;
+            this.subscriptionStartDate = subSDate;
+            this.subscriptionEndDate = subEDate;
+            this.quantity = quantity;
+            this.mainPackage = mainPackId;
+            this.subscriptionId = subId;
+            this.packName = packageName;
+        }*/
+    }
 }

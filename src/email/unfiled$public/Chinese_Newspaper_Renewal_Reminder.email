@@ -1,0 +1,295 @@
+<html>
+	<head>
+		<style>
+			body, .tableStyle{
+				font-family: Arial Unicode MS;
+				font-size:10pt;
+			}
+		</style>
+	</head>
+	<body>			
+		<table width="100%" class = "tableStyle" cellspacing="0" class = "tableStyle">
+			<tr>
+				<td width=65% align="left">
+					<br><span style = "font-size: 14pt;"> <b> 续订通知单 </span></b></font>
+					<br><br>DATE 		: {{DateToday}}
+					<br><br>Billing A/C NO  	: {{BillingAccountNumber}}
+					<br><br>{{ContactName}} 
+					<br>{{AttentionTo}}
+					{{ContactMailingAddress}}
+				</td>
+				
+				<td width=35% align="left">
+					<img src="{{baseURL}}" height="95" width="135"/>
+					<br/><b>Singapore Press Holdings Limited Circulation</b>
+					<br/>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+					<br/>Enquiries: +65 6388 3838, Email: circs@sph.com.sg
+					<br/>Co. Regn. No.: 198402868E
+				</td>
+			</tr>
+		</table>
+		
+		<br><br>感谢您对本报的支持。
+
+		<table width="100%" class = "tableStyle" cellspacing = "0" class = "tableStyle">
+			<tr>
+				<td width="100%" valign="top">
+					您的报刊订阅期即将期满，我们谨此邀请您继续订阅。请将此续订表格填妥，并在&nbsp;<u>{{expiryDate}}</u>
+					 前把所有的通知单寄回或传真至 (65) 6744 4875。 若有任何询问，请拨电 (65)6388 3838与我们的客户服务组联系。您也可以通过电邮地址：circs@sph.com.sg 与我们联络。若您已续订，请将此函作废。
+				</td>						
+			</tr>
+			
+			<tr>
+				<td colspan="2">为了提倡环保和更有效的服务，我们将通过电子邮件，发送订阅确认函给您，请提供以下最新资料。
+					若您欲收到纸本订阅确认函，请打勾&#9744;。 <font style="font-family: Arial Unicode MS;"></font>
+				</td>
+			</tr>
+		</table>
+		
+		<table width="100%" class = "tableStyle" cellspacing="0">
+			<tr>
+				<br>
+				<td width="30%">电邮地址： {{EmailAddress}}</td>
+				<td width="25%">联络号码: (住家) {{Homenumber}}</td>
+				<td width="20%">(办公室) {{OfficeNumber}}</td>
+				<td width="25%">(手提电话) {{MobileNumber}}</td>
+			</tr>
+		</table>
+		
+		<br/>祝阅读愉快 !<br/><br/>
+			
+		<table frame="box" width="100%" bgcolor="#cccccc" cellpadding="0" style="font-size:10pt;border: solid 1px;" class = "tableStyle">
+			<tr>
+				<td width=40% align=center> <b>收件人编号/姓名 <br/>报刊 <br/> 刊期</b></td>						
+				<td width=15% align=center><b> 份数 </b></td>
+				<td width=15% align=center><b> 期满日期  </b></td>
+				<td width=15% align=center><b> 数额S$ </b></td>
+				<td width=15% align=center><b> 请打勾 </b></td>
+			</tr>
+		</table>
+		
+		<table frame="box" width="100%" cellspacing="0">				
+			{{Insert Table}}
+		</table>
+		
+		<br/>
+		<table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0" class = "tableStyle">
+			<tr>                    
+				<td align="left" >
+					是的，我要续订以上报 刊 一 年。(请在以上挂号打勾)
+				</td>                   
+			</tr>
+			
+			<tr>
+				<td ><font style="font-family: Arial Unicode MS;"> &#9744;</font> 按月以信用卡付款（您的订阅将持续有效，如果要取消订阅，请书面通知我们）</td>
+			</tr>
+			
+			<tr>
+				<td ><font style="font-family: Arial Unicode MS;"> &#9744;</font>  付全额 S$__________________ (请包括Newspaper Delivery Fee。有关Newspaper Delivery Fee 请查阅条例)</td>
+			</tr>  
+			
+			<tr><td>*包括派送费 / 邮费</td></tr>
+								   
+			<tr>
+				<td >付款方式 (请打勾)</td>
+			</tr>
+			
+			<tr>
+				<td ><font style="font-family: Arial Unicode MS;"> &#9744;</font> 信用卡付款 ： &nbsp;&nbsp; <font style="font-family: Arial Unicode MS;"> &#9744;</font> VISA   &nbsp;&nbsp;&nbsp;&nbsp;    <font style="font-family: Arial Unicode MS;"> &#9744;</font> MASTERCARD</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp; 信用卡用户姓名：__________________________________________________________________________________________</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;信用卡号码：__________________________________________________有效日期至:_______________________（月份/年份)</td>
+			</tr>
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;签名:____________________________________________________________ 日期:_____________________________________</td>
+			</tr>
+			
+			<tr><td >&nbsp;</td></tr>
+			
+			<tr>
+				<td ><font style="font-family: Arial Unicode MS;"> &#9744;</font> 支票付款（支票收款人“Singapore Press Holdings Limited”)</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;银行/ 支票号码：__________________________________________________ 数额 ：___________________________________ </td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td  style="font: bold">订阅户口号码: {{AccountNumber}}</td>            
+			</tr>				   
+		</table>
+		<br/>
+		<table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0" class = "tableStyle">                    
+			<tr>
+				<td ><u>一、   条例</u></td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+		
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;付款方式</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  所有订阅是根据预付方式</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  付款可通过以下方式：</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o  支票、汇票（必须通过本地银行并以新元付款），领款者必须指定为
+				</td>
+			</tr>
+		
+			<tr>
+				<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“Singapore Press Holdings Limited”</b></td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o  信用卡（Visa/MasterCard）
+				</td>
+			</tr>
+			
+			<tr>
+				<td ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可通过传真/电子邮件订阅。请注明信用卡号码和有效日期</b></td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认订阅程序</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  一旦确认您的订阅，您将收到一份确认通知</td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派送费 (Newspaper Delivery Fee)</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•   订阅费用不包括派送费。每月的派送费根据以下房子类型：</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$3 – 政府组屋（年费为 $36）</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$4 – 私人公寓、工厂和办公室（年费为 $48）</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$5 – 私人地产（年费为 $60）</td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其它</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 订阅费用包括7%消费税</td>
+			</tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 订阅费用和任何行政费用可在未受通知下更改</td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联络方式</td>
+			</tr>
+			
+			<tr>
+				<td >
+					<table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0">
+					
+						<tr>
+							<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 电话：(65) 6388 3838</td> 
+							<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 传真：(65) 6744 4875/ (65) 6744 1646</td>
+						</tr>
+						<tr>
+							<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 电子邮件：circs@sph.com.sg</td>
+							<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 网址：www.sphsubscription.com.sg</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td ><u>二、  更换地址</u></td>
+			</tr>
+			
+			<tr><td>&nbsp;</td></tr>
+			
+			<tr>
+				<td >
+					<table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0" class = "tableStyle">
+					
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请将更新通知单寄到：</td> 
+							<td  width="50%">&nbsp;&nbsp;&nbsp;请将报纸送到：</td>
+						</tr>
+						
+						<tr>
+							<td colspan = "2"> &nbsp; </td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订户号码：______________________</td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;订户号码：______________________</td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：__________________________</td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;姓名：__________________________</td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：__________________________</td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;地址：__________________________</td>
+						</tr>
+						
+						<tr>
+							<td  width="50%"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________________________</td>
+							<td  width="50%"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________________________</td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮区：__________________________ </td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;邮区：__________________________ </td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国家：__________________________ </td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;国家：__________________________ </td>
+						</tr>
+						
+						<tr>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生效日期：______________________ </td>
+							<td  width="50%">&nbsp;&nbsp;&nbsp;生效日期：______________________ </td>
+						</tr>						
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

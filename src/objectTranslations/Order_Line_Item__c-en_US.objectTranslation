@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Line Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Line Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Add On Package Product Platform --></label>
+        <name>Add_On_Package_Product_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Add On Package Product Sub Type --></label>
+        <name>Add_On_Package_Product_Sub_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Add On Package Subscription Rate --></label>
+        <name>Add_On_Package_Subscription_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Addon Package --></label>
+        <name>Addon_Package__c</name>
+        <relationshipLabel><!-- Order Line Items (Addon Package ID) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Admin Charge --></label>
+        <name>Admin_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount To Refund --></label>
+        <name>Amount_To_Refund__c</name>
+    </fields>
+    <fields>
+        <label><!-- Asia1 Creation Mode --></label>
+        <name>Asia1_Creation_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Bulk</masterLabel>
+            <translation><!-- Bulk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual</masterLabel>
+            <translation><!-- Individual --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Asia 1 creation mode --></label>
+        <name>Asia_1_creation_mode__c</name>
+        <picklistValues>
+            <masterLabel>Bulk</masterLabel>
+            <translation><!-- Bulk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual</masterLabel>
+            <translation><!-- Individual --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Auto Renew --></label>
+        <name>Auto_Renew__c</name>
+    </fields>
+    <fields>
+        <label><!-- Based Order Line Item --></label>
+        <name>Based_Order_Line_Item__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Based Publication Product Category --></label>
+        <name>Based_Publication_Product_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- COS Urgent Request --></label>
+        <name>COS_Urgent_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Order Line Items (Direct) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Charity --></label>
+        <name>Charity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End Date --></label>
+        <name>Contract_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- DTL Date --></label>
+        <name>DTL_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivered By --></label>
+        <name>Delivered_By__c</name>
+        <picklistValues>
+            <masterLabel>Mailing Agent</masterLabel>
+            <translation><!-- Mailing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Direct Sub Delivery Method --></label>
+        <name>Direct_Sub_Delivery_Method__c</name>
+        <picklistValues>
+            <masterLabel>Mailing Agent</masterLabel>
+            <translation><!-- Mailing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor or Mailing Agent</masterLabel>
+            <translation><!-- Vendor or Mailing Agent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Earliest Start Date --></label>
+        <name>Earliest_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Earliest Stop Date --></label>
+        <name>Earliest_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Override Amount --></label>
+        <name>Fee_Override_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Override --></label>
+        <name>Fee_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Waiver --></label>
+        <name>Fee_Waiver__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generate Invoice --></label>
+        <name>Generate_Invoice__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift1 --></label>
+        <name>Gift1__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Gift2 --></label>
+        <name>Gift2__c</name>
+        <relationshipLabel><!-- Order Line Items (Gift2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Gift3 --></label>
+        <name>Gift3__c</name>
+        <relationshipLabel><!-- Order Line Items (Gift3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Gl Code --></label>
+        <name>Gl_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grace Allocation --></label>
+        <name>Grace_Allocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grace Days --></label>
+        <name>Grace_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsEOMCycle? --></label>
+        <name>IsEOMCycle__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is All In One --></label>
+        <name>Is_All_In_One__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Digital --></label>
+        <name>Is_Digital__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Downgrade --></label>
+        <name>Is_Downgrade__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Qty Increase --></label>
+        <name>Is_Qty_Increase__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package Billing Type --></label>
+        <name>Main_Package_Billing_Type__c</name>
+        <picklistValues>
+            <masterLabel>Full Prepaid</masterLabel>
+            <translation><!-- Full Prepaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Postpaid</masterLabel>
+            <translation><!-- Recurring Postpaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Prepaid</masterLabel>
+            <translation><!-- Recurring Prepaid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Package Frequency --></label>
+        <name>Main_Package_Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fri - Sun</masterLabel>
+            <translation><!-- Fri - Sun --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mon - Fri</masterLabel>
+            <translation><!-- Mon - Fri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mon - Sat</masterLabel>
+            <translation><!-- Mon - Sat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sat - Sun</masterLabel>
+            <translation><!-- Sat - Sun --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Package ID --></label>
+        <name>Main_Package_ID__c</name>
+        <relationshipLabel><!-- Order Line Items (Main Package ID) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Main Package Period --></label>
+        <name>Main_Package_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package Product Family --></label>
+        <name>Main_Package_Product_Family__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Package Product Platform --></label>
+        <name>Main_Package_Product_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package Product Sub Type --></label>
+        <name>Main_Package_Product_Sub_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package Sub Type --></label>
+        <name>Main_Package_Sub_Type__c</name>
+        <picklistValues>
+            <masterLabel>Evergreen</masterLabel>
+            <translation><!-- Evergreen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Termed</masterLabel>
+            <translation><!-- Termed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Package Subscription Rate --></label>
+        <name>Main_Package_Subscription_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package Type --></label>
+        <name>Main_Package_Type__c</name>
+        <picklistValues>
+            <masterLabel>Add On</masterLabel>
+            <translation><!-- Add On --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Base</masterLabel>
+            <translation><!-- Base --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bundle</masterLabel>
+            <translation><!-- Bundle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discount</masterLabel>
+            <translation><!-- Discount --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- New Contract Period is required if a Promotion is being selected for creating the Order. --></help>
+        <label><!-- New Contract Period --></label>
+        <name>New_Contract_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Payment Mode --></label>
+        <name>New_Payment_Mode__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Quantity --></label>
+        <name>New_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of GIfts --></label>
+        <name>Number_of_GIfts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Subscription --></label>
+        <name>Old_Subscription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Online Order Number --></label>
+        <name>Online_Order_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Line Item ID --></label>
+        <name>Order_Line_Item_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Line Item Legacy Id --></label>
+        <name>Order_Line_Item_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Line Item # --></label>
+        <name>Order_Line_Item__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Override Reason --></label>
+        <name>Override_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- PO Number --></label>
+        <name>PO_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Account --></label>
+        <name>Parent_Account__c</name>
+        <relationshipLabel><!-- Order Line Items (Parent Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Penalty Charge --></label>
+        <name>Penalty_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pending Copies 2 --></label>
+        <name>Pending_Copies_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pending Copies --></label>
+        <name>Pending_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ph (d) --></label>
+        <name>Ph_d__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ph (e) --></label>
+        <name>Ph_e__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postage Charge --></label>
+        <name>Postage_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Qty --></label>
+        <name>Previous_Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion Contract Period --></label>
+        <name>Promotion_Contract_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion ID --></label>
+        <name>Promotion_ID__c</name>
+        <relationshipLabel><!-- Order Line Items (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Publication 1 --></label>
+        <name>Publication_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication 2 --></label>
+        <name>Publication_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Product Category --></label>
+        <name>Publication_Product_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Qty --></label>
+        <name>Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Postal Code --></label>
+        <name>Recipient_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub-classification --></label>
+        <name>Sub_classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscribed as --></label>
+        <name>Subscribed_as__c</name>
+        <picklistValues>
+            <masterLabel>Add On</masterLabel>
+            <translation><!-- Add On --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Correction</masterLabel>
+            <translation><!-- Correction --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Downgrade</masterLabel>
+            <translation><!-- Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Misc Change</masterLabel>
+            <translation><!-- Misc Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Buy</masterLabel>
+            <translation><!-- New Buy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal</masterLabel>
+            <translation><!-- Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upgrade</masterLabel>
+            <translation><!-- Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor Conversion</masterLabel>
+            <translation><!-- Vendor Conversion --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription Id --></label>
+        <name>Subscription_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Name --></label>
+        <name>Subscription_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Suppress Notification (Stop) --></label>
+        <name>Suppress_Notification_Stop__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suppress Renewal and Reminder Letter --></label>
+        <name>Suppress_Renewal_and_Reminder_Letter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suppress Vendor Start notice --></label>
+        <name>Suppress_Vendor_Start_notice__c</name>
+    </fields>
+    <fields>
+        <label><!-- Supressed Acknowledgement Letter --></label>
+        <name>Supressed_Acknowledgement_Letter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Supressed Grace Allocation --></label>
+        <name>Supressed_Grace_Allocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Supressed Vendor Notification(Converted) --></label>
+        <name>Supressed_Vendor_Notification_Converted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suppress Vendor Start Notification --></label>
+        <name>Supressed_Vendor_Notification_New_Sub__c</name>
+    </fields>
+    <fields>
+        <label><!-- Term Length (Mth) --></label>
+        <name>Term_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Term is discussed? --></label>
+        <name>Term_is_discussed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Terminating Reason --></label>
+        <name>Terminating_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change to another pub</masterLabel>
+            <translation><!-- Change to another pub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Digital / apps issues</masterLabel>
+            <translation><!-- Customer request - Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Moving overseas</masterLabel>
+            <translation><!-- Customer request - Moving overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - No reason given</masterLabel>
+            <translation><!-- Customer request - No reason given --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Not reading</masterLabel>
+            <translation><!-- Customer request - Not reading --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Policy</masterLabel>
+            <translation><!-- Customer request - Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Service / Delivery issues</masterLabel>
+            <translation><!-- Customer request - Service / Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Downgrade</masterLabel>
+            <translation><!-- Package - Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Misc. Change</masterLabel>
+            <translation><!-- Package - Misc. Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Upgrade</masterLabel>
+            <translation><!-- Package - Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Credit card</masterLabel>
+            <translation><!-- Payment failure - Credit card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Invoice</masterLabel>
+            <translation><!-- Payment failure - Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - PayPal</masterLabel>
+            <translation><!-- Payment failure - PayPal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reduction in quantity</masterLabel>
+            <translation><!-- Reduction in quantity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Gift Price --></label>
+        <name>Total_Gift_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Postage Charge --></label>
+        <name>Total_Postage_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Rate --></label>
+        <name>Total_Subscription_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent Stop? --></label>
+        <name>Urgent_Stop__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent? --></label>
+        <name>Urgent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Conversion? --></label>
+        <name>Vendor_Conversion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor/Mailing Agent --></label>
+        <name>Vendor_Mailing_Agent__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Subscription ID --></label>
+        <name>Vendor_Subscription_ID__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Order Entry – Change of Subscription</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Order Line Item Layout</layout>
+        <sections>
+            <label><!-- Billing --></label>
+            <section>Billing</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- For Testing --></label>
+            <section>For Testing</section>
+        </sections>
+        <sections>
+            <label><!-- Other Charges --></label>
+            <section>Other Charges</section>
+        </sections>
+        <sections>
+            <label><!-- Other Info --></label>
+            <section>Other Info</section>
+        </sections>
+        <sections>
+            <label><!-- Subscription Details and Packages --></label>
+            <section>Subscription Details and Packages</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Change Of Subscription Validation: Start Date must be greater than today. --></errorMessage>
+        <name>ChangeOfSubStartDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Delivered By is require. --></errorMessage>
+        <name>Delivered_By</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Main Package Billing Type is require. --></errorMessage>
+        <name>Main_Package_Billing_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Main Package Frequency is require. --></errorMessage>
+        <name>Main_Package_Frequency</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Main Package Sub Type is require. --></errorMessage>
+        <name>Main_Package_Sub_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Main Package Type field is require. --></errorMessage>
+        <name>Main_Package_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date date is within Bill Run period. Please select a date on or after the 2nd of next month --></errorMessage>
+        <name>No_COS_Request_First_of_Next_Month</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Stop date is within Bill Run period. Please select a date on or after the 2nd of next month --></errorMessage>
+        <name>No_Pstop_Request_First_of_Next_Month</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Order line END DATE must be greater than the order line START DATE. --></errorMessage>
+        <name>Order_End_Date_Rule_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date must be greater than today --></errorMessage>
+        <name>Order_Start_Date_Rule_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter End Date value --></errorMessage>
+        <name>Required_End_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Qty is required for Direct Accounts. --></errorMessage>
+        <name>Required_Qty</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter a Start Date --></errorMessage>
+        <name>Required_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Stop Request Date should not be equal to Today&apos;s Date or Earlier Date! --></errorMessage>
+        <name>Validate_Stop_Request_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Vendor Subscription ID is require when Vendor Conversion is checked. --></errorMessage>
+        <name>Vendor_Subscription_ID</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Assign_Vendor --></label>
+        <name>Assign_Vendor</name>
+    </webLinks>
+</CustomObjectTranslation>

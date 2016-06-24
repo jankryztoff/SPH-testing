@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cir Planner Schedule</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cir Planner Schedule</value>
+    </caseValues>
+    <fields>
+        <label><!-- Mon-Fri End Time --></label>
+        <name>Mon_Fri_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mon-Fri Start Time --></label>
+        <name>Mon_Fri_Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sat/PH End Time --></label>
+        <name>Sat_PH_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sat/PH Start Time --></label>
+        <name>Sat_PH_Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sun End Time --></label>
+        <name>Sun_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sun Start Time --></label>
+        <name>Sun_Start_Time__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

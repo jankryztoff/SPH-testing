@@ -1,0 +1,7 @@
+<apex:page controller="ListObjectsContr">
+  <apex:pageBlock >
+      <apex:pageBlockTable value="{!objects}" var="obj">
+          <apex:column value="{!obj}" headerValue="Object Name"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+</apex:page>

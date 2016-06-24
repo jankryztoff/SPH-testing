@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Junction between Case and Subscription (Vendor)</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Case Vendor Subscriptions</relationshipLabel>
+        <relationshipName>Case_Vendor_Subscriptions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Case Vendor Subscriptions</relationshipLabel>
+        <relationshipName>Case_Vendor_Subscriptions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CASE_Vendor_Subscription_Legacy_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>CASE Vendor Subscription Legacy Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.RecordTypeId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Record Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Replacement_Required__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.Replacement_Required__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Replacement Required</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Within_Cir_Schedule__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.Within_Circulation_Planning_Schedule__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Within Cir Schedule</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Subscriptions (Vendor)</relationshipLabel>
+        <relationshipName>Case_Vendor_Subscriptions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Complaint_Copies__c</fullName>
+        <externalId>false</externalId>
+        <label>Complaint Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complaint_From__c</fullName>
+        <externalId>false</externalId>
+        <label>Complaint From</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Complaint To</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Copies__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goodwill_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Goodwill Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Goodwill_Copies__c</fullName>
+        <externalId>false</externalId>
+        <label>Goodwill Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Issue_No__c</fullName>
+        <externalId>false</externalId>
+        <label>Issue No.</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Month__c</fullName>
+        <externalId>false</externalId>
+        <label>Month</label>
+        <picklist>
+            <picklistValues>
+                <fullName>January</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>February</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>March</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>April</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>May</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>June</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>July</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>August</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>September</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>October</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>November</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>December</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Replace_From__c</fullName>
+        <externalId>false</externalId>
+        <label>Replace From</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Replace_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Replace To</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Replacement_Copies__c</fullName>
+        <externalId>false</externalId>
+        <label>Replacement Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Replacement_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Replacement Required</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Case__r.Sub_Status__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sub Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Subscription_Vendor__r.Subscription_Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subscription Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Vendor__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription (Vendor)</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <filterItems>
+                <field>Subscription_Vendor__c.Account__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>$Source.Address__c</field>
+                <operation>equals</operation>
+                <value></value>
+            </filterItems>
+            <filterItems>
+                <field>$Source.Address__c</field>
+                <operation>equals</operation>
+                <valueField>Subscription_Vendor__c.Recipient__r.Address__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Subscription_Vendor__c</referenceTo>
+        <relationshipLabel>Cases</relationshipLabel>
+        <relationshipName>Case_Vendor_Subscriptions</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Vendor_Debit__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor Debit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Vendor__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Case Vendor Subscription</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CVS{0000000000}</displayFormat>
+        <label>Case Vendor Subscription Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Vendor Subscriptions</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Complaint_Dates_cannot_be_future_dates</fullName>
+        <active>true</active>
+        <errorConditionFormula>Complaint_From__c &gt; today() || Complaint_To__c &gt; today()</errorConditionFormula>
+        <errorMessage>Complaint Dates cannot be greater than today</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_SubCantBeEditedByCSOAdmin</fullName>
+        <active>true</active>
+        <description>Subscription field cannot be edited by CSO admin when editing Complaint Cases.</description>
+        <errorConditionFormula>AND($Profile.Name = &apos;CSO Admin&apos;, ISCHANGED( Subscription_Vendor__c), Case__r.RecordType.DeveloperName = &apos;Complaint Magazine&apos; )</errorConditionFormula>
+        <errorMessage>CSO Admin cant edit subscription. Please contact CSO.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Copies_cannot_be_negative</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(NOT(ISNULL(Replacement_Copies__c)), 
+Complaint_Copies__c &lt; Replacement_Copies__c, 
+FALSE 
+)</errorConditionFormula>
+        <errorMessage>Replacement Copies cannot be greater than Complaint Copies</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementFromDateWithinComplaintPeriod</fullName>
+        <active>true</active>
+        <errorConditionFormula>((Replace_From__c &gt; Complaint_To__c &amp;&amp; Replace_From__c &gt; Complaint_From__c) || (Replace_From__c &lt; Complaint_To__c &amp;&amp; Replace_From__c &lt; Complaint_From__c))</errorConditionFormula>
+        <errorDisplayField>Replace_From__c</errorDisplayField>
+        <errorMessage>Replacement From should be within Complaint Period.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementFromNotGreaterThan14</fullName>
+        <active>true</active>
+        <errorConditionFormula>Case__r.Replacement_Required__c &amp;&amp; Replace_From__c &lt; (TODAY()- 14)</errorConditionFormula>
+        <errorDisplayField>Replace_From__c</errorDisplayField>
+        <errorMessage>Replacement Issue From Date should not be older than  14 days.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementFromfieldRequired</fullName>
+        <active>false</active>
+        <description>Check Replacement Issue Date if Replacement is required for Complaint case.</description>
+        <errorConditionFormula>ISBLANK( Replace_From__c ) &amp;&amp; Case__r.Replacement_Required__c</errorConditionFormula>
+        <errorDisplayField>Replace_From__c</errorDisplayField>
+        <errorMessage>Replacement Issue Date is required if Replacement Required checkbox is checked.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementIssueDateFieldsRequired</fullName>
+        <active>true</active>
+        <description>Check Replacement Issue Date if Replacement is required for Complaint case.</description>
+        <errorConditionFormula>(ISBLANK(Replace_To__c) || ISBLANK(Replace_From__c)) &amp;&amp; Case__r.Replacement_Required__c</errorConditionFormula>
+        <errorMessage>Replacement Issue Dates are required if Replacement Required checkbox is checked.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementReqReplacementCopies</fullName>
+        <active>true</active>
+        <errorConditionFormula>Case__r.RecordType.Name = &apos;Complaint - Newspaper&apos;
+&amp;&amp; 
+IF (Case__r.Replacement_Required__c = FALSE, Replacement_Copies__c &lt;&gt; null || Replacement_Copies__c &lt;&gt; 0, FALSE)</errorConditionFormula>
+        <errorMessage>Replacement Required checkbox is unchecked, Replacement Copies should be blank or zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementToDateIsNotToday</fullName>
+        <active>true</active>
+        <errorConditionFormula>((Replace_To__c &gt; Complaint_To__c &amp;&amp; Replace_To__c &gt; Complaint_From__c) || (Replace_To__c &lt; Complaint_To__c &amp;&amp; Replace_To__c &lt; Complaint_From__c))</errorConditionFormula>
+        <errorDisplayField>Replace_To__c</errorDisplayField>
+        <errorMessage>Replacement To should be within Complaint Period</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReplacementTofieldRequired</fullName>
+        <active>false</active>
+        <description>Check Replacement Issue Date if Replacement is required for Complaint case.</description>
+        <errorConditionFormula>ISBLANK(Replace_To__c) &amp;&amp; Case__r.Replacement_Required__c</errorConditionFormula>
+        <errorDisplayField>Replace_To__c</errorDisplayField>
+        <errorMessage>Replacement Issue Date is required if Replacement Required checkbox is checked.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubscriptionEdit</fullName>
+        <active>true</active>
+        <description>D-2200</description>
+        <errorConditionFormula>OR($Profile.Name  = &apos;CSO Admin&apos;, CONTAINS($Profile.Name, &apos;Vendor&apos;)) &amp;&amp; ISCHANGED( Subscription_Vendor__c )</errorConditionFormula>
+        <errorMessage>User cannot update subscription.</errorMessage>
+    </validationRules>
+</CustomObject>

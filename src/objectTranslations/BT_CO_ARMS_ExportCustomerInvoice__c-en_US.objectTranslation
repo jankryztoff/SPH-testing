@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_ExportCustomerInvoice</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_ExportCustomerInvoice</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountNumber --></label>
+        <name>accountNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountType --></label>
+        <name>accountType__c</name>
+    </fields>
+    <fields>
+        <label><!-- feUniqueKey --></label>
+        <name>feUniqueKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- invoiceAmount --></label>
+        <name>invoiceAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- invoiceDate --></label>
+        <name>invoiceDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- invoiceDueDate --></label>
+        <name>invoiceDueDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- invoiceNumber --></label>
+        <name>invoiceNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- invoiceOutstandingAmount --></label>
+        <name>invoiceOutstandingAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- synonym --></label>
+        <name>synonym__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

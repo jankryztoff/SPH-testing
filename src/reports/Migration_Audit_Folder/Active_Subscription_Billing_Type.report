@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Legacy_Subscription_ID__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Billing_Type__c</field>
+    </columns>
+    <columns>
+        <field>CUST_LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Zuora__Status__c</field>
+    </columns>
+    <columns>
+        <field>CUST_CREATED_NAME</field>
+    </columns>
+    <description>Active Subscription Billing Type</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Legacy_Subscription_ID__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Legacy_Subscription_ID__c</column>
+            <operator>notContain</operator>
+            <value>null</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Billing_Type__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Zuora__Status__c</column>
+            <operator>equals</operator>
+            <value>Active</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Active Subscription Billing Type</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

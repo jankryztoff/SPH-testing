@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ESHOPPaypalRefundResponse</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ESHOPPaypalRefundResponse</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- actioIndicator --></label>
+        <name>actioIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- errorMessage --></label>
+        <name>errorMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- parentTransactionId --></label>
+        <name>parentTransactionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- refundAmount --></label>
+        <name>refundAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- statusIndicator --></label>
+        <name>statusIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscribername --></label>
+        <name>subscribername__c</name>
+    </fields>
+    <fields>
+        <label><!-- transactionId --></label>
+        <name>transactionId__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

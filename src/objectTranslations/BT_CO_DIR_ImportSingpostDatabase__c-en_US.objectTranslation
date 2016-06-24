@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_DIR_ImportSingpostDatabase</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_DIR_ImportSingpostDatabase</value>
+    </caseValues>
+    <fields>
+        <label><!-- AddressType --></label>
+        <name>AddressType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- BuildingKey --></label>
+        <name>BuildingKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- NumberOfUnits --></label>
+        <name>NumberOfUnits__c</name>
+    </fields>
+    <fields>
+        <label><!-- ServiceNumber --></label>
+        <name>ServiceNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- SingpostKey --></label>
+        <name>SingpostKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- StreetKey --></label>
+        <name>StreetKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- WalkupIndicator --></label>
+        <name>WalkupIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingCode --></label>
+        <name>buildingCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingDescription --></label>
+        <name>buildingDescription__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingName --></label>
+        <name>buildingName__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingNo --></label>
+        <name>buildingNo__c</name>
+    </fields>
+    <fields>
+        <label><!-- floor --></label>
+        <name>floor__c</name>
+    </fields>
+    <fields>
+        <label><!-- postalCodeImageBase64 --></label>
+        <name>postalCodeImageBase64__c</name>
+    </fields>
+    <fields>
+        <label><!-- postalCode --></label>
+        <name>postalCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- streetName --></label>
+        <name>streetName__c</name>
+    </fields>
+    <fields>
+        <label><!-- unit --></label>
+        <name>unit__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

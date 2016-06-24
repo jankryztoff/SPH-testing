@@ -1,0 +1,39 @@
+<apex:page standardController="MCOP_Batch__c">
+    <apex:sectionHeader title="Mass Change of Package" subtitle="Congifuration"/>
+    <apex:form >
+        <apex:pageBlock title="Batch Configuration Parameters" mode="detail" tabStyle="Account">
+            <apex:pageBlockSection title="Please specify the From and To Package:" columns="2" collapsible="false">
+                <apex:inputField value="{!MCOP_Batch__c.From_Package__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.To_Package__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:actionRegion >
+            <apex:pageBlockSection id="Sub_Param1" title="Please specify the paramters to filter the Subscriptions:" columns="2" collapsible="false">
+                <apex:inputField value="{!MCOP_Batch__c.Account_Type__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.Payment_Mode__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.On_Contract__c}" id="onContract">
+                    <apex:actionSupport event="onchange" rerender="Sub_Param2"/>
+                </apex:inputField>
+            </apex:pageBlockSection>
+            </apex:actionRegion>
+            <apex:pageBlockSection id="Sub_Param2" showHeader="false">
+                <apex:inputField value="{!MCOP_Batch__c.Contract_End_Date_From__c}" rendered="{!MCOP_Batch__c.On_Contract__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.Contract_End_Date_To__c}" rendered="{!MCOP_Batch__c.On_Contract__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.Sub_Qty_From__c}"/>
+                <apex:inputField value="{!MCOP_Batch__c.Sub_Qty_To__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="Sub_Param3" title="Please specify Conversion Effective Date:" columns="2" collapsible="false">
+                <apex:inputField value="{!MCOP_Batch__c.Effective_Date__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Schedule the Batch Run" mode="detail" tabStyle="Contact">
+            <apex:pageBlockSection id="Schedule1" title="Please specify the preferred Job Start Time:" columns="2" collapsible="false">
+                <apex:inputField value="{!MCOP_Batch__c.Start_Time__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!save}" value="Confirm to Schedule"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -18,6 +18,9 @@ public class Vendor_Assignment {
     public final String OVERSEAS = GlobalVariableClass.STRING_OVERSEAS;
     public final String INTERNAL = GlobalVariableClass.STRING_INTERNAL;
     public final String DIGITAL = GlobalVariableClass.DIGITAL;
+    //START PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
+    public final String STRING_AIRLINE = GlobalVariableClass.STRING_AIRLINE;
+    //END PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
     
     public final Id MAILING_AGENT_RECORDTYPE_ID = ConstantsSLB.getKeyId('Account_Mailing Agent'); //START/END 04 November 2015 D-3865 Kevin Evasco - Non-selective query fix
 
@@ -30,7 +33,7 @@ public class Vendor_Assignment {
         
         for(Order_Line_Item_Vendor__c oli: lOrderLineItems){
             setPostalCodes.add(oli.Recipient_Postal_Code__c);
-            setPubIDs.add(oli.Publication__c);
+            setPubIDs.add(oli.Publication__c); 
         }
         
         if(!setPostalCodes.isEmpty() && !setPubIDs.isEmpty())
@@ -92,6 +95,7 @@ public class Vendor_Assignment {
         //Categorize the Olis
         for(Order_Line_Item__c oli: lOrderLineItems)
         {
+            
             if(oli.Delivered_By__c == MAILING_AGENT)
             {
                 lstAssignM.add(oli);
@@ -154,7 +158,14 @@ public class Vendor_Assignment {
                 String addressType = oli.Order__r.Recipient_Contact__r.Address__r.Recordtype.DeveloperName;
                 if(mapAgentAssignment.containskey(addressType))
                 {
-                    oli.Vendor_Mailing_Agent__c = mapAgentAssignment.get(addressType);
+                    
+                    //START PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
+                    if(oli.Order__r.Order_Type__c != 'Renewal' && addressType != STRING_AIRLINE ){
+                         oli.Vendor_Mailing_Agent__c = mapAgentAssignment.get(addressType);
+                    }else if(oli.Order__r.Order_Type__c == 'Renewal') {
+                         oli.Vendor_Mailing_Agent__c = oli.Order__r.Base_Subscription__r.Vendor_1__c;
+                    }  
+                    //END PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
                     lstResult.add(oli);
                 }
             }
@@ -181,7 +192,7 @@ public class Vendor_Assignment {
             lstResult.add(oli);
         }
         
-        return lstResult;
+        return lstResult; 
     }
     
     public List<Order_Line_Item__c> assignNewVendor(List<Order_Line_Item__c> lstOliToAssign)
@@ -209,7 +220,7 @@ public class Vendor_Assignment {
               lstResult.add(oli);
             }             
         }
-        
+        // System.debug('LISTRESULT = ' + lstResult);S
         return lstResult;
     }
     
@@ -246,6 +257,10 @@ public class Vendor_Assignment {
                  mapAgentAssignment.put(INTERNAL, mAgent.ID);
              else if( DIGITAL == mAgent.type)
                  mapAgentAssignment.put(DIGITAL, mAgent.ID);
+            //START PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
+             else if( STRING_AIRLINE == mAgent.type)
+             mapAgentAssignment.put(STRING_AIRLINE, mAgent.ID);
+            //END PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
          }
         return mapAgentAssignment;
     }

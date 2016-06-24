@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>IF(Zuora__Subscription__c.Subscriber_Contact__c.Address__c.GST_Applicable__c:SUM &gt;= 1, Zuora__SubscriptionProductCharge__c.Publication_Charge__c:SUM / 1.07,0)</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Subscription Amount Without Tax</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(Zuora__Subscription__c.Subscriber_Contact__c.Address__c.GST_Applicable__c:SUM &gt;= 1,(Zuora__SubscriptionProductCharge__c.Publication_Charge__c:SUM / 1.07) * 0.07,0)</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>GST Amount for Subscription</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF( Zuora__Subscription__c.Subscriber_Contact__c.Address__c.GST_Applicable__c:SUM &gt;= 1, Zuora__SubscriptionProductCharge__c.Delivery_Postage_charge__c:SUM/ 1.07,0)</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA3</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Delivery Amount Without Tax</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(Zuora__Subscription__c.Subscriber_Contact__c.Address__c.GST_Applicable__c:SUM &gt;= 1, (Zuora__SubscriptionProductCharge__c.Delivery_Postage_charge__c:SUM/ 1.07) * 0.07,0)</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA4</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>GST Amount for Delivery</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Zuora__Quantity__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Publication_Charge__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Delivery_Postage_charge__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r$Credit_Balance__c</field>
+    </columns>
+    <description>Daily Subscription Transaction List - Publication Summary for Newspaper</description>
+    <filter>
+        <booleanFilter>((1 OR 2) AND 3 AND 4 AND (5 OR 6)) AND 7</booleanFilter>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r$Order_Line_Item_Number_1__c.Main_Package_Product_Sub_Type__c</column>
+            <operator>equals</operator>
+            <value>Newspaper</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r$Order_Line_Item_Number_1__c.Add_On_Package_Product_Sub_Type__c</column>
+            <operator>equals</operator>
+            <value>Newspaper</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r$Order_Line_Item_Number_1__c.Main_Package_Billing_Type__c</column>
+            <operator>equals</operator>
+            <value>Full Prepaid</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r$Billing_Type__c</column>
+            <operator>notEqual</operator>
+            <value>Recurring Prepaid,Recurring Postpaid</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Publication_Charge__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Zuora__ProductName__c</column>
+            <operator>notEqual</operator>
+            <value>Delivery Charge,Postage Charge</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$Zuora__Price__c</column>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Orders__r.Subscriptions__r.Zuora__Subscription_Product_Charges__r$PublicationCode__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>DTL-Publication Summary for Newspaper</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Account_Order_Subscription_Sub_Prod_Charge__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account.Orders__r$DTL_Date__c</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
+    </timeFrameFilter>
+</Report>

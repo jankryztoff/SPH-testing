@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription_Name_Mapping__c</field>
+    </columns>
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription__c.Zuora__SubscriptionStartDate__c</field>
+    </columns>
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription__c.Zuora__SubscriptionEndDate__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Renewal_of_Subscription</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Case_Subscriptions__r$Product_Code__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Subscription Renewal</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>cases_with_subscriptions__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case.Case_Subscriptions__r$Subscription__c.Zuora__SubscriptionStartDate__c</dateColumn>
+        <endDate>2015-10-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-10-01</startDate>
+    </timeFrameFilter>
+</Report>

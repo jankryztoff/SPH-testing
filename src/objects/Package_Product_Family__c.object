@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>[Kristine Campang 10/14/2014] Item#36 Building Remaining Items v07.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Package_Name__c</fullName>
+        <description>[Kristine Campang 10/14/2014]. Item # 36. Build Remaining Items v07.</description>
+        <externalId>false</externalId>
+        <label>Package Name</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Package Product Families</relationshipLabel>
+        <relationshipName>Package_Product_Families</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Product_Family_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product_Family__r.Product_Family__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Family Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Family__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product Family</label>
+        <referenceTo>Product_Family__c</referenceTo>
+        <relationshipLabel>Package Product Families</relationshipLabel>
+        <relationshipName>Package_Product_Families</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Package Product Family</label>
+    <nameField>
+        <displayFormat>PPF-{0000}</displayFormat>
+        <label>PPF Record No.</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Package Product Families</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>PackageRecordTypeAddOn</fullName>
+        <active>true</active>
+        <description>When you click the New Package Product Family button from the package screen, it must validate that the current package for which you’re adding records is of type: Add-On.</description>
+        <errorConditionFormula>NOT(ISPICKVAL( Package_Name__r.Package_Type__c, &quot;Add On&quot;))</errorConditionFormula>
+        <errorMessage>Package Product Family can only be added for Package Type: Add-On</errorMessage>
+    </validationRules>
+</CustomObject>

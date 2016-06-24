@@ -11,20 +11,24 @@ public class Subscription_HandlerTest {
 
             static testMethod void testSubscriptionHandler(){
 
-                
-                                            
-                       //Create a new user with Standard User Profile
-                        User testUser = new User(
-                        Alias = 'stndrd',
-                        Email='standarduser@test.com', 
-                        EmailEncodingKey='UTF-8',
-                        LastName='Test',
-                        LanguageLocaleKey='en_US', 
-                        LocaleSidKey='en_US',
-                        ProfileId = [SELECT id FROM Profile Where Name = 'Standard User' LIMIT 1].id,  //(Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
-                        TimeZoneSidKey='America/Los_Angeles',
-                        UserName='standard@test.com'
-                        );
+                        //Create a new user with Standard User Profile
+                        
+                        User testUser; 
+                        try{
+                            testUser = [SELECT Id FROM User WHERE UserName = 'standard00000@test.com'];
+                        } catch(Exception e){
+                            testUser = new User(
+                            Alias = 'stndrd',
+                            Email='standarduser@test.com', 
+                            EmailEncodingKey='UTF-8',
+                            LastName='Test',
+                            LanguageLocaleKey='en_US', 
+                            LocaleSidKey='en_US',
+                            ProfileId = [SELECT id FROM Profile Where Name = 'Standard User' LIMIT 1].id,  //(Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+                            TimeZoneSidKey='America/Los_Angeles',
+                            UserName='standard00000@test.com'
+                            );
+                        } 
                         
                         System.runAs(testUser) {
                         
@@ -190,21 +194,25 @@ public class Subscription_HandlerTest {
           }//End of testSubscriptionHandler method
         
        static testMethod void testSubscriptionHandler2(){
-
-                
-                                            
-                       //Create a new user with Standard User Profile
-                        User testUser = new User(
-                        Alias = 'stndrd',
-                        Email='standarduser@test.com', 
-                        EmailEncodingKey='UTF-8',
-                        LastName='Test',
-                        LanguageLocaleKey='en_US', 
-                        LocaleSidKey='en_US',
-                        ProfileId = [SELECT id FROM Profile Where Name = 'Standard User' LIMIT 1].id,  //(Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
-                        TimeZoneSidKey='America/Los_Angeles',
-                        UserName='standard@test.com'
-                        );
+                        
+                        //Create a new user with Standard User Profile
+                        
+                        User testUser; 
+                        try{
+                            testUser = [SELECT Id FROM User WHERE UserName = 'standard00000@test.com'];
+                        } catch(Exception e){
+                            testUser = new User(
+                            Alias = 'stndrd',
+                            Email='standarduser@test.com', 
+                            EmailEncodingKey='UTF-8',
+                            LastName='Test',
+                            LanguageLocaleKey='en_US', 
+                            LocaleSidKey='en_US',
+                            ProfileId = [SELECT id FROM Profile Where Name = 'Standard User' LIMIT 1].id,  //(Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
+                            TimeZoneSidKey='America/Los_Angeles',
+                            UserName='standard00000@test.com'
+                            );
+                        }
                         
                         System.runAs(testUser) {
                         

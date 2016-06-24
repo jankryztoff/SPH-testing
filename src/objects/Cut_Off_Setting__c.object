@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Friday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Friday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Monday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PHd_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>PHd Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phe_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Phe Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Saturday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Saturday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sunday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Thursday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Thursday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tuesday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Tuesday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wednesday_Cut_Off__c</fullName>
+        <externalId>false</externalId>
+        <label>Wednesday Cut Off</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Cut Off Setting</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Cut Off Setting Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Cut Off Settings</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Friday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Friday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Friday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Monday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Monday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Monday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PHd_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(PHd_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>PHd_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Phe_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Phe_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Phe_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Saturday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Saturday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Saturday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Sunday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Sunday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Sunday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Thursday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Thursday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Thursday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Tuesday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Tuesday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Tuesday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Wednesday_Cut_Off_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(REGEX(Wednesday_Cut_Off__c, &apos;^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$&apos;))</errorConditionFormula>
+        <errorDisplayField>Wednesday_Cut_Off__c</errorDisplayField>
+        <errorMessage>Invalid format.</errorMessage>
+    </validationRules>
+</CustomObject>

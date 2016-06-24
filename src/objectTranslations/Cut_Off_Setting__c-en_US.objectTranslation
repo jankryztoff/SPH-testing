@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cut Off Setting</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cut Off Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Friday Cut Off --></label>
+        <name>Friday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monday Cut Off --></label>
+        <name>Monday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- PHd Cut Off --></label>
+        <name>PHd_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phe Cut Off --></label>
+        <name>Phe_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Saturday Cut Off --></label>
+        <name>Saturday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sunday Cut Off --></label>
+        <name>Sunday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thursday Cut Off --></label>
+        <name>Thursday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tuesday Cut Off --></label>
+        <name>Tuesday_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wednesday Cut Off --></label>
+        <name>Wednesday_Cut_Off__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Friday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Monday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>PHd_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Phe_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Saturday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Sunday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Thursday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Tuesday_Cut_Off_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid format. --></errorMessage>
+        <name>Wednesday_Cut_Off_Validation</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_MIRO_SubscriptionIssueFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_MIRO_SubscriptionIssueFile</value>
+    </caseValues>
+    <fields>
+        <label><!-- Publication_Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication_Issue_Date --></label>
+        <name>Publication_Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- house_type --></label>
+        <name>house_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- office_house_mail_indicator --></label>
+        <name>office_house_mail_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- postal_sector --></label>
+        <name>postal_sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- sub_channel_code --></label>
+        <name>sub_channel_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberId --></label>
+        <name>subscriberId__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber_count --></label>
+        <name>subscriber_count__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscription_copies --></label>
+        <name>subscription_copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendor_number --></label>
+        <name>vendor_number__c</name>
+    </fields>
+    <layouts>
+        <layout>BT_CO_MIRO_SubscriptionIssueFile Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

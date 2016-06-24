@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__Subscription__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Payment_Mode_1__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Zuora__SubscriptionStartDate__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Zuora__SubscriptionEndDate__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Main_Package_1__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Zuora__Account__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Zuora__Account__c.AccountNumber</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Zuora__CustomerAccount__c</field>
+    </columns>
+    <description>Paypal Subscriptions</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Payment_Mode_1__c</column>
+            <operator>equals</operator>
+            <value>PayPal</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Zuora__Subscription__c$Full_Address__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Paypal Subscriptions</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>All_subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

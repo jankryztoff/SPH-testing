@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>BA_INT_DATA_POOL__c.export_data__c</field>
+    </columns>
+    <columns>
+        <field>BA_INT_DATA_POOL__c.group_id__c</field>
+    </columns>
+    <columns>
+        <field>BA_INT_DATA_POOL__c.insert_time__c</field>
+    </columns>
+    <columns>
+        <field>BA_INT_DATA_POOL__c.record_type__c</field>
+    </columns>
+    <columns>
+        <field>BA_INT_DATA_POOL__c.run_for_date__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>SP049 - DataPurgeBatch</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$BA_INT_DATA_POOL__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>BA_INT_DATA_POOL__c.insert_time__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

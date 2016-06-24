@@ -1,0 +1,188 @@
+<apex:page controller="CreateVendorOrderEntryController" tabstyle="Order__c">
+<!-- START UD-1746 29/6/2015 GDelrosario: Added static file JS inthis page -->
+<apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SubscriptionDetailMiscellaneous.js')}" />
+<!-- END UD-1746 29/6/2015 GDelrosario: Added static file JS inthis page -->
+    <style>
+    	// Start D-2040 02/05/2015 JohnD added style to center text
+    	.day {
+    		text-align: center !important;
+    	}
+    	// End D-2040 02/05/2015 JohnD
+    	
+        .subItemTitle {
+            color: green;
+            font-weight: bold;
+        }
+        .scroll {
+            overflow-y: auto;
+            height: 100px; 
+        }
+
+        #lineItemTable, #giftItems {
+            background-color: #cccccc;
+        }
+        
+        
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+        
+        #lineItemTable th, #giftItems th {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        #giftItems {
+            width: 50%;
+            border-spacing: 1px;
+        }
+    
+        #lineItemTable td, #lineItemTable th, 
+        .resultContainer td, .resultContainer th {
+            border: 0 !important;
+            padding: 2px;
+        }
+        
+        #lineItemTable tr, .resultContainer tr,  #giftItems tr {
+            background-color: #ffffff;
+        }
+        
+        .childList {
+            background-color: #0099FF;
+        }
+        
+        .removeButtonCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        
+        .resultContainer > thead > tr > th {
+            background-color: #6666CC !important;
+            color: #ffffff !important;
+        }
+        
+        .resultContainer > tbody > tr {
+            cursor: pointer;
+        } 
+        
+        .packageResults th {
+            background-color: #800000 !important;
+            color: #ffffff !important;      
+        }
+        
+        
+        .packageResults tbody tr {
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
+        
+        
+        .packageContainer  {
+            padding-left: 50px !important;
+        }
+        
+        .selectedPackage {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        .numericField {
+            width: 50px;
+        }
+        
+    </style>
+<apex:form >
+        
+        <apex:pageBlock title="Order Entry - Start Vendor Subscription">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Edit" action="{!edit}" disabled="false"/>
+                <apex:commandButton value="Save as Draft"  disabled="true"/>
+                <apex:commandButton value="Submit" action="{!submit}"/>
+                <apex:commandButton value="Cancel" disabled="true"/> 
+            </apex:pageBlockButtons>
+            
+            <!--link-->
+           <h1>Knowledge Article:</h1>&nbsp;<a id="theLink" name="Order Entry Related Article" href="https://cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIq&popup=true&pubstatus=o&preview=true">Order Entry Related Article</a> <br/><br/>
+            <!-- end link -->             
+            
+            
+
+<apex:outputPanel layout="block">        
+                
+            <apex:pageBlockSection collapsible="true" title="Account and Recipient Information" columns="2">
+                <apex:outputField value="{!order.Account__c}" styleClass="subItemTitle" />
+                <apex:outputField value="{!order.Recipient_Contact__c}" label="Recipient"/>
+                <apex:outputField value="{!order.Reason__c}" label="Reason why Vendor Subscription:"/>
+                <!-- Start D-2040 02/05/2015 JohnD added delivery charge -->
+                <apex:outputField value="{!order.Delivery_Charge__c}" label="Delivery Fee" />
+                <!-- End D-2040 02/05/2015 JohnD --> 
+            </apex:pageBlockSection>
+
+</apex:outputPanel>                  
+        
+           <apex:pageBlockSection id="pubSelection" collapsible="true" title="Publication Selection" columns="1">
+                
+                <apex:outputPanel layout="block" styleClass="scroll">
+                <apex:dataTable value="{!OrWrapperList}" var="o" title="PublicationSection" border="1px" width="100%">
+         <!-- Start D-2040 02/05/2015 JohnD move stylclass to colum component-->
+         <apex:column headerValue="Publication" headerClass="selectedPackage" width="30%">
+                 <apex:outputField value="{!o.oLine.Publication__c}"/>
+               </apex:column>
+         <apex:column headerValue="Mo" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Mon__c}"/>
+         </apex:column>
+         <apex:column headerValue="Tu" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Tue__c}"/>
+         </apex:column>
+         <apex:column headerValue="We" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Wed__c}" />
+         </apex:column>
+         <apex:column headerValue="Th" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Thu__c}" />
+         </apex:column>
+         <apex:column headerValue="Fr" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Fri__c}" />
+         </apex:column>
+         <apex:column headerValue="Sa" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Sat__c}" />
+         </apex:column>
+         <apex:column headerValue="Su" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Sun__c}" />
+         </apex:column>
+         <apex:column headerValue="PHd" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.PHd__c}" />
+         </apex:column>
+         <apex:column headerValue="PHe" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <apex:outputField value="{!o.oLine.PHe__c}" />
+         </apex:column>
+         <apex:column headerValue="Notify Vendor" headerClass="selectedPackage day" width="4%" styleClass="day">
+             <center> <apex:outputField value="{!o.oLine.Notify_Vendor__c}"  /> </center>
+         </apex:column>
+         <apex:column headerValue="Start Date" headerClass="selectedPackage day" width="15%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Start_Date__c}" />
+         </apex:column>
+         <apex:column headerValue="Stop Date" headerClass="selectedPackage day" width="15%" styleClass="day">
+             <apex:outputField value="{!o.oLine.Stop_Date__c}" /> 
+         </apex:column> 
+         <!-- End D-2040 02/05/2015 JohnD move stylclass to colum component-->
+
+        
+         
+      </apex:dataTable>
+      </apex:outputPanel>
+      </apex:pageBlockSection>
+          
+      <br/>
+      <apex:pageBlockSection columns="2" showHeader="true">
+            <apex:outputField value="{!order.Remarks__c}"/>
+            <apex:outputField value="{!order.Vendor_Sms_Remarks__c}"/>
+            <!-- Start UD-0263 Ronald Dagaraga remove Informed customer 05-05-2015 -->
+            <!-- <apex:outputField value="{!order.Informed_Customer__c}"/> -->
+            <!-- End UD-0263 Ronald Dagaraga remove Informed customer 05-05-2015 -->
+      </apex:pageBlockSection>
+       
+</apex:pageBlock>
+</apex:form>   
+</apex:page>

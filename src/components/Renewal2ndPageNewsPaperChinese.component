@@ -1,0 +1,171 @@
+<apex:component >
+    <div id="renewal2ndPageNewspaperChineseComponent">
+        <table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0">
+            
+            <tr>
+                <td class="cf"><u>一、   条例</u></td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+        
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;付款方式</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  所有订阅是根据预付方式</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  付款可通过以下方式：</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o  支票、汇票（必须通过本地银行并以新元付款），领款者必须指定为<br/>“Singapore Press Holdings Limited”
+                </td>
+            </tr>
+        
+            <tr>
+                <td style="font-size:9pt;font-family:Arial;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“Singapore Press Holdings Limited”</b></td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o  信用卡（Visa/MasterCard）
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="cf"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可通过传真/电子邮件订阅。请注明信用卡号码和有效日期</b></td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认订阅程序</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  一旦确认您的订阅，您将收到一份确认通知</td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派送费 (Newspaper Delivery Fee)</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•   订阅费用不包括派送费。每月的派送费根据以下房子类型：</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$3 – 政府组屋（年费为 $36）</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$4 – 私人公寓、工厂和办公室（年费为 $48）</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$5 – 私人地产（年费为 $60）</td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其它</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 订阅费用包括7%消费税</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 订阅费用和任何行政费用可在未受通知下更改</td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联络方式</td>
+            </tr>
+            
+            <tr>
+                <td class="cf">
+                    <table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0">
+                    
+                        <tr>
+                            <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 电话：(65) 6388 3838</td> 
+                            <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 传真：(65) 6744 4875/ (65) 6744 1646</td>
+                        </tr>
+                        <tr>
+                            <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 电子邮件：circs@sph.com.sg</td>
+                            <td class="cf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 网址：www.sphsubscription.com.sg</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf"><u>二、  更换地址</u></td>
+            </tr>
+            
+            <tr><td>&nbsp;</td></tr>
+            
+            <tr>
+                <td class="cf">
+                    <table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0">
+                    
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请将更新通知单寄到：</td> 
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;请将报纸送到：</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan = "2"> &nbsp; </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订户号码：______________________</td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;订户号码：______________________</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：__________________________</td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;姓名：__________________________</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：__________________________</td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;地址：__________________________</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________________________</td>
+                            <td class="cf" width="50%"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________________________</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮区：__________________________ </td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;邮区：__________________________ </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国家：__________________________ </td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;国家：__________________________ </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生效日期：______________________ </td>
+                            <td class="cf" width="50%">&nbsp;&nbsp;&nbsp;生效日期：______________________ </td>
+                        </tr>
+                        
+                    </table>
+                </td>
+            </tr>                                
+        </table>
+    </div>
+</apex:component>

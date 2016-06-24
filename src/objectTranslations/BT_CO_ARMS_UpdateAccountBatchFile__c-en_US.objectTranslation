@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_UpdateAccountBatchFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_UpdateAccountBatchFiles</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Number --></label>
+        <name>Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved Debt Exposure Amount --></label>
+        <name>Approved_Debt_Exposure_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Sector --></label>
+        <name>Business_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- CCRID --></label>
+        <name>CCRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit External --></label>
+        <name>Credit_Limit_External__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit Internal --></label>
+        <name>Credit_Limit_Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term Reference --></label>
+        <name>Credit_Term_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term --></label>
+        <name>Credit_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debt --></label>
+        <name>Debt__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Suppression Indicator --></label>
+        <name>SOA_Suppression_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- SoaGroup --></label>
+        <name>SoaGroup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transient Indicator --></label>
+        <name>Transient_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update Date --></label>
+        <name>Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update ID --></label>
+        <name>Update_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update Time --></label>
+        <name>Update_Time__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

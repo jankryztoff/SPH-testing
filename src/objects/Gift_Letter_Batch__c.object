@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>GiftLetterBatch</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>GiftLetterBatch</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Batch_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Batch Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Account_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Account Number</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>DTL End Date</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Gift Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Gift Letter Batches</relationshipLabel>
+        <relationshipName>Gift_Letter_Batches</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Letter_Template__c</fullName>
+        <externalId>false</externalId>
+        <label>Letter Template</label>
+        <picklist>
+            <picklistValues>
+                <fullName>SPHM (Eng)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SPH Mag w/o Date (Eng)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retention (Eng)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IPP (Eng)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Premium (Chi)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Premium (Eng)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Promo_Chinese_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Promo Chinese Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promo_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Promo Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Promotion</label>
+        <referenceTo>Promotion__c</referenceTo>
+        <relationshipLabel>Gift Letter Batches</relationshipLabel>
+        <relationshipName>Gift_Letter_Batches</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_Venue__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption Venue</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>DTL Start Date</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Gift Letter Batch</label>
+    <nameField>
+        <displayFormat>BatchGL-{0000}</displayFormat>
+        <label>Gift Letter Batch Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Gift Letter Batches</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>DTLEndDateLessThanDTLStartDate</fullName>
+        <active>true</active>
+        <description>D-2503
+DTL End Date must not less than DTL Start Date</description>
+        <errorConditionFormula>End_Date__c &lt;  Start_Date__c</errorConditionFormula>
+        <errorDisplayField>End_Date__c</errorDisplayField>
+        <errorMessage>DTL End Date must not less than DTL Start Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PromoNameNotRequiredForNonChinese</fullName>
+        <active>true</active>
+        <description>Prevent user from inputting a value in the Promo Chinese Name field if the value of the Letter Template field is not &quot;Premium (Chi)&quot;.</description>
+        <errorConditionFormula>NOT(ISPICKVAL(Letter_Template__c, &apos;Premium (Chi)&apos;)) &amp;&amp; Promo_Chinese_Name__c != null</errorConditionFormula>
+        <errorDisplayField>Promo_Chinese_Name__c</errorDisplayField>
+        <errorMessage>This field should only be populated if the Letter Template is &quot;Premium (Chi)&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PromoNameRequiredForChinese</fullName>
+        <active>true</active>
+        <description>If the letter template field is set with a value of &quot;Premium (Chi)&quot;, the Promo Chinese Name field must be populated.</description>
+        <errorConditionFormula>ISPICKVAL(Letter_Template__c, &apos;Premium (Chi)&apos;) &amp;&amp; Promo_Chinese_Name__c = null &amp;&amp; Promo_Chinese_Name__c = &apos;&apos;</errorConditionFormula>
+        <errorDisplayField>Promo_Chinese_Name__c</errorDisplayField>
+        <errorMessage>Please input the Chinese Name of the selected Promotion in this field. For example, if selected Promotion is Lianhe Zaobao, Promo Chinese Name should be 联合早报.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Redemption_End_Date_Less_Than_Start_Date</fullName>
+        <active>true</active>
+        <description>D-2503
+Redemption End Date must not less than Redemption Start Date</description>
+        <errorConditionFormula>Redemption_End_Date__c  &lt;  Redemption_Start_Date__c</errorConditionFormula>
+        <errorDisplayField>Redemption_End_Date__c</errorDisplayField>
+        <errorMessage>Redemption End Date must not less than Redemption Start Date</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Generate_List</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate List</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;/apex/CreateGiftLettersBatchPage?Id={!Gift_Letter_Batch__c.Id}&apos;);</url>
+    </webLinks>
+</CustomObject>

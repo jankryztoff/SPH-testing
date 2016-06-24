@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription_Name_Mapping__c</field>
+    </columns>
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription__c.Zuora__SubscriptionStartDate__c</field>
+    </columns>
+    <columns>
+        <field>Case.Case_Subscriptions__r$Subscription__c.Zuora__SubscriptionEndDate__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Stop_Subscription</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case$Termination_Reason__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Subscription termination report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>cases_with_subscriptions__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case$Approval_Process_Submission_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

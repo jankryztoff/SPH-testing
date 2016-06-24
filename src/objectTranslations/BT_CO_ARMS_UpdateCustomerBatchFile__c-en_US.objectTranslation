@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_UpdateCustomerBatchFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_UpdateCustomerBatches</value>
+    </caseValues>
+    <fields>
+        <label><!-- Address1 --></label>
+        <name>Address1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address2 --></label>
+        <name>Address2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address3 --></label>
+        <name>Address3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address4 --></label>
+        <name>Address4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blacklist Indicator --></label>
+        <name>BlackList_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blacklist Colour Code --></label>
+        <name>Blacklist_Colour_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blacklist Reason --></label>
+        <name>Blacklist_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Block House No --></label>
+        <name>Block_House_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Secondary --></label>
+        <name>Building_Secondary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Profile --></label>
+        <name>Business_Profile__c</name>
+    </fields>
+    <fields>
+        <label><!-- CCRID --></label>
+        <name>CCRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- CareOf AttentionTo Party --></label>
+        <name>CareOf_ATtentionTo_Party__c</name>
+    </fields>
+    <fields>
+        <label><!-- CareOf AttentionTo Indicator --></label>
+        <name>CareOf_AttentionTo_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Zip --></label>
+        <name>City_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- ContactNo Email --></label>
+        <name>ContactNo_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Designation --></label>
+        <name>Contact_Designation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Extension --></label>
+        <name>Contact_Extension__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Type --></label>
+        <name>Contact_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Risk Rating --></label>
+        <name>Credit_Risk_Rating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Name1 --></label>
+        <name>Customer_Name1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Name2 --></label>
+        <name>Customer_Name2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Status --></label>
+        <name>Customer_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Floor No --></label>
+        <name>Floor_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- GST OutOfScope Indicator --></label>
+        <name>GST_OutOfScope_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ID Number --></label>
+        <name>ID_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ID Type --></label>
+        <name>ID_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- PO Box No --></label>
+        <name>PO_Box_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Passport CountryCode --></label>
+        <name>Passport_CountryCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordType --></label>
+        <name>RecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- ReferenceKey --></label>
+        <name>ReferenceKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- SPH Staff Indicator --></label>
+        <name>SPH_Staff_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sort Order --></label>
+        <name>Sort_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- UniqueKey --></label>
+        <name>UniqueKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit No --></label>
+        <name>Unit_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unlink Customer --></label>
+        <name>Unlink_Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- UpdateDate --></label>
+        <name>UpdateDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- UpdateTime --></label>
+        <name>UpdateTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update ID --></label>
+        <name>Update_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

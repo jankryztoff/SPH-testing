@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Case$RecordType</field>
+    </columns>
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case$Sub_Status__c</field>
+    </columns>
+    <columns>
+        <field>Case$Status</field>
+    </columns>
+    <columns>
+        <field>Case$Recipient_Address__c.Postal_Sector__c</field>
+    </columns>
+    <columns>
+        <field>Case$Urgent_Request__c</field>
+    </columns>
+    <columns>
+        <field>Case$Recipient_Address__c.Postal_Code__c</field>
+    </columns>
+    <columns>
+        <field>Case$Recipient__c.Address__c.Zonal_Code__c</field>
+    </columns>
+    <description>For viewing of pending cases</description>
+    <filter>
+        <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Start_Subscription,Case.Stop_Subscription,Case.Temp_Stop_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$Sub_Status__c</column>
+            <operator>equals</operator>
+            <value>Waiting for Vendor Assignment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Complaint_Newspaper,Case.Vendor_Stop_Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$Status</column>
+            <operator>equals</operator>
+            <value>New,Pending</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>New and Pending cases for Ops</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>cases_with_zones_ps__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case$CreatedDate</dateColumn>
+        <endDate>2015-12-21</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-12-21</startDate>
+    </timeFrameFilter>
+</Report>

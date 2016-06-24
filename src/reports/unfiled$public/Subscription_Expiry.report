@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__Subscription__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Cases__r$Subscription_Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Cases__r$Subscription_End_Date__c</field>
+    </columns>
+    <format>Matrix</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Zuora__Subscription__c$Product_Code__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Subscription Expiry</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_with_Cases__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Cases__r$Subscription_End_Date__c</dateColumn>
+        <endDate>2015-10-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-10-01</startDate>
+    </timeFrameFilter>
+</Report>

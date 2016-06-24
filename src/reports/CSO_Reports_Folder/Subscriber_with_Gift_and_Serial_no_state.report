@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order__c$Account__c</field>
+    </columns>
+    <columns>
+        <field>Order__c$Name</field>
+    </columns>
+    <columns>
+        <field>Order__c.Order_Line_Items_Direct__r$Name</field>
+    </columns>
+    <columns>
+        <field>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Order_Quantity_Formula__c</field>
+    </columns>
+    <columns>
+        <field>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Name</field>
+    </columns>
+    <columns>
+        <field>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Serial_Number__c</field>
+    </columns>
+    <description>Initial name is Subscribers with Gift and Serial_N</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Gift_Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order__c.Order_Line_Items_Direct__r$Promotion_ID__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Has_Letter_Attached__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Subscriber with Gift and Serial no state</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Gifts_with_Order_and_Subscriber__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Order__c.Order_Line_Items_Direct__r.Order_Line_Item_Gifts__r$Serial_Number__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Order__c$Check_Dated__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

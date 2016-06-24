@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_CNTC_FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Zuora__SubscriptionEndDate__c</column>
+            <operator>equals</operator>
+            <value>10/22/2015</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Zuora__SubscriptionStartDate__c</column>
+            <operator>equals</operator>
+            <value>10/23/2015</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>SP053 - SP_DailySetSubActiveFlag</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Recipient_Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Zuora__ContractAcceptanceDate__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

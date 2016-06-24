@@ -1,0 +1,38 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div><font face="Verdana, Helvetica, sans-serif" size="2">{{Today}}</font></div><div><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><font face="Verdana, Helvetica, sans-serif" size="2"><font style="color: rgb(0, 0, 0);">{{Contact.FirstName}}&nbsp;</font><font style="color: rgb(0, 0, 0);">{{Contact.LastName}}</font></font><div><font face="Verdana, Helvetica, sans-serif" size="2">{{Contact.MailingAddress}}</font></div>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<p class="MsoHeader" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">Dear Subscriber,</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><span style="color: rgb(0, 0, 0);">Notification
+for the collection of Gift for the&nbsp;</span>{{Publication__c.Name}}<span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">Subscription</span></font></p>
+
+<p class="MsoNormal"><font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);">Account no:&nbsp;</font><font face="Verdana, Helvetica, sans-serif" size="2">{{Account.AccountNumber}}</font></p><div style="color: rgb(0, 0, 0);"><div><div id="_com_1" class="msocomtxt" language="JavaScript"><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">Thank
+you for subscribing to&nbsp;{{Publication__c.Name}}.</font></p><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><span style="color: rgb(0, 0, 0);">As a token of our appreciation, we are pleased
+to present you a&nbsp;</span><font style="color: rgb(0, 0, 0);">{{Gift__c.Name}} worth&nbsp;</font>{{Gift__c.Gift_Cost__c}}.</font></p><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><font size="2" face="Verdana, Helvetica, sans-serif">{{Promotion_Gift__c.Redemption_Letter_Details__c}}</font></p><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">We trust
+that you will enjoy your upcoming issues of&nbsp;{{Publication__c.Name}}.</font></p><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">______________________________________________________________________</font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">I hereby acknowledge receipt of&nbsp;{{Gift__c.Name}}<i>&nbsp;</i><i>&nbsp;worth&nbsp;</i>{{Gift__c.Gift_Cost__c}}<i>.</i></font></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><i><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></i></p><p class="MsoBodyText" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">Name: ________________________________ NRIC: ________________________</font></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">___________________________________</font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 0.5in;"><font face="Verdana, Helvetica, sans-serif" size="2">&nbsp; &nbsp; &nbsp; Signature / Date</font></p></div></div><div style="font-size: 12pt; font-family: arial; color: rgb(0, 0, 0);"><div id="_com_2" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[<p class="MsoBodyText"><br></p>
+
+<div style="font-size: 12pt; font-family: arial;"><!--[if !supportAnnotations]-->
+
+<div><div id="_com_2" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div>]]></td>
+</tr>
+</table>

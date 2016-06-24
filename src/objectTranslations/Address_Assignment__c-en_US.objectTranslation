@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Address Assignment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Address Assignments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Assignment Legacy ID --></label>
+        <name>Address_Assignment_Legacy_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Assignment Number --></label>
+        <name>Address_Assignment_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address ID --></label>
+        <name>Address_ID__c</name>
+        <relationshipLabel><!-- Address Assignments (Address ID) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case ID --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact ID --></label>
+        <name>Contact_ID__c</name>
+        <relationshipLabel><!-- Address Assignments (Contact ID) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective From Date --></label>
+        <name>Effective_From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Address --></label>
+        <name>New_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Void</masterLabel>
+            <translation><!-- Void --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription History --></label>
+        <name>Subscription_History__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) --></label>
+        <name>Subscription_Vendor__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription ID --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Address Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Old Address --></label>
+        <name>old_address__c</name>
+    </fields>
+    <layouts>
+        <layout>Address Assignment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Address Assignment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- End date must be greater than the Effective date and must not be a past date. --></errorMessage>
+        <name>Validation_Address_Assign_1</name>
+    </validationRules>
+</CustomObjectTranslation>

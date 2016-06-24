@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>packinglabelbatch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>packinglabebatch</value>
+    </caseValues>
+    <fields>
+        <label><!-- DaysfromCurrentdate --></label>
+        <name>DaysfromCurrentdate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issuedate --></label>
+        <name>Issuedate__c</name>
+    </fields>
+    <fields>
+        <label><!-- ToAddress --></label>
+        <name>ToAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- ToEmailID --></label>
+        <name>ToEmailID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ToName --></label>
+        <name>ToName__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

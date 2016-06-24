@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Billing Batch Allocation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Billing Batch Allocation</value>
+    </caseValues>
+    <fields>
+        <help><!-- Separate by Comma &quot;,&quot; --></help>
+        <label><!-- Billing Batch Number --></label>
+        <name>Batch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Batch Number --></label>
+        <name>Next_Batch_Number__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

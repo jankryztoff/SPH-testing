@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Publication_Commission_Rates__c$Name</field>
+    </columns>
+    <columns>
+        <field>Publication_Commission_Rates__c$Commission_Rate_Special_Fri__c</field>
+    </columns>
+    <columns>
+        <field>Publication_Commission_Rates__c$Commission_Rate_Special_Mon__c</field>
+    </columns>
+    <columns>
+        <field>Publication_Commission_Rates__c$Commission_Rate_Special_PHD__c</field>
+    </columns>
+    <columns>
+        <field>Publication_Commission_Rates__c$Commission_Rate_Special_PHE__c</field>
+    </columns>
+    <columns>
+        <field>Publication_Commission_Rates__c$Commission_Rate_Special_Sat__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>SP058 - SP_LoadPublicationRates</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Publication_Commission_Rates__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Publication_Commission_Rates__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

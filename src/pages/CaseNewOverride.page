@@ -1,0 +1,5 @@
+<apex:page standardController="Case" extensions="CaseNewOverrideController" action="{!redirect}">
+<apex:pageMessages ></apex:pageMessages>
+<br/><br/>
+<a href="/{!$Currentpage.parameters.def_account_id}" class="btn" style="text-decoration:none"> Back to Account </a>
+</apex:page>

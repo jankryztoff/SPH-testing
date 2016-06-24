@@ -1,5 +1,14 @@
-@isTest (seeAllData= TRUE)
+@isTest (seeAllData= false)
 private class BatchAddressAssignEffectiveDateTest01 {
+    
+    @testSetup
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createBatchInterface();
+        insert CustomSettingsDataFactory.createPlannerSched();
+    }
 
     
     //Holds all testdata values
@@ -219,17 +228,21 @@ private class BatchAddressAssignEffectiveDateTest01 {
             contactList[1].Address__c = addressList[1].id;
             contactList[1].Email__c = null;
             contactList[1].Email_Secondary__c = 'a@a.com';
+            contactList[1].Billing_Indicator__c = true;
+            contactList[1].Recipient_Indicator__c = false;
         //}   \
             contactList[2].Account = acc[0];
             contactList[2].City_Code__c = cityList[0].id;
             contactList[2].Address__c = addressList[2].id;
             contactList[2].Email__c = 'a@a.com';
+            contactList[2].Billing_Indicator__c = true;
+            contactList[2].Recipient_Indicator__c = false;
         //}   \
             contactList[3].Account = acc[0];
             contactList[3].City_Code__c = cityList[0].id;
             contactList[3].Address__c = addressList[3].id;
             contactList[3].Email__c = 'a@a.com';
-        
+            
         insert contactList; // JURNA REMOVED
         //update contactList; // JURNA ADDED
         sObjectListMap_global.put('Contact', contactList);
@@ -798,13 +811,22 @@ private class BatchAddressAssignEffectiveDateTest01 {
 
     //Case
     static List<Case> createCase01(List<Order__c> order) {
-        List<Case> caseList = TestDataFactory.createCase(1, 'Complaint - Magazine');
+        List<Case> caseList = TestDataFactory.createCase(2, 'Change of Address/Vendor');
             caseList[0].Order__c = order[0].Id;
             caseList[0].Change_of_Address_Type__c = GlobalVariableClass.BILLINGADD;
             caseList[0].Status = GlobalVariableClass.STATUS_CLOSED;
+            caseList[0].Category__c = 'Request';
+            caseList[0].Sub_Category__c = 'Change of Address';
+            
+            caseList[1].Order__c = order[0].Id;
+            caseList[1].Change_of_Address_Type__c = GlobalVariableClass.BILLDELIVERYADD;
+            caseList[1].Status = GlobalVariableClass.STATUS_CLOSED;
+            caseList[1].Category__c = 'Request';
+            caseList[1].Sub_Category__c = 'Change of Address';
         //
         
         Database.insert(caseList);
+        system.debug('@@@@@@**** created case debug: ' + caseList);
         sObjectListMap_global.put('Case', caseList);
         return caseList;
     }
@@ -838,7 +860,16 @@ private class BatchAddressAssignEffectiveDateTest01 {
     //FROM Address_Assignment__c WHERE Effective_Date__c = :dt AND Active__c = false AND End_Date__c = NULL AND Case__r.Status = :GlobalVariableClass.STATUS_CLOSED
     static List<Address_Assignment__c> createAddressAssignment01(List<Address__c> addressList, List<Case> caseList, List<Contact> contactList,
             List<Subscription_Vendor__c> svList, List<Zuora__Subscription__c> subRecs, List<Account> acc) {
-        Integer record = 1;
+        Integer record = 10;
+        
+        system.debug('@@@@@** case Change_of_Address_Type__c debug: ' + caseList[0].Change_of_Address_Type__c);
+        
+        // caseList[0].Change_of_Address_Type__c = GlobalVariableClass.BILLINGADD;
+        // caseList[0].Category__c = 'Request';
+        // caseList[0].Sub_Category__c = 'Change of Address';
+        // update caseList[0];
+        
+        
         List<Address_Assignment__c> addressAssignmentList = new List<Address_Assignment__c>();
         for (Integer x=0; x<record; x++) {
             Address_Assignment__c aa = new Address_Assignment__c();
@@ -855,6 +886,123 @@ private class BatchAddressAssignEffectiveDateTest01 {
             aa.Subscription__c = subRecs[0].id;
             //aa.Vendor__c = acc[0].Id; //JURNA ADDED
             
+            addressAssignmentList.add(aa);
+        
+        
+        // Raus Ablaza 06-14-2016
+        // added new address_assignment__c without Subscript
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = contactList[0].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false;
+            addressAssignmentList.add(aa);
+        
+        
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = contactList[0].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = true;
+            addressAssignmentList.add(aa);
+            
+            //****************************//
+            
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = contactList[0].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false;
+            aa.Subscription__c = subRecs[0].id;
+            
+            addressAssignmentList.add(aa);
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = contactList[0].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false;
+            addressAssignmentList.add(aa);
+        
+        
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = contactList[0].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = true;
+            addressAssignmentList.add(aa);
+            
+        }
+        
+        Integer conListCount = contactList.size();
+        for (Integer x=0; x<conListCount; x++) {
+            Address_Assignment__c aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = contactList[x].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false; 
+            addressAssignmentList.add(aa);
+            
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = contactList[x].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false; 
+            addressAssignmentList.add(aa);
+            
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = contactList[x].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false; 
+            aa.Subscription__c = subRecs[0].id;
+            addressAssignmentList.add(aa);
+            
+            aa = new Address_Assignment__c();
+            aa.Address__c = addressList[0].Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = contactList[x].Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = svList[0].Id; 
+            aa.Active__c = false; 
+            aa.Subscription__c = subRecs[0].id;
             addressAssignmentList.add(aa);
         }
         
@@ -1043,11 +1191,37 @@ private class BatchAddressAssignEffectiveDateTest01 {
         
         //system.assertEquals(addressAssignmentList[0].Contact__r.AccountId, svList[0].Account__c); //JURNA ADDED
     }
+    
+    static testMethod void testBatchAddressAssignmentEffectiveDateGetDate() {
+        testData02();
+        Test.startTest();
+        BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate(date.today());
+        ID batchprocessid = Database.executeBatch(batch,200);
+        System.assertNotEquals(null, batchprocessid); 
+        Test.stopTest();
+    }
+    
+    static testMethod void testBatchAddressAssignmentEffectiveDateAssignId() {
+        
+        testData02();
+        Test.startTest();
+        
+        List<Address_Assignment__c> addAssignList = new List<Address_Assignment__c>();
+        Address_Assignment__c aa = new Address_Assignment__c();
+        addAssignList = (List<Address_Assignment__c>) sObjectListMap_global.get('Address_Assignment__c');
+        aa = addAssignList[0];
+        
+        BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate(aa.Id);
+        ID batchprocessid = Database.executeBatch(batch,200);
+        System.assertNotEquals(null, batchprocessid); 
+        Test.stopTest();
+    }
 
     static testMethod void testBatchAddressAssignmentEffectiveDate01() {
         
         //TestData
         testData02();
+        
         Test.startTest();
         BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
         ID batchprocessid = Database.executeBatch(batch,200);
@@ -1142,13 +1316,15 @@ private class BatchAddressAssignEffectiveDateTest01 {
         BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
         
         //TestData TODO
-        sObjectListMap_global = new Map<String, Object>();
-        
+        testdata02();
+        // sObjectListMap_global = new Map<String, Object>();
+        Test.StartTest();
         Map<String, Contact> subZuoraIdToNewContactMap = new Map<String, Contact>();
         Map<String, Id> subZuoraIdToNewVendorMap = new Map<String, Id>();
         
         //TestProper
         batch.updateSub(subZuoraIdToNewContactMap, subZuoraIdToNewVendorMap);
+        Test.StopTest();
     }
     
     //public List<Subscription_Vendor__c> updateSubVendor(Map<Id, Contact> subVendorIdToNewContactMap, Map<Id, Id> subVendorIdToNewVendorMap) {
@@ -1192,7 +1368,9 @@ private class BatchAddressAssignEffectiveDateTest01 {
         Map<Id, Set<Zuora__Subscription__c>> accountIdToSubscriptionMap = new Map<Id, Set<Zuora__Subscription__c>>();
         
         //TestProper
+        Test.startTest();
         batch.updateBillAccBillingContact(conIdToAddressAssignIdMap, conIdToConMap, subIdToBillAccMap, billAccIdToNewContactMap, accountIdToSubscriptionMap);
+        Test.stopTest();
     }
     
     //public List<Map<String, Object>> updateSubBillingContact(List<Order__c> newOrderList, Map<Id, Contact> subIdToNewContactMap) {
@@ -1276,22 +1454,210 @@ private class BatchAddressAssignEffectiveDateTest01 {
     //public static void updateCustomerWebserviceNonFuture(Set<Id> CusToUpdSet){
     static testMethod void testUpdateCustomerWebserviceNonFuture01() {
         try{
-        Test.setMock(WebServiceMock.class, new zLoginMock());       
-        //BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
+            Test.setMock(WebServiceMock.class, new zLoginMock());       
+            //BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
+            
+            //TestData TODO
+            Set<Id> CusToUpdSet = new Set<Id>();
+            List<BT_CO_ARMS_UpdateCustomerBatchFile__c> btcoList = createBTCOARMS_UCBF01();
+            CusToUpdSet.add(btcoList[0].id);
+            
+            //from BT_CO_ARMS_UpdateCustomerBatchFile__c Where  Id =: CusToUpdSet
+            
+            //from BT_CO_ARMS_UpdateCustomerBatchFile__c Where CreatedDate = Today AND Customer_Name1__c IN :updCusName_SET AND UniqueKey__c IN :updUniqKey_SET AND CCRID__c IN :updCusNum_SET];
+            
+            //TestProper
+            BatchAddressAssignmentEffectiveDate.updateCustomerWebserviceNonFuture(CusToUpdSet);
+        } catch (Exception e) {
+            
+        }
+    }
+    
+    static testMethod void testBatchAddressAssignmentUsingId() {
+        //TestData
         
-        //TestData TODO
-        Set<Id> CusToUpdSet = new Set<Id>();
-        List<BT_CO_ARMS_UpdateCustomerBatchFile__c> btcoList = createBTCOARMS_UCBF01();
-        CusToUpdSet.add(btcoList[0].id);
+        User userU = TestDataFactory.prepareTestusers();
         
-        //from BT_CO_ARMS_UpdateCustomerBatchFile__c Where  Id =: CusToUpdSet
+        System.runAs(userU) {
+
+            sObjectListMap_global = new Map<String, Object>();        
+            
+            List<Zone__c> zoneList = createZone01();
+            List<Country__c> countryList = createCountry01(zoneList);
+            List<Singpost_Address__c> singpostAddressList = createPostalCode01();
+            
+            List<Address__c> addressList = createAddress01(countryList, singpostAddressList);
+            List<City__c> cityList = createCity01(countryList);
+                
+            List<Account> acc = createAccount01();
+                    
+            List<Contact> contactList = createContact03(acc, cityList, addressList);
+            
+            Letter_Print_Request__c letterPrint = createLetterPrintRequest01(acc);
+            List<Order__c> odr = createOrder01(acc);
+            
+            List<Case> caseList = createCase01(odr);
+            
+            List<Zuora__CustomerAccount__c> billAcc = createZuoraCustomerAccount03(acc, contactList);
+                    
+            List<Package__c> packageList = createPackage01();
+            List<Promotion__c> promotionList = createPromotion01();
+            List<Order_Line_Item__c> orderLineItemList = createOrderLineItem01(odr, packageList, promotionList);
+            
+            //List<Zuora__Subscription__c> createZuoraSubscription( acc, List<Promotion__c> promo, billAcc,  odr) {
+            List<Zuora__Subscription__c> zSub = createZuoraSubscription02(acc, billAcc, odr, orderLineItemList, contactList);
+            
+            List<Subscription_Vendor__c> svList = createSubscriptionVendor03(acc, contactList);
+    
+            List<Order_Line_Item_Vendor__c> olivList = createOrderLineItemVendor01(svList, odr); //JURNA ADDED
+            
+            //BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate(); JURNA ADDED
+            //batch.accountIdToSubscriptionVendorListMap(svList[0].Account__c, svList); JURNA ADDED
+            //BatchAddressAssignmentEffectiveDate.accountIdToSubscriptionVendorListMap(svList[0].Account__c, new List<Subscription_Vendor__c> {svList[0]}); JURNA ADDED
+            
+            Map<Id,Address_Assignment__c> addressAssignmentMap = new Map<Id, Address_Assignment__c>(createAddressAssignment01(addressList, caseList, contactList, svList, zSub, acc));
+            Set<String> aaIds = new Set<String>();
+            for(String a :addressAssignmentMap.keySet()){
+                aaIds.add(a);
+            }
+            Test.startTest();
+            BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate(aaIds);
+            ID batchprocessid = Database.executeBatch(batch,200);
+            System.assertNotEquals(null, batchprocessid); 
+            Test.stopTest();
         
-        //from BT_CO_ARMS_UpdateCustomerBatchFile__c Where CreatedDate = Today AND Customer_Name1__c IN :updCusName_SET AND UniqueKey__c IN :updUniqKey_SET AND CCRID__c IN :updCusNum_SET];
+        }
+    }
+    
+    public static testMethod void testUpdateSubMethod() {
         
-        //TestProper
-        BatchAddressAssignmentEffectiveDate.updateCustomerWebserviceNonFuture(CusToUpdSet);
-    } catch (Exception e) {
-       }
+        User userU = TestDataFactory.prepareTestusers();
+        
+        System.runAs(userU) {
+        
+            // Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            // database.insert(acc);
+            
+            Account accV = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            accV.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor');
+            database.insert(accV);
+            
+            SingPost_Address__c spAdd = TestDataFactory.createSingpostAddress(1)[0];
+            insert spAdd;
+            
+            Address__c ad = TestDataFactory.createAddress(1)[0];
+            ad.RecordTypeId = Schema.SObjectType.Address__c.getRecordTypeInfosByName().get('Local').getRecordTypeId();
+            ad.Postal_Code__c = spAdd.Id;
+            ad.Address_Type__c = 'A';
+            Database.insert(ad);
+            
+            Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+            con.Address__c = ad.Id;
+            con.AccountId = accV.Id;
+            con.Recipient_Indicator__c = true;
+            Database.insert(con);
+            
+            Subscription_Vendor__c subVen = TestDataFactory.createSubscriptionVendor(1)[0];
+            subVen.Status__c = 'Active';
+            subVen.Account__c = accV.Id;
+            Database.insert(subVen);
+            
+            Publication__c pub = TestDataFactory.createPublication(1)[0];
+            pub.Product_Category__c = 'Magazine';
+            Database.insert(pub);
+            
+            Subscription_Vendor_Publication__c subVenPub = TestDataFactory.createSubVendorPublication(1)[0];
+            subVenPub.Subscription_Vendor__c = subVen.Id;
+            subVenPub.Publication__c = pub.Id;
+            Database.insert(subVenPub);
+            
+            Order__c odr = TestDataFactory.createOrder(1)[0];
+            odr.Account__c = accV.Id;
+            odr.Billing_Type__c = 'Full Prepaid';
+            odr.DTL_Date__c = Date.today();
+            insert odr;
+            
+            List<Case> caseList = TestDataFactory.createCase(2, 'Change of Address/Vendor');
+            caseList[0].Order__c = odr.Id;
+            caseList[0].Change_of_Address_Type__c = GlobalVariableClass.BILLINGADD;
+            caseList[0].Status = GlobalVariableClass.STATUS_CLOSED;
+            caseList[0].Category__c = 'Request';
+            caseList[0].Sub_Category__c = 'Change of Address';
+            caseList[1].Order__c = odr.Id;
+            caseList[1].Change_of_Address_Type__c = GlobalVariableClass.BILLDELIVERYADD;
+            caseList[1].Status = GlobalVariableClass.STATUS_CLOSED;
+            caseList[1].Category__c = 'Request';
+            caseList[1].Sub_Category__c = 'Change of Address';
+            insert caseList;
+            
+            List<Address_Assignment__c> addressAssignmentList = new List<Address_Assignment__c>();
+            
+            Address_Assignment__c aa = new Address_Assignment__c();
+            aa.Address__c = ad.Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = con.Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = subVen.Id; 
+            aa.Active__c = false; 
+            addressAssignmentList.add(aa);
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = ad.Id;
+            aa.Case__c = caseList[0].Id;
+            aa.Contact__c = con.Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Closed'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = subVen.Id; 
+            aa.Active__c = true;
+            addressAssignmentList.add(aa);
+            
+            aa = new Address_Assignment__c();
+            aa.Address__c = ad.Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = con.Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Active'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = subVen.Id; 
+            aa.Active__c = false;
+            addressAssignmentList.add(aa);
+        
+            aa = new Address_Assignment__c();
+            aa.Address__c = ad.Id;
+            aa.Case__c = caseList[1].Id;
+            aa.Contact__c = con.Id; 
+            aa.Effective_Date__c = Date.today(); 
+            aa.Status__c = 'Closed'; 
+            aa.End_Date__c = null;                                      
+            aa.Subscription_Vendor__c = subVen.Id; 
+            aa.Active__c = true;
+            addressAssignmentList.add(aa);
+            
+            insert addressAssignmentList;
+            
+            Set<String> selectiveIds = new Set<String>();
+            for (Address_Assignment__c aas : addressAssignmentList) {
+                selectiveIds.add(String.valueOf(aas.Id));
+            }
+            
+            Test.startTest();
+            
+            Map<String, Contact> subVendorIdToNewContactMap = new Map<String, Contact>();
+            subVendorIdToNewContactMap.put(subVen.Id, con);
+            
+            Map<String, Id> subVendorIdToNewVendorMap = new Map<String, Id>();
+            subVendorIdToNewVendorMap.put(subVen.Id, accV.Id);
+            
+            BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate(selectiveIds);
+            ID batchprocessid = Database.executeBatch(batch);
+            //batch.updateSub(subVendorIdToNewContactMap, subVendorIdToNewVendorMap);
+            
+            Test.stopTest();
+        }
+        
     }
     
 }

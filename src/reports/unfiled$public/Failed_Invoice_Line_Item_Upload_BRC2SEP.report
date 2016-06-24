@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Zuora__Account__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>equals</operator>
+            <value>BA-S01444302,BA-S01609782,BA-S01351395,BA-S01549177,BA-S01351388,BA-S01637344,BA-S01470723,BA-S01698347,BA-S01497729,BA-S01423379,BA-S01592360,BA-S01444386,BA-S01609884,BA-S01408147,BA-S01645715,BA-S01351455,BA-S01549163,BA-S01637374,BA-S01470593</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Failed Invoice Line Item Upload BRC2SEP</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Zuora__CustomerAccount__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Zuora__ContractAcceptanceDate__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

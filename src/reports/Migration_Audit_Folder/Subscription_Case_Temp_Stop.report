@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__Subscription__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Cases__r$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Number_of_Copies1__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c$Legacy_Subscription_ID__c</field>
+    </columns>
+    <description>Subscription Case Temp Stop</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Cases__r$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Temp_Stop_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Legacy_Subscription_ID__c</column>
+            <operator>notContain</operator>
+            <value>null</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Number_of_Copies1__c</column>
+            <operator>greaterThan</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Legacy_Subscription_ID__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Subscription Case Temp Stop</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_Case_Temp_Stop_Sub__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

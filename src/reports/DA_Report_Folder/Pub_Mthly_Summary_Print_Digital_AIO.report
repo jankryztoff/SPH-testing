@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_1376636</developerName>
+        <masterLabel>Platform Grouped</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Package__c$Platform__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Print</sourceValue>
+            </sourceValues>
+            <value>Print</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Online</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Smartphone</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tablet</sourceValue>
+            </sourceValues>
+            <value>Digital</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>All in One</sourceValue>
+            </sourceValues>
+            <value>All in One</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Package__c.Subscriptions__r$Number_of_Copies__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Account_Record_Type__c</column>
+            <operator>equals</operator>
+            <value>Direct Corporate,Direct Individual</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Main_Package_Product_Sub_Type_Mapping__c</column>
+            <operator>equals</operator>
+            <value>Newspaper</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Product_Code__c</column>
+            <operator>notEqual</operator>
+            <value>DELCHG,POSCHG,ADMCHG</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Account_Record_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Product_Code__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_1376636</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Pub Mthly Summary - Print/Digital/AIO</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SM_Report_Type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Package__c.Subscriptions__r$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vendor Monthly Data</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vendor Monthly Data</value>
+    </caseValues>
+    <fields>
+        <label><!-- Amount Before GST --></label>
+        <name>Amount_Before_GST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount Type --></label>
+        <name>Amount_Type__c</name>
+        <picklistValues>
+            <masterLabel>Commission</masterLabel>
+            <translation><!-- Commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery Fee</masterLabel>
+            <translation><!-- Delivery Fee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery Rate</masterLabel>
+            <translation><!-- Delivery Rate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insertion</masterLabel>
+            <translation><!-- Insertion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pagination</masterLabel>
+            <translation><!-- Pagination --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Copies --></label>
+        <name>Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit/Debit --></label>
+        <name>Credit_Debit__c</name>
+        <picklistValues>
+            <masterLabel>Credit</masterLabel>
+            <translation><!-- Credit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debit</masterLabel>
+            <translation><!-- Debit --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credit Period --></label>
+        <name>Credit_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debit Amount --></label>
+        <name>Debit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debit Note No. --></label>
+        <name>Debit_Note_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debit Period --></label>
+        <name>Debit_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Fee --></label>
+        <name>Delivery_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- GST Amount --></label>
+        <name>GST_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grand Total --></label>
+        <name>Grand_Total2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grand Total --></label>
+        <name>Grand_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Handling Fee --></label>
+        <name>Handling_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insertion Fee --></label>
+        <name>Insertion_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- Normalized View --></label>
+        <name>Normalized_View__c</name>
+    </fields>
+    <fields>
+        <label><!-- Note Number --></label>
+        <name>Note_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Vendor Monthly Data --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Vendor Monthly Data --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total --></label>
+        <name>Total2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total --></label>
+        <name>Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Vendor Monthly Data --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Vendor Monthly Data Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

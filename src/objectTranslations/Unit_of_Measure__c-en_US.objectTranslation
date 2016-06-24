@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Unit of Measure</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Unit of Measure</value>
+    </caseValues>
+    <fields>
+        <label><!-- Is Monthly? --></label>
+        <name>Is_Monthly__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of days issued separated by comma. Ex. Monday,Tuesday,Wednesday --></help>
+        <label><!-- Issue Days --></label>
+        <name>Issue_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Used for --></label>
+        <name>Used_for__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

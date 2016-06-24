@@ -1,0 +1,87 @@
+<html> 
+	<body> 
+		<font = "Arial"> 
+			<table width="100%"> 
+				<tr> 
+					<td width=68% align=left> 
+						<br><font size="5"> <b> Subscription Acknowledgement </b></font> 
+					<div style="font-size:9pt; font-name: arial">
+						<br><br> Date : {{Today}}
+						<br> Billing A/C No  : {{AccountNumber}}</b> 
+						<br><br>{{AccountName}}
+                                                <br> {{AttnTo}}
+						<br> {{MailingAddress}}
+					</div>	
+					</td> 
+					<td width=32% align=left>
+					<img src="{{baseURL}}" height="95" width="135"/>
+					<div style="font-size:9pt; font-name: arial">
+					<br><b>Singapore Press Holdings Limited</b>
+					<br><b>Circulation</b>
+					<br>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+					<br>Enquiries: +65 6388  3838, Email : circs@sph.com.sg
+                                        <br>Co. Regn. No.: 198402868E
+					</div>
+					</td>
+				</tr>
+			</table>
+			<div style="font-size:8pt; font-name: arial">
+				<br><br>Thank you for your subscription(s) with SPH. We are pleased to confirm the following details:
+			</div>
+			<table width="100%" cellpadding="0" style="font-family:Arial; border-spacing: 0px; border-collapse: collapse; font-size:7pt; border: 1px solid #000000;" border='1' >
+				<tr style="font-size:9pt; font-name: arial; border: 1px solid #000000;" > 
+				
+					<td colspan=6 align=left style="border: 1px solid #000000;"> <b>Subscription & Recipient Details</b>
+					<br>{{RecipientNumber}} &nbsp; {{RecipientAccountName}},&nbsp; {{MailingAddress1}}
+					</td>
+				</tr>			
+				<tr style="font-size:9pt; font-name: arial">
+					<td  align=left style="border: 1px solid #000000;" >	
+						<b>Subscription Packages</b>
+					</td>
+                    <td  align=center style="border: 1px solid #000000;">
+						<b>Subscription Period*</b>
+					</td>
+					<td  align=center style="border: 1px solid #000000;">
+						<b>Copy(s)</b>
+					</td>
+					<td  align=center style="border: 1px solid #000000;">
+						<b>Price Plan</b>
+					</td>
+					<td  align=center style="border: 1px solid #000000;">
+						<b>Payment Mode</b>
+					</td>
+					<td  align=center style="border: 1px solid #000000;">
+						<b>Price (S$)</b>
+					</td>
+				</tr>
+				{{insert table}}
+			</table>
+			<table cellpadding="0" cellspacing="0">	
+				<tr style="font-size:7pt; font-name: arial">
+					<td>
+				*If you have signed up a newspaper promotion package, please note that an administrative fee will be imposed if you terminate your subscription before the contract expiry date. The fee imposed will be based on the amount stated in the Terms and Conditions of the promotion, and the fee may differ for each promotion. Subscription(s) will automatically be renewed until terminated by Subscribers in writing with 30 days’ notice.<br>
+				</tr>
+			</table>
+			<div style="font-size:7pt; font-name: arial">
+				{{footnotes}}				
+			</div>
+			<table cellpadding="0" cellspacing="0">
+			<tr style="font-size:9pt; font-name: arial" >
+					<td>
+				<br><b><i>Please contact us at 6319 1100 or email us at circsadmin@sph.com.sg if you do not receive the publication(s) on the subscription start date within three (3) days. More information and Terms & Conditions on subscription matters can be found at our website www.sphsubscription.com.sg.</i></b>
+
+				<br><br>For any other enquiries on your subscription, please call our Customer Service Officers at (65) 6388 3838 during operating hours (Mondays to Fridays: 8.30am - 6pm and Saturdays/Sundays: 8.30am - 12pm. Closed on Public Holidays). Alternatively, you can email us at circs@sph.com.sg.
+
+
+				<br><br><!--START:D-3475 9/2/15 Added by Manolo Valena--><!--<br>--><!--END:D-3475 9/2/15 Added by Manolo Valena-->Thank you and we look forward to your continued support. Happy Reading!
+
+
+				<br><br><b>Best Regards</b>
+				<br><b>Circulation Customer Service</b>
+					</td>
+				</tr>
+			</table>
+		</font>
+	</body>
+</html>

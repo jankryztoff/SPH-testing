@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Subscription_Temp_Stop__c$Id</field>
+    </columns>
+    <columns>
+        <field>Subscription_Temp_Stop__c$Subscription_Temp_Stop_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Subscription_Temp_Stop__c$Name</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <column>Subscription_Temp_Stop__c$LastModifiedBy</column>
+            <operator>equals</operator>
+            <value>Migration2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Subscription_Temp_Stop__c$LastModifiedBy</column>
+            <operator>equals</operator>
+            <value>Migration</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Subscription Temp Stop for BX</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_Temp_Stop__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Subscription_Temp_Stop__c$LastModifiedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-01-26</startDate>
+    </timeFrameFilter>
+</Report>

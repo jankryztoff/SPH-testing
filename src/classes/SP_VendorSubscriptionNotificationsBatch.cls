@@ -232,6 +232,7 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
     //START D-4074 10-Dec-2015 Added By S.Puli
     global void execute(Database.BatchableContext BC, List<Case_Vendor_Subscription__c> initialCaseVenSubs) {
         //Start UD-3457 26-Jan-2016 Added By S.Puli
+
         try{
         //End UD-3457 26-Jan-2016 Added By S.Puli
             List<Case> scope = new List<Case>();
@@ -242,6 +243,7 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
                 }
             }
             if(initialCaseSubs.size()>0){
+                //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
                 scope = [Select Id, CaseNumber, RecordType.Name, Account.Id, Subscription_Name__c, Temp_Stop__r.Id, Temp_Stop__r.Temp_Stop_Date__c, 
                 Temp_Stop__r.Restart_Date__c, CSO_Remarks__c, Sub_Category__c, Stop_Request_Date__c, Effective_Date__c, Vendor__r.Email__c, Vendor__c, 
                 New_Address__r.Postal_Code__c, Vendor__r.RecordType.Name, Vendor__r.Vendor_Communication_Preference__c, Vendor__r.Active__c, 
@@ -253,7 +255,8 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
                 Case_Vendor_Subscriptions__r), (select id, Stop_Request_Date__c, Subscription_Vendor__c, Subscription_Vendor__r.Recipient__c, 
                 Publication__c from Order_Line_Items1__r) 
                 From Case 
-                Where Id IN :initialCaseSubs];
+                Where Id IN :initialCaseSubs AND Status != :GlobalVariableClass.STATUS_VOID];
+                //END PD-0359 13Jun2016 Added By C. Lin
             }
         
         //END D-4074 10-Dec-2015 Added By S.Puli
@@ -588,9 +591,10 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
                 }
                 //END: D-3140 20/06/2015 Added by S.Puli
                     //START: D-3140 20/06/2015 Added by S.Puli
-                    system.debug('coaCaseToNewMobile_MAP>>'+coaCaseToNewMobile_MAP);
-                    system.debug('coaCaseToTaskContact_MAP>>'+coaCaseToTaskContact_MAP);
-                    system.debug('mapVendorToStaff_MAP>>'+mapVendorToStaff_MAP);
+                    system.debug('\n\n***CON: >>'+conId_SET);
+                    system.debug('\n\n***USER: >>'+[Select Id, Name, ContactId, Alias, Contact.AccountId, Profile.UserLicense.Name,  isActive From User]);
+                    system.debug('\n\n***USER22: >>'+[Select Id, Name, ContactId, Alias, Contact.AccountId From User Where ContactId In :conId_SET]);
+                    system.debug('\n\n***USER33: >>'+[Select Id, Name, ContactId, Alias, Contact.AccountId From User Where Profile.UserLicense.Name = :GlobalVariableClass.USER_LICENSE]);
                     //Start D-4333 18-Jan-2016 Added By S.Puli
                     List<User> newCoaUserList = [Select Id, Name, ContactId, Alias, Contact.AccountId From User Where ContactId In :conId_SET AND Profile.UserLicense.Name = :GlobalVariableClass.USER_LICENSE and isActive=true];
                     //End D-4333 18-Jan-2016 Added By S.Puli
@@ -879,7 +883,9 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
                     }
                 }
                 if(tempStopVenSubIds.size()>0 && tempStopCaseToSubIds_MAP.size()>0){
-                    for(Case_Vendor_Subscription__c cvSubs : [Select Id, Case__c,Case__r.RecordTypeId, Subscription_Vendor__c, Case__r.Temp_Stop_Date__c, Case__r.Change_of_Address_Type__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :tempStopVenSubIds AND Case__r.Effective_Date__c = tomorrow AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD)]){
+                    //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
+                    for(Case_Vendor_Subscription__c cvSubs : [Select Id, Case__c,Case__r.RecordTypeId, Subscription_Vendor__c, Case__r.Temp_Stop_Date__c, Case__r.Change_of_Address_Type__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :tempStopVenSubIds AND Case__r.Effective_Date__c = tomorrow AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Case__r.Status != :GlobalVariableClass.STATUS_VOID]){
+                    //END PD-0359 13Jun2016 Added By C. Lin
                         for(Id caseId : tempStopCaseToSubIds_MAP.keyset()){
                             for(Id subsId : tempStopCaseToSubIds_MAP.get(caseId)){
                                 tempStopBoolean = false;
@@ -938,7 +944,9 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
                 }
                 if(tempRestartVenSubIds.size()>0 && tempRestartCaseToSubIds_MAP.size()>0){
             //START UD-3170 05-Nov-2015 Added by S.Puli
-                    for(Case_Vendor_Subscription__c cvSubs : [Select Id, Case__c,Case__r.RecordTypeId, Subscription_Vendor__c, Case__r.Temp_Stop_Date__c, Case__r.Change_of_Address_Type__c, Case__r.Vendor__c, Case__r.Vendor__r.RecordType.Name,Case__r.Vendor__r.Vendor_Communication_Preference__c, Case__r.Vendor__r.Handphone_Number__c,Case__r.Vendor__r.Email__c,Case__r.Contact_To_Update__c, Case__r.Contact_To_Update__r.Address__r.Postal_Code__r.Name, Case__r.New_Address__r.Postal_Code__r.Name,Case__r.New_Address__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :tempRestartVenSubIds AND Case__r.Effective_Date__c = tomorrow AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD)]){
+                    //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
+                    for(Case_Vendor_Subscription__c cvSubs : [Select Id, Case__c,Case__r.RecordTypeId, Subscription_Vendor__c, Case__r.Temp_Stop_Date__c, Case__r.Change_of_Address_Type__c, Case__r.Vendor__c, Case__r.Vendor__r.RecordType.Name,Case__r.Vendor__r.Vendor_Communication_Preference__c, Case__r.Vendor__r.Handphone_Number__c,Case__r.Vendor__r.Email__c,Case__r.Contact_To_Update__c, Case__r.Contact_To_Update__r.Address__r.Postal_Code__r.Name, Case__r.New_Address__r.Postal_Code__r.Name,Case__r.New_Address__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :tempRestartVenSubIds AND Case__r.Effective_Date__c = tomorrow AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Case__r.Status != :GlobalVariableClass.STATUS_VOID]){
+                    //END PD-0359 13Jun2016 Added By C. Lin
                         for(Id caseId : tempRestartCaseToSubIds_MAP.keyset()){
                             if(tempRestartCaseToSubIds_MAP.get(caseId) == cvSubs.Subscription_Vendor__c){
                                 //Start UD-3379 05-Feb-2016 Added By S.Puli
@@ -2617,7 +2625,10 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
     global void finish(Database.BatchableContext BC) {
         String shortID = String.valueOf(BC.getJobId()).subString(0,15);
         List<BATCH_JOB_SCHEDULER__c> batchJobSchedulerList = [SELECT Id, Status__c, Batch_Code__c, Batch_Run_Date__c, SFDC_Job_id__c FROM BATCH_JOB_SCHEDULER__c WHERE SFDC_Job_id__c = :shortID OR SFDC_Job_id__c = :BC.getJobId()];
-
+        //Start PD-0307 07-Jun-2016 Added By S.Puli
+        SP_VenSubsNotifChainBatch svs = new SP_VenSubsNotifChainBatch(batchJobSchedulerList);
+        Database.executeBatch(svs);
+        /**
         if(batchJobSchedulerList.size() > 0)
         {
             BATCH_JOB_SCHEDULER__c batchJobScheduler = batchJobSchedulerList.get(0);
@@ -2633,7 +2644,8 @@ global class SP_VendorSubscriptionNotificationsBatch implements Database.Batchab
 
             update batchJobScheduler;           
      
-        }   
+        }  **/
+        //eND PD-0307 07-Jun-2016 Added By S.Puli
     //START UD-2016 VPernicia 07/27/15
         List<Messaging.SingleEmailMessage> mailList = new List<Messaging.SingleEmailMessage>();
         List<SMS_Outbound__c> smsOutboundList = new List<SMS_Outbound__c>();

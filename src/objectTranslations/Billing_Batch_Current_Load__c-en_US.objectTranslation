@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Billing Batch Current Load</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Billing Batch Current Load</value>
+    </caseValues>
+    <fields>
+        <label><!-- Current Load --></label>
+        <name>Current_Load__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

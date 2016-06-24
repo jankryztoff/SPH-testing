@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Credit_Note_Item__c</baseObject>
+    <category>other</category>
+    <deployed>false</deployed>
+    <description>This report type is for &apos;Monthly Summary of ARMS CreditNotes&apos; Report</description>
+    <label>Credit Note Items with Credit Notes</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Amt_After_Tax__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Amt_Before_Tax__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Credit_Note__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice_Date__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Tax_Amt__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Tax_Exempt_Amt__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Tax_Rate__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ARMS Interface Time</displayNameOverride>
+            <field>Credit_Note__c.To_ARMS_Time__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Document Date</displayNameOverride>
+            <field>Credit_Note__c.Document_Date__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Credit Note Number</displayNameOverride>
+            <field>Credit_Note__c.Credit_Note_Number__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Amount After Tax</displayNameOverride>
+            <field>Credit_Note__c.Total_Amt_After_Tax__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Amount Before Tax</displayNameOverride>
+            <field>Credit_Note__c.Total_Amt_Before_Tax__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Tax Amount</displayNameOverride>
+            <field>Credit_Note__c.Total_Tax_Amt__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Tax Exempt Amount</displayNameOverride>
+            <field>Credit_Note__c.Total_Tax_Exempt_Amt__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Name</displayNameOverride>
+            <field>Credit_Note__c.Billing_Account__c.Zuora__Account__c.Name</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Number</displayNameOverride>
+            <field>Credit_Note__c.Billing_Account__c.Zuora__Account__c.AccountNumber</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ARMS Invoice ID</displayNameOverride>
+            <field>Invoice__c.ARMS_Invoice_ID__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Date</displayNameOverride>
+            <field>Invoice__c.Zuora__InvoiceDate__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ARMS Interface Timestamp</displayNameOverride>
+            <field>Invoice__c.ARMS_Interface_Timestamp__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Account Name</displayNameOverride>
+            <field>Invoice__c.Zuora__BillingAccount__c.Name</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Account</displayNameOverride>
+            <field>Invoice__c.Zuora__BillingAccount__c</field>
+            <table>Credit_Note_Item__c</table>
+        </columns>
+        <masterLabel>Credit Note Items</masterLabel>
+    </sections>
+</ReportType>

@@ -5,6 +5,7 @@
  * Requirement/Project Name: CRSM Project
  * @description: This job will fetch all the eligibles publication subsriptions and mark them for mass cover price update
  * History: 19/04/2016 [D-4382] Wenjun : Restructure the class
+ * History: 20/06/2016 [PD-0586] Jessa: added batch job id on calling the main class on the finish method
  */
  
 global class BatchCOCP implements Database.Batchable<sObject>, Database.Stateful {    
@@ -75,6 +76,8 @@ global class BatchCOCP implements Database.Batchable<sObject>, Database.Stateful
         //END Wenjun D-4806 19 May 16 
         query +=' AND (Billing_Type__c = :MR_PRE OR Billing_Type__c = :MR_POST)';
         query +=' AND (Zuora__SubscriptionEndDate__c = NULL OR Zuora__SubscriptionEndDate__c > THIS_MONTH)';
+        
+        //System.debug(' query : '+query);
         return Database.getQueryLocator(query);
     }
     
@@ -145,7 +148,7 @@ global class BatchCOCP implements Database.Batchable<sObject>, Database.Stateful
         
         //Start the main processing job
         //START Wenjun D-4806 20 April 16 - Add Job Run Date parameter
-        BatchCOCPMain batch = new BatchCOCPMain(jobRunDate);
+        BatchCOCPMain batch = new BatchCOCPMain(jobRunDate, BC.getJobId());
         //END Wenjun D-4806 20 April 16
         Database.executeBatch(batch, 10);     
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contact$Id</field>
+    </columns>
+    <columns>
+        <field>Contact$Name</field>
+    </columns>
+    <columns>
+        <field>Contact$Contact_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Contact$Recipient_Indicator__c</field>
+    </columns>
+    <columns>
+        <field>Contact$Recipient_Number__c</field>
+    </columns>
+    <columns>
+        <field>Contact$Recipient_Number_Show__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Contact$Recipient_Indicator__c</column>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Contact$Recipient_Number_Show__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>UD-1550 Recipient Number Null</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Contacts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Contact$Legacy_Created_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

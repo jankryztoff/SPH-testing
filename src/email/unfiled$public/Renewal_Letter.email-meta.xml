@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Gift_Letter</letterhead>
+    <name>Renewal Letter</name>
+    <style>formalLetter</style>
+    <subject>Letter of Renewal</subject>
+    <textOnly>Account no:
+{!Contact.FirstName} {!Contact.LastName}
+{!Contact.MailingAddress}
+Dear {!Contact.FirstName} {!Contact.LastName},
+
+SPH Subscriber Engagement Programme
+
+Thank you for renewing your subscription by another {!Promotion__c.Contract_Period__c} months. Your subscription has been processed and the following requested newspaper(s) will be delivered to your stated address from the mentioned date(s).
+
+Start Date Publication
+{!Zuora__Subscription__c.Zuora__SubscriptionStartDate__c} {!Publication__c.Name}
+{!Promotion_Gift__c.Redemption_Letter_Details__c}
+
+This is a computer-generated letter. No signature is required.</textOnly>
+    <type>html</type>
+</EmailTemplate>

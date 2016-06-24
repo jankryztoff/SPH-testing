@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>An image will be shown if the Customer is a VIP, Credit Alert or Attention Seeking Subs.</description>
+    <internalUseOnly>true</internalUseOnly>
+    <name>Attention Seeking Subs</name>
+    <public>false</public>
+</Document>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>City</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Airline --></label>
+        <name>Airline__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Code --></label>
+        <name>City_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Legacy ID --></label>
+        <name>City_Legacy_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Name --></label>
+        <name>City_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Cities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Flight Number (1) --></label>
+        <name>Flight_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number (2) --></label>
+        <name>Flight_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <layouts>
+        <layout>City Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - City Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

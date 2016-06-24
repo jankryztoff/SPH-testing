@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Product Codes to bypass creation of Delivery Subscription</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Product_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Code</label>
+        <length>8</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Product Code</label>
+    <visibility>Protected</visibility>
+</CustomObject>

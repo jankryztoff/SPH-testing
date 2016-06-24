@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Manual Vendor Credits/ Debits</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Manual Vendor Credits/ Debits</value>
+    </caseValues>
+    <fields>
+        <label><!-- Amount After GST --></label>
+        <name>Amt_After_GST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approval Date --></label>
+        <name>Approval_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Manual Vendor Credits/ Debits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Credit / Debit Indicator --></label>
+        <name>Credit_Debit_Indicator__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credit / Debit Note Number --></label>
+        <name>Credit_Debit_Note_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Reason Type - Description
+
+01 - PREPAID PAPER COST-NON- DEL
+
+02 - PREPAID DEL FEE-NON-DEL
+
+03 - SUB PAPER FEE FOR VEN
+
+04 - SUB DELIVERY FEE FOR VEN
+
+D3 - PREPAID PAPER COST-NON- DEL --></help>
+        <label><!-- Credit/Debit Vendor Reason --></label>
+        <name>Credit_Debit_Vendor_Reason__c</name>
+        <picklistValues>
+            <masterLabel>01</masterLabel>
+            <translation><!-- 01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>02</masterLabel>
+            <translation><!-- 02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>03</masterLabel>
+            <translation><!-- 03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>04</masterLabel>
+            <translation><!-- 04 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- From Date --></label>
+        <name>From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Id --></label>
+        <name>Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Manual Vendor Credits/ Debits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Manual Vendor Credits/ Debits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- To Date --></label>
+        <name>To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Manual Vendor Credits/ Debits --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Manual Vendor Credits/ Debits Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Remarks --></label>
+            <section>Remarks</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Credit/Debit Indicator cannot be blank. --></errorMessage>
+        <name>CreditDebit_Indicator_is_blank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Credit/Debit Vendor Reason cannot be blank. --></errorMessage>
+        <name>CreditDebit_Vendor_Reason_is_blank</name>
+    </validationRules>
+</CustomObjectTranslation>

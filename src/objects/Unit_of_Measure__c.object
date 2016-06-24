@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Is_Monthly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Monthly?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Issue_Days__c</fullName>
+        <description>List of days issued separated by comma. Ex. Monday,Tuesday,Wednesday. This is use in UsageHelper apex class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List of days issued separated by comma. Ex. Monday,Tuesday,Wednesday</inlineHelpText>
+        <label>Issue Days</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <externalId>false</externalId>
+        <label>Label</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Used_for__c</fullName>
+        <externalId>false</externalId>
+        <label>Used for</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Unit of Measure</label>
+    <visibility>Public</visibility>
+</CustomObject>

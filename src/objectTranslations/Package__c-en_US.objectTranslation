@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Package</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Packages</value>
+    </caseValues>
+    <fields>
+        <label><!-- Base Product Count --></label>
+        <name>Base_Product_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Type --></label>
+        <name>Billing_Type__c</name>
+        <picklistValues>
+            <masterLabel>Full Prepaid</masterLabel>
+            <translation><!-- Full Prepaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Postpaid</masterLabel>
+            <translation><!-- Recurring Postpaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Prepaid</masterLabel>
+            <translation><!-- Recurring Prepaid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Bundle Discount Count --></label>
+        <name>Bundle_Discount_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bundle Product Count --></label>
+        <name>Bundle_Product_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Channel: Direct --></label>
+        <name>Channel_Direct__c</name>
+    </fields>
+    <fields>
+        <label><!-- Channel: E-shop (overseas) --></label>
+        <name>Channel_E_shop_overseas__c</name>
+    </fields>
+    <fields>
+        <label><!-- Channel: E-shop (private) --></label>
+        <name>Channel_E_shop_private__c</name>
+    </fields>
+    <fields>
+        <label><!-- Channel: E-shop (public) --></label>
+        <name>Channel_E_shop_public__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Count --></label>
+        <name>Discount_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration Hidden --></label>
+        <name>Duration_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective End Date --></label>
+        <name>Effective_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- EligibleProductFamily(forAdd-OnPackage) --></label>
+        <name>Eligible_Product_Family_for_Add_On_Pack__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extension Discount Count --></label>
+        <name>Extension_Discount_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extension Product Count --></label>
+        <name>Extension_Product_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Frequency Identifier --></label>
+        <name>Frequency_Identifier__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicator for those Packages where there is no GST applied in order to handle GST at Package Price in ACK Letters --></help>
+        <label><!-- GST Exclusive --></label>
+        <name>GST_Exclusive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Of Promotions --></label>
+        <name>Number_Of_Promotions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Code --></label>
+        <name>Package_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Item Base Hidden --></label>
+        <name>Package_Item_Base_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Item Bundle Hidden --></label>
+        <name>Package_Item_Bundle_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Price --></label>
+        <name>Package_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Sub Type --></label>
+        <name>Package_Sub_Type__c</name>
+        <picklistValues>
+            <masterLabel>Extension</masterLabel>
+            <translation><!-- Extension --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Single</masterLabel>
+            <translation><!-- Single --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tiered</masterLabel>
+            <translation><!-- Tiered --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Package Type --></label>
+        <name>Package_Type__c</name>
+        <picklistValues>
+            <masterLabel>Add On</masterLabel>
+            <translation><!-- Add On --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Base</masterLabel>
+            <translation><!-- Base --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bundle</masterLabel>
+            <translation><!-- Bundle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discount</masterLabel>
+            <translation><!-- Discount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grace Period</masterLabel>
+            <translation><!-- Grace Period --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Updated by workflow with value from product platform on package item, used for reporting --></help>
+        <label><!-- Platform --></label>
+        <name>Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family(Current Package) --></label>
+        <name>Product_Family_Current_Package_Map__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family(Current Package) --></label>
+        <name>Product_Family_Current_Package__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family (for Add-On Packages) --></label>
+        <name>Product_Family_for_Add_On_Packages__c</name>
+        <picklistValues>
+            <masterLabel>AFR</masterLabel>
+            <translation><!-- AFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BH</masterLabel>
+            <translation><!-- BH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BT</masterLabel>
+            <translation><!-- BT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FT</masterLabel>
+            <translation><!-- FT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MY</masterLabel>
+            <translation><!-- MY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NP</masterLabel>
+            <translation><!-- NP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SM</masterLabel>
+            <translation><!-- SM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TABL</masterLabel>
+            <translation><!-- TABL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBS</masterLabel>
+            <translation><!-- TBS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TM</masterLabel>
+            <translation><!-- TM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUP</masterLabel>
+            <translation><!-- TUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUPJ</masterLabel>
+            <translation><!-- TUPJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WB</masterLabel>
+            <translation><!-- WB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WSJA</masterLabel>
+            <translation><!-- WSJA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZB</masterLabel>
+            <translation><!-- ZB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Family (for Add On Packages) --></label>
+        <name>Product_Family_for_Add_On_Packages_del__c</name>
+        <picklistValues>
+            <masterLabel>AFR</masterLabel>
+            <translation><!-- AFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BH</masterLabel>
+            <translation><!-- BH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BT</masterLabel>
+            <translation><!-- BT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FT</masterLabel>
+            <translation><!-- FT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MY</masterLabel>
+            <translation><!-- MY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NP</masterLabel>
+            <translation><!-- NP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SM</masterLabel>
+            <translation><!-- SM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TABL</masterLabel>
+            <translation><!-- TABL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBS</masterLabel>
+            <translation><!-- TBS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TM</masterLabel>
+            <translation><!-- TM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUP</masterLabel>
+            <translation><!-- TUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUPJ</masterLabel>
+            <translation><!-- TUPJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WB</masterLabel>
+            <translation><!-- WB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WSJA</masterLabel>
+            <translation><!-- WSJA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZB</masterLabel>
+            <translation><!-- ZB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Renewal Pkg Code (Mag 1 Yr Base) --></label>
+        <name>RenewalPkgCodeMag1YrBase__c</name>
+        <relationshipLabel><!-- Packages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Renewal Pkg Code (Mag 1 Yr Disc) --></label>
+        <name>RenewalPkgCodeMag1YrDisc__c</name>
+        <relationshipLabel><!-- Packages (Renewal Pkg Code (Mag 1 Yr Disc)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Renewal Pkg Code (Mag 2 Yr Base) --></label>
+        <name>RenewalPkgCodeMag2YrBase__c</name>
+        <relationshipLabel><!-- Packages (Renewal Pkg Code (Mag 2 Yr Base)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Renewal Pkg Code (Mag 2 Yr Disc) --></label>
+        <name>RenewalPkgCodeMag2YrDisc__c</name>
+        <relationshipLabel><!-- Packages (Renewal Pkg Code (Mag 2 Yr Disc)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Renewal Pkg Code (Newspaper) --></label>
+        <name>RenewalPkgCodeNewspaper__c</name>
+        <relationshipLabel><!-- Packages (Renewal Pkg Code (Newspaper)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Same Pck Renewal (Mag 1 Yr Base)? --></label>
+        <name>Same_Pck_Renewal_Mag_1_Yr_Base__c</name>
+    </fields>
+    <fields>
+        <label><!-- Same Pck Renewal (Mag 1 Yr Disc)? --></label>
+        <name>Same_Pck_Renewal_Mag_1_Yr_Disc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Same Pck Renewal (Mag 2 Yr Base)? --></label>
+        <name>Same_Pck_Renewal_Mag_2_Yr_Base__c</name>
+    </fields>
+    <fields>
+        <label><!-- Same Pck Renewal (Mag 2 Yr Disc)? --></label>
+        <name>Same_Pck_Renewal_Mag_2_Yr_Disc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Same Pck Renewal (Newspaper)? --></label>
+        <name>Same_Pck_Renewal_Newspaper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sequence --></label>
+        <name>Sequence__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subs Period Hidden --></label>
+        <name>Subs_Period_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Period --></label>
+        <name>Subscription_Period_1__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>21</masterLabel>
+            <translation><!-- 21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>22</masterLabel>
+            <translation><!-- 22 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>23</masterLabel>
+            <translation><!-- 23 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>24</masterLabel>
+            <translation><!-- 24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>25</masterLabel>
+            <translation><!-- 25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>26</masterLabel>
+            <translation><!-- 26 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>27</masterLabel>
+            <translation><!-- 27 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>28</masterLabel>
+            <translation><!-- 28 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>29</masterLabel>
+            <translation><!-- 29 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30</masterLabel>
+            <translation><!-- 30 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>31</masterLabel>
+            <translation><!-- 31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>32</masterLabel>
+            <translation><!-- 32 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>33</masterLabel>
+            <translation><!-- 33 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>34</masterLabel>
+            <translation><!-- 34 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>35</masterLabel>
+            <translation><!-- 35 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>36</masterLabel>
+            <translation><!-- 36 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>37</masterLabel>
+            <translation><!-- 37 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>38</masterLabel>
+            <translation><!-- 38 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>39</masterLabel>
+            <translation><!-- 39 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>40</masterLabel>
+            <translation><!-- 40 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>41</masterLabel>
+            <translation><!-- 41 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>42</masterLabel>
+            <translation><!-- 42 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>43</masterLabel>
+            <translation><!-- 43 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>44</masterLabel>
+            <translation><!-- 44 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>45</masterLabel>
+            <translation><!-- 45 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription Period --></label>
+        <name>Subscription_Period__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>21</masterLabel>
+            <translation><!-- 21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>22</masterLabel>
+            <translation><!-- 22 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>23</masterLabel>
+            <translation><!-- 23 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>24</masterLabel>
+            <translation><!-- 24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>25</masterLabel>
+            <translation><!-- 25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>26</masterLabel>
+            <translation><!-- 26 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>27</masterLabel>
+            <translation><!-- 27 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>28</masterLabel>
+            <translation><!-- 28 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>29</masterLabel>
+            <translation><!-- 29 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30</masterLabel>
+            <translation><!-- 30 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>31</masterLabel>
+            <translation><!-- 31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>32</masterLabel>
+            <translation><!-- 32 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>33</masterLabel>
+            <translation><!-- 33 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>34</masterLabel>
+            <translation><!-- 34 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>35</masterLabel>
+            <translation><!-- 35 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>36</masterLabel>
+            <translation><!-- 36 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>37</masterLabel>
+            <translation><!-- 37 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>38</masterLabel>
+            <translation><!-- 38 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>39</masterLabel>
+            <translation><!-- 39 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>40</masterLabel>
+            <translation><!-- 40 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>41</masterLabel>
+            <translation><!-- 41 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>42</masterLabel>
+            <translation><!-- 42 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>43</masterLabel>
+            <translation><!-- 43 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>44</masterLabel>
+            <translation><!-- 44 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>45</masterLabel>
+            <translation><!-- 45 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>46</masterLabel>
+            <translation><!-- 46 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>47</masterLabel>
+            <translation><!-- 47 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>48</masterLabel>
+            <translation><!-- 48 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription Type --></label>
+        <name>Subscription_Type__c</name>
+        <picklistValues>
+            <masterLabel>Evergreen</masterLabel>
+            <translation><!-- Evergreen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Termed</masterLabel>
+            <translation><!-- Termed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tagged to Promo --></label>
+        <name>Tagged_to_Promo_for_Add_On_Discount__c</name>
+    </fields>
+    <layouts>
+        <layout>Package Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- System Generated --></label>
+            <section>System Generated</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Field must be populated. --></errorMessage>
+        <name>Billing_Type_For_Grace_Period</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Period exceeds the Effectivity Duration --></errorMessage>
+        <name>Calc_Total_Subscription_Period</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective End Date is before the effective start date --></errorMessage>
+        <name>EffectiveEndisBeforeEffectiveStart</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Grace Period Package should not have an Evergreen Subscription Type --></errorMessage>
+        <name>Grace_Period_Evergreen</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Period must be one month. --></errorMessage>
+        <name>One_Month_Subscription_Period</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Package Code not allowed to be changed. --></errorMessage>
+        <name>Package_Code_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Product Family should be NULL if Package type is not “Add on” --></errorMessage>
+        <name>Package_Type_Add_On</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only 1 Bundle Discount per Bundle Product is allowed --></errorMessage>
+        <name>Package_Type_Bundle</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only Base Product and Discount package items is allowed for Add On package type. --></errorMessage>
+        <name>Package_Type_Change_Add_On</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only Base Product package items is allowed for Base package type. --></errorMessage>
+        <name>Package_Type_Change_Base</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only Bundle Product and Bundle Discount package items are allowed for Bundle package type. --></errorMessage>
+        <name>Package_Type_Change_Bundle</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only Extension Product and Extension Discount package items are allowed for Discount package type. --></errorMessage>
+        <name>Package_Type_Change_Discount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot;,  1 &quot;Discount&quot;, 1 &quot;Extension Product&quot;, and 1 &quot;Extension Discount&quot; Package Item is allowed for a Package of type &quot;Discount&quot; with Sub Type &quot;Extension&quot; --></errorMessage>
+        <name>Package_Type_Change_Discount_Extension</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot; and 1 &quot;Discount&quot; Package Item are allowed for a Package of type &quot;Discount&quot; or &quot;Add On&quot; --></errorMessage>
+        <name>Package_Type_Change_Discount_Test</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot;  is allowed for a Package of type &quot;Discount&quot; with &quot;Tiered&quot; Sub Type --></errorMessage>
+        <name>Package_Type_Change_Discount_Tiered</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A Package Sub Type must be chosen for Package Type: Discount. --></errorMessage>
+        <name>Package_Type_Discount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Type should not be &quot;Evergreen&quot; if Package Type is &quot;Discount&quot; and Package Sub Type is &quot;Extension&quot; --></errorMessage>
+        <name>Package_Type_Discount_Package_Sub_Ext</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only 1 Extension Discount must be allowed. --></errorMessage>
+        <name>Package_Type_Extension_Discount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only 1 Extension Product must be allowed. --></errorMessage>
+        <name>Package_Type_Extension_Product</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter the Product family for which this package is eligible. --></errorMessage>
+        <name>ProductFamilyforAddOnPackages</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Field must be populated. --></errorMessage>
+        <name>Product_Family_is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- If subscription type is evergreen, the subscription period must be N/A --></errorMessage>
+        <name>SubscriptionPeriodforSubTypeEvergreen</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription period is not filled --></errorMessage>
+        <name>SubscriptionPeriodforSubTypeTerm</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Tagged to Promo must not be ticked for Base or Bundle packages --></errorMessage>
+        <name>TaggedtoPromoforDiscountAddOn</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Field must be populated. --></errorMessage>
+        <name>Termed_Subscription_Type</name>
+    </validationRules>
+</CustomObjectTranslation>

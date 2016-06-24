@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_CreateAccountBatchResonseFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_CreateAccountBatchResonseFile</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountCreationDate --></label>
+        <name>accountCreationDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountNumber --></label>
+        <name>accountNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- approvedDebtExposureAmount --></label>
+        <name>approvedDebtExposureAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- businessSector --></label>
+        <name>businessSector__c</name>
+    </fields>
+    <fields>
+        <label><!-- ccrId --></label>
+        <name>ccrId__c</name>
+    </fields>
+    <fields>
+        <label><!-- creditLimitExternal --></label>
+        <name>creditLimitExternal__c</name>
+    </fields>
+    <fields>
+        <label><!-- creditLimitInternal --></label>
+        <name>creditLimitInternal__c</name>
+    </fields>
+    <fields>
+        <label><!-- creditTermReference --></label>
+        <name>creditTermReference__c</name>
+    </fields>
+    <fields>
+        <label><!-- creditTerm --></label>
+        <name>creditTerm__c</name>
+    </fields>
+    <fields>
+        <label><!-- debtManagementTreatment --></label>
+        <name>debtManagementTreatment__c</name>
+    </fields>
+    <fields>
+        <label><!-- returnMessage --></label>
+        <name>returnMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- returnStatus --></label>
+        <name>returnStatus__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

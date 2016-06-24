@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Packing Label Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Packing Label Batches</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+        <relationshipLabel><!-- Packing Label Batches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Record Type --></label>
+        <name>Account_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 1 --></label>
+        <name>Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 2 --></label>
+        <name>Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 3 --></label>
+        <name>Address_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 4 (Postal Code) --></label>
+        <name>Address_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 5 --></label>
+        <name>Address_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Block --></label>
+        <name>Block__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copy Type --></label>
+        <name>Copy_Type__c</name>
+        <picklistValues>
+            <masterLabel>Freelist</masterLabel>
+            <translation><!-- Freelist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription</masterLabel>
+            <translation><!-- Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivered By --></label>
+        <name>Delivered_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Date --></label>
+        <name>Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 1 --></label>
+        <name>Flight_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 2 --></label>
+        <name>Flight_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 3 --></label>
+        <name>Flight_Number_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issue Date --></label>
+        <name>Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mailing Agent Account Number --></label>
+        <name>Mailing_Agent_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Copies --></label>
+        <name>Number_of_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- POSTCODE --></label>
+        <name>POSTCODE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Sub Type --></label>
+        <name>Product_Sub_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Name --></label>
+        <name>Recipient_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Number --></label>
+        <name>Recipient_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Type --></label>
+        <name>Recipient_Type__c</name>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal</masterLabel>
+            <translation><!-- Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Local</masterLabel>
+            <translation><!-- Local --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Overseas</masterLabel>
+            <translation><!-- Overseas --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+        <picklistValues>
+            <masterLabel>Local</masterLabel>
+            <translation><!-- Local --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Overseas</masterLabel>
+            <translation><!-- Overseas --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ST NAME --></label>
+        <name>ST_NAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salutation --></label>
+        <name>Salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Account Name --></label>
+        <name>Subscriber_Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Account Number --></label>
+        <name>Subscriber_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Product Charge --></label>
+        <name>Subscription_Product_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Type --></label>
+        <name>Subscription_Type__c</name>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper</masterLabel>
+            <translation><!-- Newspaper --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Packing Label Batches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Test LookUp --></label>
+        <name>Test_LookUp__c</name>
+        <relationshipLabel><!-- TestLookUp --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Unit --></label>
+        <name>Unit__c</name>
+    </fields>
+    <layouts>
+        <layout>Packing Label Batch Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

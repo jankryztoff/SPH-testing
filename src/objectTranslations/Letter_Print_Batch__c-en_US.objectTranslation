@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Letter Print Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Letter Print Batches</value>
+    </caseValues>
+    <fields>
+        <label><!-- Initialization Status --></label>
+        <name>Initialization_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Initialized Batches --></label>
+        <name>Initialized_Batches__c</name>
+    </fields>
+    <fields>
+        <label><!-- Letter Type --></label>
+        <name>Letter_Type__c</name>
+        <picklistValues>
+            <masterLabel>Acknowledgment Letter</masterLabel>
+            <translation><!-- Acknowledgment Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card Failure Notification</masterLabel>
+            <translation><!-- Credit Card Failure Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Notes</masterLabel>
+            <translation><!-- Credit Notes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>First Renewal Reminder for Magazine</masterLabel>
+            <translation><!-- First Renewal Reminder for Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>First Renewal Reminder for Newspaper</masterLabel>
+            <translation><!-- First Renewal Reminder for Newspaper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gift Letter</masterLabel>
+            <translation><!-- Gift Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice Letter</masterLabel>
+            <translation><!-- Invoice Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Second Renewal Reminder for Magazine</masterLabel>
+            <translation><!-- Second Renewal Reminder for Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Second Renewal Reminder for Newspaper</masterLabel>
+            <translation><!-- Second Renewal Reminder for Newspaper --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subset Batch Size --></label>
+        <name>Subset_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Batch Count --></label>
+        <name>Total_Batch_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Record Count --></label>
+        <name>Total_Record_Count__c</name>
+    </fields>
+    <layouts>
+        <layout>Letter Print Batch Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

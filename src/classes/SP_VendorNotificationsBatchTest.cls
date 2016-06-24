@@ -185,8 +185,10 @@ public class SP_VendorNotificationsBatchTest{
                  cas[2].Temp_Stop_Sub__c = sub[1].id;      
                  cas[2].Sub_Status__c = 'Urgent CoA Approved';
                  cas[2].Subscription_Name__c = sub[2].Id;
+                
                  
                  database.insert(cas);
+                 
                  
                  Address_Assignment__c aa = new Address_Assignment__c();
                  aa.Case__c = cas[0].Id;

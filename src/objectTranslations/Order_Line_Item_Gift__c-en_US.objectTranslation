@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Line Item Gift</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Line Item Gifts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Record Type Hidden --></label>
+        <name>Account_Record_Type_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift ID --></label>
+        <name>Gift_ID__c</name>
+        <relationshipLabel><!-- Order Line Item Gifts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Gift Letter Batch Id --></label>
+        <name>Gift_Letter_Batch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Name --></label>
+        <name>Gift_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Letter Attached --></label>
+        <name>Has_Letter_Attached__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hidden Status --></label>
+        <name>Hidden_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Remarks --></label>
+        <name>Internal_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- NRIC (Collect on Behalf) --></label>
+        <name>NRIC_Collect_on_Behalf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name (Collect on Behalf) --></label>
+        <name>Name_Collect_on_Behalf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Line Item --></label>
+        <name>Order_Line_Item__c</name>
+        <relationshipLabel><!-- Order Line Item Gifts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Order Quantity --></label>
+        <name>Order_Quantity_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Quantity --></label>
+        <name>Order_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price --></label>
+        <name>Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion Gift --></label>
+        <name>Promotion_Gift__c</name>
+        <relationshipLabel><!-- Order Line Item Gifts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Qty --></label>
+        <name>Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Date --></label>
+        <name>Redemption_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Quantity --></label>
+        <name>Redemption_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Remarks --></label>
+        <name>Redemption_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Serial Number --></label>
+        <name>Serial_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Telephone (Collect on Behalf) --></label>
+        <name>Telephone_Collect_on_Behalf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Number --></label>
+        <name>Unique_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Order Line Item Gift Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Redemption Details --></label>
+            <section>Redemption Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Redemption Date must be specified when Redemption Quantity is entered --></errorMessage>
+        <name>RedemptionDateNotPopulated</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Redemption Quantity must be specified when Redemption Date is entered --></errorMessage>
+        <name>RedemptionQuantityNotPopulated</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The redemption quantity should not be more than the order quantity. --></errorMessage>
+        <name>Redemption_Qty_not_more_than_Order_Qty</name>
+    </validationRules>
+</CustomObjectTranslation>

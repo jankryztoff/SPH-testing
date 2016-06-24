@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>create( ) API callout from on-prem to request Zuora to generate the data source file, HTTP GET to download the file, and bulk API upload to upload the records in Salesforce.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Accounting_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Accounting Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Applied_To_Invoice_Item_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Applied To Invoice Item ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Charge_Amount__c</fullName>
+        <description>The amount being charged to the invoice item. This amount doesn’t include taxes UNLESS the charge’s tax mode is inclusive.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount being charged to the invoice item. This amount doesn’t include taxes UNLESS the charge’s tax mode is inclusive.</inlineHelpText>
+        <label>Charge Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Charge_Date__c</fullName>
+        <description>The date when the Invoice Item record is created.</description>
+        <externalId>false</externalId>
+        <label>Charge Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Charge_Description__c</fullName>
+        <description>A description of the invoice item&apos;s charge.</description>
+        <externalId>false</externalId>
+        <label>Charge Description</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Charge_ID__c</fullName>
+        <description>The ID of the rate plan charge that is associated with this invoice item upon object creation.</description>
+        <externalId>false</externalId>
+        <label>Charge ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Charge_Name__c</fullName>
+        <description>The name of the invoice item’s charge.</description>
+        <externalId>false</externalId>
+        <label>Charge Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Charge_Number__c</fullName>
+        <description>The unique identifier of the invoice item&apos;s charge.</description>
+        <externalId>false</externalId>
+        <label>Charge Number</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_By_ID__c</fullName>
+        <description>The user ID of the person who created the invoice item.</description>
+        <externalId>false</externalId>
+        <label>Created By ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_Date__c</fullName>
+        <description>The date when the Invoice Item record is created.</description>
+        <externalId>false</externalId>
+        <label>Created Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ID__c</fullName>
+        <description>The ID of this record.</description>
+        <externalId>true</externalId>
+        <label>ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_ID__c</fullName>
+        <description>The ID of the invoice associated</description>
+        <externalId>false</externalId>
+        <label>Invoice ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Processing_Type__c</fullName>
+        <description>Identifies the kind of charge where:
+0 – charge
+1 – discount
+2 – prepayment
+3 – tax</description>
+        <externalId>false</externalId>
+        <label>Processing Type</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Description__c</fullName>
+        <description>A description of the product associated with this invoice item.</description>
+        <externalId>false</externalId>
+        <label>Product Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Product_ID__c</fullName>
+        <description>The ID of the product associated with this invoice item.</description>
+        <externalId>false</externalId>
+        <label>Product ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <description>The name of the product associated with this invoice item.</description>
+        <externalId>false</externalId>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <description>The number of units for this invoice item.</description>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Plan_Charge_ID__c</fullName>
+        <description>The ID of the rate plan charge that&apos;s associated with this invoice item.</description>
+        <externalId>false</externalId>
+        <label>Rate Plan Charge ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Revenue_Recognition_Code__c</fullName>
+        <description>Associates this invoice item with a specific revenue recognition code.</description>
+        <externalId>false</externalId>
+        <label>Revenue Recognition Code</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Revenue_Recognition_Start_Date__c</fullName>
+        <description>The date when revenue recognition is triggered.</description>
+        <externalId>false</externalId>
+        <label>Revenue Recognition Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Revenue_Recognition_Trigger_Condition__c</fullName>
+        <description>Specifies when revenue recognition begins based on a triggering event.</description>
+        <externalId>false</externalId>
+        <label>Revenue Recognition Trigger Condition</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SKU__c</fullName>
+        <description>The unique SKU for the product associated with this invoice item.</description>
+        <externalId>false</externalId>
+        <label>SKU</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Service_End_Date__c</fullName>
+        <description>The end date of the service period associated with this invoice item. Service ends one second before the date in this value.</description>
+        <externalId>false</externalId>
+        <label>Service End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Service_Start_Date__c</fullName>
+        <description>The start date of the service period associated with this invoice item. If the associated charge is a one-time fee, then this date is the date of that charge.</description>
+        <externalId>false</externalId>
+        <label>Service Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_ID__c</fullName>
+        <description>The ID of the subscription associated with the invoice item.</description>
+        <externalId>true</externalId>
+        <label>Subscription ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Number</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>Invoice Line Items</relationshipLabel>
+        <relationshipName>Invoice_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Amount__c</fullName>
+        <description>The amount of tax applied to the invoice item’s charge</description>
+        <externalId>false</externalId>
+        <label>Tax Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Code__c</fullName>
+        <description>Specifies the tax code for taxation rules</description>
+        <externalId>false</externalId>
+        <label>Tax Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_Exempt_Amount__c</fullName>
+        <description>The amount of the invoice item’s charge that’s tax exempt.</description>
+        <externalId>false</externalId>
+        <label>Tax Exempt Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Mode__c</fullName>
+        <description>The tax mode of the invoice item.
+
+TaxExclusive
+TaxInclusive</description>
+        <externalId>false</externalId>
+        <label>Tax Mode</label>
+        <length>12</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UOM__c</fullName>
+        <description>Specifies the unit to measure the charge.</description>
+        <externalId>false</externalId>
+        <label>UOM</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Unit_Price__c</fullName>
+        <description>The per unit price of the invoice item</description>
+        <externalId>false</externalId>
+        <label>Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Updated_By_ID__c</fullName>
+        <description>The ID of the user who last updated the invoice item.</description>
+        <externalId>false</externalId>
+        <label>Updated By ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Updated_Date__c</fullName>
+        <description>The date when the invoice item was last updated</description>
+        <externalId>false</externalId>
+        <label>Updated Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Invoice Line Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Invoice_ID__c</columns>
+        <columns>Charge_Name__c</columns>
+        <columns>Charge_Amount__c</columns>
+        <columns>Charge_Date__c</columns>
+        <columns>Tax_Amount__c</columns>
+        <columns>Tax_Code__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Subscription_ID__c</columns>
+        <columns>Subscription_Number__c</columns>
+        <columns>Tax_Exempt_Amount__c</columns>
+        <columns>Unit_Price__c</columns>
+        <columns>UOM__c</columns>
+        <columns>Created_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Invoice_ID__c</field>
+            <operation>contains</operation>
+            <value>2c92c094555ce889015571ec51912d53</value>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Invoice Line Item Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Invoice Line Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_40459882</developerName>
+        <masterLabel>Transaction</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Billing_Summary__c.Transaction_Type__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>PUB DATE ADJ</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING CRD - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING CRD - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING INV - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING INV - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING PPAL - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>RECURRING PPAL - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DELIVERY</sourceValue>
+            </sourceValues>
+            <value>1. DTL</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>NON DELIVERY</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TSTOP WITH REFUND</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>ADJUSTMENT - FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>ADJUSTMENT - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>ADJUSTMENT - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DELETION - FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DELETION - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DELETION - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>GOODWILL - FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>GOODWILL - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>GOODWILL - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TERMINATION - FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TERMINATION - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TERMINATION - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>WAIVER - FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>WAIVER - MONTHLY POSTPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>WAIVER - MONTHLY PREPAID</sourceValue>
+            </sourceValues>
+            <value>2. Amount Charged</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>CHGOUT FULL PREPAID</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CHGOUT RECURRING CRD</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CHGOUT RECURRING INV</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CHGOUT RECURRING PPAL</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DISCOUNT</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CHGOUT DELIVERY</sourceValue>
+            </sourceValues>
+            <value>3. Charge Out</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>DISCREPANCY ADJUSTMENT</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TSTOP NO REFUND</sourceValue>
+            </sourceValues>
+            <value>4. LESS</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Copies__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Out_of_Scope_GST__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Zero_Rated_GST__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Standard_Rated_GST__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Subscription_AMT_Before_GST__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.GST_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Billing_Summary__c.Subscription_AMT_After_GST__c</field>
+    </columns>
+    <description>This report provides a summary of the transaction details.</description>
+    <filter>
+        <criteriaItems>
+            <column>Billing_Summary__c.Transaction_Type__c</column>
+            <operator>notEqual</operator>
+            <value>Balance C/F</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Billing_Summary__c.Transaction_Type__c</column>
+            <operator>notEqual</operator>
+            <value>Balance B/F</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Billing_Summary__c.Accounting_Period__c</column>
+            <operator>equals</operator>
+            <value>0715</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_40459882</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Billing_Summary__c.Transaction_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Billing Summary Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Billing_Summary__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

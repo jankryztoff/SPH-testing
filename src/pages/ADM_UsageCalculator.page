@@ -1,0 +1,28 @@
+<apex:page controller="ADM_PubCopiesController" title="Admin Tool - Usage Calculator" sidebar="false" docType="html-5.0">
+    <apex:sectionHeader title="Admin Tool" subtitle="Usage Calculator"/>
+    <apex:form >
+        <apex:pageBlock title="Enter your search criteria:" mode="edit">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!calculateUsage}" value="Calculate" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:input value="{!startDate}" id="startDT" type="date" label="Start Date:"/>
+                <apex:input value="{!endDate}" id="endDT" type="date" label="End Date:"/>
+                <apex:input value="{!subName}" id="subName" type="text" label="Subscription Name:"/>
+                <apex:inputCheckbox value="{!isCredit}" id="isCR" label="Is Credit Usage?"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Result:" mode="view" rendered="{!lstUsages.size > 0}">
+            <apex:pageBlockTable value="{!lstUsages}" var="creditUsage">
+                <apex:column value="{!creditUsage.pubCode}" headerValue="Publication Code"/>
+                <apex:column value="{!creditUsage.uom}" headerValue="Usage UOM"/> 
+                <apex:column value="{!creditUsage.intCopies}" headerValue="# of Copies"/>
+                <apex:column value="{!creditUsage.price}" headerValue="SPC Price"/>
+            </apex:pageBlockTable> 
+            <apex:outputPanel id="thePanel" layout="block" style="font-weight: bold; text-align: right">
+                <apex:outputText rendered="{!isCredit}" style="font-weight: bold; font-size: 130%;" value="Total Refund Amount: {!totalRefund}">
+                </apex:outputText>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

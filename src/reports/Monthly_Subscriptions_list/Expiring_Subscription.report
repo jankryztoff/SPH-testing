@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Subscriber_Contact__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Full_Address__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Zuora__Account__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Product_Code__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Number_of_Copies__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Frequency_1__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Subscription_Type_1__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Zuora__ContractEffectiveDate__c</field>
+    </columns>
+    <description>The report shows details of expiring subscription. User can select the no. of weeks to expiry and optionally the product.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>Zuora__Subscription__c.Contract_End_Date_1__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Expiring Subscription</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Contract_End_Date_1__c</dateColumn>
+        <interval>INTERVAL_NEXT1</interval>
+    </timeFrameFilter>
+</Report>

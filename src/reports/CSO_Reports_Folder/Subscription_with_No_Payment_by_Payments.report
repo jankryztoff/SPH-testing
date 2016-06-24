@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Subscriber_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Zuora__Invoices__r.External_Payments__r$Sold_To_Contact_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account$Email__c</field>
+    </columns>
+    <columns>
+        <field>Account.Zuora__Invoices__r.External_Payments__r$Parent_Transaction_ID__c</field>
+    </columns>
+    <columns>
+        <field>Account$Subscriber_Delivery_Address__c</field>
+    </columns>
+    <description>The report will show paypal subscriptions where payment has not been made</description>
+    <format>Tabular</format>
+    <name>Subscription with No Payment by Payment</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>External_Payments__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

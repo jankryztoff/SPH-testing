@@ -1,0 +1,51 @@
+<pre>
+{{Today}}
+
+{{Contact.MailingAddress}}
+
+Dear {{Contact.FirstName}} {{Contact.LastName}},
+
+Thank you for subscribing to {{Package__c.Name}}. Your subscription details are as follows:
+
+<b>SPH Order Number            {{Order__c.Name}}</b>
+Monthly Subscription Fee    {{Order__c.Total_Monthly_Recurring_Charge__c}}
+Monthly Delivery Fee        {{Order__c.Monthly_Delivery_Charge_for_Full_Payment__c}}
+Contract Period             {{Promotion__c.Contract_Period__c}}
+
+1. For collection of the {{Gift__c.Name}}, please produce this original letter and your original NRIC (for verification) in person to collect your gift at the below addresses
+{{Promotion_Gift__c.Redemption_Letter_Details__c}}
+
+2.	This Promotion is only applicable to Credit Card holders from DBS Bank Ltd. A valid DBS or POSB Credit Card must be presented for charging and activation of your subscription account. Subsequently, the monthly recurring subscription fee will also be charged to this same card for the entire contractual period. No cancellation will be allowed for the period of the contract. For the purpose of this promotion, we will not accept Credit Cards from any other banks. 
+
+3.	The above stated amount will be charged to the credit card/account information provided. Please be informed that the contract follows an installment plan programme administered by your Credit Card Issuing Bank and you will observe an amount of 1817.64 being withheld from your Credit limit.
+
+4.	Please ensure that you have read and agreed to all Terms and Conditions (http://www.sphsubscription.com.sg/promoterms) for this subscription promotion before redemption of the gift.
+
+5.	Your account will only be activated after your gift is collected. 
+
+6. Please complete your credit card details for billing purposes:
+
+Credit Card Type: MasterCard / Visa / Amex
+Credit Card No: _ _ _ _ - _ _ _ _ - _ _ _ _ - _ _ _ _ Expiry Date: _ _ / _ _ (MM / YY)
+
+We thank you for your support and should you require further assistance on your subscription, please call our Customer Service Hotline at 6388 3838 from 6am to 6pm on Monday to Friday, or 6am to 12pm on Saturday, Sunday. The hotline will not be available on Public Holidays. Alternatively, you may email circs@sph.com.sg.
+
+Marketing
+Circulation
+Singapore Press Holdings Limited
+ 
+
+Please note that this is a computerized printout. No signature is required.
+
+______________________________________________________________________________
+SECTION A: ACKNOWLEDGEMENT
+
+I hereby acknowledge receipt of {{Gift__c.Name}}.
+
+________________________________    
+Recipient's Name & NRIC	
+
+
+________________________________
+Recipient's Signature/Redemption Date/Contact Number
+</pre>

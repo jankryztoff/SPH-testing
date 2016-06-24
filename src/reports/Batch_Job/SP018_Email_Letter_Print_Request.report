@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Letter_Print_Request__c$Name</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Record_ID__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Acknowledgment_Type__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Status_Email__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Email_Address__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Status__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Generation_From__c</field>
+    </columns>
+    <columns>
+        <field>Letter_Print_Request__c$Generation_To__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Letter_Print_Request__c$CreatedDate</column>
+            <operator>equals</operator>
+            <value>9/30/2015 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Letter_Print_Request__c$Acknowledgment_Type__c</column>
+            <operator>equals</operator>
+            <value>Email,Both</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>SP018 Email Letter Print Request</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Letter_Print_Requests__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Letter_Print_Request__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

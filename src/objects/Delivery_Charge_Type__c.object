@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Mapping for Address Type to Delivery Type</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_Delivery_Charge_Type__c</fullName>
+        <description>Values should only either H, A, or L</description>
+        <externalId>false</externalId>
+        <label>Default Delivery Charge Type</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Delivery Charge Type</label>
+    <visibility>Protected</visibility>
+</CustomObject>

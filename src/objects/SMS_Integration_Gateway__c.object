@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>SMS integration gateway</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>SMS_Country_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>SMS Country Code</label>
+        <length>5</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMS_Gateway_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>SMS Gateway ID</label>
+        <length>20</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMS_Gateway_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>SMS Gateway URL</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMS_Password__c</fullName>
+        <externalId>false</externalId>
+        <label>SMS Password</label>
+        <length>20</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMS_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>SMS Type</label>
+        <length>20</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>SMS Integration Gateway</label>
+    <visibility>Protected</visibility>
+</CustomObject>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>N&amp;E Zone Exec / Manager</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Vendor_Ops_N_E_Sr_Manager</parentRole>
+</Role>

@@ -1,0 +1,93 @@
+<apex:component controller="PackingLabelCoverSheetClass" access="global">
+
+    
+     <br/><br/><br/>                
+     
+         
+             
+                <apex:outputText value="To  :World Reach (Fax : 6267 5912)"></apex:outputText>
+
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:outputtext Value="Issue Date"></apex:outputtext>
+
+                
+                
+                
+                
+                
+
+                         &nbsp;&nbsp;&nbsp;
+                        <apex:outputtext value=":TJ Mailroom 1"></apex:outputtext>
+
+                
+                
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                <apex:outputtext value="Monday"></apex:outputtext>        
+            
+                
+                
+                 
+                
+
+         <br/><br/><br/>                
+
+                                <apex:outputtext value="From :Subscription Section"></apex:outputtext>                
+
+         <br/><br/>
+         <!--
+         <apex:pageblockTable value="{!wrplist}" var="v" border="2px"  >
+                 <apex:column value="{!v.type}" headerValue="" width="150px"  />
+                 <apex:column value="{!v.st}" headerValue="ST" width="80px"  />
+                 <apex:column value="{!v.bt}" headerValue="BT" width="80px"  />
+                 <apex:column value="{!v.bh}" headerValue="BH" width="80px"  />
+                 <apex:column value="{!v.np}" headerValue="NP" width="80px"  />
+                 <apex:column value="{!v.zb}" headerValue="ZB" width="80px"  />
+                 <apex:column value="{!v.tm}" headerValue="TM" width="80px"  />
+                 <apex:column value="{!v.wb}" headerValue="WB" width="80px"  />
+                 <apex:column value="{!v.sm}" headerValue="SM" width="80px"  />
+                 <apex:column value="{!v.my}" headerValue="MY" width="80px"  />
+         </apex:pageblockTable>-->
+         
+         <table>
+             <tr>
+                 <td>
+                    {!wrplist[0].type}
+                 </td>
+                 <td>
+                    {!wrplist[0].st}
+                 </td>
+                 <td>
+                    {!wrplist[0].bt}
+                 </td>
+                 <td>
+                    {!wrplist[0].bh}
+                 </td>
+             </tr>
+         </table>
+         
+         <br/><br/>
+
+               <apex:outputText value="Remarks:             _______________________"></apex:outputText> <br/><br/>
+               <apex:outputText value="No. of copies verified by:             _______________________"></apex:outputText><br/><br/>
+               <apex:outputText value="Received by:             _______________________"></apex:outputText><br/><br/><br/><br/>
+               <apex:outputText value="Note:"></apex:outputText>
+               <apex:outputText value="SM/WB/NP are previous day's issue"></apex:outputText>
+
+       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       
+
+        Singapore Press Holdings Limited<br/>
+        Circulation<br/>
+        82 Genting Lane, Media Centre, Singapore 349567 Tel: +65 6388 3838 Fax: +65 644 4875  Website : www.sph.com.sg <br/>
+        Co. Regn. No. 198402868E
+        
+     
+</apex:component>

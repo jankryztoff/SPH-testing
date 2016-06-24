@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_PPS_RefundFileResponse</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_PPS_RefundFileResponses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- addressLine1 --></label>
+        <name>addressLine1__c</name>
+    </fields>
+    <fields>
+        <label><!-- addressLine2 --></label>
+        <name>addressLine2__c</name>
+    </fields>
+    <fields>
+        <label><!-- addressLine3 --></label>
+        <name>addressLine3__c</name>
+    </fields>
+    <fields>
+        <label><!-- addressLine4 --></label>
+        <name>addressLine4__c</name>
+    </fields>
+    <fields>
+        <label><!-- approvalDate --></label>
+        <name>approvalDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- bankAccountNumber --></label>
+        <name>bankAccountNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- bankCode --></label>
+        <name>bankCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- chqCutDate --></label>
+        <name>chqCutDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- chqNumber --></label>
+        <name>chqNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- chqStatus --></label>
+        <name>chqStatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- clearanceDate --></label>
+        <name>clearanceDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- clearingCountryCode --></label>
+        <name>clearingCountryCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- customerACNumber --></label>
+        <name>customerACNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- customerAccount --></label>
+        <name>customerAccount__c</name>
+    </fields>
+    <fields>
+        <label><!-- customerName2 --></label>
+        <name>customerName2__c</name>
+    </fields>
+    <fields>
+        <label><!-- customerName --></label>
+        <name>customerName__c</name>
+    </fields>
+    <fields>
+        <label><!-- handledByWho --></label>
+        <name>handledByWho__c</name>
+    </fields>
+    <fields>
+        <label><!-- mailAddressLine1 --></label>
+        <name>mailAddressLine1__c</name>
+    </fields>
+    <fields>
+        <label><!-- mailAddressLine2 --></label>
+        <name>mailAddressLine2__c</name>
+    </fields>
+    <fields>
+        <label><!-- mailAddressLine3 --></label>
+        <name>mailAddressLine3__c</name>
+    </fields>
+    <fields>
+        <label><!-- mailAddressLine4 --></label>
+        <name>mailAddressLine4__c</name>
+    </fields>
+    <fields>
+        <label><!-- payee2 --></label>
+        <name>payee2__c</name>
+    </fields>
+    <fields>
+        <label><!-- payee --></label>
+        <name>payee__c</name>
+    </fields>
+    <fields>
+        <label><!-- paymentAmount2 --></label>
+        <name>paymentAmount2__c</name>
+    </fields>
+    <fields>
+        <label><!-- paymentAmount --></label>
+        <name>paymentAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- telephone --></label>
+        <name>telephone__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

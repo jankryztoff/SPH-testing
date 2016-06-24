@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cir Planner Schedule Setting</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cir Planner Schedule Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Cir Pln Sat/PH End Time --></label>
+        <name>Cir_Pln_Sat_PH_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cir Pln Sat/PH Start Time --></label>
+        <name>Cir_Pln_Sat_PH_Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cir Pln Sun End Time --></label>
+        <name>Cir_Pln_Sun_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cir Pln Sun Start Time --></label>
+        <name>Cir_Pln_Sun_Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cir Pln Weekday End Time --></label>
+        <name>Cir_Pln_Weekday_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cir Pln Weekday Start Time --></label>
+        <name>Cir_Pln_Weekday_Start_Time__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

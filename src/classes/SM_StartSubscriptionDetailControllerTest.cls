@@ -4,19 +4,25 @@ public class SM_StartSubscriptionDetailControllerTest{
         //get cso Profile ID
         List<Profile> csoprof = new List<Profile>();
         csoprof = [Select ID From Profile Where Name = 'cso' LIMIT 1];
+        User testUser;
         
-        User testUser = new User(
-            Alias = 'stndrd',
-            Email='standarduser@test.com', 
-            EmailEncodingKey='UTF-8',
-            LastName='Test',
-            LanguageLocaleKey='en_US', 
-            LocaleSidKey='en_US',
-            ProfileId = csoprof[0].id,
-            TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
-        );
-        
+        try{
+            testUser = [Select Id, Alias, Email, EmailEncodingKey, LastName, LanguageLocaleKey, LocaleSidKey, ProfileId, TimeZoneSidKey, UserName From User Where ProfileId =: csoprof[0].Id];
+        }catch(QueryException e){
+            System.debug('No User.' +e.getMessage());
+            testUser = new User(
+                Alias = 'stndrd',
+                Email='standarduser@test.com', 
+                EmailEncodingKey='UTF-8',
+                LastName='Test',
+                LanguageLocaleKey='en_US', 
+                LocaleSidKey='en_US',
+                ProfileId = csoprof[0].id,
+                TimeZoneSidKey='America/Los_Angeles',
+                UserName='standard@test.com'
+            );
+        }
+
         System.runAs(testUser) {        
             //create Publication
             Publication__c newPublication = TestDataFactory.createPublication(1)[0];
@@ -168,18 +174,24 @@ public class SM_StartSubscriptionDetailControllerTest{
         //get cso Profile ID
         List<Profile> csoprof = new List<Profile>();
         csoprof = [Select ID From Profile Where Name = 'cso' LIMIT 1];
+        User testUser;
         
-        User testUser = new User(
-            Alias = 'stndrd',
-            Email='standarduser@test.com', 
-            EmailEncodingKey='UTF-8',
-            LastName='Test',
-            LanguageLocaleKey='en_US', 
-            LocaleSidKey='en_US',
-            ProfileId = csoprof[0].id,
-            TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
-        );
+        try{
+            testUser = [Select Id, Alias, Email, EmailEncodingKey, LastName, LanguageLocaleKey, LocaleSidKey, ProfileId, TimeZoneSidKey, UserName From User Where ProfileId =: csoprof[0].Id];
+        }catch(QueryException e){
+            System.debug('No User.' +e.getMessage());
+            testUser = new User(
+                Alias = 'stndrd',
+                Email='standarduser@test.com', 
+                EmailEncodingKey='UTF-8',
+                LastName='Test',
+                LanguageLocaleKey='en_US', 
+                LocaleSidKey='en_US',
+                ProfileId = csoprof[0].id,
+                TimeZoneSidKey='America/Los_Angeles',
+                UserName='standard@test.com'
+            );
+        }
 
         System.runAs(testUser){ 
             //create Publication

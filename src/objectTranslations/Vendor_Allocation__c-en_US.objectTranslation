@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vendor Allocation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vendor Allocations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allocated --></label>
+        <name>Allocated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allocation Type --></label>
+        <name>Allocation_TypeInVA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Effective End Date --></label>
+        <name>Effective_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- House/Block Number --></label>
+        <name>House_Block_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- House Type --></label>
+        <name>House_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mailing Agent Code --></label>
+        <name>Mailing_Agent_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Vendor Account --></label>
+        <name>Old_Vendor_Account__c</name>
+        <relationshipLabel><!-- Vendor Allocations (Old Vendor Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Operated --></label>
+        <name>Operated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parcel Name --></label>
+        <name>Parcel_Name__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Process Status --></label>
+        <name>Process_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Project_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type_SPH__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique --></label>
+        <name>SPH_Unique__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>SingPost_Address__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>Street_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) --></label>
+        <name>Subscription_Vendor__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Units --></label>
+        <name>Total_Units__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Account --></label>
+        <name>Vendor_Account__c</name>
+        <relationshipLabel><!-- Vendor Allocations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Allocation Legacy Id --></label>
+        <name>Vendor_Allocation_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Code --></label>
+        <name>Vendor_Code__c</name>
+    </fields>
+    <layouts>
+        <layout>MIG - Vendor Allocation Layout</layout>
+        <sections>
+            <label><!-- Address Details --></label>
+            <section>Address Details</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Vendor Allocation Layout</layout>
+        <sections>
+            <label><!-- Address Details --></label>
+            <section>Address Details</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Effective End Date must be greater than Effective Start Date and must not be a past date. --></errorMessage>
+        <name>Eff_end_date_must_be_greater_than_eff_st</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select  atleast one (Allocated and/or Operated) --></errorMessage>
+        <name>Pick_Atleast_one_field</name>
+    </validationRules>
+</CustomObjectTranslation>

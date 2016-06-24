@@ -1,0 +1,161 @@
+<apex:component >
+    <div id="renewal2ndPageNewspaperEnglishComponent">
+        <table cellspacing="0">
+            <tr>
+                <td colspan="5"><u><b>A.   TERMS AND CONDITIONS</b></u></td>
+            </tr>
+            <tr><td colspan="5"></td></tr>
+            <tr><td colspan="5"></td></tr>
+            <tr>
+                <td colspan="5"><b>MODE OF PAYMENT</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td colspan="3">All subscriptions are available on a prepaid basis.</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">•  </td>
+                <td colspan="3">Payment can be made through:</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%">o </td>
+                <td>Cheque, Money Order (payment to be drawn in Singapore currency on a local bank), made payable to:</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td><b>“Singapore Press Holdings Limited”</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%">o </td>
+                <td>Credit Card (Visa/MasterCard)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td colspan="2">Subscription is accepted via fax/e-mail for this mode of payment. Please indicate card number and expiry date.</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table cellspacing="0">
+            <tr><td colspan="3"> </td></tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td colspan="3"><b>CONFIRMATION OF SUBSCRIPTION</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td>You will receive an acknowledgement advice upon the confirmation of your subscription.</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table cellspacing="0">
+            <tr><td colspan="3"> </td></tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td colspan="3"><b>DELIVERY FEE</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td>Subscription rates exclude delivery fee. The monthly delivery fee, dependent on house type, is payable as follows:</td>
+            </tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$3 – HDB ($36 per annum)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$4 – Private apartments, walk-up apartments, factories and offices ($48 per annum)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$5 – Landed properties ($60 per annum)</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table cellspacing="0">
+            <tr>
+                <td colspan="3"><b>OTHERS</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td>Subscription rates are inclusive of 7% Goods and Services Tax (GST)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td >Subscription rates and administrative charges (if any) are subject to change without prior notice.</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table cellspacing="0">
+            <tr>
+                <td colspan="6"><b>CONTACT US</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td width="">Tel:   (65) 6388 3838 </td>
+                <td width="15%"> </td>
+                <td width="3%">• </td>
+                <td width="">Fax:   (65) 6744 4875 / (65) 6744 1646</td>
+            </tr>
+
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td width="">Email:   circs@sph.com.sg</td>
+                <td width="15%"> </td>
+                <td width="3%">• </td>
+                <td width="">Website:   www.sphsubscription.com.sg</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table width="100%" style="font-size:10pt; font-name:Arial">
+            <tr>
+                <td colspan="3"><u><b>B.   CHANGE OF ADDRESS (IF ANY)</b></u></td>
+            </tr>
+            <tr><td colspan="3"></td></tr>
+            <tr><td colspan="3"></td></tr>
+            <tr>
+                <td width="2.5%"></td>
+                <td width="32%" align="left">
+                    Please send renewal advice to: 
+                    <br/><br/> Name: ___________________________________
+                    <br/>Sub A/C No: ______________________________
+                    <br/>Address: _________________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________ PC ___________________
+                    <br/>Country: _________________________________                 
+                    <br/>Effective date: ____________________________
+                </td>
+                <td width="32%" valign="left">
+                    Please deliver papers to:
+                    <br/><br/> Name: ___________________________________
+                    <br/>Sub A/C No: ______________________________
+                    <br/>Address: _________________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________ PC ___________________
+                    <br/>Country: _________________________________                 
+                    <br/>Effective date: ____________________________
+                </td>
+            </tr>           
+        </table>
+    </div>
+</apex:component>

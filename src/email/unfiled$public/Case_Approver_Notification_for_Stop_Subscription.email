@@ -1,0 +1,11 @@
+*** {!Case.RecordType} Approval Request Alert ***
+ 
+Below case is pending for your approval :
+ 
+Case : {!Case.CaseNumber}
+Owner : {!Case.OwnerFullName}
+Case Type : {!Case.RecordType}
+Date Created : {!Case.CreatedDate}
+
+ 
+Please click on link to access the case : {!Case.Link}

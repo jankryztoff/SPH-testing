@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_LEG2SF_Log</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_LEG2SF_Logs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- DML Status --></label>
+        <name>DML_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Interface ID --></label>
+        <name>Interface_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invalid Record Count --></label>
+        <name>Invalid_Record_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stack Trace --></label>
+        <name>Stack_Trace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Record Count --></label>
+        <name>Total_Record_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid Record Count --></label>
+        <name>Valid_Record_Count__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

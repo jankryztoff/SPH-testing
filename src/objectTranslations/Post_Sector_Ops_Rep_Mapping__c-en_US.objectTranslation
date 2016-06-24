@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Post Sector Ops Rep Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Post Sector Ops Rep Mappings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Vendor Ops --></label>
+        <name>New_Vendor_Ops__c</name>
+        <relationshipLabel><!-- Post Sector Ops Rep Mappings (New Vendor Ops) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Old Vendor Ops --></label>
+        <name>Old_Vendor_Ops__c</name>
+        <relationshipLabel><!-- Post Sector Ops Rep Mappings (Old Vendor Ops) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Postal Area Description --></label>
+        <name>Postal_Area_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Sector Code --></label>
+        <name>Postal_Sector_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Zone Legacy Id --></label>
+        <name>Postal_Zone_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Ops --></label>
+        <name>Vendor_Ops__c</name>
+        <relationshipLabel><!-- Post Sector Ops Rep Mappings (Vendor Ops) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Zone --></label>
+        <name>Zone__c</name>
+        <relationshipLabel><!-- Post Sector Ops Rep Mappings --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>MIG - Postal Sector-Ven Ops Rep Mapping Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Postal Sector-Ven Ops Rep Mapping Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

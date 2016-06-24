@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Gift_Letter</letterhead>
+    <name>Subscription Letter</name>
+    <style>formalLetter</style>
+    <subject>Thank you for subscribing.</subject>
+    <textOnly>{!Contact.FirstName} {!Contact.LastName}
+{!Contact.MailingAddress}
+
+Dear Subscriber,
+
+
+Notification for the collection of Gift for the {!Publication__c.Name} Subscription
+
+Account no: «Sub_Accn»/ «Rcpn_Accn»
+
+Thank you for subscribing to {!Publication__c.Name}
+
+As a token of our appreciation, we are pleased to present you a {!Gift__c.Name} worth {!Gift__c.Gift_Cost__c}
+
+{!Promotion_Gift__c.Redemption_Letter_Details__c}
+
+We trust that you will enjoy your upcoming issues of {!Publication__c.Name}
+
+________________________________________________________
+
+I hereby acknowledge receipt of {!Gift__c.Name}  worth {!Gift__c.Cost__c}  .
+
+Name: _________________________ NRIC: ________________________
+
+
+
+_________________________________________
+
+Signature / Date</textOnly>
+    <type>html</type>
+</EmailTemplate>

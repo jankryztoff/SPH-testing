@@ -1,0 +1,474 @@
+<apex:page controller="VendorTempStopController" tabStyle="Case">
+<apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" /> 
+
+     
+    <apex:sectionHeader title="Order Entry - Temp-Stop Subscription"/>
+    
+    <apex:form >
+        <!--START: D-1361 JLedesma Change font color to red if Urgent.  -->
+        <script type="text/javascript">
+        if (!window.console) window.console = {};
+        if (!window.console.log) window.console.log = function () { };
+            function changeColor(earliestStart, tempStopDate, textComp){              
+                earliestStartSplit = earliestStart.split("/");
+                tempStopDateSplit = tempStopDate.split("/");
+                var earliestStart = new Date(earliestStartSplit[2], earliestStartSplit[1] - 1, earliestStartSplit[0]);
+                var tempStopDate = new Date(tempStopDateSplit[2], tempStopDateSplit[1] - 1, tempStopDateSplit[0]);
+                isUrgent = false;
+                //START: UD-1332 5/20/2015 JLedesma urgent approval criteria.
+                if(earliestStart > tempStopDate){
+                //END: UD-1332 5/20/2015 JLedesma urgent approval criteria.
+                    isUrgent = true;       
+                }
+                else {
+                    isUrgent = false;
+                }
+                if(isUrgent){
+                    textComp.style.color = '#ff0000';
+                } else {
+                    textComp.style.color = '#000000';
+                }
+
+            }
+        </script>
+        <!--END: D-1361 JLedesma Change font color to red if Urgent.  -->
+        <apex:pageblock id="mainBlock">
+            
+            <apex:pageBlockButtons location="Top" id="pageButtons">
+                <apex:commandButton value="Submit" action="{!submit}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <!--link-->
+            <!-- START: D-0556 / K. Tan / Modified Link -->
+
+            <h1>Knowledge Article:</h1>&nbsp;<a id="theLink" name="{!$Label.Article_Name_TempStopVendor}" href="https://{!$Label.Article_Link_TempStopVendor}">Order Entry - Temp-Stop Subscription Related Article</a> <br/><br/>
+            <!-- END: D-0556 / K. Tan / Modified Link -->
+
+            <!-- end link -->
+            
+            <!-------------------------------------- Account Details ------------------------------------------->
+            <apex:pageBlockSection id="acctDetailsSection" collapsible="True" title="Account Details" columns="2">       
+                <apex:outputText label="Account Name"> 
+                    <apex:outputLink value="{!URLFOR($Action.Account.View,thisAccount.Id)}">{!thisAccount.Name}</apex:outputLink>
+                </apex:outputText>                
+                <apex:outputField label="Account Number" value="{!thisAccount.AccountNumber}"/>
+                <apex:outputField label="Account Type" value="{!thisAccount.RecordType.Name}"/>
+                <apex:inputCheckbox value="{!followUpTask}" label="Create Follow Up Task" />
+                <apex:selectList value="{!requestSource}" label="Request Source" size="1">
+                    <apex:selectOptions value="{!requestSources}"/>
+                </apex:selectList> 
+                </apex:pageBlockSection>
+            
+            <!------------------------------------------- Temp Stop History ------------------------------------------->
+            <apex:pageBlockSection id="tempStopHistorySection" collapsible="True" title="Temp Stop History" columns="1">
+                <apex:outputPanel layout="block" styleClass="scroll">  
+                    <table width="50%" border='1' cellspacing="0" cellpadding="2" styleClass="table" style='vertical-align:bottom;text-align:center' >
+                        <thead>
+                            <tr bgcolor="#B1A0C7" >
+                                <th><font color="white" style='vertical-align:bottom;text-align:center'>Subscription Name</font></th>
+                                <th><font color="white" style='vertical-align:bottom;text-align:center'>Subscription ID</font></th>
+                                <th><font color="white" style='vertical-align:bottom;text-align:center'>Temp Stop Date</font></th>
+                                <th><font color="white" style='vertical-align:bottom;text-align:center'>Restart Date</font></th>
+                                <th><font color="white" style='vertical-align:bottom;text-align:center'>Status</font></th>                    
+                            </tr>
+                        </thead>
+                        <tbody>  
+                                <apex:repeat value="{!vendorTempStopRecList}" var="vts" id="tshistory" > 
+
+                                <tr>
+                                    <td> <apex:outputfield value="{!vts.Subscription_Vendor__r.Name}"/> </td>
+                                    <td> {!vts.Subscription_Vendor__r.id}</td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                           <apex:param value="{!vts.Temp_Stop__r.Temp_Stop_Date__c}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                           <apex:param value="{!vts.Temp_Stop__r.Restart_Date__c}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> {!vts.Temp_Stop__r.Temp_Stop_Status__c}</td>
+                                </tr> 
+                            </apex:repeat>  
+                        </tbody>
+                    </table>
+                </apex:outputPanel>
+            
+                <!------------------------- Create - Update - Cancel ---------------------->
+                <apex:selectRadio id="selectedTempStopType" value="{!selectedTempStopType}">
+                    <apex:selectOptions value="{!ListTempStopType}"/>
+                    <apex:actionSupport event="onclick" reRender="wrapperPannel"/>
+                </apex:selectRadio>
+                
+                <apex:outputPanel id="wrapperPannel" layout="none">
+                <apex:PageMessages id="msg"/> 
+                <!--------------------------------------------- Create New Temp Stop Table ---------------------------------------------->
+                    <apex:outputPanel layout="block" styleClass="scroll" id="activeSubs" rendered="{!IF(selectedTempStopType == 'Create New Temp Stop',true,false)}">  
+                        <table width="100%" border='1' cellspacing="0" cellpadding="2" styleClass="table" style='vertical-align:bottom;text-align:center'>
+                            <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Status</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' colspan="7"><font color="white">Current Frequency</font></th>                            
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' rowspan="2"><font color="white">Temp Stop Quantity</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Earliest Start Date</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Option</font></th>                  
+                            </tr>
+                            </thead>
+                            <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Mon</font></th> 
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Tue</font></th>                            
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Wed</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Thu</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Fri</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Sat</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' width="14.3%"><font color="white">Sun</font></th>                            
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white"></font></th>                  
+                            </tr>
+                            </thead>
+                            <tbody>        
+                                <apex:repeat value="{!subscriptionResultList}" var="sub">                
+                                    <tr>  
+                                        <!-- START: D-1808 / JLedesma / Updated field name -->
+                                        <td> <apex:outputLink value="{!URLFOR($Action.Subscription_Vendor__c.View,sub.Id)}">{!sub.pub}</apex:outputLink></td>
+                                        <!-- END: D-1808 / JLedesma / Updated field name -->
+                                        <td> <apex:outputtext value="{!sub.status}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.mon}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.tue}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.wed}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.thu}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.fri}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.sat}"/> </td>
+                                        <td> <apex:outputtext value="{!sub.sun}"/> </td>
+                                        <!-- START: UD-1359 / JLedesma 6/3/2015 / entry/selection not avail for certain publications -->
+                                        <!-- START: UD-1331 / JLedesma 5/21/2015 / entry/selection not avail for certain publications -->
+                                        <!-- START: D-3040/ JLedesma 5/29/2015 / entry for Subscriptions -->
+                                        <td> <apex:inputfield value="{!sub.tp.Temp_Stop_Qty__c}" rendered="{!sub.isShown}"/> </td> <!--Start/End UD-1191/UD-1192 James 05/14/2015-->
+                                        <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}" rendered="{!sub.isShown}"> <!--Start/End UD-1191/UD-1192 James 05/14/2015-->
+                                               <apex:param value="{!sub.earliestStartDate}" /> 
+                                             </apex:outputText>    
+                                        </td>
+                                        <!--START: D-1361 JLedesma Change font color to red if Urgent.  -->
+                                        <td> <apex:inputfield value="{!sub.tp.Temp_Stop_Date__c}" onchange="changeColor('{!sub.earliestStartDate}', this.value, this);" rendered="{!sub.isShown}" /> </td > <!--Start/End UD-1191/UD-1192 James 05/14/2015--> 
+                                        <!--END: D-1361 JLedesma Change font color to red if Urgent.  -->   
+                                       <td > 
+                                       <apex:inputfield value="{!sub.tp.Restart_Date__c}" rendered="{!sub.isShown}" > <!--Start/End UD-1191/UD-1192 James 05/14/2015-->
+                                       <apex:actionSupport event="onchange" rerender="callDateUrgency()"/>
+                                       </apex:inputField>                                      
+                                       </td> 
+                                       
+                                        
+                                        <td> <apex:commandButton value="Add" action="{!setSelectedRecords}" rendered="{!sub.isShown}" rerender="selected,msg" id="buttonId"> <!--Start/End UD-1191/UD-1192 James 05/14/2015-->
+                                        <!-- END: UD-1359 / JLedesma 6/3/2015 / entry/selection not avail for certain publications -->
+                                            <apex:param name="venPubId" assignto="{!myId}" value="{!sub.venPubId}" id="param"/>
+                                            <apex:param name="vfsubId" assignto="{!vfSubId}" value="{!sub.id}" id="param2"/>  
+                                            </apex:commandButton> 
+                                        </td>
+                                    </tr>   
+                                </apex:repeat>   
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+
+
+                    <!------------------------------------------------ Selected from Create New Temp Stop ------------------------------------------------->
+                    <apex:outputPanel layout="block" styleClass="scroll" rendered="{!IF(selectedTempStopType == 'Create New Temp Stop',true,false)}" id="selected">  
+                        <br> </br>
+                            <font color="red"> <b> Selected: </b> </font>
+                        <br> </br>
+                        <table width="70%" border='1' cellspacing="0" cellpadding="2" styleClass="table" style='vertical-align:bottom;text-align:center'>
+                            <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center' rowspan="2"><font color="white">Temp Stop Quantity</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Remarks</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Option</font></th>                  
+                            </tr>
+                            </thead>
+                            <tbody>        
+                                <apex:repeat value="{!tempStopRequestList}" var="tstop" rendered="true">                
+                                    <tr>
+                                        <!-- START: D-1808 / JLedesma / Updated field name -->
+                                        <td> {!tstop.pub} </td>
+                                        <!-- END: D-1808 / JLedesma / Updated field name -->
+                                        <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!tstop.tempStopDate}" /> 
+                                             </apex:outputText>    
+                                        </td>
+                                        <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!tstop.restartDate}" /> 
+                                             </apex:outputText>    
+                                        </td>
+                                        <td> {!tstop.tempStopQty} </td>
+                                        <td> <apex:inputtext value="{!tstop.remarks}"/> </td>
+                                        <td> <apex:commandButton value="Remove" action="{!removeSubscriptionRecord}" rerender="selected">
+                                                 <apex:param name="vfsubId" assignto="{!tstopId}" value="{!tstop.id}" id="param2"/>     
+                                             </apex:commandButton> 
+                                        </td>
+                                    </tr>   
+                                </apex:repeat>   
+                            </tbody>
+                        </table>
+                        
+                    </apex:outputPanel>
+
+
+                 <!--------------------------------------------- Update New Temp Stop Table ---------------------------------------------->
+                <apex:outputPanel layout="block" styleClass="scroll" id="VUpd" rendered="{!IF(selectedTempStopType == 'Update Temp Stop Request',true,false)}" > 
+                    <table width="100%" border='1' cellspacing="0" cellpadding="2" styleClass="table" style='vertical-align:bottom;text-align:center'>
+                        <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Status</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Quantity</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Earliest Start Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Status</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>                                
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Option</font></th>                  
+                            </tr>
+                        </thead>
+                     
+                        <tbody>        
+                            <apex:repeat value="{!vToUpdate}" var="vst" rendered="true">                
+                                <tr> 
+                                    <!-- START: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputLink value="/{!vst.Subscription_Vendor__r.Id}" id="accountLink">{!vst.Publication__r.Name}</apex:outputLink> </td>
+                                    <!-- END: D-1808 / JLedesma / Updated field name -->
+                                    <td> {!vst.Subscription_Vendor__r.Status__c} </td>
+                                    <td> {!vst.Temp_Stop__r.Temp_Stop_Qty__c} </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+											<!-- START: UD-1327 6/22/2015 / JLedesma / Updated field value -->
+                                            <apex:param value="{!vst.Temp_Stop__r.Pop_Start__c}" /> 
+											<!-- END: UD-1327 6/22/2015 / JLedesma / Updated field value -->
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!vst.Temp_Stop__r.Temp_Stop_Date__c}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}" id="reStartDate">
+                                               <apex:param value="{!vst.Temp_Stop__r.Restart_Date__c}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> {!vst.Temp_Stop__r.Temp_Stop_Status__c}  </td> 
+                                    <!--START: D-1361 JLedesma Change font color to red if Urgent.  -->
+                                    <td> 
+                                        <!-- START: UD-1331 / JLedesma 5/21/2015 / entry/selection not avail for certain publications -->
+										<!-- START: UD-1327 6/22/2015 / JLedesma / Updated field value -->
+                                        <apex:inputfield rendered="{!IF(vst.Temp_Stop__r.Temp_Stop_Date__c!=null, (IF(vst.Temp_Stop__r.Temp_Stop_Date__c>TODAY(),true,false)), false)}" value="{!vst.Temp_Stop__r.Temp_Stop_Date__c}" onchange="changeColor('{!vst.Temp_Stop__r.Pop_Start__c}', this.value, this);" style="color:{!IF(vst.Temp_Stop__r.Pop_Start__c!=NULL, (IF(vst.Temp_Stop__r.Pop_Start__c > vst.Temp_Stop__r.Temp_Stop_Date__c, 'red', 'black')), 'black')}"/>
+										<!-- END: UD-1327 6/22/2015 / JLedesma / Updated field value -->
+                                        <!-- END: UD-1331 / JLedesma 5/21/2015 / entry/selection not avail for certain publications -->
+                                        <apex:outputField rendered="{!IF(vst.Temp_Stop__r.Temp_Stop_Date__c!=null, (IF(vst.Temp_Stop__r.Temp_Stop_Date__c <= TODAY() && vst.Temp_Stop__r.Restart_Date__c > TODAY(),true, false)), false)}" value="{!vst.Temp_Stop__r.Temp_Stop_Date__c}"/>
+                                    </td>
+                                   
+                                    <td>
+                                    <!--END: D-1361 JLedesma Change font color to red if Urgent.  --> 
+                                    <!--START: D-3040 JLedesma 6/5/2014 Related: validation for Update overlapping -->
+                                        <!--apex:inputfield value="{!vst.Temp_Stop__r.Restart_Date__c}" onchange="CompareDatesRestartDate();" id="DateSelect" /--> 
+                                        <apex:inputfield value="{!vst.Temp_Stop__r.Restart_Date__c}" id="DateSelect" /> 
+                                    <!--END: D-3040 JLedesma 6/5/2014 Related: validation for Update overlapping -->
+
+                                    </td>
+                                    
+                                    <td> <apex:commandButton value="Add" action="{!setVendorTempStopRecords}" rerender="selectedUpd,msg" id="buttonId">
+                                        <apex:param name="paramId3" assignto="{!myIdUpdate}" value="{!vst.Id}" id="param3"/>
+
+                                     
+                                        </apex:commandButton>
+                                    </td>
+                                </tr>   
+                            </apex:repeat>   
+                         </tbody>
+                    </table>
+                
+                <!------------------------------------------------ Selected from Update New Temp Stop ------------------------------------------------->
+                <br> </br>
+                  <font color="red"> <b> Selected: </b> </font>
+                <br> </br> 
+                
+                <apex:outputPanel layout="block" styleClass="scroll" rendered="true" id="selectedUpd">
+                <table width="70%" border='1' cellspacing="0" cellpadding="2" styleClass="table" id="selectedUpd" style='vertical-align:bottom;text-align:center'>
+                        <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Quantity</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Remarks</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Option</font></th>                  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>        
+                            <apex:repeat value="{!updateListWrapper}" var="vst" rendered="true">                
+                                <tr>
+                                    <!-- START: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputLink value="/{!vst.subId}" >{!vst.pub}</apex:outputLink></td>
+                                    <!-- END: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!vst.tempStopDate}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!vst.restartDate}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{!vst.tempStopQty}" /> </td>
+                                    <td> <apex:inputText value="{!vst.remarks}" /> </td>
+                                    <td> <apex:commandButton value="Remove" action="{!removeTempStopToUpdate}" rerender="selectedUpd">
+                                        <apex:param name="paramId" assignto="{!myIdUpdate}" value="{!vst.Id}" id="param"/>
+                                        </apex:commandButton> 
+                                    </td>
+                                </tr>   
+                            </apex:repeat>   
+                        </tbody> 
+                </table>
+                </apex:outputpanel>
+            </apex:outputpanel>
+            <!-- D-0689 -->
+            <!--------------------------------------------- Cancel New Temp Stop Table ---------------------------------------------->
+            <apex:outputPanel layout="block" styleClass="scroll" id="VCan" rendered="{!IF(selectedTempStopType == 'Cancel Temp Stop Request',true,false)}">
+            <table width="100%" border='1' cellspacing="0" cellpadding="2" styleClass="table" style='vertical-align:bottom;text-align:center'>
+                        <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Status</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Quantity</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp Stop Status</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Cancel?</font></th>                  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>       
+                            <apex:repeat value="{!vToCancel}" var="vst" rendered="true">                
+                                <tr>
+                                    <!-- START: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputLink value="/{!vst.Subscription_Vendor__r.Id}" id="accountLink">{!vst.Publication__r.Name}</apex:outputLink> </td> 
+                                    <!-- END: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputField value="{!vst.Subscription_Vendor__r.Status__c}"/> </td>
+                                    <td> <apex:outputField value="{!vst.Temp_Stop__r.Temp_Stop_Qty__c}"/> </td>
+                                    <td> <apex:outputField value="{!vst.Temp_Stop__r.Temp_Stop_Date__c}" /></td>
+                                    <td> <apex:outputField value="{!vst.Temp_Stop__r.Restart_Date__c}" /></td>                                        
+                                    <td> <apex:outputfield value="{!vst.Temp_Stop__r.Temp_Stop_Status__c}"/> </td>
+                                    
+                                    <td> <apex:commandButton value="Add" action="{!setVendorTempStopRecords}" rerender="selectedCan" id="buttonId">
+                                        <apex:param name="paramId" assignto="{!myIdCancel}" value="{!vst.Id}" id="param"/>
+                                        </apex:commandButton> 
+                                    </td>
+                                </tr>   
+                            </apex:repeat>  
+                        </tbody>
+                </table>
+                
+                <!------------------------------------------------ Selected from Cancel New Temp Stop -------------------------------------------------> 
+                <br> </br>
+                  <font color="red"> <b> Selected: </b> </font>
+                <br> </br>
+                
+                <apex:outputPanel layout="block" styleClass="scroll" rendered="true" id="selectedCan"> 
+                <table width="70%" border='1' cellspacing="0" cellpadding="2" styleClass="table" id="selectedCan" style='vertical-align:bottom;text-align:center' >
+                        <thead>
+                            <tr>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Subscription Name</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Temp-Stop Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Restart Date</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Status</font></th>
+                                <th bgcolor="#B1A0C7" style='vertical-align:bottom;text-align:center'><font color="white">Urgent Stop?</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Remarks</font></th>
+                                <th bgcolor="#00B050" style='vertical-align:bottom;text-align:center'><font color="white">Option</font></th>                  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>      
+                            <apex:repeat value="{!cancelListWrapper}" var="vst" rendered="true">                
+                                <tr>
+                                    <!-- START: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputLink value="/{!vst.subId}" >{!vst.pub}</apex:outputLink></td>
+                                    <!-- END: D-1808 / JLedesma / Updated field name -->
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!vst.tempStopDate}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                               <apex:param value="{!vst.restartDate}" /> 
+                                         </apex:outputText>    
+                                    </td>
+                                    <td> <apex:outputText value="{!vst.tempStopStatus}"/> </td>
+                                    <td> <apex:outputText value="{!IF(vst.tempStopDate=TODAY()+1, 'Yes', 'No')}" style="color:{!IF((vst.tempStopDate=TODAY()+1), 'red', 'black')};"/></td>
+                                    <td> <apex:inputText value="{!vst.remarks}" /> </td>
+                                    <td> <apex:commandButton value="Remove" action="{!removeTempStopToCancel}" rerender="selectedCan">
+                                        <apex:param name="paramId" assignto="{!myIdCancel}" value="{!vst.Id}" id="param"/>
+                                        </apex:commandButton> 
+                                    </td>
+                                    
+                                </tr>   
+                            </apex:repeat>   
+                        </tbody> 
+                </table>
+                </apex:outputPanel>
+            </apex:outputPanel> 
+            </apex:outputPanel> 
+            </apex:pageBlockSection> 
+            <!-- START: D-1118 JLedesma 1/8/2015 Buttons must also be placed on the bottom of the page.-->
+            <apex:pageBlockButtons location="Bottom" id="pageButtonsBottom">
+                <apex:commandButton value="Submit" action="{!submit}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>      
+            <!-- END: D-1118 JLedesma 1/8/2015 Buttons must also be placed on the bottom of the page.-->     
+        </apex:pageblock>
+        <apex:actionFunction name="getDateUrgency" action="{! getDateUrgency}"/>
+        <apex:actionFunction name="setSubscriptionRecords" action="{!setSubscriptionRecords}" />
+        <apex:actionFunction name="setVendorTempStopRecords" action="{!setVendorTempStopRecords}" />
+    
+    </apex:form>
+        
+        <script>    
+            function enableButton(){            
+                document.getElementById("{!$Component.buttonId}").enabled=true;
+                alert("alert");
+            }
+            
+             function CompareDatesRestartDate(){
+                var valueFromInputField = $("input[id*='DateSelect']"); 
+                var reStartDate1 = $("span[id*='reStartDate']").text();
+                var reStartDate = reStartDate1.substring(0, 10);
+                            
+                var from = reStartDate.split("/");
+                var fromI = valueFromInputField.val().split("/");
+  
+                D1 = new Date(from[2], from[1] - 1, from[0]);       // Original ReStart Date
+                D2 = new Date(fromI[2], fromI[1] - 1, fromI[0]);    // User entered ReStart Date
+                            
+                if (D2 <= D1) {
+                    $(valueFromInputField).css('color', 'red');
+                }
+                else {
+                    $(valueFromInputField).css('color', 'black');
+                }
+                    
+             }
+             
+             function callDateUrgency(){
+             
+                 getDateUrgency();
+              
+             }
+        </script>
+
+</apex:page>

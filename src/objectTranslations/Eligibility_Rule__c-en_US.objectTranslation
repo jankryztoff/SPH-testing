@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Eligibility Rule</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Eligibility Rules</value>
+    </caseValues>
+    <fields>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+        <picklistValues>
+            <masterLabel>Add</masterLabel>
+            <translation><!-- Add --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change</masterLabel>
+            <translation><!-- Change --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Condition --></label>
+        <name>Condition__c</name>
+        <picklistValues>
+            <masterLabel>&lt;</masterLabel>
+            <translation><!-- &lt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&lt;=</masterLabel>
+            <translation><!-- &lt;= --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;</masterLabel>
+            <translation><!-- &gt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;=</masterLabel>
+            <translation><!-- &gt;= --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Contract Status --></label>
+        <name>Contract_Status__c</name>
+        <picklistValues>
+            <masterLabel>With Contract</masterLabel>
+            <translation><!-- With Contract --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Without contract</masterLabel>
+            <translation><!-- Without contract --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Contract / Subscription Rule --></label>
+        <name>Contract_Subscription_Rule__c</name>
+        <picklistValues>
+            <masterLabel>Contract End Date</masterLabel>
+            <translation><!-- Contract End Date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription End Date</masterLabel>
+            <translation><!-- Subscription End Date --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Contract Type --></label>
+        <name>Contract_Type__c</name>
+        <picklistValues>
+            <masterLabel>NA</masterLabel>
+            <translation><!-- NA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>With Contract</masterLabel>
+            <translation><!-- With Contract --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Without Contract</masterLabel>
+            <translation><!-- Without Contract --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Current Platform --></label>
+        <name>Current_Platform__c</name>
+        <picklistValues>
+            <masterLabel>All-In-One</masterLabel>
+            <translation><!-- All-In-One --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone</masterLabel>
+            <translation><!-- Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet</masterLabel>
+            <translation><!-- Tablet --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Customer Status --></label>
+        <name>Customer_Status__c</name>
+        <picklistValues>
+            <masterLabel>Existing customer</masterLabel>
+            <translation><!-- Existing customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New customer</masterLabel>
+            <translation><!-- New customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor customer</masterLabel>
+            <translation><!-- Vendor customer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days --></label>
+        <name>Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective End Date --></label>
+        <name>Effective_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Eligibility Rule --></label>
+        <name>Eligibility_Rule__c</name>
+        <relationshipLabel><!-- Eligibility Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+        <picklistValues>
+            <masterLabel>AFR</masterLabel>
+            <translation><!-- AFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BH</masterLabel>
+            <translation><!-- BH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BT</masterLabel>
+            <translation><!-- BT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FT</masterLabel>
+            <translation><!-- FT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MY</masterLabel>
+            <translation><!-- MY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NP</masterLabel>
+            <translation><!-- NP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SM</masterLabel>
+            <translation><!-- SM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TABL</masterLabel>
+            <translation><!-- TABL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBS</masterLabel>
+            <translation><!-- TBS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TM</masterLabel>
+            <translation><!-- TM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUP</masterLabel>
+            <translation><!-- TUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUPJ</masterLabel>
+            <translation><!-- TUPJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WB</masterLabel>
+            <translation><!-- WB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WSJA</masterLabel>
+            <translation><!-- WSJA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZB</masterLabel>
+            <translation><!-- ZB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Status --></label>
+        <name>Subsciber_Status__c</name>
+        <picklistValues>
+            <masterLabel>New Subscriber</masterLabel>
+            <translation><!-- New Subscriber --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Eligibility Rule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Required Fields are not populated --></errorMessage>
+        <name>All_Required_fields_are_populated</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Contract / Subscription Rule must be Subscription End Date. --></errorMessage>
+        <name>Contract_Subscription_Rule_on_Contract</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &quot;Contract&quot; field must be NA if Action = &quot;Can Add&quot; --></errorMessage>
+        <name>Contract_Subscription_Rule_on_Contract_2</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Check the Effective Start Date must not be later than the Effective End Date --></errorMessage>
+        <name>Dates_Validation</name>
+    </validationRules>
+</CustomObjectTranslation>

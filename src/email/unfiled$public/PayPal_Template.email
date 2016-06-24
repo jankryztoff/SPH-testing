@@ -1,0 +1,74 @@
+<html>
+	<body>
+	<table width="100%"> 
+		<tr>
+			<td width=68% align=left> 
+					<div style = "font-family:Arial; font-size: 9pt;">
+						{{Today}}<br>
+						<br>
+						{{FirstName}} {{LastName}}<br>
+						
+						 {{MailingAddress}} <br>	 
+						<br>
+
+						DEAR {{FirstName}} {{LastName}},<br>
+						<br>
+						<b>
+						{{Subscriptions}} <br>
+						Account No&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp; : {{Zuora__AccountNumber__c}} <br>
+						Amount&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;: ${{Payment_amount__c}}<br>
+						PayPal Email Address&emsp;: {{PaypalEmail}} <br>
+						<br></b>
+					</div>
+			</td>
+			<td width=32% align=left>
+				<img src="{{baseURL}}" height="95" width="135"/>
+				<div style="font-size:9pt; font-name: arial">
+					<br><b>Singapore Press Holdings Limited</b>
+					<br><b>Circulation</b>
+					<br>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+					<br>Enquiries: +65 6388  3838, Email : circs@sph.com.sg
+									<br>Co. Regn. No.: 198402868E
+				</div>
+			</td>
+		</tr>
+	</table>
+			<div style = "font-family:Arial; font-size: 9pt;">
+			Thank you for supporting SPH publications.<br>
+			<br>
+			We wish to inform that your credit card deduction via PayPal was unsuccessful on {{Payment_Date__c}}.  <br>
+			<p align="justify">
+			Please update changes in your credit card number and the expiry date in your PayPal account or alternatively complete the form below and fax to us at <b>6744 4875 </b> for processing by SPH directly. </p>
+			<p align="justify">
+			To ensure an undisrupted delivery of your subscription, your prompt response by <b>{{Today+7}}</b> is greatly appreciated. Please also be informed that early termination of subscription contract(s) will incur administrative and other processing charges wherever applicable.
+			</p>
+			<p align="justify">
+			For further clarification, please contact our Customer Service officers at 6388 3838 or fax in to us at (65) 6744 4875.
+			</p>
+			Thank you<br>
+			<br>
+
+			(<i>This is a computer generated letter and does not require any signature</i>)<br>
+			<hr>
+			<b>Please fill in this portion and fax to us at 6744 4875 by {{Today+7}}</b><br>
+			<br>{{FirstName}} {{LastName}}<br>								
+			{{MailingAddress}} <br><br>	 
+
+			<b>{{Publication}}</b><br><br>
+			Please charge to my new credit card as indicated below: <br>
+
+			<br>
+
+			Credit Card no. (Visa / Master): _______________________________ Expiry Date : ________<br><br>
+			Cardholder’s Name: ________________________ Signature: _______________ Date: _________
+
+			<br><br>
+
+
+
+			To allow us to serve you better, please update your contact details if there are any changes.<br>
+			Tel: (H) {{HomeNumber}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) 
+{{OfficeNumber}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Mobile) {{MobileNumber}}
+		</div>
+	</body>
+</html>

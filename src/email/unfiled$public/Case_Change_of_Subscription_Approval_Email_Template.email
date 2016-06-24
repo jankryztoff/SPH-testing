@@ -1,0 +1,9 @@
+Below case is pending for your approval :
+
+Case : {!Case.CaseNumber}
+Owner : {!Case.OwnerFullName}
+Amount:  {!Case.Admin_Charges__c}
+Case Type : {!Case.RecordType}
+Date/Time Created : {!Case.CreatedDate}
+
+Please click on link to access the case : {!Case.Link}

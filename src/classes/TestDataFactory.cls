@@ -182,9 +182,9 @@ public class TestDataFactory {
         List<Singpost_Address__c> singpostAddressList = new List<Singpost_Address__c>();
         
         for(Integer i=0;i<numSingpostAddress;i++){
-            Singpost_Address__c  singpostAddressRecord = new Singpost_Address__c(Name='SA'+i, Address_Type__c='P',
+            Singpost_Address__c  singpostAddressRecord = new Singpost_Address__c(Name='1'+i, Address_Type__c='P',
                                                                                  Street_Name__c='TestStreet' + i,Building_Name__c='TestBldgName'+i,
-                                                                                 Number_of_Units__c=i);
+                                                                                 Number_of_Units__c=i, House_Block_Number__c = '42');
             singpostAddressList.add(singpostAddressRecord);
         }
         return singpostAddressList;
@@ -296,7 +296,8 @@ public class TestDataFactory {
             subscriptionList.add(subscriptionRecord);
         }
         return subscriptionList;
-    }
+    }   
+    
     
     public static List<Zuora__Subscription__c> createActiveSubscription(Integer numSubscriptions, Id orderLineItem,Id customerAccount) {
         List<Zuora__Subscription__c> subscriptionList = new List<Zuora__Subscription__c>();
@@ -585,10 +586,44 @@ public class TestDataFactory {
         }
         return asiaOneSubscriptionList;
     } 
-
+    
+    public static List<Address_Details__c> createAddressDetails(Integer numAddresses) {
+        List<Address_Details__c> addressDetailList = new List<Address_Details__c>();
+ 
+        List<Singpost_Address__c> singPostAddList = createSingpostAddress(1);
+        insert singPostAddList;
+        for(Integer i=0;i<numAddresses;i++){
+            Address_Details__c addressDetailRecord = new Address_Details__c(Name=i + 'Test Address', Postal_Code__c =singPostAddList[0].Id, Unit__c = '53', Level__c='09',
+                                                                               Postal_code_text__c =  singPostAddList[0].Name, buildingNo__c =  singPostAddList[0].House_Block_Number__c, 
+                                                                               Key__c = singPostAddList[0].Name+'|'+singPostAddList[0].House_Block_Number__c+'|6|2');            
+            
+            addressDetailList.add(addressDetailRecord);
+        }
+        return addressDetailList;
+   
+    }   
+    /* //COMMENTED OUT FIRST FOR PREVIOUS TEST CLASSES
     public static List<Address__c> createAddress(Integer numAddresses) {
         List<Address__c> addressList = new List<Address__c>();
     //test
+        List<Country__c> countryList = createCountry(1);
+        
+        insert countryList;
+        
+        List<Singpost_Address__c> singPostAddList = createSingpostAddress(1);
+        insert singPostAddList;
+        for(Integer i=0;i<numAddresses;i++){
+            Address__c addressRecord = new Address__c(Name=i + 'Test Address', country__c=countryList[0].id, Postal_Code__c =singPostAddList[0].Id, Level_Number__c ='09', Unit_Number__c = '53' );            
+            //addressRecord.country__c = countryList[0].id;
+            addressList.add(addressRecord);
+        }
+        return addressList;
+    //test
+    }   */
+
+    public static List<Address__c> createAddress(Integer numAddresses) {
+        List<Address__c> addressList = new List<Address__c>();
+    
         List<Country__c> countryList = createCountry(1);
         insert countryList;
         for(Integer i=0;i<numAddresses;i++){
@@ -597,9 +632,9 @@ public class TestDataFactory {
             addressList.add(addressRecord);
         }
         return addressList;
-    //test
+ 
     }   
-    
+
     public static List<Country__c> createCountry(Integer numCountries) {
         List<Country__c> countryList = new List<Country__c>();
     
@@ -1307,6 +1342,7 @@ public class TestDataFactory {
         orderline.Override_Reason__c = 'TEST';
         orderline.Suppress_Notification_Stop__c = TRUE;
         orderline.Main_Package_Type__c = 'Base';
+        orderline.Order__r.Order_Type__c = 'Renewal';
         insert orderline;
         
         objectMap.put('Order_Line_Item__c', orderline);  
@@ -1752,7 +1788,7 @@ public class TestDataFactory {
         
         zqu__ProductRatePlan__c prdRatePlan = TestDataFactory.createProductRatePlan(1)[0];
         prdRatePlan.zqu__ZProduct__c = zProduct.Id;
-        prdRatePlan.RatePlanType__c= 'Ptoration';
+        prdRatePlan.RatePlanType__c= 'Proration';
         prdRatePlan.zqu__EffectiveStartDate__c= date.today();
         prdRatePlan.zqu__EffectiveEndDate__c= date.today().addDays(30);
         prdRatePlan.zqu__Deleted__c = false;

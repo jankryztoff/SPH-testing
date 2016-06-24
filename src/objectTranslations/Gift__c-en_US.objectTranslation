@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Gift</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Gifts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Gift Code --></label>
+        <name>Gift_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Cost --></label>
+        <name>Gift_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Image (Mobile) --></label>
+        <name>Gift_Image_Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Image --></label>
+        <name>Gift_Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Image web (large) --></label>
+        <name>Gift_Image_web_large__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Image web (medium) --></label>
+        <name>Gift_Image_web_medium__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Image web (small) --></label>
+        <name>Gift_Image_web_small__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Type --></label>
+        <name>Gift_Type__c</name>
+        <picklistValues>
+            <masterLabel>Free</masterLabel>
+            <translation><!-- Free --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premium</masterLabel>
+            <translation><!-- Premium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Gift description --></label>
+        <name>Gift_description__c</name>
+    </fields>
+    <fields>
+        <label><!-- One Time Charge --></label>
+        <name>One_Time_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Price --></label>
+        <name>Retail_Price__c</name>
+    </fields>
+    <layouts>
+        <layout>Gift Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Gift Images --></label>
+            <section>Gift Images</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- There should be no One Time Charge for Free type Gifts. --></errorMessage>
+        <name>One_Time_Charge_for_Free_Gifts</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- One Time Charge should be greater than $0 for Premium Gifts. --></errorMessage>
+        <name>One_Time_Charge_for_Premium_Gifts</name>
+    </validationRules>
+</CustomObjectTranslation>

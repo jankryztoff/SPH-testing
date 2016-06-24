@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Commission_Rate_Fri__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Fri</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Mon__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Mon</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_PHD__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate PHD</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_PHE__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate PHE</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Sat__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Sat</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Fri__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Fri</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Mon__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Mon</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_PHD__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) PHD</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_PHE__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) PHE</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Sat__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Sat</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Sun__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate  (Special)  Sun</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Thur__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Thur</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Tue__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Tue</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Special_Wed__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate (Special) Wed</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Sun__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Sun</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Thur__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Thur</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Tue__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Tue</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Wed__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Rate Wed</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Fri__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Fri</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Mon__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Mon</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_PHD__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price PHD</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_PHE__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price PHE</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Sat__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Sat</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Sun__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Sun</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Thur__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Thur</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Tue__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Tue</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Cover_Price_Wed__c</fullName>
+        <externalId>false</externalId>
+        <label>Cover Price Wed</label>
+        <precision>11</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Deliver_Fee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Deliver Fee</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Insertion_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Insertion Rate</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Publication__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Look-up to Publication</description>
+        <externalId>false</externalId>
+        <label>Publication</label>
+        <referenceTo>Publication__c</referenceTo>
+        <relationshipLabel>Publication Commission Rates</relationshipLabel>
+        <relationshipName>Publication_Commission_Rates</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Publication Commission Rate</label>
+    <nameField>
+        <label>Publication Commission Rates Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Publication Commission Rates</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

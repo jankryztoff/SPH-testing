@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__CustomerAccount__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Legacy_Billing_Account_Id__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Other_PaymentMethod__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$ARMS_Business_Profile__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$ARMS_Debt_Management__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Legacy_Billing_Account_Id__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Other_PaymentMethod__c</column>
+            <operator>equals</operator>
+            <value>Invoice</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$ARMS_Debt_Management__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$ARMS_Business_Profile__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Mig BA ARMS Check</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Billing_Accounts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__CustomerAccount__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

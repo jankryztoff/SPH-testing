@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>No_of_Concurrent_Users__c</fullName>
+        <externalId>false</externalId>
+        <label>No. of Concurrent Users</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Package_Service_Access_Flag__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Package Service Access Flag</label>
+        <referenceTo>Service_Access_Flag__c</referenceTo>
+        <relationshipLabel>Package Access Flags</relationshipLabel>
+        <relationshipName>Package_Access_Flags</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Package__c</fullName>
+        <externalId>false</externalId>
+        <label>Package</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Package Access Flags</relationshipLabel>
+        <relationshipName>Package_Access_Flags</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Package Access Flag</label>
+    <nameField>
+        <displayFormat>PAF-{0000}</displayFormat>
+        <label>PAF Record No</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Package Access Flags</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Package_Item_Validation</fullName>
+        <active>true</active>
+        <description>A package item of type &quot;base product&quot; or &quot;bundle product&quot;, should have been added to the package.</description>
+        <errorConditionFormula>IF(ISPICKVAL(Package__r.Package_Type__c, &apos;Base&apos;) &amp;&amp;  Package__r.Package_Item_Base_Hidden__c  &lt;=  0, true, false)
+||
+IF(ISPICKVAL(Package__r.Package_Type__c, &apos;Bundle&apos;) &amp;&amp;  Package__r.Package_Item_Bundle_Hidden__c  &lt;= 0, true, false)</errorConditionFormula>
+        <errorMessage>Please add a package item of type &quot;base product&quot; or &quot;bundle product&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Product_Platform_Validation</fullName>
+        <active>true</active>
+        <description>The package item of type &quot;base product&quot; or &quot;bundle product&quot; should not belong to a Product of platform &quot;Print&quot;</description>
+        <errorConditionFormula>If(OR(
+$ObjectType.Package_Item__c.Fields.RecordTypeId == &apos;012N00000008jCOIAY&apos;,
+$ObjectType.Package_Item__c.Fields.RecordTypeId == &apos;012N00000008jCdIAI&apos;) &amp;&amp; $ObjectType.Package_Item__c.Fields.Product_Platform__c == &apos;Print&apos;, true, false)</errorConditionFormula>
+        <errorMessage>Please add a digital package item to the package.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>New_Package_Access_Flag</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Package Access Flag</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/26.0/connection.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/js/functions.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery-ui.min.js&apos;)} 
+
+// get product platform from package item
+//START UD-1996 7/21/2015 Added by Manolo Valena - Updated query to only get Package Items with record type Base Product or Bundle Product. Also modified filter to get Package Items that are not Print.
+var queryProdPlatStr = &quot;SELECT Id, Name, Package__c, Product_Platform__c from Package_Item__c where Package__c = &apos;{!Package__c.Id}&apos; AND Product_Platform__c != &apos;Print&apos; AND (RecordType.Name = &apos;Base Product&apos; OR RecordType.Name = &apos;Bundle Product&apos;)&quot;; 
+//END UD-1996 7/21/2015 Added by Manolo Valena
+var queryProdPlat = sforce.connection.query(queryProdPlatStr); 
+var product_platform = queryProdPlat.getArray(&apos;records&apos;); 
+
+var queryProdItemStr = &quot;SELECT Id, Name, Package__c from Package_Item__c where Package__c = &apos;{!Package__c.Id}&apos; AND (RecordType.Name = &apos;Base Product&apos; OR RecordType.Name = &apos;Bundle Product&apos;)&quot;; 
+var queryProdItem = sforce.connection.query(queryProdItemStr); 
+var product_item = queryProdItem.getArray(&apos;records&apos;); 
+
+//START UD-1996 7/21/2015 Added by Manolo Valena - Rearranged conditions to fire error message for missing Base Product or Bundle Product Package Items first. Also updated logic to check if there is no existing Digital Package Item. 
+if (product_item.length &lt;= 0) { 
+alert(&quot;Please add a digital package item to the package&quot;); 
+} else if (product_platform.length == 0) { 
+alert(&quot;No service access flags allowed to be added for Print Packages&quot;); 
+} else { 
+window.location = &quot;{!URLFOR($Action.Package_Access_Flag__c.New, null,[saveURL=Package__c.Link, retURL=Package__c.Link, 
+CF00N9000000Dmvcn_lkid=Package__c.Id, CF00N9000000Dmvcn=Package__c.Name])}&quot;; 
+}
+//END UD-1996 7/21/2015 Added by Manolo Valena</url>
+    </webLinks>
+</CustomObject>

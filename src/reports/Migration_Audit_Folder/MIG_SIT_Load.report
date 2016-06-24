@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Legacy_Id__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ACCOUNT.NAME</column>
+            <operator>equals</operator>
+            <value>A SAMAD MAS DAWOOD,AAPC SINGAPORE PTE LTD,AB HALIM AB HALIM BIN AB RAZAK,AUSTRALIAN HIGH COMMISSION,CHAN DICK,CHIU HOCK HENG,D L HACK,DAVIS LANGDON &amp; SEAH SINGAPORE PTE LTD,ENG ENG KIM,GAMAL ANGULLIA,GAN ASTHER RACHEL,GAN BERNICE,GAN BOON CHONG,GAN CHER SENG,GAN CHYE HIAN,GAN DAVID,GAN EN AUSTIN,GAN ENG OON,GAN GEOK CHUA,GAN JIA XIN,GAN JIAYI KELLIE,GAN KIM KEE,GAN LEE HOON,GAN PAUL,GUE TEE KNG,GUNDU KRISHNAREDDY,GURMEET SINGH,GURVEEN KAUR,GUY LEJAY,GWEE LIAN KHENG,GWEE MINDY,GWEE TECK CHYE,GWEE THENG POR,GWEE WEE CHEN,GWEN TAN,GWENDELINE TEO,HEAH HOCK THYE,HO IVIN,KHOO BOON INN,KOH PENG HOCK,MADHUVI DAMANI,NG ALLAN,ONG KEE HWEE,ONG SELENA,OU ALICE,SHAW VEE MENG,SOH KIA YAM,TAN GEOK TIN,TAN KIM SENG,TAN LING SENG,TOH SOO CHENG,WONG SUM WAH,YEOH SAW GUAN</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>MIG - SIT Load</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__CustomerAccount__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$CreatedBy</field>
+    </columns>
+    <description>Check all the BAs that were not enhanced.</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$CreatedBy</column>
+            <operator>notContain</operator>
+            <value>Karl</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>MIG_CHECK - BAcheckAfterEnhancement</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Billing_Accounts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__CustomerAccount__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

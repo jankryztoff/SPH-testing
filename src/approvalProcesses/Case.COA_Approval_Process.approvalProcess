@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>CreatedDate</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>CSO_Team_Leader_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Step 1</label>
+        <name>Step_1</name>
+    </approvalStep>
+    <description>Notify Team lead that there is case needed for approval for the urgent Change of Address.</description>
+    <emailTemplate>unfiled$public/Case_Approver_Notification_Team_Lead</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(
+ISPICKVAL( Status, &quot;Pending&quot;), 
+ISPICKVAL( Sub_Category__c ,&quot;Change of Address&quot;),
+Effective_Date__c &lt; POP_Start_Date__c, 
+ OR(ISPICKVAL(Change_of_Address_Type__c, &quot;Change of Delivery Address - Local to Local&quot;), ISPICKVAL(Change_of_Address_Type__c, &quot;Change of Billing and Delivery Address&quot;), ISPICKVAL(Change_of_Address_Type__c, &quot;Change of Billing address&quot;)) 
+)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>COA_Case_Closed</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Credit_Vendor</name>
+            <type>Task</type>
+        </action>
+        <action>
+            <name>Notification_to_CSO_for_Approved_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Urgent_COA_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Case_Status_Pending</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notification_to_CSO_for_Rejected_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Urgent_COA_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Approval_Process_Submission_Date</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Case_Owner_to_TL_Queue</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Waiting_for_Urgent_COA_Approval</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>COA Approval Process</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

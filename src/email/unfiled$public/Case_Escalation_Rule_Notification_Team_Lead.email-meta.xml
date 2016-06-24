@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for Escalation Email Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Case: Escalation Rule Notification (Team Lead)</name>
+    <style>none</style>
+    <subject>Case Escalation Alert  - Case Not Closed Yet 48 hours - Case ID {!Case.Id}</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for Approved Email Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Case: Approved Notification for Waived (CSO)</name>
+    <style>none</style>
+    <subject>Approval Notification  - Case ID {!Case.Id}</subject>
+    <type>text</type>
+</EmailTemplate>

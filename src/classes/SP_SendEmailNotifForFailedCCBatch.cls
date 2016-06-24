@@ -175,7 +175,7 @@ global class SP_SendEmailNotifForFailedCCBatch implements Database.Batchable<sOb
                                              
                                              //START MMallorca D-3722 05/11/2015 Added address fields for Internal Address Type 
                                              FROM External_Payment__c
-                                             WHERE Transaction_Type__c = 'F' AND Payment_Method__c = 'Credit Card' AND  CreatedDate = TODAY  AND (Billing_Contact_email__c != null AND Billing_Contact_email__c != '')]);
+                                             WHERE Transaction_Type__c = 'F' AND Payment_Method__c = 'Credit Card' AND  CreatedDate = YESTERDAY  AND (Billing_Contact_email__c != null AND Billing_Contact_email__c != '')]);
             //End D-3931 VPernicia: additional condition, Change Refdate to yestrday changed to TODAY from YESTERDAY
             //END D-3435 - added Billing_Account__r.Billing_Contact__c
             //END UD-2556 08/31/2015 added by Jason A./Alyana N.

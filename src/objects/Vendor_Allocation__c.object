@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Allocated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Allocated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Allocation_TypeInVA__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Parcel_Name__r.Allocation_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Allocation Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Building_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>SingPost_Address__r.Building_Name__c</formula>
+        <label>Building Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Effective_End_Date__c</fullName>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Effective End Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Start_Date__c</fullName>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Effective Start Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>House_Block_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>SingPost_Address__r.House_Block_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>House/Block Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>House_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>SingPost_Address__r.Address_Type__c</formula>
+        <label>House Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Created_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Created By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Created_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Created Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Updated_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Updated By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Updated_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Updated Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mailing_Agent_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vendor_Account__r.Mailing_Agent_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Mailing Agent Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Old_Vendor_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Old Vendor Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Vendor Subscriber, Vendor</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Vendor Allocations (Old Vendor Account)</relationshipLabel>
+        <relationshipName>Vendor_Allocation</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Operated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parcel_Name__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Parcel Name</label>
+        <referenceTo>Parcel__c</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Process_Status__c</fullName>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Process Status</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Parcel_Name__r.Project_Name__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Project Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type_SPH__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vendor_Account__r.RecordType.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Record Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPH_Unique__c</fullName>
+        <externalId>false</externalId>
+        <label>Unique</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SingPost_Address__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Postal Code</label>
+        <referenceTo>Singpost_Address__c</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (Effective_End_Date__c &lt; TODAY(),
+&quot;inactive&quot;,
+&quot;active&quot;)</formula>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>SingPost_Address__r.Street_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Street Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Vendor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription (Vendor)</label>
+        <referenceTo>Subscription_Vendor__c</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Total_Units__c</fullName>
+        <externalId>false</externalId>
+        <formula>SingPost_Address__r.Number_of_Units__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Units</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>User Specified</description>
+        <externalId>false</externalId>
+        <label>Vendor Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Vendor</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Vendor Allocations</relationshipLabel>
+        <relationshipName>Vendor_Allocations</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Vendor_Allocation_Legacy_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Vendor Allocation Legacy Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vendor_Account__r.Vendor_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Vendor Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Vendor Allocation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Vendor_Code__c</columns>
+        <columns>SingPost_Address__c</columns>
+        <columns>Vendor_Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Parcel_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>test</fullName>
+        <columns>NAME</columns>
+        <columns>Vendor_Code__c</columns>
+        <columns>SingPost_Address__c</columns>
+        <columns>Vendor_Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Parcel_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SingPost_Address__c</field>
+            <operation>equals</operation>
+            <value>159637</value>
+        </filters>
+        <label>test</label>
+    </listViews>
+    <nameField>
+        <displayFormat>VA-{0000}</displayFormat>
+        <label>Vendor Allocation ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Vendor Allocations</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>SingPost_Address__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>House_Block_No__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Street_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Vendor_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Allocated__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Operated__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>SingPost_Address__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>House_Block_No__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Street_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Vendor_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Allocated__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Operated__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SingPost_Address__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>House_Block_No__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Street_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Vendor_Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Allocated__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Operated__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>SingPost_Address__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>House_Block_No__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Street_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Vendor_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Allocated__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Operated__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Eff_end_date_must_be_greater_than_eff_st</fullName>
+        <active>true</active>
+        <description>Effective end date must be greater than effective start date and must not be a past date</description>
+        <errorConditionFormula>Effective_End_Date__c  &lt;  Effective_Start_Date__c || Effective_End_Date__c &lt; TODAY()</errorConditionFormula>
+        <errorDisplayField>Effective_End_Date__c</errorDisplayField>
+        <errorMessage>Effective End Date must be greater than Effective Start Date and must not be a past date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Pick_Atleast_one_field</fullName>
+        <active>true</active>
+        <description>Must pick atleast one</description>
+        <errorConditionFormula>AND( Allocated__c  = FALSE , Operated__c = FALSE)</errorConditionFormula>
+        <errorDisplayField>Allocated__c</errorDisplayField>
+        <errorMessage>Please select  atleast one (Allocated and/or Operated)</errorMessage>
+    </validationRules>
+</CustomObject>

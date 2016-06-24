@@ -7,6 +7,7 @@ Descriprion: Test class for BatchCOCP
 */
 
 @isTest
+//@isTest(seeAllData = TRUE)
 
 public class BatchCOCPTest{
     
@@ -48,6 +49,7 @@ public class BatchCOCPTest{
             sub.Zuora__CustomerAccount__c = billAccnt.Id;
             sub.Number_of_Copies1__c = '3';
             sub.Name = 'BA-0000'+count;
+            //sub.Contract_End_Date_1__c = Date.Today();
             count++;
         }
         database.insert(subs); 
@@ -87,21 +89,45 @@ public class BatchCOCPTest{
        try{
            Test.setMock(WebServiceMock.class, new zLoginMock());
            BatchCOCP batch= new BatchCOCP(true, true, Date.today());
+           Database.executeBatch(batch, 1000); 
+           /*
            Database.BatchableContext BC;
            batch.start(BC);
            batch.execute(BC, subs);
            batch.finish(BC);
          
-           batch= new BatchCOCP(false, 'BA-00001', false, Date.today());
+           batch= new BatchCOCP(false, 'BA-00001', false, Date.today());        
            batch.start(BC);
            batch.execute(BC, subs);
            batch.finish(BC);
+           */
            
-           Test.stopTest();
        }
        catch(Zuora.zRemoteException e){
            String error = e.getMessage();
        }
        
+       try{
+           Test.setMock(WebServiceMock.class, new zLoginMock());
+           
+           BatchCOCP batch= new BatchCOCP(true, true, Date.today());           
+           Database.BatchableContext BC;
+           batch.start(BC);
+           batch.execute(BC, subs);
+           batch.finish(BC);
+           
+           batch= new BatchCOCP(false, 'BA-00001', false, Date.today());
+           Database.executeBatch(batch, 1000); 
+           
+           batch.start(BC);
+           batch.execute(BC, subs);
+           batch.finish(BC);
+           
+           
+       }
+       catch(Zuora.zRemoteException e){
+           String error = e.getMessage();
+       }
+       Test.stopTest();
     }
 }

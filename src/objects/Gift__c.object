@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Gift_Code__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Code</label>
+        <length>20</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Cost__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Cost</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Image_Mobile__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Image (Mobile)</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Gift_Image__c</fullName>
+        <description>This field will be used to store the URL of the gift image being stored in the Knowledge Article object.</description>
+        <externalId>false</externalId>
+        <label>Gift Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Image_web_large__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Image web (large)</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Gift_Image_web_medium__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Image web (medium)</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Gift_Image_web_small__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Image web (small)</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Gift_Type__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Free</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Gift_description__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>Gift description</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>One_Time_Charge__c</fullName>
+        <description>User specified</description>
+        <externalId>false</externalId>
+        <label>One Time Charge</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Retail_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Retail Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Gift</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Gift_Type__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Gift_interface</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Gift_Code__c</columns>
+        <columns>Gift_description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gift_Code__c</field>
+            <operation>equals</operation>
+            <value>C30VC</value>
+        </filters>
+        <label>Gift interface</label>
+    </listViews>
+    <nameField>
+        <label>Gift Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Gifts</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>One_Time_Charge_for_Free_Gifts</fullName>
+        <active>true</active>
+        <description>If gift type = free, One Time Charge field must be blank</description>
+        <errorConditionFormula>ISPICKVAL(Gift_Type__c ,&apos;Free&apos;)&amp;&amp;One_Time_Charge__c&lt;&gt;0</errorConditionFormula>
+        <errorMessage>There should be no One Time Charge for Free type Gifts.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>One_Time_Charge_for_Premium_Gifts</fullName>
+        <active>true</active>
+        <description>If gift type = premium, One Time Charge must be populated and value must be greater than $0</description>
+        <errorConditionFormula>ISPICKVAL( Gift_Type__c , &quot;Premium&quot;)&amp;&amp;(ISNULL(One_Time_Charge__c)||ISBLANK(One_Time_Charge__c)||One_Time_Charge__c&lt;=0)</errorConditionFormula>
+        <errorMessage>One Time Charge should be greater than $0 for Premium Gifts.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>IF(Address__c.Number_of_Units__c:SUM=0,Address__c.Number_of_Units__c:SUM,Case_Subscription__c.Subscription__c.Recipient_Contact__c.Recipient_Contact__c:SUM/Address__c.Number_of_Units__c:SUM)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Penetration(%)</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Postal_Zone__c.Singpost_Addresses__r.Addresses__r.Case_Subscriptions__r$Subscription__c.Recipient_Contact__c.Recipient_Contact__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Postal_Zone__c.Singpost_Addresses__r$Number_of_Units__c</field>
+    </columns>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Postal_Zone__c.Singpost_Addresses__r.Addresses__r$House_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Postal_Zone__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Penetration Direct Sub POC</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Postal_Sector_with_address_with_subscriptions__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Postal_Zone__c.Singpost_Addresses__r.Addresses__r.Case_Subscriptions__r$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>

@@ -163,7 +163,7 @@ public class ChangeInAddressExtensionNew{
         List<Case_Subscription__c> cSubList = new List<Case_Subscription__c>();
         Set<Id> subIdSet = new Set<Id>();
         //END UD-3356 04Dec2015 Added By C. Lin
-		Map<Id, Boolean> subIdToSelectedSubMap = new Map<Id, Boolean>(); //START END UD-3799 22Jan2016 Added By C. Lin - Map subId to if selected or not
+        Map<Id, Boolean> subIdToSelectedSubMap = new Map<Id, Boolean>(); //START END UD-3799 22Jan2016 Added By C. Lin - Map subId to if selected or not
         
         //START UD-2500 08/26/2015 Added by J.Sarion - Check fields if not populated
         if(changeInAddress.ContactId == null){
@@ -292,15 +292,6 @@ public class ChangeInAddressExtensionNew{
         //END UD-3356 04Dec2015 Added By C. Lin
         
             
-            System.debug('##### subWrapperList:' + subWrapperList);
-            System.debug('##### subWrapperList.size:' + subWrapperList.size());
-            System.debug('##### subList:' + subList);
-            System.debug('##### subList.size:' + subList.size());
-            System.debug('##### cas:' + cas);
-            System.debug('##### cas.size:' + cas.size());
-            System.debug('##### changeInAddress.Change_of_Address_Type__c:' + changeInAddress.Change_of_Address_Type__c);
-            System.debug('##### changeInAddress.Effective_Date__c:' + changeInAddress.Effective_Date__c);
-            System.debug('##### changeInAddress.POP_Start_Date__c:' + changeInAddress.POP_Start_Date__c);
             
             if(changeInAddress.Effective_Date__c == NULL ){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Effective Date must not be null'));
@@ -404,21 +395,21 @@ public class ChangeInAddressExtensionNew{
                 isAllDeliveredByMailingAgent = (subCount >  0 && subCount == subWrapperList.size());
                 //END PD-0284 6/9/2016 Added By L. Valencia
                 
-				//START UD-3799 22Jan2016 Added By C. Lin - Map subId to if selected or not
+                //START UD-3799 22Jan2016 Added By C. Lin - Map subId to if selected or not
                 for(SubscriptionWrapper sub :subWrapperList){
                     if(sub.subId != null){
                         subIdToSelectedSubMap.put(sub.subId, sub.selectSub);
                     }
                 }
                 //END UD-3799 22Jan2016 Added By C. Lin
-				
-				//START UD-3555 11Jan2016 Added By C. Lin - Validation for Bundle Subs should be COA together
-				for(SubscriptionWrapper subWrap :subWrapperList){
-					if(subIdToSubscriptionMap.containsKey(subWrap.subId)){
-						if(oliIdToSubListMap.containsKey(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c)){
-							if(oliIdToSubListMap.get(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c).size() > 1 && subWrap.selectSub == true){ //START END UD-3799 22Jan2016 Added By C. Lin - Add && subWrap.selectSub == true
-								for(Zuora__Subscription__c sub : oliIdToSubListMap.get(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c)){
-									//START UD-3799 22Jan2016 Added By C. Lin - Check if sub is selected in wrapper or not
+                
+                //START UD-3555 11Jan2016 Added By C. Lin - Validation for Bundle Subs should be COA together
+                for(SubscriptionWrapper subWrap :subWrapperList){
+                    if(subIdToSubscriptionMap.containsKey(subWrap.subId)){
+                        if(oliIdToSubListMap.containsKey(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c)){
+                            if(oliIdToSubListMap.get(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c).size() > 1 && subWrap.selectSub == true){ //START END UD-3799 22Jan2016 Added By C. Lin - Add && subWrap.selectSub == true
+                                for(Zuora__Subscription__c sub : oliIdToSubListMap.get(subIdToSubscriptionMap.get(subWrap.subId).Order_Line_Item_Number_1__c)){
+                                    //START UD-3799 22Jan2016 Added By C. Lin - Check if sub is selected in wrapper or not
                                     //if(subWrap.selectSub == false && sub.Id == subWrap.subId){
                                     if(subIdToSelectedSubMap.get(sub.Id) == false){
                                         bundleSubsSelected = false;
@@ -541,7 +532,7 @@ public class ChangeInAddressExtensionNew{
                                     }
                                 }
                             }else{
-								//START UD-3799 22Jan2016 Added By C. Lin - Updated Error Message
+                                //START UD-3799 22Jan2016 Added By C. Lin - Updated Error Message
                                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Subscriptions in a Bundle Package should be selected'));
                                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'A subscription from a bundle package is selected and its related bundle subscription/s are not selected. Please select all subscriptions in that bundle package to proceed.'));
                                 //END UD-3799 22Jan2016 Added By C. Lin
@@ -579,24 +570,24 @@ public class ChangeInAddressExtensionNew{
                     if(changeInAddress.Effective_Date__c >= changeInAddress.POP_Start_Date__c){
                         if(changeInAddress.Change_of_Address_Type__c == GlobalVariableClass.BILLDELIVERYADD){
                             
-                            //START PD-0284 6/9/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
+                            //START PD-0284 6/12/2016 Added By L. Valencia - Need to check if all subscriptions are delivered by Mailing Agent
                             Boolean isAllDeliveredByMailingAgent = false;
                             
                             Integer subCount = 0;
-                            for (SubscriptionWrapper subWrapper : subWrapperList) {
-                                if (subWrapper.deliveredBy == GlobalVariableClass.OLIDELIVEREDBY_VENDOR) {
+                            for (Zuora__Subscription__c sub : subList) {
+                                if (sub.Delivered_By_1__c == GlobalVariableClass.OLIDELIVEREDBY_VENDOR) {
                                     isAllDeliveredByMailingAgent = false;
                                     break;
                                 }
                                 ++subCount;
                             }
-                            isAllDeliveredByMailingAgent = (subCount >  0 && subCount == subWrapperList.size());
+                            isAllDeliveredByMailingAgent = (subCount >  0 && subCount == subList.size());
 
                             if (isAllDeliveredByMailingAgent) {
                                 changeInAddress.Status = GlobalVariableClass.STATUS_CLOSED;
                                 changeInAddress.Sub_Status__c = null;
                             } else {
-                            //END PD-0284 6/9/2016 Added By L. Valencia
+                            //END PD-0284 6/12/2016 Added By L. Valencia
                                 if(vendorSet.size() > 1 || vendorSet.size() == 0){
                                     //START D-3301 7/31/2015 Added By C. Lin - Set Status to Pending
                                     changeInAddress.Status = GlobalVariableClass.STATUS_PENDING;
@@ -771,6 +762,9 @@ public class ChangeInAddressExtensionNew{
         //START PD-0284 6/3/2016 Added By L. Valencia - Do not set for Waiting for Vendor Assignment when subscription is delivered by Mailing Agent
         public String deliveredBy {get; set;}
         //END PD-0284 6/3/2016 Added By L. Valencia
+        //START PD-0288 10Jun2016 Added By C. Lin - Add RecipientId
+        public Id RecipientId {get; set;}
+        //END PD-0288 10Jun2016 Added By C. Lin
     }
     
     public void getSubscriptions() {
@@ -984,15 +978,17 @@ public class ChangeInAddressExtensionNew{
             //END D-2979 5/20/2015 Added By C. Lin
              //END: D-2808 JLedesma 4/28/2015 Cannot perform Change of Address on Bundle Package
             if(!sIdSet.isEmpty()){
+                //START PD-0288 10Jun2016 Added By C. Lin - Added Recipient_Contact__c
                 //START UD-2206 9/17/15 AddedBy FrancisBenzon : added recipient contact address in query
                 //START UD-1566 6/17/2015 Added By C. Lin - Add Main_Package_1__r.Name
                 //START D-3709 10/12/2015 Added By C. Lin - Save Old Vendor Credit of Sub in Case Subscription
                 //START PD-0284 6/3/2016 Added By L. Valencia - Added Delivered_By_1__c field
-                sList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Main_Package_1__r.Name, Recipient_Contact__r.Address__c, Vendor_Credit_1__c, Delivered_By_1__c FROM Zuora__Subscription__c WHERE Id IN :sIdSet];
+                sList = [SELECT Id, Name, Recipient_Contact__r.Name, Recipient_Contact__r.Address__r.Postal_Code__c, Vendor_1__r.Name, Zuora__Status__c, Main_Package_1__c, Main_Package_1__r.Name, Recipient_Contact__r.Address__c, Vendor_Credit_1__c, Delivered_By_1__c, Recipient_Contact__c FROM Zuora__Subscription__c WHERE Id IN :sIdSet];
                 //END PD-0284 6/3/2016 Added By L. Valencia
                 //END D-3709 10/12/2015 Added By C. Lin
                 //END UD-1566 6/17/2015 Added By C. Lin
                 //END UD-2206 9/17/15 AddedBy FrancisBenzon : added recipient contact address in query
+                //END PD-0288 10Jun2016 Added By C. Lin
             }
             
             for (Zuora__Subscription__c sub :sList) {
@@ -1020,7 +1016,9 @@ public class ChangeInAddressExtensionNew{
                 //START PD-0284 6/3/2016 Added By L. Valencia - Do not set for Waiting for Vendor Assignment when subscription is delivered by Mailing Agent
                 subscriptionWrapper.deliveredBy = (String.isNotBlank(sub.Delivered_By_1__c) ? sub.Delivered_By_1__c :  null);
                 //END PD-0284 6/3/2016 Added By L.Valencia
-                
+                //START PD-0288 10Jun2016 Added By C. Lin - Checking for Change of Billing and Delivery
+                subscriptionWrapper.RecipientId = (sub.Recipient_Contact__c != null ? sub.Recipient_Contact__c : null);
+                //END PD-0288 10Jun2016 Added By C. Lin
                 subWrapperList.add(subscriptionWrapper);
                 
                 //START D-2905 05/12/2015 Added by: J.Sarion - Subscription list for Change of Vendor depends on Contact to Update
@@ -1189,12 +1187,8 @@ public class ChangeInAddressExtensionNew{
                     
                     //START D-2979 5/20/2015 Added By C. Lin - assign vendor for non magazine subscriptions only
                     if(!magazineSubSet.contains(sub.subId)){
-                        System.debug('##### inside magazinesubset: ' + vendorSet.size());
-                        System.debug('##### vendorSet: ' + vendorSet);
                         if(vendorSet.size() == 1){
-                            System.debug('##### inside vendor size is one');
                             for(Id ven : vendorSet){
-                                System.debug('##### ven:' + ven);
                                 addressAssignment.Vendor__c = ven;
                             }
                         }
@@ -1396,6 +1390,13 @@ public class ChangeInAddressExtensionNew{
                         //END D-3709 10/12/2015 Added By C. Lin
                        caseSub.Old_Recipient_Contact__c = changeInAddress.Contact_To_Update__c;
                //END: D-4285 1-14-2016 Added by Kristine Balaoing
+                        //START PD-0288 10Jun2016 Added By C. Lin
+                        if(sub.RecipientId != changeInAddress.Contact_To_Update__c){
+                            caseSub.Billing_Address_Change_Only__c = true;
+                        }else if(sub.RecipientId == changeInAddress.Contact_To_Update__c){
+                            caseSub.Billing_Address_Change_Only__c = false;
+                        }
+                        //END PD-0288 10Jun2016 Added By C. Lin
                         caseSubList.add(caseSub);
                     }
                     catch (Exception e) {

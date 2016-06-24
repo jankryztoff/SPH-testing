@@ -1,0 +1,7 @@
+Hi,
+
+A new email has been sent to the closed case {!Case.CaseNumber}. Please click on the link below to access the email.
+
+{!Case.Id}
+
+Thanks

@@ -1,0 +1,169 @@
+<apex:page controller="StopSubCaseOfferController" tabStyle="Case">
+<style> 
+        .dataRow {
+            cursor: pointer; 
+            cursor: hand;
+        }
+        .subItemTitle {
+            color: green;
+            font-weight: bold;
+        }
+        .scroll {
+            overflow: auto;
+            width:1170px;
+            height: 300px !important;
+            background-color:#ffffff;
+        }
+
+        #lineItemTable, #giftItems {
+            background-color: #cccccc;
+        }
+                        
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+        
+        #lineItemTable th, #giftItems th {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        #giftItems {
+            width: 50%;
+            border-spacing: 1px;
+        }
+            
+        #lineItemTable td, #lineItemTable th, 
+        .resultContainer td, .resultContainer th {
+            border: 0 !important;
+            padding: 2px;
+        }
+        
+        #lineItemTable tr, .resultContainer tr,  #giftItems tr {
+            background-color: #ffffff;
+        }
+        
+        .childList {
+            background-color: #0099FF;
+        }
+        
+        .removeButtonCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        
+        .resultContainer > thead > tr > th {
+            background-color: #6666CC !important;
+            color: #ffffff !important;
+        }               
+        
+        .packageResults th {
+            background-color: #800000 !important;
+            color: #ffffff !important;      
+        }
+        
+        
+        .packageResults tbody tr {
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
+        
+        
+        .packageContainer  {
+            padding-left: 50px !important;
+        }
+        
+        .selectedPackage {
+            background-color: #99CCFF !important;
+        }
+        
+        .numericField {
+            width: 50px;
+        }        
+        
+        </style>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Cancel" action="{!doCancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection collapsible="true" title="Search Package" columns="1">
+            <!-- search container -->
+                <apex:outputPanel id="searchContainer">                    
+                    <apex:actionRegion >
+                        <!--START: UD-3471 1/12/16 Added by Manolo Valena-->
+                        <apex:pageBlockSection columns="3">
+                            <apex:outputText value="Search Text" />
+                            <apex:outputText value="Billing Type" />
+                            <br/>
+                            <apex:inputText id="searchTermPack"  value="{!searchTextPack}" />
+                            <apex:selectList value="{!searchBillingTypePack}" size="1" id="searchBillingTypePack">
+                                <apex:selectOption itemValue="Full Prepaid" itemLabel="Full Prepaid" />
+                                <apex:selectOption itemValue="Recurring Prepaid" itemLabel="Recurring Prepaid" />
+                                <apex:selectOption itemValue="Recurring Postpaid" itemLabel="Recurring Postpaid" />
+                            </apex:selectList>
+                            <apex:commandButton value="Search" reRender="searchResults" action="{! getPackageRecords}"/>
+                            <apex:outputText value="" />                           
+                            <apex:outputText value="" />
+                            <apex:outputText value="" />                               
+                        </apex:pageBlockSection>
+                        <!--END: UD-3471 1/12/16 Added by Manolo Valena-->
+                        <apex:pageBlockSection columns="1">
+                            <apex:outputPanel styleClass="subItemTitle" id="searchResults">
+                                <table class="list resultContainer">
+                                    <thead class="rich-table-thead">
+                                        <tr>
+                                            <th width="10%">Select</th>
+                                            <th width="30%">Package Name</th>
+                                            <th width="24%">Package Type</th>
+                                            <th width="12%">Sub Period</th>
+                                            <th width="12%">Sub Type</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--START UD-3471 5/1/2016 Gdelrosario : made the value dynamic to call on the list for pagination purposes -->
+                                    <!--START: UD-3471 1/12/16 Added by Manolo Valena-->
+                                    <apex:repeat value="{!IF((packageRecordList!=null),packageRecordList,Promo)}" var="pack" rendered="{!Promo != null}">
+                                    <!--END: UD-3471 1/12/16 Added by Manolo Valena-->
+                                    <!--END   UD-3471 5/1/2016 Gdelrosario : made the value dynamic to call on the list for pagination purposes --> 
+                                            <tr class="dataRow" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                                                <td> <apex:commandLink action="{!setPackage}" value="Select" styleClass="btn" style="text-decoration:none;">
+                                                         <apex:param name="paramId" assignto="{!packageId}" value="{!pack['package_name__c']}" id="param"/>
+                                                     </apex:commandLink>
+                                                </td>
+                                                <td> {!pack.package_name__r.name} </td>
+                                                <td> {!pack.package_name__r.package_type__c} </td>
+                                                <td> {!pack.package_name__r.subscription_period__c}</td>                                                   
+                                                <td align='center'> {!pack.package_name__r.subscription_type__c} </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>                                                                       
+                            </apex:outputPanel>                      
+                        </apex:pageBlockSection>
+                    </apex:actionRegion>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <!--START UD-3471 5/1/2016 Gdelrosario : this is for buttons of pagination -->
+            <!--START: UD-3471 1/12/16 Added by Manolo Valena-->
+            <apex:outputPanel rendered="{!packageRecordList == null && Promo != null}" >
+            <!--END: UD-3471 1/12/16 Added by Manolo Valena-->
+                <div align="center" draggable="false" >
+                    <apex:commandButton value="First" action="{!setPack.first}" disabled="{!setPack.pageNumber = 1}" />
+                    <apex:commandButton value="Previous" action="{!setPack.previous}" disabled="{!setPack.pageNumber = 1}"/>
+                    &nbsp;&nbsp;
+                    <apex:outputText rendered="{!(setPack.pageNumber * setPack.pageSize) < setPack.ResultSize}" value="{!setPack.pageNumber * setPack.pageSize} of {!setPack.ResultSize}"></apex:outputText>
+                    <apex:outputText rendered="{!(setPack.pageNumber * setPack.pageSize) >= setPack.ResultSize}" value="{!setPack.ResultSize} of {!setPack.ResultSize}"></apex:outputText>
+                    &nbsp;&nbsp;
+                    <apex:commandButton value="Next" action="{!setPack.next}" disabled="{!IF((setPack.hasNext== true),false,true)}"/>
+                    <apex:commandButton value="Last" action="{!setPack.last}" disabled="{!IF((setPack.hasNext== true),false,true)}"/> 
+                </div>
+            </apex:outputPanel>
+            <!--END UD-3471 5/1/2016 Gdelrosario : this is for buttons of pagination -->
+        </apex:pageBlock>
+    </apex:form>
+  
+</apex:page>

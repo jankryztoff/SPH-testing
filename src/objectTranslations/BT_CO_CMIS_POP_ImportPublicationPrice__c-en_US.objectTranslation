@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationPrice</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationPrices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- coverPrice --></label>
+        <name>coverPrice__c</name>
+    </fields>
+    <fields>
+        <label><!-- dayOfWeek --></label>
+        <name>dayOfWeek__c</name>
+    </fields>
+    <fields>
+        <label><!-- effectiveDate --></label>
+        <name>effectiveDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationCode --></label>
+        <name>publicationCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- salesType --></label>
+        <name>salesType__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

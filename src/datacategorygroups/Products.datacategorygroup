@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>STimes</label>
+                <name>STimes</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The Kids Times</label>
+                <name>The_Kids_Times</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The Straits Times</label>
+                <name>The_Straits_Times</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The Sunday Times</label>
+                <name>The_Sunday_Times</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Lianhe Zaobao</label>
+                <name>Lianhe_Zaobao</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The Business Times</label>
+                <name>The_Business_Times</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The New Paper</label>
+                <name>The_New_Paper</name>
+            </dataCategory>
+            <dataCategory>
+                <label>My Paper</label>
+                <name>My_Paper</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Berita Harian</label>
+                <name>Berita_Harian</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Tabla</label>
+                <name>Tabla</name>
+            </dataCategory>
+            <label>Publications</label>
+            <name>Publications</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Her World</label>
+                <name>Her_World</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Shape</label>
+                <name>Shape</name>
+            </dataCategory>
+            <dataCategory>
+                <label>U-Weekly</label>
+                <name>U_Weekly</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Nuyou</label>
+                <name>Nuyou</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Female</label>
+                <name>Female</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Female Brides</label>
+                <name>Female_Brides</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Young Parents</label>
+                <name>Young_Parents</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Home &amp; Decor</label>
+                    <name>Home_Decor</name>
+                </dataCategory>
+                <label>Simply Her</label>
+                <name>Simply_Her</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Torque</label>
+                <name>Torque</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Men&apos;s health</label>
+                <name>Men_s_health</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Golf&apos;s Digest</label>
+                <name>Golf_s_Digest</name>
+            </dataCategory>
+            <dataCategory>
+                <label>HWM</label>
+                <name>HWM</name>
+            </dataCategory>
+            <dataCategory>
+                <label>The Peak Singapore</label>
+                <name>The_Peak_Singapore</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Icon Singapore</label>
+                <name>Icon_Singapore</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Her World Brides</label>
+                <name>Her_World_Brides</name>
+            </dataCategory>
+            <label>Magazines</label>
+            <name>Magazines</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Foreign Publications</label>
+            <name>Foreign_Publications</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Print</label>
+                <name>Print</name>
+            </dataCategory>
+            <dataCategory>
+                <label>All In One Package</label>
+                <name>All_In_One_Package</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Smart Phone</label>
+                    <name>Smart_Phone</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Tablet</label>
+                    <name>Tablet</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Online</label>
+                    <name>Online</name>
+                </dataCategory>
+                <label>Digital</label>
+                <name>Digital</name>
+            </dataCategory>
+            <label>Offerings</label>
+            <name>Offerings</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Gift Redemption</label>
+                <name>Gift_Redemption</name>
+            </dataCategory>
+            <label>Promotions</label>
+            <name>Promotions</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Products category refers to the publications, offerings and promotions.</description>
+    <label>Products</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

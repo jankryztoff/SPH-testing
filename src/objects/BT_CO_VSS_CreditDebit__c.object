@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Vendor Credit / Debit data for VSS - by Vendor by Pub by Month by Sub</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Storing Old Vendor Address to populate into VSS CR file</description>
+        <externalId>false</externalId>
+        <label>Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>BT_CO_VSS_CreditDebits</relationshipLabel>
+        <relationshipName>BT_CO_VSS_CreditDebits</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Building_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Building_Name__c , Recipient_Contact__r.Address__r.Building_Name__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Building Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Commission Fee</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Copies__c</fullName>
+        <externalId>false</externalId>
+        <label>Copies</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Debit__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit/Debit Indicator</label>
+        <picklist>
+            <picklistValues>
+                <fullName>C</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>D</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Debit_Note_No__c</fullName>
+        <description>For report purpose only. To remove the commas. UD-1353</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Note_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Debit Note No</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Delivery Fee</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>FreeGift_Sponsor_Indicator__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+(Subscription__r.Order_Line_Item_Number_1__r.Total_Gift_Price__c == 0 &amp;&amp;  Subscription__r.Order_Line_Item_Number_1__r.Number_of_GIfts__c &gt; 0) ||
+(Subscription__r.Sponsor_1__c == true), true,false)</formula>
+        <label>FreeGift/Sponsor Indicator</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>From__c</fullName>
+        <description>Case From  Date used in VSS records</description>
+        <externalId>false</externalId>
+        <label>From</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Grand_Total__c</fullName>
+        <description>Sub_Total__c +  Delivery__c 
+UD1351</description>
+        <externalId>false</externalId>
+        <formula>Sub_Total__c +  Delivery__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Grand Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Handling_Fee__c</fullName>
+        <externalId>false</externalId>
+        <formula>Commission__c + Pagination__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Handling Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>House_Block_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Block_House_Number__c , Recipient_Contact__r.Address__r.Block_House_Number__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>House Block No</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Insertion__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Insertion Fee</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Job_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Job Id</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Level_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Level_Number__c , Recipient_Contact__r.Address__r.Level_Number__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Level Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manual_Amt__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Manual Credit/Debit Amount</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Manual_VDC_reason_code__c</fullName>
+        <description>field added to capture manual vendor credit debit reason codes from the Manual_Vendor_Credits_Debits__c object</description>
+        <externalId>false</externalId>
+        <label>Manual VDC reason code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Note_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit / Debit Note Number</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pagination__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Pagination Fee</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Postal_Code__r.Name , Recipient_Contact__r.Address__r.Postal_Code__r.Name )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Postal Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Posting_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Posting Date</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Publication_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Publication Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipient_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Recipient Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>BT_CO_VSS_CreditDebits</relationshipLabel>
+        <relationshipName>BT_CO_VSS_CreditDebits</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Recipient_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null,  Subscription__r.Recipient_Contact__r.FirstName &amp;&quot; &quot;&amp;  Subscription__r.Recipient_Contact__r.LastName  , Recipient_Contact__r.FirstName &amp;&quot; &quot;&amp; Recipient_Contact__r.LastName  )</formula>
+        <label>Recipient Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Street_Name__c , Recipient_Contact__r.Address__r.Street_Name__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Street Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sub_Total__c</fullName>
+        <description>(Handling + Insertion)
+UD1351</description>
+        <externalId>false</externalId>
+        <formula>Handling_Fee__c +  Insertion__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sub Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Zuora__Subscription__c.Subscription_Type_1__c</field>
+                <operation>equals</operation>
+                <value>Publication</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>BT_CO_VSS_CreditDebits</relationshipLabel>
+        <relationshipName>VSS_Credit_Debit</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>To__c</fullName>
+        <description>Case To Date Used in VSS records</description>
+        <externalId>false</externalId>
+        <label>To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Total Amount</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Subscription__c &lt;&gt; Null, Subscription__r.Recipient_Contact__r.Address__r.Unit_Number__c , Recipient_Contact__r.Address__r.Unit_Number__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor Group</label>
+        <length>1</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor Number</label>
+        <length>5</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>BT_CO_VSS_CreditDebit</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Address__c</columns>
+        <columns>Job_Id__c</columns>
+        <columns>Posting_Date__c</columns>
+        <columns>Publication_Code__c</columns>
+        <columns>Vendor_Group__c</columns>
+        <columns>Vendor_Number__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Recipient_Contact__c</columns>
+        <columns>Credit_Debit__c</columns>
+        <columns>Copies__c</columns>
+        <columns>Manual_Amt__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Manual_VDC_reason_code__c</columns>
+        <columns>Note_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>For_VerificationWL</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Publication_Code__c</columns>
+        <columns>Recipient_Contact__c</columns>
+        <columns>Vendor_Group__c</columns>
+        <columns>Vendor_Number__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Credit_Debit__c</columns>
+        <columns>Copies__c</columns>
+        <columns>Commission__c</columns>
+        <columns>Insertion__c</columns>
+        <columns>Pagination__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Posting_Date__c</columns>
+        <columns>Note_Number__c</columns>
+        <columns>Job_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subscription__c</field>
+            <operation>equals</operation>
+            <value>BA-S01254811</value>
+        </filters>
+        <filters>
+            <field>Subscription__c</field>
+            <operation>equals</operation>
+            <value>BA-S01248341</value>
+        </filters>
+        <label>For VerificationWL</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>For_Verificationeh</fullName>
+        <columns>NAME</columns>
+        <columns>Publication_Code__c</columns>
+        <columns>Recipient_Contact__c</columns>
+        <columns>Address__c</columns>
+        <columns>Vendor_Number__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Credit_Debit__c</columns>
+        <columns>Copies__c</columns>
+        <columns>Delivery__c</columns>
+        <columns>Commission__c</columns>
+        <columns>Insertion__c</columns>
+        <columns>Pagination__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Posting_Date__c</columns>
+        <columns>Job_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Posting_Date__c</field>
+            <operation>equals</operation>
+            <value>8/31/2015</value>
+        </filters>
+        <filters>
+            <field>Job_Id__c</field>
+            <operation>equals</operation>
+            <value>SP011</value>
+        </filters>
+        <filters>
+            <field>Address__c</field>
+            <operation>equals</operation>
+            <value>487827</value>
+        </filters>
+        <filters>
+            <field>Recipient_Contact__c</field>
+            <operation>equals</operation>
+            <value>CHEONG CHEE THAM</value>
+        </filters>
+        <label>For Verificationeh</label>
+    </listViews>
+    <listViews>
+        <fullName>Last_Month</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>Vendor_Group__c</columns>
+        <columns>Vendor_Number__c</columns>
+        <columns>Commission__c</columns>
+        <columns>Pagination__c</columns>
+        <columns>Insertion__c</columns>
+        <columns>Credit_Debit__c</columns>
+        <columns>Total_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Posting_Date__c</field>
+            <operation>equals</operation>
+            <value>LAST_MONTH</value>
+        </filters>
+        <label>Last Month</label>
+    </listViews>
+    <listViews>
+        <fullName>eh</fullName>
+        <columns>Address__c</columns>
+        <columns>NAME</columns>
+        <columns>Publication_Code__c</columns>
+        <columns>Vendor_Number__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Commission__c</columns>
+        <columns>Pagination__c</columns>
+        <columns>Insertion__c</columns>
+        <columns>Delivery__c</columns>
+        <columns>Manual_Amt__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Posting_Date__c</columns>
+        <columns>Note_Number__c</columns>
+        <columns>Recipient_Contact__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Posting_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>Job_Id__c</field>
+            <operation>equals</operation>
+            <value>SP003</value>
+        </filters>
+        <label>eh</label>
+    </listViews>
+    <nameField>
+        <displayFormat>VSS-{YYMM}-{00000000}</displayFormat>
+        <label>Record Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BT_CO_VSS_CreditDebits</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

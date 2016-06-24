@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Gift</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Gifts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Gift Redemption Number --></label>
+        <name>Gift_Redemption_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Remarks --></label>
+        <name>Internal_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- NRIC (Collect on Behalf) --></label>
+        <name>NRIC_Collect_on_Behalf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name (Collect on Behalf) --></label>
+        <name>Name_Collect_on_Behalf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Quantity --></label>
+        <name>Order_Quantity_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Quantity --></label>
+        <name>Order_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion Gift --></label>
+        <name>Promotion_Gift__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Date --></label>
+        <name>Redemption_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Quantity --></label>
+        <name>Redemption_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Remarks --></label>
+        <name>Redemption_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Redemption Number --></label>
+        <name>Salesforce_Redemption_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Telephone (Collect on Behalf) --></label>
+        <name>Telephone_Collect_on_Behalf__c</name>
+    </fields>
+    <layouts>
+        <layout>Order Gift Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Redemption Details --></label>
+            <section>Redemption Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Redemption date must be specified when redemption quantity is entered. --></errorMessage>
+        <name>Redemption_date_must_be_specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Redemption quantity cannot be greater than Order quantity. --></errorMessage>
+        <name>Redemption_qty_cannot_be_greater_than_or</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Redemption quantity must be specified when redemption date is entered --></errorMessage>
+        <name>Redemption_qty_must_be_specified</name>
+    </validationRules>
+</CustomObjectTranslation>

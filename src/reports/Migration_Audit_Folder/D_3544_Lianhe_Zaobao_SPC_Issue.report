@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__SubscriptionProductCharge__c.Zuora__ProductName__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_$Zuora__Subscription__c.Main_Package_1__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>FK_$Zuora__Subscription__c.Main_Package_1__c</column>
+            <operator>equals</operator>
+            <value>Lianhe Zaobao Print Daily Mthly Pre Paid</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>notContain</operator>
+            <value>Copy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>notContain</operator>
+            <value>Dummy,Delivery,Proration</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>D-3544 Lianhe Zaobao SPC Issue</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__SubscriptionProductCharge__c@Zuora__SubscriptionProductCharge__c.Zuora__Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>FK_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

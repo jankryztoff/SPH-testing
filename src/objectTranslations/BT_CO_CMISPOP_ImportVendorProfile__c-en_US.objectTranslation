@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_CMISPOP_ImportVendorProfile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_CMISPOP_ImportVendorProfile</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- blockHouseNumber --></label>
+        <name>blockHouseNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingName --></label>
+        <name>buildingName__c</name>
+    </fields>
+    <fields>
+        <label><!-- email --></label>
+        <name>email__c</name>
+    </fields>
+    <fields>
+        <label><!-- faxNumber --></label>
+        <name>faxNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- gstRegistrationNumber --></label>
+        <name>gstRegistrationNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- handphoneNumber --></label>
+        <name>handphoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- level --></label>
+        <name>level__c</name>
+    </fields>
+    <fields>
+        <label><!-- nricPassport --></label>
+        <name>nricPassport__c</name>
+    </fields>
+    <fields>
+        <label><!-- pagerNumber --></label>
+        <name>pagerNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- postalCode --></label>
+        <name>postalCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- registeredName --></label>
+        <name>registeredName__c</name>
+    </fields>
+    <fields>
+        <label><!-- streetName --></label>
+        <name>streetName__c</name>
+    </fields>
+    <fields>
+        <label><!-- telephoneOffice --></label>
+        <name>telephoneOffice__c</name>
+    </fields>
+    <fields>
+        <label><!-- telephoneResidence --></label>
+        <name>telephoneResidence__c</name>
+    </fields>
+    <fields>
+        <label><!-- unitNumber --></label>
+        <name>unitNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorCode --></label>
+        <name>vendorCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorGroup --></label>
+        <name>vendorGroup__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorName --></label>
+        <name>vendorName__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorStatus --></label>
+        <name>vendorStatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorType --></label>
+        <name>vendorType__c</name>
+    </fields>
+    <fields>
+        <label><!-- zoneCode --></label>
+        <name>zoneCode__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

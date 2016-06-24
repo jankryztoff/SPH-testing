@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Usage</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Usages</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Id --></label>
+        <name>Account_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Usages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Added --></label>
+        <name>Date_Added__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rate Plan Charge Id --></label>
+        <name>Rate_Plan_Charge_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to Zuora Error Message --></label>
+        <name>Send_to_Zuora_Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to Zuora Time --></label>
+        <name>Send_to_Zuora_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sent to Zuora</masterLabel>
+            <translation><!-- Sent to Zuora --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- StopType --></label>
+        <name>StopType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Id --></label>
+        <name>Subscription_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Temp Stop --></label>
+        <name>Subscription_Temp_Stop__c</name>
+        <relationshipLabel><!-- Usages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- UOM --></label>
+        <name>UOM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Identifier --></label>
+        <name>Unique_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Of Measure --></label>
+        <name>Unit_of_Measure__c</name>
+        <relationshipLabel><!-- Usages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Usage Type --></label>
+        <name>Usage_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zuora Id --></label>
+        <name>Zuora_Id__c</name>
+    </fields>
+    <layouts>
+        <layout>Usage Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

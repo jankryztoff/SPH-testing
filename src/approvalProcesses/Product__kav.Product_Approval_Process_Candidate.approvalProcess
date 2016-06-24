@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+    <allowedSubmitters>
+        <submitter>The_Candidates</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Owner</field>
+        <field>Title</field>
+        <field>ArticleType</field>
+        <field>Product_Details__c</field>
+        <field>Summary</field>
+        <field>CreatedDate</field>
+        <field>CreatedBy</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>The_Publisher</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>Product__kav.ValidationStatus</field>
+                <operation>equals</operation>
+                <value>Validated Internal,Validated External</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
+        <label>Pending Approval to The Publisher</label>
+        <name>Pending_Approval_to_The_Publisher</name>
+    </approvalStep>
+    <description>Product Approval Process Candidate (Knowledge Management)</description>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <criteriaItems>
+            <field>Product__kav.PublishStatus</field>
+            <operation>equals</operation>
+            <value>Draft,Archived</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Product__kav.ArticleType</field>
+            <operation>equals</operation>
+            <value>Product</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Product_PublishArticle</name>
+            <type>KnowledgePublish</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Product Approval Process Candidate</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

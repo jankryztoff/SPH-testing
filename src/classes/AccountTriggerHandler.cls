@@ -103,7 +103,7 @@ public class AccountTriggerHandler implements TriggerHandlerInterface {
         //Start VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
         Account acc = (Account) so;
         if(acc.Generate_Account_Number__c) {
-                acc.AccountNumber = acc.Account_Auto_Number__c;
+              acc.AccountNumber = acc.Account_Auto_Number__c;
         }
         //End VPernicia/MGatchalian 5/13/15 D-2917: Remove recursion
     }

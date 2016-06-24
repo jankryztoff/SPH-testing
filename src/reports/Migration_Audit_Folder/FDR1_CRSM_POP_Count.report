@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>RowCount</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>false</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Record Count</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Zuora__Subscription__c.Number_of_Copies__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Zuora__Subscription__c.Qty__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c.Product_Code__c</column>
+            <operator>contains</operator>
+            <value>ST</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_CREATED_NAME</column>
+            <operator>equals</operator>
+            <value>Karl Tan</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FK_$Account.Account_Legacy_Id__c</column>
+            <operator>equals</operator>
+            <value>SP|V0000L,SP|V0003A,SP|V0004E,SP|V0005J,SP|V0006B,SP|V0007F,SP|V0008K,SP|V0009C,SP|V0010C,SP|V0011G,SP|V0012L,SP|V0013D,SP|V0014H,SP|V0015A,SP|V0016E,SP|V0017J,SP|V0018B,SP|V0020F,SP|V0022C,SP|V0023G</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$Account.Account_Legacy_Id__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>FDR1 CRSM-POP Count</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Vendor_1__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

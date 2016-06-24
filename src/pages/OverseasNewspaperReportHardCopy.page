@@ -1,0 +1,121 @@
+<!-- * D-2013 3/20/2015 Alyana Navarro - Reconstruct whole VF Page -->
+<apex:page controller="PDFGenerationOverseasNewspaper" renderAs="PDF" action="{!generatePDF}">
+
+    <head>
+        <style> 
+            body {
+                font-family: 'Arial Unicode MS'; 
+            } 
+        </style>
+    </head>
+
+    <td width="20%" align="right">
+    <br>Co. Regn No.: 198402868E</br>
+    </td>
+    <table width="100%">
+    <!--start april-->
+    <!--START : D-3014 05/25/2015 S.Puli-->
+    <td width="50%" align="left"> <br/>To &nbsp; &nbsp; : {!mailingAgentAccountName}&nbsp;{!faxString}</td>
+    <!--END : D-3014 05/25/2015 S.Puli-->
+    <!--START D-3013 05/22/2015 Added By S.Puli-->
+    <td width="50%" align="right"> <br/>Issue Date &nbsp; &nbsp;: 
+    <!--END D-3013 05/22/2015 Added By S.Puli-->
+    <!--end april-->
+    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+        <apex:param value="{!referenceDate}" />    <!--START/END: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery-->
+    </apex:outputText>
+    </td>
+    </table>
+        
+    <table width="100%">
+    <!--START UD-2952/2954 10/26/2015 added by Jason A.-->
+    <td width="50%" align="left" style=" text-indent: 2.5em;">: TJ Mailroom 1</td>
+    <!--END UD-2952/2954 10/26/2015 added by Jason A.-->
+    <!--START D-3013 05/22/2015 Added By S.Puli-->
+    <td width="50%" align="right" style=" text-indent: 5.5em;">
+    <!--END D-3013 05/22/2015 Added By S.Puli-->
+    <apex:outputText value="{0,date,EEEE}">
+        <apex:param value="{!referenceDate}" /> <!--START/END: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery-->
+    <!--START D-3013 05/22/2015 Added By S.Puli-->
+    </apex:outputText>&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--END D-3013 05/22/2015 Added By S.Puli-->
+    </td>
+    </table>
+    <p/>
+    
+    <table width="100%">
+    <td width="50%" align="left"> <br/>From : Circulation</td>
+    </table>
+  
+    <table width="100%">
+    <td width="50%" align="left" style=" text-indent: 2.5em;">: Customer Service </td>
+    </table>
+    
+    <p/>
+    
+    <table style="width:100%" border="1" cellspacing="0" cellpadding="3">
+      <tr>
+          <th rowspan="2"></th>
+          <th align="center" colspan="9">PUBLICATIONS</th>
+      </tr>
+      <tr>
+        <th align="center">ST</th>
+        <th align="center">BT</th>
+        <th align="center">BH</th>
+        <th align="center">NP</th>
+        <th align="center">ZB</th>
+        <th align="center">TM</th>
+        <th align="center">WB</th>
+        <th align="center">SM</th>
+        <th align="center">MY</th>
+      </tr>
+      <tr>
+        <td>Subscription</td>
+        <td>{!STsub}</td>
+        <td>{!BTsub}</td>
+        <td>{!BHSub}</td>
+        <td>{!NPsub}</td>
+        <td>{!ZBsub}</td>
+        <td>{!TMsub}</td>
+        <td>{!WBsub}</td>
+        <td>{!SMsub}</td>
+        <td>{!MYsub}</td>
+      </tr>
+      <tr>
+        <td>Freelist</td>
+        <td>{!STfree}</td>
+        <td>{!BTfree}</td>
+        <td>{!BHfree}</td>
+        <td>{!NPfree}</td>
+        <td>{!ZBfree}</td>
+        <td>{!TMfree}</td>
+        <td>{!WBfree}</td>
+        <td>{!SMfree}</td>
+        <td>{!MYfree}</td>
+      </tr>
+      <tr>
+        <td>Grand Total</td>
+        <td>{!grandTotalST}</td>
+        <td>{!grandTotalBT}</td>
+        <td>{!grandTotalBH}</td>
+        <td>{!grandTotalNP}</td>
+        <td>{!grandTotalZB}</td>
+        <td>{!grandTotalTM}</td>
+        <td>{!grandTotalWB}</td>
+        <td>{!grandTotalSM}</td>
+        <td>{!grandTotalMY}</td>
+      </tr>
+    </table>
+    <br/><br/><br/>  
+    <p/> Remarks:
+    <br/><br/><br/>
+    <p/> No. of Copies verified by:
+    <br/><br/><br/>  
+    <p/> Received by:
+    <br/><br/><br/> 
+    <p/> Note:
+    <!--START UD-2953 10/26/2015 Added By Jason A.-->
+    <p/>SM/WB/NP are previous day's issue 
+    <!--END UD-2953 10/26/2015 Added By Jason A.-->
+   
+</apex:page>

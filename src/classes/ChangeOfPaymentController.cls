@@ -429,6 +429,11 @@ public class ChangeOfPaymentController{
                                 thisBillingAccount.Payment_Mode__c = 'Check';
                                 thisBillingAccount.Zuora__DefaultPaymentMethod__c = 'Check';
                                 thisBillingAccount.Other_PaymentMethod__c = '';
+
+
+                                //START PD-0532 6/23/2016 Added By L. Valencia - Set to false to ensure that validation rule will not be triggered
+                                thisBillingAccount.ARMS_Account_Required__c = false;
+                                //END PD-0532 6/23/2016 Added By L. Valencia
                                 
                                 thisBillingAccount.ARMS_Account_Number__c = '';
                                 thisBillingAccount.ARMS_Customer_Number__c = '';
@@ -445,9 +450,9 @@ public class ChangeOfPaymentController{
                                 thisBillingAccount.Zuora__DefaultPaymentMethod__c = thisCase.Payment_Mode__c;
                                 thisBillingAccount.Other_PaymentMethod__c = '';
                                 
-                                //START D-3059 05/29/2015
+                                //START D-3059 5/29/2015
                                 thisBillingAccount.ARMS_Account_Required__c = false;
-                                //END D-3059 05/29/2015
+                                //END D-3059 5/29/2015
                                 
                                 thisBillingAccount.ARMS_Account_Number__c = '';
                                 thisBillingAccount.ARMS_Customer_Number__c = '';

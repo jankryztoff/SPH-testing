@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Non Publication Day</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Non Publication Days</value>
+    </caseValues>
+    <fields>
+        <label><!-- Non Publication Date --></label>
+        <name>Non_Publication_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Non Publication Days --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Non Publication Day Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

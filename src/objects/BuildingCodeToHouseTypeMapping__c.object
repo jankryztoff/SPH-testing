@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Building_Type_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Building codes as per the new Singpost format.
+Eg, C01, C02</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Building codes as per the new Singpost format.
+Eg, C01, C02</inlineHelpText>
+        <label>Building Type Code</label>
+        <length>5</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Building_Type_Description__c</fullName>
+        <description>Eg,
+C01 - HDB
+C02 - HDB HAWKER /FOOD CENTRE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Eg,
+C01 - HDB
+C02 - HDB HAWKER /FOOD CENTRE</inlineHelpText>
+        <label>Building Type Description</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>House_Type__c</fullName>
+        <description>House types which determin the delivery charges per subscription.
+Only Accepted values &apos;H&apos;,&apos;C&apos;,&apos;L&apos;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>House types which determin the delivery charges per subscription.
+Only Accepted values &apos;H&apos;,&apos;C&apos;,&apos;L&apos;</inlineHelpText>
+        <label>House Type</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Building Code to house type mapping</label>
+    <visibility>Public</visibility>
+</CustomObject>

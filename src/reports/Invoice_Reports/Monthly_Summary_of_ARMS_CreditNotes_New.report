@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Credit_Note_Item__c$Name</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Credit_Note__c.Billing_Account__c.Zuora__Account__c.Name</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Invoice__c.Zuora__BillingAccount__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Credit_Note__c.Billing_Account__c.Zuora__Account__c.AccountNumber</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Credit_Note__c.Total_Amt_After_Tax__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Credit_Note__c.Total_Amt_Before_Tax__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Tax_Amt__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Tax_Exempt_Amt__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Invoice__c.ARMS_Invoice_ID__c</field>
+    </columns>
+    <columns>
+        <field>Credit_Note_Item__c$Invoice_Date__c</field>
+    </columns>
+    <description>Monthly Summary of ARMS CreditNotes</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Credit_Note_Item__c$Credit_Note__c.Document_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Monthly Summary of ARMS CreditNotes_New</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Credit_Note_Items_with_Credit_Notes__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Credit_Note_Item__c$Credit_Note__c.To_ARMS_Time__c</dateColumn>
+        <endDate>2016-04-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2016-04-01</startDate>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ASIAONE_BulkIdCreation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ASIAONE_BulkIdCreation</value>
+    </caseValues>
+    <fields>
+        <label><!-- Display_Name --></label>
+        <name>Display_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- First_Name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last_Name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Password --></label>
+        <name>Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Secret_Answer --></label>
+        <name>Secret_Answer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Secret_Question --></label>
+        <name>Secret_Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- User_ID_LDAP_ID --></label>
+        <name>User_ID_LDAP_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- creationStatus --></label>
+        <name>creationStatus__c</name>
+        <picklistValues>
+            <masterLabel>Failure</masterLabel>
+            <translation><!-- Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- subscription --></label>
+        <name>subscription__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

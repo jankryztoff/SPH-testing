@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_57271620</developerName>
+        <masterLabel>House Type</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Singpost_Address__c$House_Type_Description__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Apartment</sourceValue>
+            </sourceValues>
+            <value>Apartment</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Condominium</sourceValue>
+            </sourceValues>
+            <value>Condominium</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>HDB Block</sourceValue>
+            </sourceValues>
+            <value>HBD Block</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Walkup</sourceValue>
+            </sourceValues>
+            <value>Walkup</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Singpost_Address__c.Addresses__r.Contacts__r.Subscriptions__r$Zuora__Account__c</field>
+    </columns>
+    <columns>
+        <field>Singpost_Address__c.Addresses__r.Contacts__r.Subscriptions__r$Account_Record_Type__c</field>
+    </columns>
+    <columns>
+        <field>Singpost_Address__c.Addresses__r$Address_Type__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Singpost_Address__c.Addresses__r.Contacts__r.Subscriptions__r$Number_of_Copies__c</field>
+    </columns>
+    <description>This report shows the number of subscriber by house type in each postal sector</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Singpost_Address__c$Postal_Sector__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_57271620</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Singpost_Address__c.Addresses__r.Contacts__r.Subscriptions__r$Classification__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Penetration Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_postal_code_with_house_type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Singpost_Address__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>

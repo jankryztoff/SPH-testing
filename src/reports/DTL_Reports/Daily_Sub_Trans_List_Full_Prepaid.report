@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>IF(Order__c.Amount_Paid__c:SUM&gt;Zuora__Subscription__c.Subscription_Charge__c:SUM,Order__c.Amount_Paid__c:SUM - Zuora__Subscription__c.Subscription_Charge__c:SUM, IF(Order__c.Check_Amount__c:SUM&gt;Zuora__Subscription__c.Subscription_Charge__c:SUM, Order__c.Check_Amount__c:SUM - Zuora__Subscription__c.Subscription_Charge__c:SUM, 0))</calculatedFormula>
+        <datatype>number</datatype>
+        <description>Amount to Pay</description>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Amount to Pay</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(Order__c.Check_Amount__c:SUM&gt;0, 
+	IF(((Order__c.Check_Amount__c:SUM + Order__c.Credit_Balance__c:SUM)-Zuora__Subscription__c.Subscription_Charge__c:SUM)&gt;0,
+		((Order__c.Check_Amount__c:SUM + Order__c.Credit_Balance__c:SUM)-Zuora__Subscription__c.Subscription_Charge__c:SUM), 0), 
+	IF(Order__c.Amount_Paid__c:SUM&gt;0,
+	IF(((Order__c.Amount_Paid__c:SUM + Order__c.Credit_Balance__c:SUM) - Zuora__Subscription__c.Subscription_Charge__c:SUM)&gt;0, 
+		((Order__c.Amount_Paid__c:SUM + Order__c.Credit_Balance__c:SUM) - Zuora__Subscription__c.Subscription_Charge__c:SUM), 0), 0))</calculatedFormula>
+        <datatype>number</datatype>
+        <description>Excess Payment</description>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Excess Payment</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF((Order__c.Subscriber_Charge__c:SUM&lt;Order__c.Credit_Balance__c:SUM), Order__c.Subscriber_Charge__c:SUM, IF((Order__c.Credit_Balance__c:SUM&lt;Order__c.Subscriber_Charge__c:SUM), Order__c.Credit_Balance__c:SUM, 0))</calculatedFormula>
+        <datatype>number</datatype>
+        <description>Off Set Amount</description>
+        <developerName>FORMULA3</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Off Set Amount</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <field>Account.Orders__r$DTL_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Name</field>
+    </columns>
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account$Account_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Account$Recipient_Number__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Recipient_Contact__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Product_Code__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Number_of_Copies__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Zuora__SubscriptionStartDate__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Order_Line_Item_Number_1__c.End_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r.Invoice_Line_Items__r$Charge_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Zuora__CustomerAccount__c.Zuora__CreditCard_Expiration__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r.Subscriptions__r$Zuora__CustomerAccount__c.Zuora__CreditCard_Number__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r$Credit_Balance__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r.Subscriptions__r$Subscription_Charge__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders__r$Amount_Paid__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Orders__r$Check_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account$Total_Credit_Balance1__c</field>
+    </columns>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Orders__r.Subscriptions__r$Payment_Mode_1__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Orders__r.Subscriptions__r$Other_PaymentMethod_1__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Orders__r$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Daily Sub Trans List Full Prepaid</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Account_Order_and_Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account.Orders__r$DTL_Date__c</dateColumn>
+        <endDate>2016-04-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2016-01-01</startDate>
+    </timeFrameFilter>
+</Report>

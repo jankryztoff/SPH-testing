@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>BT_CS_Timestamp will contain the HH:MM:SS.millis value that will be appended for daily batch jobs. FDS requirement 11AM GMT+8</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Daily_Timestamp__c</fullName>
+        <defaultValue>&apos;T03:00:00.000Z&apos;</defaultValue>
+        <description>follows the THH:MM:SS.millisZ format (ex. T03:00:00.000Z)</description>
+        <externalId>false</externalId>
+        <label>Daily_Timestamp</label>
+        <length>14</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>BT_CS_Timestamp</label>
+    <visibility>Public</visibility>
+</CustomObject>

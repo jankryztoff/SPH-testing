@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Daily Vendor/ Publication Data</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Daily Vendor/ Publication Data</value>
+    </caseValues>
+    <fields>
+        <label><!-- Amount Before GST --></label>
+        <name>Amount_Before_GST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission (Non-Special Delivery) --></label>
+        <name>Commission_Non_Special_Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission (Special Delivery) --></label>
+        <name>Commission_Special_Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copies (Non-Special Delivery) --></label>
+        <name>Copies_Non_Special_Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copies (Special Delivery) --></label>
+        <name>Copies_Special_Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- GST Amount --></label>
+        <name>GST_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insertion --></label>
+        <name>Insertion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual Credit? --></label>
+        <name>Manual_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Miscellaneous --></label>
+        <name>Miscellaneous__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pagination --></label>
+        <name>Pagination__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Daily Vendor/ Publication Data --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sponsored Copies --></label>
+        <name>Sponsored_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Credit --></label>
+        <name>Total_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>POP Consolidation</masterLabel>
+            <translation><!-- POP Consolidation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor Consolidation</masterLabel>
+            <translation><!-- Vendor Consolidation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Daily Vendor/ Publication Data --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

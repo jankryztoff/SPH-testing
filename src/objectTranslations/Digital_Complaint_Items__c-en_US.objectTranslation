@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Digital Complaint Items</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Digital Complaint Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account_Lookup_Field --></label>
+        <name>Account_Lookup_Field__c</name>
+        <relationshipLabel><!-- Digital Complaint Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- SPH Online User Id --></label>
+        <name>Asia1__c</name>
+        <relationshipLabel><!-- Digital Complaint Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case No --></label>
+        <name>Case_No__c</name>
+        <relationshipLabel><!-- Digital Complaint Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Create User --></label>
+        <name>Create_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deactivate user --></label>
+        <name>Deactivate_user__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Code --></label>
+        <name>Device_Code__c</name>
+        <picklistValues>
+            <masterLabel>Any Type</masterLabel>
+            <translation><!-- Any Type --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Force Logout --></label>
+        <name>Force_Logout__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Application --></label>
+        <name>Mobile_Application__c</name>
+        <picklistValues>
+            <masterLabel>Zaobao Mobile</masterLabel>
+            <translation><!-- Zaobao Mobile --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- New Password --></label>
+        <name>New_Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- SPH Online User Id --></label>
+        <name>SPH_Online_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Done via External site</masterLabel>
+            <translation><!-- Done via External site --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Category --></label>
+        <name>Sub_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suppress Email --></label>
+        <name>Suppress_Email__c</name>
+    </fields>
+    <layouts>
+        <layout>Create User</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Deactivate User</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Digital Complaint Items Layout</layout>
+        <sections>
+            <label><!-- Create New User --></label>
+            <section>Create New User</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Deactivate User --></label>
+            <section>Deactivate User</section>
+        </sections>
+        <sections>
+            <label><!-- Force Logout --></label>
+            <section>Force Logout</section>
+        </sections>
+        <sections>
+            <label><!-- Reset Password --></label>
+            <section>Reset Password</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Force Logout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Reset Password</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Reset Password --></label>
+            <section>Reset Password</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Create User --></label>
+        <name>Create_User</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Deactivate User --></label>
+        <name>Deactivate_User</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Force Logout --></label>
+        <name>Force_Logout</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Reset Password --></label>
+        <name>Reset_Password</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Force Logout for ST and BT has to be done via an external site. --></errorMessage>
+        <name>CannotForceLogOutSTandBT</name>
+    </validationRules>
+</CustomObjectTranslation>

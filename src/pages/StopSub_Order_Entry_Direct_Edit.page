@@ -1,0 +1,520 @@
+<apex:page controller="StopSubOrderEntryDirectController" docType="Html-5.0" id="thisPage" action="{!getOrder}">
+<!--START/END UD-0364 4/8/2015 MGaelo moved javascript logic at the end of the page -->           
+    <style> 
+        .subItemTitle {
+            color: green;
+            font-weight: bold;
+        }
+        .scroll {
+            overflow: auto;
+            width:1170px;
+            height: 200px !important;
+            
+        }
+
+        #lineItemTable, #giftItems {
+            background-color: #cccccc;
+        }
+        
+        
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+        
+        #lineItemTable th, #giftItems th {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        #giftItems {
+            width: 50%;
+            border-spacing: 1px;
+        }
+            
+        #lineItemTable td, #lineItemTable th, 
+        .resultContainer td, .resultContainer th {
+            border: 0 !important;
+            padding: 2px;
+        }
+        
+        #lineItemTable tr, .resultContainer tr,  #giftItems tr {
+            background-color: #ffffff;
+        }
+        
+        .childList {
+            background-color: #0099FF;
+        }
+        
+        .removeButtonCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        
+        .resultContainer > thead > tr > th {
+            background-color: #6666CC !important;
+            color: #ffffff !important;
+        }               
+        
+        .packageResults th {
+            background-color: #800000 !important;
+            color: #ffffff !important;      
+        }
+        
+        
+        .packageResults tbody tr {
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
+        
+        
+        .packageContainer  {
+            padding-left: 50px !important;
+        }
+        
+        .selectedPackage {
+            background-color: #99CCFF !important;
+        }
+        
+        .numericField {
+            width: 50px;
+        }
+
+        body .bPageBlock .pbBody .blue .pbSubheader{
+
+        background-color:#2E9AFE;
+
+            }                
+        
+        //Start UD-1547 James 06/10/2015
+        /* This is for the full screen DIV */
+        .popupBackground {
+            /* Background color */
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+    
+            /* Dimensions */
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 998;
+            position: absolute;
+        
+            /* Mouse */
+            cursor:wait;
+        }
+ 
+        /* This is for the message DIV */
+        .PopupPanel {
+            /* Background color */
+            border: solid 2px blue;
+            background-color: white;
+ 
+            /* Dimensions */
+            left: 50%;
+            width: 200px;
+            margin-left: -100px;
+            top: 50%;
+            height: 50px;
+            margin-top: -25px;
+            z-index: 999;
+            position: fixed;
+        
+            /* Mouse */
+            cursor:pointer;
+        }
+        //End UD-1547 James 06/10/2015
+        </style>
+    <!-- START : UD-0386 4/1/2015 Alyana Navarro - Call javascript. -->
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SubscriptionDetailMiscellaneous.js')}" />
+    <!-- END : UD-0386 4/1/2015 Alyana Navarro -->
+    <apex:sectionHeader title="Order Entry - Stop Subscription"/>
+    <apex:form id="thisForm">
+      <apex:pageMessages id="msg"/>
+        <apex:pageBlock >
+            <!-- START : UD-0386 4/1/2015 Alyana Navarro - Add id on buttons -->
+            <apex:pageBlockButtons >                
+                <apex:commandButton value="Edit" disabled="true"/>
+                <!--START: UD-3362 12/7/15 Added by Manolo Valena-->
+                <apex:commandButton value="Save as Draft" action="{!saveAsDraft}" reRender="msg" id="saveAsDraftBtn" oncomplete="revertButtons()" onclick="this.disabled=true;"/>
+                <!--END: UD-3362 12/7/15 Added by Manolo Valena-->
+                <apex:commandButton value="Submit" disabled="true"/>
+                <apex:commandButton value="Void" disabled="true"/>
+                <apex:commandButton value="Cancel" action="{! doCancel}" id="cancelBtn"/>                    
+            </apex:pageBlockButtons>
+            <!-- END : UD-0386 4/1/2015 Alyana Navarro -->
+            <h1>Knowledge Article:</h1>&nbsp;<a id="theLink" name="{!$Label.Article_Name_StopSubDirect}" href="https://{!$Label.Article_Link_StopSubDirect}">Order Entry - Stop Subscription Related Article</a> <br/><br/>
+            
+            <!-- ----------------------Order Information---------------------- -->
+            <apex:outputPanel styleClass="blue" layout="block">
+            <apex:pageBlockSection title="Order Information" id="section1">
+                <apex:outputField value="{!order.OwnerId}" label="Case Owner"/>
+                <apex:outputField value="{!order.Case_Record_Type__c}" label="Case Record Type"/>
+                <apex:outputField value="{!order.name}" label="Order Number"/>
+                <apex:outputField value="{!order.Category__c}" label="Category"/>
+                <apex:outputField value="{!order.Status__c}" label="Status"/>
+                <apex:outputField value="{!order.Sub_Category__c}" label="Sub Category"/>               
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!-- ----------------------Billing Information---------------------- -->
+            <apex:outputPanel styleClass="blue" layout="block">
+            <apex:pageBlockSection title="Billing Information" columns="1" id="section2">
+                <apex:outputText label="Subscriber Account"> 
+                    <apex:outputLink value="{!URLFOR($Action.Account.View,account.Id)}">{! account.name}</apex:outputLink>
+                </apex:outputText>
+
+                <apex:inputCheckbox label="Eligible for Retention" disabled="true" value="{!retention}" id="retention">
+                    <apex:actionSupport rerender="sendToRentention" event="onchange"/>
+                </apex:inputCheckBox>
+                <apex:inputCheckbox value="{!Send_to_Retention}" label="Send to Retention" id="sendToRentention" disabled="{! NOT(retention)}"/>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!-- ----------------------Order Line Items Table---------------------- -->
+            <apex:outputPanel styleClass="blue" layout="block">
+            <apex:pageBlockSection title="OrderLine Items" columns="1" id="section3">
+                <apex:outputPanel styleClass="scroll" layout="block" id="firstTable">
+                <table class="list resultContainer">
+                    <thead class="rich-table-thead">
+                        <tr>
+                            <!-- START/END: UD-943 4/22/2015 - Removed by Kristine Campang -->
+                            <th>Subscription</th>
+                            <th>Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Contract End Date</th>
+                            <th>Qty</th>
+                            <th>DOW Pattern</th>
+                            <th>Recipient Name</th>
+                            <th>Recipient Number</th>
+                            <th>Billing A/c</th>
+                            <th>Rate Plan</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        <apex:repeat value="{!allSubscriptionResultList}" var="sub" >                
+                            <tr>
+                                <!-- START/END: UD-943 4/22/2015 - Removed by Kristine Campang -->
+                                <td> {! sub['subscription']} </td>
+                                <td> {! sub['type']} </td>
+                                <td> 
+                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                        <apex:param value="{!sub['startDate']}" /> 
+                                    </apex:outputText>
+                                </td>
+                                <td> 
+                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                        <apex:param value="{!sub['endDate']}" /> 
+                                    </apex:outputText>
+                                </td>
+                                <td> 
+                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                        <apex:param value="{!sub['contractEnd']}" /> 
+                                    </apex:outputText>
+                                </td> 
+                                <td> {! sub['quantity']} </td>
+                                <td> {! sub['dowPattern']} </td>
+                                <td> {! sub['recipientName']} </td>
+                                <td> {! sub['recipientNumber']} </td>
+                                <td> {! sub['billingAccount']} </td>
+                                <td> {! sub['ratePlan']} </td>
+                                <td> 
+                                    <!--START:UD-1153 5/6/15 Added by Manolo Valena - Added thisForm to be rerendered-->
+                                    <!--START: UD-943 04/22/2015 Added by Kristine Campang- changed disable behavior of button --> 
+                                    <apex:commandButton value="Add" action="{!setSubscriptionRecords}" rerender="stopInformationTable, asia, msg, firstTable, cancelBtn, saveAsDraftBtn, thisForm" id="addButton" disabled="false">
+                                        <apex:param name="paramId" assignto="{!myId}" value="{!sub['id']}" id="param"/>                                                          
+                                    </apex:commandButton>
+                                    <!--END: UD-943 04/22/2015 Added by Kristine Campang --> 
+                                    <!--END:UD-1153 5/6/15 Added by Manolo Valena-->
+                                </td>
+                            </tr>   
+                        </apex:repeat>                         
+                    </tbody>
+                </table>
+                
+            </apex:outputPanel>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+                    
+            <!-- ----------------------Stop Subscription Information Table---------------------- -->
+            <apex:outputPanel styleClass="blue" layout="block">
+            <apex:pageBlockSection title="Stop Subscription Information" columns="1" id="section4" >
+                 <apex:outputPanel rendered="true" id="stopInformationTable" styleClass="scroll" layout="block">
+                <table class="list resultContainer">
+                    <thead class="rich-table-thead">
+                        <tr>
+                            <th>Select</th>
+                            <th>Subscription</th>
+                            <th>Earliest Stop Date</th>
+                            <th>Stop Date</th> <!--Start/End UD-1611 7/2/2015 James Changed label from Stop Request Date to Stop Date-->
+                            <th>Termination Reason</th>
+                            <th>Refund</th>
+                            <th>Publication 1</th>
+                            <th>Pending Copies 1</th>
+                            <th>Publication 2</th>
+                            <th>Pending Copies 2</th>
+                            <th>Admin Fee</th>
+                            <th>Fee Waiver</th>
+                            <th>Fee Override</th>
+                            <!--START UD-0364 4/8/2015 MGaelo added feeOverrideAmount-->
+                            <th>Fee Override Amount</th>
+                            <!--END UD-0364 4/8/2015 MGaelo added feeOverrideAmount-->
+                            <th>Override Reason</th>
+                            <th>Suppress Notification</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!relatedSubscriptionResultList}" var="sub">
+                        <!--START UD-0364 4/8/2015 MGaelo added logic feeOverride-->
+                            <apex:variable var="isOverride" value="{!IF(sub['feeOverride'] = true, false, true)}" />
+                            <apex:variable var="isSelected" value="{!IF(sub['enableRemoveButton'] = true, false, true)}" />
+                            <tr>
+                                <td> <apex:inputCheckbox value="{!sub['enableRemoveButton']}" >
+                        <!--END UD-0364 4/8/2015 MGaelo added logic feeOverride-->
+                                         <apex:actionSupport rerender="removeButton" event="onchange"/>
+                                     </apex:inputCheckBox> </td>
+                                <td> {! sub.subscription} </td>
+                                <td> 
+                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                        <apex:param value="{!sub['earliestStopDate']}" /> 
+                                    </apex:outputText>  
+                                </td>
+                                <td> 
+                                    <apex:inputField id="stopDate" value="{! sub['oliFieldAccess.stop_request_date__c']}">                                         
+                                         <apex:actionSupport action="{! checkRetention}" rerender="retention, sendToRentention, adminFee, msg, stopDate, refund, copiespending1, copiespending2, copiesmissed, publication1, publication2, copiespendings, terminatingReason" event="onchange" status="statusSaveTrip" oncomplete="revertButtons()" onsubmit="DisableButtons()"> <!--Start/End UD-1547 James 06/10/2015-->
+                                             <apex:param name="paramId" assignto="{!myId}" value="{!sub['id']}" id="param"/>
+                                         </apex:actionSupport>
+                                    </apex:inputField>
+                                </td>
+                                <td> 
+                                    <!--START UD-2549 3/18/2016 Added by J.Sarion -->
+                                    <!-- Start PD-0471 16Jun16 JohnD - added adminfee in rerender and apex:param -->
+                                    <apex:inputField id="terminatingReason" value="{! sub.oliFieldAccess.terminating_reason__c}" >
+                                        <apex:actionSupport event="onchange" action="{!setRefundToZero}" rerender="refund, adminFee" status="statusSaveTrip" oncomplete="revertButtons()" onsubmit="DisableButtons()" >
+                                            <apex:param name="paramId" assignto="{!myId}" value="{!sub['id']}" id="param" />
+                                            <apex:param name="originalAdminFee" assignTo="{!originalAdminFee}" value="{!sub.originalAdminFee}" />
+                                        </apex:actionSupport>
+                                    </apex:inputField>
+                                    <!-- End PD-0471 16Jun16 JohnD - added adminfee in rerender -->
+                                    <!--END UD-2549 3/18/2016 Added by J.Sarion-->
+                                </td>
+                                <td> <apex:outputText value="{! sub.refund}" id="refund"/> </td>
+                                <td> <apex:outputText value="{! sub.publication1}" /> </td>
+                                <td> <apex:outputText value="{! sub.copiespending1}" id="copiespending1"/> </td>
+                                <td> <apex:outputText value="{! sub.publication2}" /> </td>
+                                <td> <apex:outputText value="{! sub.copiespending2}" id="copiespending2"/> </td>
+                                <!--START UD-0364 4/8/2015 MGaelo added logic feeCheckBox upon click Remove-->
+                                <!-- Start PD-0471 16Jun16 JohnD - added hidden field -->
+                                <td><apex:outputText value="{! sub.adminFee}" id="adminFee"/></td>
+                                <!-- End PD-0471 16Jun16 JohnD - added hidden field -->
+                                <!--START:D-3344 8/10/15 Added by Manolo Valena - Added disabled to disable checkbox if subscription is not under promotion.-->
+                                <td> <apex:inputCheckbox styleClass="feeCheckBox" value="{!sub.feeWaiver}" onclick="toggleFeeCheckBox(this, false);" disabled="{!!sub.underPromotion}"/> </td>
+                                <!--END:D-3344 8/10/15 Added by Manolo Valena-->
+                                <td> 
+                                    <!--START:D-3344 8/10/15 Added by Manolo Valena - Added disabled to disable checkbox if subscription is not under promotion.-->
+                                    <apex:inputCheckbox styleClass="feeCheckBox" value="{!sub['feeOverride']}" onclick="toggleFeeCheckBox(this, true);" disabled="{!!sub.underPromotion}"/>                                        
+                                    <!--END:D-3344 8/10/15 Added by Manolo Valena-->
+                                </td>
+                                <td>
+                                    <!--START:D-2795 5/18/15 Added by Manolo Valena - actionFunction methodToCheckOverride invoked onchange-->
+                                    <!--START:UD-2074 7/25/15 Added by Manolo Valena - Added action function to update pagemessages onclick. Also removed existing method that causes error.-->
+                                    <apex:inputText styleClass="feeOverrideAmount" value="{!sub.feeOverrideAmount}" disabled="{!isOverride}" onchange="copyAmount(this); updAcFunc();" />
+                                    <!--END:UD-2074 7/25/15 Added by Manolo Valena-->
+                                    <apex:inputHidden value="{!sub.feeOverrideAmountHidden}" /> 
+                                    <!--END:D-2795 5/18/15 Added by Manolo Valena-->
+                                </td>
+                                <td> <apex:inputtext value="{! sub.overrideReason}"/> </td>
+                                <td> <apex:inputCheckbox value="{! sub.suppressNotification}"/> </td>                          
+                                <td>
+                                    <!--START: UD-3388 12/14/15 Added by Manolo Valena-->                                     
+                                    <apex:commandButton oncomplete="showPrompt()" value="Remove" rerender="stopInformationTable, asia" id="removeButton" disabled="{!!sub['enableRemoveButton']}">
+                                    <!--END: UD-3388 12/14/15 Added by Manolo Valena-->
+                                <!--END UD-0364 4/8/2015 MGaelo added logic feeCheckBox upon click Remove-->
+                                        <apex:param name="paramId" assignto="{!myId}" value="{!sub['id']}" id="param"/>
+                                        <apex:actionSupport reRender="stopInformationTable"/>                                        
+                                    </apex:commandButton>
+                                </td>                                
+                            </tr>                            
+                        </apex:repeat>
+                    </tbody>
+                </table>                
+            </apex:outputPanel>  
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!-- ----------------------Related Lists for Asia1 Table---------------------- -->
+            <apex:outputPanel styleClass="blue" layout="block">
+ 
+            <apex:pageBlockSection title="Related Lists for Asia1" columns="1" id="section5">
+                <apex:outputPanel rendered="true" id="asia" styleClass="scroll" layout="block">
+                <table class="list resultContainer">
+                    <thead class="rich-table-thead">
+                        <tr>
+                            <th>User ID</th>
+                            <th>Service Flag</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        <apex:repeat value="{!asiaResultList}" var="sub">                
+                            <tr>                                                                
+                                <td> {! sub['userId']} </td>
+                                <td> {! sub['serviceFlag']} </td>
+                                <td> {! sub['status']} </td>
+                                <td> {! sub['quantity']} </td>                                
+                            </tr>   
+                        </apex:repeat>                         
+                    </tbody>
+                </table>                
+            </apex:outputPanel>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+           
+        </apex:pageBlock>
+                            
+        <apex:actionFunction action="{!checkRetention}" name="retention"/>
+        <apex:actionFunction action="{!removeSubscriptionRecord}" name="removeSubscriptionRecord"/>
+        
+        <!--START:D-2795 5/18/15 Added by Manolo Valena - actionFunction which is called onchange of the feeOverride field-->
+        <apex:actionFunction action="{!checkIfAllowableAmount}" name="methodToCheckOverride" reRender="msg" >
+            <apex:param name="p1" value="" assignTo="{!feeAdminAmountCompare}" />
+            <apex:param name="p2" value="" assignTo="{!feeOverrideAmountCompare}" />
+        </apex:actionFunction>
+        <!--END:D-2795 5/18/15 Added by Manolo Valena-->
+        <!--START:UD-2074 7/25/15 Added by Manolo Valena - new actionFunction-->
+        <apex:actionFunction name="updAcFunc" rerender="msg" />
+        <!--END:UD-2074 7/25/15 Added by Manolo Valena-->
+        <!--Start UD-1547 James 06/10/2015-->
+        <apex:actionStatus id="statusSaveTrip" stopText="">
+            <apex:facet name="start">
+                <div>
+                    <div class="popupBackground" />
+                    <div class="PopupPanel">
+                        <table border="0" width="100%" height="100%">
+                            <tr>
+                                <td align="center"><b>Please Wait</b></td>
+                            </tr>
+                            <tr>
+                                <td align="center"><img src="/resource/loading_gif"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <!--End UD-1547 James 06/10/2015-->
+    </apex:form>
+   <!--START UD-0364 4/8/2015 MGaelo moved here javascript logic --> 
+<script>        
+        
+        function retention(){
+            retention();
+        }     
+        
+        function showPrompt(){
+            var result = confirm("Any related subscription will be removed. Do you want to continue?");            
+            if(result){
+                removeSubscriptionRecord();
+            }
+        }
+        //Start UD-1547 James 06/10/2015
+        // START : UD-0386 4/1/2015 Alyana Navarro - For enabling button if there is an error
+        function revertButtons() {
+            $("[id*='saveAsDraftBtn']").addClass("btn");
+            $("[id*='saveAsDraftBtn']").removeClass("btnDisabled");
+            $("[id*='saveAsDraftBtn']").removeAttr('disabled');
+            $("[id*='saveAsDraftBtn']").css("font-style", "");
+            $("[id*='saveAsDraftBtn']").val("Save as Draft");    
+            
+            $("[id*='cancelBtn']").addClass("btn");
+            $("[id*='cancelBtn']").removeClass("btnDisabled");
+            $("[id*='cancelBtn']").removeAttr('disabled');
+            $("[id*='cancelBtn']").css("font-style", "");
+            $("[id*='cancelBtn']").val("Cancel");                        
+
+            //Start MMallorca D-3116 enable textbox after loading 06/25/2015
+            $(".dateOnlyInput").find('input[type=text]').removeAttr('disabled');
+            $(".dateFormat").find('a').removeAttr('disabled');
+            //End MMallorca D-3116 06/25/2015    
+
+            //START UD-2549 3/18/2016 Added by J.Sarion - Disable button
+            $("[id*='terminatingReason']").removeClass("btnDisabled");
+            $("[id*='terminatingReason']").removeAttr("disabled", "disabled");
+            //END UD-2549 3/18/2016 Added by J.Sarion - Disable button
+        }
+        // END : UD-0386 4/1/2015 Alyana Navarro
+    
+        function DisableButtons() {
+            $("[id*='saveAsDraftBtn']").addClass("btn");
+            $("[id*='saveAsDraftBtn']").addClass("btnDisabled");
+            $("[id*='saveAsDraftBtn']").attr("disabled", "disabled");
+            $("[id*='saveAsDraftBtn']").css("font-style", "");
+            $("[id*='saveAsDraftBtn']").val("Save as Draft");    
+            
+            $("[id*='cancelBtn']").addClass("btn");
+            $("[id*='cancelBtn']").addClass("btnDisabled");
+            $("[id*='cancelBtn']").attr("disabled", "disabled");
+            $("[id*='cancelBtn']").css("font-style", "");
+            $("[id*='cancelBtn']").val("Cancel");                        
+
+            //Start MMallorca D-3116 disable textbox when loading 06/25/2015
+            $(".dateOnlyInput").find('input[type=text]').attr("disabled", "disabled");
+            $(".dateFormat").find('a').attr("disabled", "disabled");
+            //End MMallorca D-3116 06/25/2015    
+
+            //START UD-2549 3/18/2016 Added by J.Sarion - Disable button
+            $("[id*='terminatingReason']").addClass("btnDisabled");
+            $("[id*='terminatingReason']").attr("disabled", "disabled");
+            //END UD-2549 3/18/2016 Added by J.Sarion - Disable button
+        }
+        //End UD-1547 James 06/10/2015
+        
+          function toggleFeeCheckBox(e, isOverrideClicked) {
+            
+            var parent = $(e).parent();
+            
+            var isOverride = false;
+            if (isOverrideClicked && $(e).prop("checked")) {
+                isOverride = true;
+            }
+            
+            $(parent).siblings().each(function() {
+                
+                $(this).children().each(function() {
+                    
+                    if ($(this).prop("tagName") == 'INPUT') {
+                        
+                        if ($(this).hasClass("feeCheckBox") && this != e) {
+                            $(this).prop("checked", false);
+                        }
+                        
+                        if ($(this).hasClass("feeOverrideAmount")) {
+                            if (isOverride == true) {
+                                $(this).prop("disabled", false);
+                            } else {
+                                $(this).prop("disabled", true);
+                                $(this).val("");
+                            }
+                        }
+                    }
+                });
+            });
+      }
+      
+        function copyAmount(e) {
+            $(e).siblings().each(function() {
+                $(this).val( $(e).val());
+            });
+        }
+      
+    </script>     
+<!--END UD-0364 4/8/2015 MGaelo moved here javascript logic -->     
+</apex:page>

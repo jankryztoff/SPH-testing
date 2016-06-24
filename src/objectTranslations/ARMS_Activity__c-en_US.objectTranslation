@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ARMS Activity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ARMS Activites</value>
+    </caseValues>
+    <fields>
+        <label><!-- ARMS Activity Date Logged --></label>
+        <name>ARMS_Activity_Date_Logged__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Activity Status Sub Type --></label>
+        <name>ARMS_Activity_Status_Sub_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Activity Type --></label>
+        <name>ARMS_Activity_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Logged By --></label>
+        <name>ARMS_Logged_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Outstanding Amount (Activity) --></label>
+        <name>ARMS_Outstanding_Amount_Activity__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Period of Debt End Date --></label>
+        <name>ARMS_Period_of_Debt_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Period of Debt Start Date --></label>
+        <name>ARMS_Period_of_Debt_Start_Date__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

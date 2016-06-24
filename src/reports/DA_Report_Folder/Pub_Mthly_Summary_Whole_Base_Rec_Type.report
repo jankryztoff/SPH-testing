@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Package__c.Subscriptions__r$Number_of_Copies__c</field>
+    </columns>
+    <description>Pub Mthly Summary - Whole Base with Account Record Type field.</description>
+    <filter>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Main_Package_Product_Sub_Type_Mapping__c</column>
+            <operator>equals</operator>
+            <value>Newspaper</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Product_Code__c</column>
+            <operator>notEqual</operator>
+            <value>DELCHG,POSCHG,ADMCHG</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Account_Record_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Product_Code__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Pub Mthly Summary - Whole Base(Rec Type)</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SM_Report_Type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Package__c.Subscriptions__r$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

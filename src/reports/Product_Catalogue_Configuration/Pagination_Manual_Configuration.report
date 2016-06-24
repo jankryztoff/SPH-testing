@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Pagination_Rate__c$Publication__c</field>
+    </columns>
+    <columns>
+        <field>Pagination_Rate__c$Name</field>
+    </columns>
+    <columns>
+        <field>Pagination_Rate__c$Pagination_Range_LL__c</field>
+    </columns>
+    <columns>
+        <field>Pagination_Rate__c$Pagination_Range_UL__c</field>
+    </columns>
+    <columns>
+        <field>Pagination_Rate__c$Effective_Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>Pagination_Rate__c$Paginaton_Rate__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Pagination - Manual Configuration</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Pagination_Rates__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Pagination_Rate__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Newspaper Renewal Reminder</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Newspaper Renewal Reminder</name>
+    <style>none</style>
+    <subject>Subscription Renewal Advice</subject>
+    <textOnly>Subscription Renewal Advice
+
+DATE 		: {{Date.Today}}
+
+SUB A/C NO  	: 2128073J
+{{Contact.FirstName}} {{Contact.LastName}}
+{{Contact.MailingAdress}}
+
+{{Class.Barcode}}
+Singapore Press Holdings Limited
+Circulation
+83 Genting Lane, Level 2, Media Centre
+Singapore 349567
+Fax : 650 67448 Enquiries: 65-63883838
+Email : circs@sph.com.sg
+
+
+
+Thank you for subscribing to our publication/s in the past years.
+
+Your subscription is expiring soon. To renew your subscription, please complete the form below and mail all pages back to us with the attached envelope or fax all pages to us at (65) 6744 4875 or email us before {{Date}}.
+
+As part of our go green initiative, we will be sending acknowledgement letter via email.  Kindly update us your email address and contact number.  Please tick here if you wish to receive acknowledgement letter in hard copy.
+
+
+Email : leept@sph.com.sg  Tel: (H)  93845125  (O)  65874524  (Mobile) 98547513
+
+
+
+Please ignore this advice if you have renewed all your subscription. We look forward to your continuous support.
+
+
+
+Recipient No/Name
+Pub
+Frequency  Copy/s  Stop Date  Amount
+S$  Please
+Tick
+
+2128073J  {{Account.AccountName}}
+
+{{Subscription.Publication_Code__c}}      MON-SAT, PH   {{Zuora__Subscription__c.Number_of_Copies__c}}  {{Subscription.End_Date__c}}  60.00  (  )
+BT     MON-SAT, PH   {{Zuora__Subscription__c.Number_of_Copies__c}}  {{Subscription.End_Date__c}}  60.00  (  )
+DELIVERY FEE      60.00
+SUB TOTAL          271.50
+TOTAL    253.74  17.76  0.00  271.50
+
+
+
+Yes, I wish to renew my subscription/s for another year. (Please tick the above)
+ Monthly payment (applicable only via credit card payment, subscription will remain in force until we receive your termination notification)
+  Full payment at S$___________________ . (Please include newspaper delivery fee. Refer to T&amp;C for Delivery Fee)
+* Inclusive of newspaper delivery fee / postage fee
+
+Payment Mode (please tick where applicable)
+ Credit Card Payment (Please tick where applicable):
+ VISA                    MASTER          AMEX
+Cardholder name : ________________________________________________________________________
+Credit Card No. : __________________________________ Expiry Date (mm/yy) : ____________________
+Signature : _______________________________________ Date : _________________________________
+
+ Cheque Payment (Payable to Singapore Press Holdings Limited)
+Bank/Cheque No : _________________________________ Amount : ______________________________
+SUB A/C NO  : 28888888H
+
+A.   TERMS AND CONDITIONS
+
+MODE OF PAYMENT
+
+•	All subscriptions are available on a prepaid basis.
+
+•	Payment can be made through:
+
+o	Cheque, Money Order (payment to be drawn in Singapore currency on a local bank), made payable to:
+
+“Singapore Press Holdings Limited”
+
+o	Credit Card (Visa/MasterCard/Amex)
+
+Subscription is accepted via fax/e-mail for this mode of payment. Please indicate card number and expiry date.
+
+CONFIRMATION OF SUBSCRIPTION
+
+•	You will receive an acknowledgement advice upon the confirmation of your subscription.
+
+DELIVERY FEE
+
+•	Subscription rates exclude delivery fee. The monthly delivery fee, dependent on house type, is payable as follows:
+
+$3 – HDB ($36 per annum)
+
+$4 – Private apartments, walk-up apartments, factories &amp; offices ($48 per annum)
+
+$5 – Landed properties ($60 per annum))
+
+OTHERS
+
+•	Subscription rates are inclusive of 7% Goods and Services Tax (GST)
+
+•	Subscription rates and administrative charges (if any) are subject to change without prior notice.
+
+CONTACT US
+
+●	Tel:   (65) 6388 3838   ●	Fax:   (65) 6744 4875 / (65) 6744 1646
+●	Email:   circs@sph.com.sg  ●  Website:   www.sphsubscription.com.sg
+
+
+
+B.   CHANGE OF ADDRESS (IF ANY)
+
+
+Please send renewal advice to:
+
+Name: ______________________________________
+Sub A/C No: _________________________________
+Address: ____________________________________
+__________________ PC _______________
+Country: ____________________________________
+Effective date: _______________________________
+Please send renewal advice to:
+
+Name: ______________________________________
+Sub A/C No: _________________________________
+Address: ____________________________________
+__________________ PC _______________
+Country: ____________________________________
+Effective date: _______________________________</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,48 @@
+<apex:page controller="BypassCreditCardController" tabStyle="Case">
+
+    <apex:sectionHeader title="Case Edit"/>
+    <apex:outputPanel id="errorPanel">
+        <apex:pageMessages />
+    </apex:outputPanel>
+    
+    <apex:form >
+        <apex:pageBlock id="mainBlock">
+            <apex:pageBlockButtons location="Top" id="pageButtons">
+                <apex:commandButton value="Save" action="{!saveRecord}"/>
+                <apex:commandButton value="Save & New" action="{!saveandnew}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection id="CaseInfo" collapsible="TRUE" title="Case Information" columns="2" >
+            
+                <apex:inputField value="{!thisCase.AccountId}"/>
+                <apex:inputField value="{!thisCase.Billing_Account_Name__c}"/>
+                <apex:inputField value="{!thisCase.Category__c}"/>
+                <apex:inputField value="{!thisCase.Sub_Category__c}"/>
+                  
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection id="AddInfo" collapsible="TRUE" title="Additional Information" columns="2" >
+            
+                <apex:inputField value="{!thisCase.Status}"/>
+                <apex:inputField value="{!thisCase.Stop_Charging_Credit_Card__c}"/>
+                <apex:inputField value="{!thisCase.Origin}"/>
+                <apex:inputField value="{!thisCase.Start_Charging_Credit_Card__c}"/>
+                <apex:inputField value="{!thisCase.Priority}"/>
+                <apex:inputField value="{!thisCase.Generate_Arms_Invoice__c}"/>
+                <apex:inputField value="{!thisCase.Charging_Date__c}"/> 
+                <apex:outputField value="{!thisCase.Charge_Status__c}"/>   
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection id="DescInfo" collapsible="TRUE" title="Description Information" columns="1" >
+            
+                <apex:inputField value="{!thisCase.Subject__c}"/>
+                <apex:inputField value="{!thisCase.Description}"/>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageblock>
+    </apex:form>
+    <apex:relatedList list="Tasks" />
+</apex:page>

@@ -18,7 +18,7 @@ private class ComplaintNewspaperController2Test {
             LocaleSidKey='en_US',
             ProfileId = [SELECT id FROM Profile WHERE NAME = 'System Administrator' Limit 1].Id,//(Id) ConstantsSLB.getKeyId('Profile_System Administrator'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standard9@test.com'
         );    
         
         return u;

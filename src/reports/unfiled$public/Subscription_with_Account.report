@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Account_Record_Type__c</field>
+    </columns>
+    <columns>
+        <field>FK_ACC_ACCOUNT_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Billing_Type__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Main_Package_1__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Subscription with Account</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c@Zuora__Subscription__c.Zuora__Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c.Zuora__ContractAcceptanceDate__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

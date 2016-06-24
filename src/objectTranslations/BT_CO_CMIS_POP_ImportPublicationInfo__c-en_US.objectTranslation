@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationInfo</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationInfos</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- effectiveDate --></label>
+        <name>effectiveDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- expiryDate --></label>
+        <name>expiryDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- freePublicationIndicator --></label>
+        <name>freePublicationIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- frequencyCode --></label>
+        <name>frequencyCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- languageCode --></label>
+        <name>languageCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- onlinePublicationIndicator --></label>
+        <name>onlinePublicationIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicHolidayWeekdayIndicator --></label>
+        <name>publicHolidayWeekdayIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicHolidayWeekendIndicator --></label>
+        <name>publicHolidayWeekendIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationCode --></label>
+        <name>publicationCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationName --></label>
+        <name>publicationName__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationType --></label>
+        <name>publicationType__c</name>
+    </fields>
+    <fields>
+        <label><!-- publishedDays --></label>
+        <name>publishedDays__c</name>
+    </fields>
+    <fields>
+        <label><!-- publisherCode --></label>
+        <name>publisherCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- sphPublicationIndicator --></label>
+        <name>sphPublicationIndicator__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -164,10 +164,10 @@ public class BT_AB_ARM067DX_ImportCirculationTest {
      
         Test.StartTest();
             BT_AB_ARM067DX_ImportCirculationOrders batch = new BT_AB_ARM067DX_ImportCirculationOrders();
-            database.executeBatch(batch, 20);
-               
-            Database.BatchableContext BC;
-            batch.execute(BC, CredNotelist);
+            Id batchJobIdRes = database.executeBatch(batch, 20);
+            system.assertNotEquals(null, batchJobIdRes);
+            // Database.BatchableContext BC;
+            // batch.execute(BC, CredNotelist);
         Test.StopTest();
         
     }

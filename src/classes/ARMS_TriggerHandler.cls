@@ -473,6 +473,15 @@ public class ARMS_TriggerHandler implements TriggerHandlerInterface{
     public void afterUpdate(SObject oldSo, SObject so) {
         
         Zuora__CustomerAccount__c ca = (Zuora__CustomerAccount__c)so;
+		// Start PD-0430 11Jun16 JohnD - for billing batch assignment if there is a changed in billing type
+        Zuora__CustomerAccount__c oldCa = (Zuora__CustomerAccount__c)oldSo;
+		
+		if ((oldCa.Billing_Type__c == null && ca.Billing_Type__c != null) 
+				|| (oldCa.Billing_Type__c != ca.Billing_Type__c)) {
+					
+			billingAccountIdSet.add(ca.Id);
+		}
+		// End PD-0430 11Jun16 JohnD - for billing batch assignment if there is a changed in billing type
         
         if (ca.Zuora__DefaultPaymentMethod__c == 'Other') {
             

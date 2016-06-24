@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>Order__c</field>
+        <field>Temp_Stop__c</field>
+        <field>POP_Start_Date__c</field>
+        <field>Main_Package__c</field>
+        <field>Temp_Stop_Type__c</field>
+        <field>Temp_Stop_Date__c</field>
+        <field>Restart_Date__c</field>
+        <field>Total_Issue__c</field>
+        <field>Total_Credit_Balance_Amount__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>CSO_Team_Leader_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Step 1</label>
+        <name>Step_1</name>
+    </approvalStep>
+    <description>Notify Team lead that there is case needed for approval for the urgent temp stop.</description>
+    <emailTemplate>unfiled$public/Case_Approver_Notification_Team_Lead</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(
+Requires_Urgent_Approval__c = TRUE,
+ISPICKVAL(Status, &quot;Pending&quot;),
+RecordType.Name = &quot;Temp Stop Subscription&quot;
+)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Case_Status_Close</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notification_to_CSO_for_Approved_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Urgent_Approved_Checkbox</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Urgent_Temp_Stop_Subs_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Case_Status_Close</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notification_to_CSO_for_Rejected_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Urgent_Temp_Stop_Subs_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Case_Owner_to_TL_Queue</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Urgent Temp Stop Subs Approval Process</label>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Publications</label>
+            <name>Publications</name>
+        </dataCategory>
+        <dataCategory>
+            <label>SOP</label>
+            <name>SOP</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Promotions</label>
+            <name>Promotions</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Foo article made my CSO</description>
+    <label>CSO Articles</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

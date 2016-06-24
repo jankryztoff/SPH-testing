@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_CreateAccountBatchFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_CrateAccountBatchFiles</value>
+    </caseValues>
+    <fields>
+        <label><!-- ARMS ID --></label>
+        <name>ARMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved Debt Exposure Amount --></label>
+        <name>Approved_Debt_Exposure_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Sector --></label>
+        <name>Business_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- CCRID --></label>
+        <name>CCRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Creator ID --></label>
+        <name>Creator_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit External --></label>
+        <name>Credit_Limit_External__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit Internal --></label>
+        <name>Credit_Limit_Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term Refererence --></label>
+        <name>Credit_Term_Refererence__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term --></label>
+        <name>Credit_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cust Giro Acct Number --></label>
+        <name>Cust_Giro_Acct_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cust Giro Bank Number --></label>
+        <name>Cust_Giro_Bank_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debt Management Treatment --></label>
+        <name>Debt_Management_Treatment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failed Reason --></label>
+        <name>Failed_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retrieve Account Indicator --></label>
+        <name>Retrieve_Account_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Group --></label>
+        <name>SOA_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Suppression Indicator --></label>
+        <name>SOA_Suppression_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transient Indicator --></label>
+        <name>Transient_Indicator__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

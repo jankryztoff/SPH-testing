@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Gift__c</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Gift_Type__c</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Gift_Inventory__c</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Gift_Issued_New__c</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Gift_Redeemed_New__c</field>
+    </columns>
+    <columns>
+        <field>Promotion_Gift__c.Balance_Quantity_New__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Promotion Config - Promotion Gifts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Promotion_Gift__c@Promotion_Gift__c.Promotion__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>FK_NAME</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>FK_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

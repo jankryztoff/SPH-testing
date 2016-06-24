@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>16 Weeks Complaint</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>16 Weeks Complaints</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Number --></label>
+        <name>Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Copies --></label>
+        <name>Complaint_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint From --></label>
+        <name>Complaint_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Pub Code --></label>
+        <name>Complaint_Pub_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint To --></label>
+        <name>Complaint_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name Formula --></label>
+        <name>Contact_Name_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Frequency --></label>
+        <name>Frequency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Code --></label>
+        <name>Product_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Address --></label>
+        <name>Recipient_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Approved / Rejected By --></label>
+        <name>Reclass_Approved_Rejected_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Date --></label>
+        <name>Reclass_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Status --></label>
+        <name>Reclass_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Sub Category --></label>
+        <name>Reclass_Sub_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Category --></label>
+        <name>Sub_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription End Date --></label>
+        <name>Subscription_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Start Date --></label>
+        <name>Subscription_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Type --></label>
+        <name>Subscription_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor No --></label>
+        <name>Vendor_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Void By --></label>
+        <name>Void_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Void Date --></label>
+        <name>Void_Date__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

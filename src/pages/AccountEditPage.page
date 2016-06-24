@@ -1,0 +1,110 @@
+<apex:page standardController="Account">
+    <apex:form >
+        
+        <apex:pageBlock title="Account Edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>   
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Account Information" columns="1" rendered="{!Account.recordType.Name=='Vendor Subscriber'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.VendorSubscriberAccount}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            <!--START: D-3977 11/24/2015 Added by Kristine Campang - removed some fields in the field set-->
+            <apex:pageBlockSection title="Contact Details" columns="1" rendered="{!Account.recordType.Name=='Vendor Subscriber'}">
+            <!--START D-3910 K. Tan 11/17/2015-->
+            <apex:pageBlockSectionItem >
+            </apex:pageBlockSectionItem>
+            <!--END-3910 K. Tan 11/17/2015-->               
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.VendorAccountContactDetail}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection> 
+            
+            <apex:pageBlockSection title="Account Information" columns="1" rendered="{!Account.recordType.Name=='Direct Individual'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccount}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" rendered="{!Account.recordType.Name=='Direct Individual'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccount2}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>                           
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Contact Details" columns="1" rendered="{!Account.recordType.Name=='Direct Individual'}">
+            <!--START D-3910 K. Tan 11/17/2015-->
+            <apex:pageBlockSectionItem >
+            </apex:pageBlockSectionItem>
+            <!--END-3910 K. Tan 11/17/2015-->               
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccountContactDetails}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" rendered="{!Account.recordType.Name=='Direct Individual'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccountContactDetails2}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>                         
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" rendered="{!Account.recordType.Name=='Direct Individual'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccountContactDetails3}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>                         
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Demographic Details" columns="2" rendered="{!Account.recordType.Name=='Direct Individual'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectIndividualAccountDemographic}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Account Information" columns="1" rendered="{!Account.recordType.Name=='Direct Corporate'}">
+            <!--START UD-3282 RReyes 11/19/2015-->
+            <apex:inputField value="{!Account.Attention_Seeking_Subs__c}" rendered="{!if($Profile.Name == 'System Administrator' || $Profile.Name == 'SPH System Admin 2' , true, false)}"/>
+            <apex:outputField value="{!Account.Attention_Seeking_Subs__c}" rendered="{!if($Profile.Name != 'System Administrator' && $Profile.Name != 'SPH System Admin 2', true, false)}"/>
+            <!--END UD-3282 RReyes 11/19/2015-->
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectCorporateAccount}" var="f"> 
+                    <apex:inputField value="{!Account[f]}"/>
+                </apex:repeat>  
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="1" rendered="{!Account.recordType.Name=='Direct Corporate'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectCorporateAccount2}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>                         
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Contact Details" columns="1" rendered="{!Account.recordType.Name=='Direct Corporate'}">
+            <!--START D-3910 K. Tan 11/17/2015-->
+            <apex:pageBlockSectionItem >
+            </apex:pageBlockSectionItem>
+            <!--END-3910 K. Tan 11/17/2015-->   
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectCorporateAccountContactDetails}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="1" rendered="{!Account.recordType.Name=='Direct Corporate'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectCorporateAccountContactDetails2}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>                         
+            </apex:pageBlockSection>
+            
+            
+            <apex:pageBlockSection title="Account Information" columns="1" rendered="{!Account.recordType.Name=='Direct SPH Inter-Division'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectInterDivisionAccount}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Contact Details" columns="1" rendered="{!Account.recordType.Name=='Direct SPH Inter-Division'}">
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.DirectInterDivisionAccountContactDetails}" var="f"> 
+                    <apex:inputField value="{!Account[f]}" />
+                </apex:repeat>  
+            </apex:pageBlockSection>
+            <!--END: D-3977 11/24/2015 Added by Kristine Campang - removed some fields in the field set-->
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

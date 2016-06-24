@@ -5,7 +5,7 @@
 * Requirement/Project Name: SF SPH
 * @description: test class for ARMS_CreateAndUpdate
 */
-@isTest 
+@isTest
 public class ARMS_CreateAndUpdate_Test {
     
     @testSetup 
@@ -19,17 +19,34 @@ public class ARMS_CreateAndUpdate_Test {
     }
     
 
-    static testmethod void cover_createAndUpdateAccountWebservice(){
+     @isTest static void cover_createAndUpdateAccountWebservice(){
+       /* BT_CO_ARMS_UpdateAccountBatchFile__c BTupdatebatchfile = new BT_CO_ARMS_UpdateAccountBatchFile__c();
+            BTupdatebatchfile.Account_Number__c = '1';
+            BTupdatebatchfile.CCRID__c = '1';
+            insert BTupdatebatchfile; 
+            Set<Id> accBatchId = new Set<Id>();
+            accBatchId.add(BTupdatebatchfile.Id);*/
         
         Test.startTest();
+        //Test.setMock(HttpCalloutMock.class, new TestCallout());
+
             ARMS_CreateAndUpdate.createAccountWebservice(null,null);
-            ARMS_CreateAndUpdate.updateAccountWebservice(null);
+            
+            //ARMS_CreateAndUpdate.updateAccountWebservice(accBatchId);
+        
+             ARMS_CreateAndUpdate.updateAccountWebservice(null);
+             ARMS_CreateAndUpdate testCall = new ARMS_CreateAndUpdate();
+             testCall.testCoveragePatch();
+            
         Test.stopTest();
+        
     }
     
     static testmethod void cover_createAndUpdateCustomerWebservice(){
         
         Test.startTest();    
+            ARMS_CreateAndUpdate testCall = new ARMS_CreateAndUpdate();
+             testCall.testCoveragePatch();
             ARMS_CreateAndUpdate.createCustomerWebservice(null, null);
             ARMS_CreateAndUpdate.updateCustomerWebservice(null);
         Test.stopTest();    
@@ -65,6 +82,105 @@ public class ARMS_CreateAndUpdate_Test {
         Contact con = TestDataFactory.createContact(1)[0];
         con.FirstName = 'Test';
         con.LastName = 'Contact';
+        con.AccountId = acc.id;
+        con.Address__c = add.id;
+        con.MailingCountry = 'Singapore';
+        con.MailingCity = 'Singapore';
+        con.MailingStreet = '123 Test Street';
+        con.MailingPostalCode = '1000';
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
+        con.Address__c = add.id;
+        con.Office_Number__c = '5629143';
+        con.HomePhone__c = '2341234';
+        con.Mobile_Number__c = '09151541542';
+        con.Fax__c = '1234567';
+        con.NRIC__c='test';
+        sObjectMap.put('Contact', con);
+        Database.insert(con);
+        
+        Order__c order = TestDataFactory.createOrder(1)[0];      
+        order.Account__c = acc.id;
+        order.Delivery_Charge__c = 20; 
+        order.Subscriber_Charge__c = 200; 
+        order.Recipient_Contact__c = con.id;
+        order.Billing_Contact__c = con.id;
+        order.Billing_Account_Creation_Mode__c = GlobalVariableClass.CREATE_NEW_BILLACC;
+        order.Create_ARMS_Customer_Account__c = true;
+        order.Create_ARMS_Account_Only__c = false;
+        sObjectMap.put('Order__c', order);
+        Database.insert(order);
+        
+        Zuora__CustomerAccount__c zCus = TestDataFactory.createBillingAccount(1)[0];
+        zCus.Name = 'April';
+        zCus.Zuora__Account__c = acc.Id;
+        zCus.Billing_Contact__C = con.id;
+        zCus.Other_PaymentMethod__c= 'Invoice';
+        sObjectMap.put('Zuora__CustomerAccount__c', zCus);
+        Database.insert(zCus);
+   
+             
+        Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
+            zSub.Contact__c = con.Id;
+            zSub.Zuora__Account__c = acc.id;
+            zSub.Zuora__CustomerAccount__c = zCus.Id;
+            zSub.Order_Number_1__c = order.Id;
+            zSub.Classification__c = 'secret';
+        sObjectMap.put('Zuora__Subscription__c', zSub);
+        Database.insert(zSub);
+        
+        
+                      
+        Set<id> orderIdSet = new Set<id>();
+        orderIdSet.add(order.Id);
+        
+            
+ //    Zuora__CustomerAccount__c zCusAcc = (Zuora__CustomerAccount__c) sObjectMap.get('Zuora__CustomerAccount__c');
+                
+ //     Database.update(zCusAcc);
+    
+            List<Zuora__CustomerAccount__c> edtCustomerList = new List<Zuora__CustomerAccount__c>();
+            edtCustomerList.add(zCus);
+            
+            Test.startTest();    
+                ARMS_CreateAndUpdate cau = new ARMS_CreateAndUpdate();
+                cau.updateCustomer(edtCustomerList);
+            Test.stopTest();
+            System.assertNotEquals(null,cau);
+        }catch(Exception e){}
+    }
+     static testmethod void cover_updateCustomer2(){
+        try{
+             Map<String, sObject> sObjectMap = null;
+        sObjectMap = new Map<String, sObject>();
+
+        //Create Address
+        RecordType recType = [SELECT Id, DeveloperName from RecordType WHERE sObjectType = 'Address__c' and DeveloperName = 'Overseas'];
+        
+        Address__c add = TestDataFactory.createAddress(1)[0];
+        add.RecordTypeId = recType.id;
+        add.Name = 'Test Address';
+        add.Legacy_Created_By__c = 'Creator';
+        add.Legacy_Created_Date__c = String.valueOf(date.today() - 3);
+        add.Legacy_Updated_By__c = 'Modifier';
+        add.Legacy_Updated_Date__c = String.valueOf(date.today()); 
+        add.Block_House_Number__c = '22';
+        add.Level_Number__c = '03';
+        add.Unit_Number__c = '13';
+        sObjectMap.put('Address__c', add);
+        Database.insert(add);       
+        
+        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        acc.Name = 'Test Account';
+        acc.AccountNumber = '';
+        /*acc.GST_Out_of_Scope__c=true;
+        acc.Staff_ID__c='Staff';*/
+        sObjectMap.put('Account', acc);
+        Database.insert(acc);        
+           
+        Contact con = TestDataFactory.createContact(1)[0];
+        con.FirstName = 'Testtewtetwetewrwerwewer';
+        con.LastName = 'Contacttewtetwetrwerwer';
         con.AccountId = acc.id;
         con.Address__c = add.id;
         con.MailingCountry = 'Singapore';
@@ -132,12 +248,226 @@ public class ARMS_CreateAndUpdate_Test {
         }catch(Exception e){}
     }
     
+    static testmethod void cover_updateCustomer3(){
+        try{
+             Map<String, sObject> sObjectMap = null;
+        sObjectMap = new Map<String, sObject>();
+
+        //Create Address
+        RecordType recType = [SELECT Id, DeveloperName from RecordType WHERE sObjectType = 'Address__c' and DeveloperName = 'Internal'];
+        
+        Address__c add = TestDataFactory.createAddress(1)[0];
+        add.RecordTypeId = recType.id;
+        add.Name = 'Test Address';
+        add.Legacy_Created_By__c = 'Creator';
+        add.Legacy_Created_Date__c = String.valueOf(date.today() - 3);
+        add.Legacy_Updated_By__c = 'Modifier';
+        add.Legacy_Updated_Date__c = String.valueOf(date.today()); 
+        add.Block_House_Number__c = '22';
+        add.Level_Number__c = '03';
+        add.Unit_Number__c = '13';
+        sObjectMap.put('Address__c', add);
+        Database.insert(add);       
+        
+        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        acc.Name = 'Test Account';
+        acc.AccountNumber = '';
+       
+        sObjectMap.put('Account', acc);
+        Database.insert(acc);        
+           
+        Contact con = TestDataFactory.createContact(1)[0];
+        con.FirstName = 'Test';
+        con.LastName = 'Contact';
+        con.AccountId = acc.id;
+        con.Address__c = add.id;
+        con.MailingCountry = 'Singapore';
+        con.MailingCity = 'Singapore';
+        con.MailingStreet = '123 Test Street';
+        con.MailingPostalCode = '1000';
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
+        con.Address__c = add.id;
+        con.Office_Number__c = '5629143';
+        con.HomePhone__c = '2341234';
+        con.Mobile_Number__c = '09151541542';
+        con.Mobile_Number_2__c='09151541542';
+        con.Fax__c = '1234567';
+        sObjectMap.put('Contact', con);
+        Database.insert(con);
+        
+        Order__c order = TestDataFactory.createOrder(1)[0];      
+        order.Account__c = acc.id;
+        order.Delivery_Charge__c = 20; 
+        order.Subscriber_Charge__c = 200; 
+        order.Recipient_Contact__c = con.id;
+        order.Billing_Contact__c = con.id;
+        order.Billing_Account_Creation_Mode__c = GlobalVariableClass.CREATE_NEW_BILLACC;
+        order.Create_ARMS_Customer_Account__c = true;
+        order.Create_ARMS_Account_Only__c = false;
+        sObjectMap.put('Order__c', order);
+        Database.insert(order);
+        
+        Zuora__CustomerAccount__c zCus = TestDataFactory.createBillingAccount(1)[0];
+        zCus.Name = 'April';
+        zCus.Zuora__Account__c = acc.Id;
+        zCus.Billing_Contact__C = con.id;
+        zCus.Other_PaymentMethod__c= 'Invoice';
+        sObjectMap.put('Zuora__CustomerAccount__c', zCus);
+        Database.insert(zCus);
+   
+             
+        Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
+            zSub.Contact__c = con.Id;
+            zSub.Zuora__Account__c = acc.id;
+            zSub.Zuora__CustomerAccount__c = zCus.Id;
+            zSub.Order_Number_1__c = order.Id;
+            zSub.Classification__c = 'secret';
+        sObjectMap.put('Zuora__Subscription__c', zSub);
+        Database.insert(zSub);
+        
+        
+                      
+        Set<id> orderIdSet = new Set<id>();
+        orderIdSet.add(order.Id);
+        
+            
+ //    Zuora__CustomerAccount__c zCusAcc = (Zuora__CustomerAccount__c) sObjectMap.get('Zuora__CustomerAccount__c');
+                
+ //     Database.update(zCusAcc);
+    
+            List<Zuora__CustomerAccount__c> edtCustomerList = new List<Zuora__CustomerAccount__c>();
+            edtCustomerList.add(zCus);
+            
+            Test.startTest();    
+                ARMS_CreateAndUpdate cau = new ARMS_CreateAndUpdate();
+                cau.updateCustomer(edtCustomerList);
+            Test.stopTest();
+            System.assertNotEquals(null,cau);
+        }catch(Exception e){}
+    }
+    
+    static testmethod void cover_updateCustomer4(){
+        try{
+             Map<String, sObject> sObjectMap = null;
+        sObjectMap = new Map<String, sObject>();
+
+        //Create Address
+        RecordType recType = [SELECT Id, DeveloperName from RecordType WHERE sObjectType = 'Address__c' and DeveloperName = 'Local'];
+        
+        Address__c add = TestDataFactory.createAddress(1)[0];
+        add.RecordTypeId = recType.id;
+        add.Name = 'Test Address';
+        add.Legacy_Created_By__c = 'Creator';
+        add.Legacy_Created_Date__c = String.valueOf(date.today() - 3);
+        add.Legacy_Updated_By__c = 'Modifier';
+        add.Legacy_Updated_Date__c = String.valueOf(date.today()); 
+        add.Block_House_Number__c = '22';
+        add.Level_Number__c = '03';
+        add.Unit_Number__c = '13';
+        sObjectMap.put('Address__c', add);
+        Database.insert(add);       
+        
+        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        acc.Name = 'Test Account';
+        acc.AccountNumber = '';
+        acc.GST_Out_of_Scope__c=true;
+        acc.Staff_ID__c='Staff';
+        sObjectMap.put('Account', acc);
+        Database.insert(acc);        
+           
+        Contact con = TestDataFactory.createContact(1)[0];
+        con.FirstName = 'Test';
+        con.LastName = 'Contact';
+        con.AccountId = acc.id;
+        con.Address__c = add.id;
+        con.MailingCountry = 'Singapore';
+        con.MailingCity = 'Singapore';
+        con.MailingStreet = '123 Test Street';
+        con.MailingPostalCode = '1000';
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
+        con.Address__c = add.id;
+        con.Office_Number__c = '5629143';
+        con.HomePhone__c = '2341234';
+        con.Mobile_Number__c = '09151541542';
+        con.Fax__c = '1234567';
+        con.NRIC__c=null;
+        con.Passport__c='PASS';
+        sObjectMap.put('Contact', con);
+        Database.insert(con);
+        
+        Order__c order = TestDataFactory.createOrder(1)[0];      
+        order.Account__c = acc.id;
+        order.Delivery_Charge__c = 20; 
+        order.Subscriber_Charge__c = 200; 
+        order.Recipient_Contact__c = con.id;
+        order.Billing_Contact__c = con.id;
+        order.Billing_Account_Creation_Mode__c = GlobalVariableClass.CREATE_NEW_BILLACC;
+        order.Create_ARMS_Customer_Account__c = true;
+        order.Create_ARMS_Account_Only__c = false;
+        sObjectMap.put('Order__c', order);
+        Database.insert(order);
+        
+        Zuora__CustomerAccount__c zCus = TestDataFactory.createBillingAccount(1)[0];
+        zCus.Name = 'April';
+        zCus.Zuora__Account__c = acc.Id;
+        zCus.Billing_Contact__C = con.id;
+        zCus.Other_PaymentMethod__c= 'Invoice';
+        sObjectMap.put('Zuora__CustomerAccount__c', zCus);
+        Database.insert(zCus);
+   
+             
+        Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
+            zSub.Contact__c = con.Id;
+            zSub.Zuora__Account__c = acc.id;
+            zSub.Zuora__CustomerAccount__c = zCus.Id;
+            zSub.Order_Number_1__c = order.Id;
+            zSub.Classification__c = 'secret';
+        sObjectMap.put('Zuora__Subscription__c', zSub);
+        Database.insert(zSub);
+        
+        
+                      
+        Set<id> orderIdSet = new Set<id>();
+        orderIdSet.add(order.Id);
+        
+            
+ //    Zuora__CustomerAccount__c zCusAcc = (Zuora__CustomerAccount__c) sObjectMap.get('Zuora__CustomerAccount__c');
+                
+ //     Database.update(zCusAcc);
+    
+            List<Zuora__CustomerAccount__c> edtCustomerList = new List<Zuora__CustomerAccount__c>();
+            edtCustomerList.add(zCus);
+            
+            Test.startTest();    
+                ARMS_CreateAndUpdate cau = new ARMS_CreateAndUpdate();
+                cau.updateCustomer(edtCustomerList);
+            Test.stopTest();
+            System.assertNotEquals(null,cau);
+        }catch(Exception e){}
+    }
+    
+    
+    
     static testmethod void cover_updateAccount(){
         try{
             Map<String, sObject> sObjectMap = setAllData();
         
             Zuora__CustomerAccount__c zCusAcc = (Zuora__CustomerAccount__c) sObjectMap.get('Zuora__CustomerAccount__c');
                 zCusAcc.Other_PaymentMethod__c= 'Invoice';
+                zCusAcc.Payment_Mode__c ='Other';
+                zCusAcc.Zuora__DefaultPaymentMethod__c='Other';
+                zCusAcc.Other_PaymentMethod__c = 'Invoice';
+                zCusAcc.ARMS_Customer_Number__c = '1';
+                zCusAcc.ARMS_Business_Profile__c = 'NORM';
+                zCusAcc.ARMS_Account_Number__c = '1';
+                zCusAcc.ARMS_ID__c='ARMSID';
+                zCusAcc.Credit_Limit_Internal__c=1000000;
+                zCusAcc.Approved_Debt_Exposure_Amount__c=10000;
+                zCusAcc.ARMS_Debt_Management__c='NORM';
+                zCusAcc.Business_Sector__c='Sector';
+                zCusAcc.SOA_Grouping__c='SOAGroup';
             Database.update(zCusAcc);
             
             List<Zuora__CustomerAccount__c> updInitialBillAccList = new List<Zuora__CustomerAccount__c>();
@@ -290,7 +620,16 @@ public class ARMS_CreateAndUpdate_Test {
         
         Map<String, sObject> sObjectMap = null;
         sObjectMap = new Map<String, sObject>();
-
+        
+        Singpost_Address__c singAdd = new Singpost_Address__c();
+        singAdd.Name = 'Address';
+        singAdd.Address_Type__c='H';
+        singAdd.Street_Name__c = 'Street';
+        singAdd.House_Block_Number__c='70';
+        singAdd.Number_of_Units__c=100;
+        singAdd.SingPost_Key__c='100050|50';
+        singAdd.Street_Code__c='TEL0005';
+        Database.insert(singAdd);     
         //Create Address
         RecordType recType = [SELECT Id, DeveloperName from RecordType WHERE sObjectType = 'Address__c' and DeveloperName = 'Local'];
         
@@ -304,6 +643,7 @@ public class ARMS_CreateAndUpdate_Test {
         add.Block_House_Number__c = '22';
         add.Level_Number__c = '03';
         add.Unit_Number__c = '13';
+        add.Postal_Code__c=singAdd.Id;
         sObjectMap.put('Address__c', add);
         Database.insert(add);       
         
@@ -651,8 +991,8 @@ public class ARMS_CreateAndUpdate_Test {
     
     
     
-    static testmethod void cover_updateAccountNotNull(){
-        try{
+    static testmethod void cover_updateAccountNotNull(){  
+        try{ 
             Map<String, sObject> sObjectMap = null;
         sObjectMap = new Map<String, sObject>();
 
@@ -743,5 +1083,129 @@ public class ARMS_CreateAndUpdate_Test {
             
         }catch(Exception e){}
     }
+    
+   /* static testmethod void cover_updateAccountNotNull2(){
+        try{ 
+            Map<String, sObject> sObjectMap = null;
+        sObjectMap = new Map<String, sObject>();
+
+        //Create Address
+                  
+        Address__c add = TestDataFactory.createAddress(1)[0];
+        RecordType recordType = [SELECT ID, DeveloperName FROM RecordType WHERE sObjectType = 'Address__c' AND DeveloperName ='Overseas' LIMIT 1];
+        add .RecordTypeid = recordType.id;
+        add .Level_Number__c = '10';
+        add .Unit_Number__c = '10';
+        add .Address_1__c = 'Asiatown';
+        add .Address_2__c = 'Ebloc2';
+        add .Address_3__c = 'IT Park';
+        add .Address_4__c = 'Lahug';    
+        sObjectMap.put('Address__c', add);
+        Database.insert(add);
+        
+        Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
+        acc.Name = 'Test Account';
+        acc.AccountNumber = '';
+        acc.Staff_ID__c = 'StaffId';
+        sObjectMap.put('Account', acc);
+        Database.insert(acc);        
+           
+        Contact con = TestDataFactory.createContact(1)[0];
+        con.FirstName = 'Test';
+        con.LastName = 'Contact';
+        con.AccountId = acc.id;
+        con.Address__c = add.id;
+        con.MailingCountry = 'Singapore';
+        con.MailingCity = 'Singapore';
+        con.MailingStreet = '123 Test Street';
+        con.MailingPostalCode = '1000';
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
+        con.Address__c = add.id;
+        con.NRIC__c = 'T1234567R';
+        sObjectMap.put('Contact', con);
+        Database.insert(con);
+        
+        Order__c order = TestDataFactory.createOrder(1)[0];      
+        order.Account__c = acc.id;
+        order.Delivery_Charge__c = 20; 
+        order.Subscriber_Charge__c = 200; 
+        order.Recipient_Contact__c = con.id;
+        order.Billing_Contact__c = con.id;
+        order.Billing_Account_Creation_Mode__c = GlobalVariableClass.CREATE_NEW_BILLACC;
+        order.Create_ARMS_Customer_Account__c = true;
+        order.Create_ARMS_Account_Only__c = false;
+        sObjectMap.put('Order__c', order);
+        Database.insert(order);
+        
+        Zuora__CustomerAccount__c zAcc = TestDataFactory.createBillingAccount(1)[0];
+        zAcc.Name = 'April';
+        zAcc.Zuora__Account__c = acc.Id;
+        zAcc.Billing_Contact__C = con.id;
+        zAcc.Billing_Type__c = 'Prepaid';
+        zAcc.ARMS_Customer_Number__c = '1';
+        zAcc.ARMS_Business_Profile__c = 'NORM';
+        zAcc.ARMS_Account_Number__c = '1';
+        sObjectMap.put('Zuora__CustomerAccount__c', zAcc);
+        Database.insert(zAcc);
+        
+        Zuora__CustomerAccount__c zCus = [SELECT Id, Name FROM Zuora__CustomerAccount__c WHERE Id=:zAcc.Id Limit 1];
+        zCus.Name = 'April';
+        zCus.Zuora__Account__c = acc.Id;
+        zCus.Billing_Contact__C = con.id;
+        zCus.Billing_Type__c = 'Prepaid';
+        zCus.Payment_Mode__c ='Other';
+        zCus.Zuora__DefaultPaymentMethod__c='Other';
+        zCus.Other_PaymentMethod__c = 'Invoice';
+        zCus.ARMS_Customer_Number__c = '1';
+        zCus.ARMS_Business_Profile__c = 'NORM';
+        zCus.ARMS_Account_Number__c = '1';
+        zCus.ARMS_ID__c='ARMSID';
+        zCus.Credit_Limit_Internal__c=1000000;
+        zCus.Approved_Debt_Exposure_Amount__c=10000;
+        zCus.ARMS_Debt_Management__c='NORM';
+        zCus.Business_Sector__c='Sector';
+        zCus.SOA_Grouping__c='SOAGroup';
+        sObjectMap.put('Zuora__CustomerAccount__c', zCus);
+        Database.update(zCus);
+   
+             
+        Zuora__Subscription__c zSub = TestDataFactory.createSubscription(1)[0];
+            zSub.Contact__c = con.Id;
+            zSub.Zuora__Account__c = acc.id;
+            zSub.Zuora__CustomerAccount__c = zCus.Id;
+            zSub.Order_Number_1__c = order.Id;
+            zSub.Classification__c = 'secret'; 
+        sObjectMap.put('Zuora__Subscription__c', zSub);
+        Database.insert(zSub);
+            
+            List<Zuora__CustomerAccount__c> updInitialBillAccList = new List<Zuora__CustomerAccount__c>();
+                updInitialBillAccList.add(zCus);
+        
+            BT_CO_ARMS_UpdateAccountBatchFile__c BTupdatebatchfile = new BT_CO_ARMS_UpdateAccountBatchFile__c();
+            BTupdatebatchfile.Account_Number__c = '1';
+            BTupdatebatchfile.CCRID__c = '1';
+            insert BTupdatebatchfile;
+
+            Test.startTest();
+                ARMS_CreateAndUpdate cau = new ARMS_CreateAndUpdate();
+                cau.updateAccount(updInitialBillAccList);
+            Test.stopTest();
+            System.assertNotEquals(null,cau);
+            
+        }catch(Exception e){}
+    }*/
+    
+    /* public class TestCallout implements HttpCalloutMock {    
+        public HTTPResponse respond(HTTPRequest req) {                
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-type','text/xml; charset=utf-8');
+            res.setBody('{"Id":"003i000002Ti9sC"}');
+            return res;
+        }
+        
+    }*/
+   
+    
     
 }

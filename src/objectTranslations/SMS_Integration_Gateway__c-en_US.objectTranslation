@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SMS Integration Gateway</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SMS Integration Gateway</value>
+    </caseValues>
+    <fields>
+        <label><!-- SMS Country Code --></label>
+        <name>SMS_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMS Gateway ID --></label>
+        <name>SMS_Gateway_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMS Gateway URL --></label>
+        <name>SMS_Gateway_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMS Password --></label>
+        <name>SMS_Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMS Type --></label>
+        <name>SMS_Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

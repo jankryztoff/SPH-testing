@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Invoice Line Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Invoice Line Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Accounting Code --></label>
+        <name>Accounting_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Applied To Invoice Item ID --></label>
+        <name>Applied_To_Invoice_Item_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- The amount being charged to the invoice item. This amount doesn’t include taxes UNLESS the charge’s tax mode is inclusive. --></help>
+        <label><!-- Charge Amount --></label>
+        <name>Charge_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge Date --></label>
+        <name>Charge_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge Description --></label>
+        <name>Charge_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge ID --></label>
+        <name>Charge_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge Name --></label>
+        <name>Charge_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge Number --></label>
+        <name>Charge_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By ID --></label>
+        <name>Created_By_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ID --></label>
+        <name>ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice ID --></label>
+        <name>Invoice_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processing Type --></label>
+        <name>Processing_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Description --></label>
+        <name>Product_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product ID --></label>
+        <name>Product_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rate Plan Charge ID --></label>
+        <name>Rate_Plan_Charge_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Revenue Recognition Code --></label>
+        <name>Revenue_Recognition_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Revenue Recognition Start Date --></label>
+        <name>Revenue_Recognition_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Revenue Recognition Trigger Condition --></label>
+        <name>Revenue_Recognition_Trigger_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- SKU --></label>
+        <name>SKU__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service End Date --></label>
+        <name>Service_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Start Date --></label>
+        <name>Service_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription ID --></label>
+        <name>Subscription_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Number --></label>
+        <name>Subscription_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Invoice Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tax Amount --></label>
+        <name>Tax_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Code --></label>
+        <name>Tax_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Exempt Amount --></label>
+        <name>Tax_Exempt_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Mode --></label>
+        <name>Tax_Mode__c</name>
+    </fields>
+    <fields>
+        <label><!-- UOM --></label>
+        <name>UOM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Price --></label>
+        <name>Unit_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Updated By ID --></label>
+        <name>Updated_By_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Updated Date --></label>
+        <name>Updated_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

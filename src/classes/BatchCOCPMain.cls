@@ -7,16 +7,25 @@
     This batch will auto-schedule itself few minutes later to process the remaining. This is to overcome the Zuora API Limit
  * History: 19/04/2016 [D-4382] Wenjun : Changes for supporting Daily / Monthly execution
  * History: 20/04/2016 [D-4806] Wenjun : Add Job Run Date parameter
+ * History: 20/06/2016 [PD-0586] Jessa Trangia: Added batch job id 
  */
  
 global class BatchCOCPMain implements Database.Batchable<sObject>, Database.AllowsCallouts {    
     
     global final String SUB_TYPE_PUB = GlobalVariableClass.SUBSCRIPTION_TYPE_PUBLICATION;
     global Date jobRunDate;
+    global ID batchjobID;
     
+    /*
     //Contructor for Full Run
     global BatchCOCPMain(Date executionDay){
         jobRunDate = executionDay;
+    }
+    */
+    //Contructor for Full Run
+    global BatchCOCPMain(Date executionDay, ID batchID){
+        jobRunDate = executionDay;
+        batchjobID = batchID;
     }
     
     global String getQueryString(){
@@ -83,11 +92,19 @@ global class BatchCOCPMain implements Database.Batchable<sObject>, Database.Allo
     global void finish(Database.BatchableContext BC) {   
         //Query for pending updates - this job will auto-schedule itself few minutes later if there is remaining 
         sObject[] lstPendingSubs = Database.query(getQueryString());
+        
         //Schedule 5 minutes Batch Job to overcome Zuora Call Limit
         if(lstPendingSubs != null && !lstPendingSubs.isEmpty())
         {
-            BatchCOCPMain batch = new BatchCOCPMain(jobRunDate);
+            BatchCOCPMain batch = new BatchCOCPMain(jobRunDate, batchjobID);
             System.scheduleBatch(batch, 'Mass Change Cover Price', 1, 10);
         }
+        //start 20-June-2016 Added by Jessa for PD-0586 
+        else{ 
+            
+            BatchJobHelper.updateJobStatus(batchjobId); 
+        } 
+        //end 20-June-2016 Added by Jessa for PD-0586 
+
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__CustomerAccount__c$Zuora__External_Id__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Legacy_Billing_Account_Id__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Zuora__DefaultPaymentMethod__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Other_PaymentMethod__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c$Other_Payment_Method__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Legacy_Billing_Account_Id__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Zuora__DefaultPaymentMethod__c</column>
+            <operator>contains</operator>
+            <value>Other</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__CustomerAccount__c$Other_PaymentMethod__c</column>
+            <operator>equals</operator>
+            <value>Internal Charge</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Internal Charge Payment Method</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Billing_Accounts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__CustomerAccount__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

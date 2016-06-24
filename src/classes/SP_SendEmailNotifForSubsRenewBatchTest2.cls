@@ -424,7 +424,7 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
              counter++;
          }
          database.insert(zp);
-         
+         test.startTest();
          zqu__ProductRatePlan__c prp = TestDataFactory.createProductRatePlan(1)[0];
          prp.zqu__ZProduct__c = zp[0].Id;
          database.insert(prp);
@@ -435,7 +435,7 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
          database.insert(packItem);
          
          counter=0;
-         List<Zuora__Subscription__c> subs = TestDataFactory.createSubscription(200);
+         List<Zuora__Subscription__c> subs = TestDataFactory.createSubscription(5);
          for(Zuora__Subscription__c sub: subs){
              sub.is1stNotifEmailSent__c = false;
              sub.Zuora__SubscriptionEndDate__c = System.Today().addDays(42);
@@ -514,11 +514,11 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
          Set<id> renewalSubsId = new Set<id>();
          renewalSubsId.add(subs[0].id);
          
-         test.startTest();
+         
              SP_SendEmailNotifForSubsRenewalsBatch batch = new SP_SendEmailNotifForSubsRenewalsBatch();
              database.executeBatch(batch, 200);
          test.stopTest();
-     }
+    }
 
      //jurna
       static testMethod void testSP_SendEmailNotifForSubsRenewalsBatch2(){
@@ -2311,7 +2311,7 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
          database.insert(packItem);
          
          counter=0;
-         List<Zuora__Subscription__c> subs = TestDataFactory.createSubscription(200);
+         List<Zuora__Subscription__c> subs = TestDataFactory.createSubscription(5);
          for(Zuora__Subscription__c sub: subs){
              sub.is1stNotifEmailSent__c = false;
              sub.Zuora__SubscriptionEndDate__c = System.Today().addDays(42);
@@ -2347,6 +2347,7 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
              }
              counter++;
          }
+          test.startTest();
          database.insert(subs);
          
          Order__c ord = TestDataFactory.createOrder(1)[0];
@@ -2387,13 +2388,13 @@ public class SP_SendEmailNotifForSubsRenewBatchTest2{
          Set<id> renewalSubsId = new Set<id>();
          renewalSubsId.add(subs[0].id);
          
-         test.startTest();
+        
             
              SP_SendEmailNotifForSubsRenewalsBatch batch2 = new SP_SendEmailNotifForSubsRenewalsBatch(renewalSubsId, firstNotifDate);
              database.executeBatch(batch2, 200);
              
          test.stopTest();
-     }
+    }
 
     static User createUser() {
         UserRole usrRole = [SELECT id, Name from UserRole LIMIT 1];

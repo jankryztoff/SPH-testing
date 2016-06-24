@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Postal_Zone__c.Singpost_Addresses__r$Name</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Postal_Zone__c.Singpost_Addresses__r$Number_of_Units__c</field>
+    </columns>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Postal_Zone__c$Postal_Sector__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Postal Sector with numbe of units</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Postal_Sector_with_Singpost_Address__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Postal_Zone__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

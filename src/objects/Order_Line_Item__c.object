@@ -1,0 +1,1734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case__r.Account.Name</formula>
+        <label>Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Add_On_Package_Product_Platform__c</fullName>
+        <externalId>false</externalId>
+        <label>Add On Package Product Platform</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Add_On_Package_Product_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Add On Package Product Sub Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Add_On_Package_Subscription_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Add On Package Subscription Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Addon_Package__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Addon Package</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Package__c.Package_Type__c</field>
+                <operation>equals</operation>
+                <value>Add On</value>
+            </filterItems>
+            <filterItems>
+                <field>Package__c.Eligible_Product_Family_for_Add_On_Pack__c</field>
+                <operation>contains</operation>
+                <valueField>$Source.Main_Package_Product_Family__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Package__c.Billing_Type__c</field>
+                <operation>contains</operation>
+                <valueField>$Source.Main_Package_Billing_Type__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Order Line Items (Addon Package ID)</relationshipLabel>
+        <relationshipName>Order_Line_Items_Vendor1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Admin_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Admin Charge</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_To_Refund__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount To Refund</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Asia1_Creation_Mode__c</fullName>
+        <description>Indicates whether the Asia1 creation is Individual or Bulk. This is use in Order Entry functionality.</description>
+        <externalId>false</externalId>
+        <label>Asia1 Creation Mode</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Individual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bulk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Asia_1_creation_mode__c</fullName>
+        <externalId>false</externalId>
+        <label>Asia 1 creation mode</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Individual</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bulk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Renew__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Auto Renew</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Based_Order_Line_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This lookup field is applicable for Change of Subscription process. This contains the Order Line Item of the Subscription being changed. This is used when getting the Classification, Sub-classification and Reason Code.</description>
+        <externalId>false</externalId>
+        <label>Based Order Line Item</label>
+        <referenceTo>Order_Line_Item__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Based_Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Based_Publication_Product_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Based Publication Product Category</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>COS_Urgent_Request__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>COS Urgent Request</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Order Line Items (Direct)</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Charity__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Charity</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Classification__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Order__r.Order_Type__c = &apos;Start&apos;, Vendor_Conversion__c = TRUE), &apos;Vendor Conversion&apos;, (IF(Order__r.Order_Type__c = &apos;Start&apos;, &apos;New&apos;, (IF(Order__r.Order_Type__c = &apos;Renewal&apos;, &apos;Renewed&apos;, (IF(CONTAINS(Order__r.Order_Type__c, &apos;Change of Subscription&apos;), &apos;Change&apos;, &apos;N/A&apos;)))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Classification</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DTL_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>DTL Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delivered_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivered By</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Vendor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mailing Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Direct_Sub_Delivery_Method__c</fullName>
+        <description>This is mapped to Publication Direct Delivery Method upon creation of the Order Line Item. Use in retrieving an Order Line Item for update in Start Subscription Order form to avoid query the associated Objects.</description>
+        <externalId>false</externalId>
+        <label>Direct Sub Delivery Method</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Vendor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mailing Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vendor or Mailing Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Earliest_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Earliest Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Earliest_Stop_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Earliest Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Date__c</fullName>
+        <description>Created for Change of Subscription.</description>
+        <externalId>false</externalId>
+        <label>Effective Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Fee_Override_Amount__c</fullName>
+        <description>Overridden Admin Charge amount</description>
+        <externalId>false</externalId>
+        <label>Fee Override Amount</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Fee_Override__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Fee Override</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Fee_Waiver__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Fee Waiver</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Generate_Invoice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Generate Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Gift1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift1</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gift2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift2</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Order Line Items (Gift2)</relationshipLabel>
+        <relationshipName>Order_Line_Items1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gift3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift3</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Order Line Items (Gift3)</relationshipLabel>
+        <relationshipName>Order_Line_Items2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gl_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Gl Code</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Grace_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Grace Allocation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Grace_Days__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Grace Days</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsEOMCycle__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Today() &lt;= 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() ), 12, 31 ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ) - 1 ) 
+&amp;&amp; 
+Today() &gt; 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() ), 12, (31 - $Setup.Days_Before_EOM__c.Number_Of_Days__c) ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ) - ($Setup.Days_Before_EOM__c.Number_Of_Days__c +1) ),True, False)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IsEOMCycle?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_All_In_One__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is All In One</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Digital__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicate if the associated package is digital. This is use in Order Entry functionality.</description>
+        <externalId>false</externalId>
+        <label>Is Digital</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Downgrade__c</fullName>
+        <description>This field will be auto-populated thru field update.</description>
+        <externalId>false</externalId>
+        <label>Is Downgrade</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Qty_Increase__c</fullName>
+        <description>This field will be auto populated thru field update.</description>
+        <externalId>false</externalId>
+        <label>Is Qty Increase</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Billing_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Billing Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Full Prepaid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Prepaid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Postpaid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Frequency__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Frequency</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Default</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mon - Fri</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mon - Sat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sat - Sun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fri - Sun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_ID__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Main Package ID</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Order Line Items (Main Package ID)</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Period__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Period</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Product_Family__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Product Family</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Default</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Product_Platform__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Product Platform</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Product_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Product Sub Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Sub Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Termed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Evergreen</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Subscription_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Subscription Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Main_Package_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Main Package Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Base</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discount</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Add On</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bundle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>New_Contract_Period__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>New Contract Period is required if a Promotion is being selected for creating the Order.</inlineHelpText>
+        <label>New Contract Period</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Payment_Mode__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Created for Change of Subscription</description>
+        <externalId>false</externalId>
+        <label>New Payment Mode</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>New_Quantity__c</fullName>
+        <description>Created for Change of Subscription.</description>
+        <externalId>false</externalId>
+        <label>New Quantity</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_GIfts__c</fullName>
+        <description>This is to identify if an order line item has a gift tied with it.</description>
+        <externalId>false</externalId>
+        <label>Number of GIfts</label>
+        <summaryForeignKey>Order_Line_Item_Gift__c.Order_Line_Item__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Old_Subscription__c</fullName>
+        <externalId>false</externalId>
+        <label>Old Subscription</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Online_Order_Number__c</fullName>
+        <externalId>true</externalId>
+        <label>Online Order Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Line_Item_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Line Item ID</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Line_Item_Legacy_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Order Line Item Legacy Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Line_Item__c</fullName>
+        <displayFormat>A-{000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Order Line Item #</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items_Direct</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Override_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Override Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>PO_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>PO Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Order Line Items (Parent Account)</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Penalty_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Penalty Charge</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Pending_Copies_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Pending Copies 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pending_Copies__c</fullName>
+        <description>Pending copies for refund</description>
+        <externalId>false</externalId>
+        <label>Pending Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ph_d__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Ph (d)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Ph_e__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Ph (e)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Postage_Charge__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Postage Charge</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Previous_Qty__c</fullName>
+        <description>This is applicable to Change of Subscription.</description>
+        <externalId>false</externalId>
+        <label>Previous Qty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion_Contract_Period__c</fullName>
+        <externalId>false</externalId>
+        <label>Promotion Contract Period</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Promotion ID</label>
+        <referenceTo>Promotion__c</referenceTo>
+        <relationshipLabel>Order Line Items (Vendor)</relationshipLabel>
+        <relationshipName>Order_Line_Items_Vendor</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Publication_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Publication 1</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publication_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Publication 2</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publication_Product_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Publication Product Category</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Qty__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>Updated Length  from 16,2 (FDS)  to 5,0 (Sample Tool tip from Eugene)</description>
+        <externalId>false</externalId>
+        <label>Qty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reason_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipient_Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order__r.Recipient_Contact__r.Address__r.Postal_Code__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Recipient Postal Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Stop_Request_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Sub_classification__c</fullName>
+        <description>This field will be auto-populated thru  trigger</description>
+        <externalId>false</externalId>
+        <label>Sub-classification</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscribed_as__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscribed as</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Upgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Buy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vendor Conversion</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Add On</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Correction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misc Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order__r.Subscription__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subscription Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Name__c</fullName>
+        <externalId>true</externalId>
+        <label>Subscription Name</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Suppress_Notification_Stop__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suppress Notification (Stop)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Suppress_Renewal_and_Reminder_Letter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suppress Renewal and Reminder Letter</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Suppress_Vendor_Start_notice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suppress Vendor Start notice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Supressed_Acknowledgement_Letter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Supressed Acknowledgement Letter</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Supressed_Grace_Allocation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Supressed Grace Allocation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Supressed_Vendor_Notification_Converted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Supressed Vendor Notification(Converted)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Supressed_Vendor_Notification_New_Sub__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suppress Vendor Start Notification</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Term_Length__c</fullName>
+        <externalId>false</externalId>
+        <label>Term Length (Mth)</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Term_is_discussed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Term is discussed?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Terminating_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Terminating Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Package - Upgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Package - Downgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Package - Misc. Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change to another pub</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - Credit card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - PayPal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - Invoice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Not reading</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Moving overseas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Service / Delivery issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Digital / apps issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Policy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - No reason given</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reduction in quantity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Total_Gift_Price__c</fullName>
+        <description>System calculated based on the summation of the related Gifts Price</description>
+        <externalId>false</externalId>
+        <label>Total Gift Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Postage_Charge__c</fullName>
+        <externalId>false</externalId>
+        <formula>Term_Length__c *  Postage_Charge__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Postage Charge</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Subscription_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Main_Package_Subscription_Rate__c +  Add_On_Package_Subscription_Rate__c) *  Qty__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subscription Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Urgent_Stop__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[KCampang 9/29/2014] Created field for Stop Subscription for Urgent Stop</description>
+        <externalId>false</externalId>
+        <label>Urgent Stop?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Urgent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Start_Date__c &lt; Earliest_Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Urgent?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vendor_Conversion__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Vendor Conversion?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vendor_Mailing_Agent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vendor/Mailing Agent</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <filterItems>
+                <field>Account.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Vendor</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Mailing Agent</value>
+            </filterItems>
+            <infoMessage>Select Vendor or Mailing Agent Account.</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items_Direct</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Vendor_Subscription_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vendor Subscription ID</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Parent_Account__c</field>
+                <operation>equals</operation>
+                <valueField>Subscription_Vendor__c.Account__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Subscription_Vendor__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Order Line Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Delivered_By__c</columns>
+        <columns>Order__c</columns>
+        <columns>Recipient_Postal_Code__c</columns>
+        <columns>Vendor_Mailing_Agent__c</columns>
+        <columns>Case__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>OLI{0000000000}</displayFormat>
+        <label>Order Line Item ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Order Line Items</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Main_Package_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>End_Date__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Main_Package_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>End_Date__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Main_Package_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Start_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>End_Date__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Main_Package_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>End_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ChangeOfSubStartDate</fullName>
+        <active>true</active>
+        <description>Validation for Change of Subscription Start Date: 
+- Baskar 03/31 - start date for change of subscription should not earlier than tomorrow
+UD-0634</description>
+        <errorConditionFormula>AND
+( 
+ISNEW(),
+CONTAINS(Order__r.Order_Type__c, &quot;Change of Subscription&quot;),
+Start_Date__c &lt;= TODAY()
+)</errorConditionFormula>
+        <errorDisplayField>Start_Date__c</errorDisplayField>
+        <errorMessage>Change Of Subscription Validation: Start Date must be greater than today.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delivered_By</fullName>
+        <active>false</active>
+        <description>Delivered By is require.</description>
+        <errorConditionFormula>ISBLANK(TEXT(Delivered_By__c))</errorConditionFormula>
+        <errorDisplayField>Delivered_By__c</errorDisplayField>
+        <errorMessage>Delivered By is require.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Main_Package_Billing_Type</fullName>
+        <active>true</active>
+        <description>Main Package Billing Type is require.</description>
+        <errorConditionFormula>ISBLANK(TEXT(Main_Package_Billing_Type__c))</errorConditionFormula>
+        <errorDisplayField>Main_Package_Billing_Type__c</errorDisplayField>
+        <errorMessage>Main Package Billing Type is require.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Main_Package_Frequency</fullName>
+        <active>true</active>
+        <description>Main Package Frequency is require.</description>
+        <errorConditionFormula>AND(ISBLANK(TEXT(Main_Package_Frequency__c)),  Order__r.Order_Type__c = &apos;Start&apos;)</errorConditionFormula>
+        <errorDisplayField>Main_Package_Frequency__c</errorDisplayField>
+        <errorMessage>Main Package Frequency is require.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Main_Package_Sub_Type</fullName>
+        <active>false</active>
+        <description>Main Package Sub Type is require.</description>
+        <errorConditionFormula>ISBLANK(TEXT( Main_Package_Sub_Type__c ))</errorConditionFormula>
+        <errorDisplayField>Main_Package_Sub_Type__c</errorDisplayField>
+        <errorMessage>Main Package Sub Type is require.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Main_Package_Type</fullName>
+        <active>true</active>
+        <description>Main Package Type field is require.</description>
+        <errorConditionFormula>ISBLANK(TEXT(Main_Package_Type__c))</errorConditionFormula>
+        <errorDisplayField>Main_Package_Type__c</errorDisplayField>
+        <errorMessage>Main Package Type field is require.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_COS_Request_First_of_Next_Month</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(IsEOMCycle__c &amp;&amp;
+CONTAINS(Order__r.Order_Type__c, &quot;Change of Subscription&quot;)&amp;&amp;
+Start_Date__c  &lt;= 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() )+ 1, 1, 1 ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ))&amp;&amp; 
+Start_Date__c &gt; 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() ), 12, (31 - $Setup.Days_Before_EOM__c.Number_Of_Days__c) ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ) - ($Setup.Days_Before_EOM__c.Number_Of_Days__c +1) ),
+$User.Validation_Exempted__c &lt;&gt; TRUE)</errorConditionFormula>
+        <errorMessage>Start Date date is within Bill Run period. Please select a date on or after the 2nd of next month</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Pstop_Request_First_of_Next_Month</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(IsEOMCycle__c &amp;&amp;
+ Stop_Request_Date__c  &lt;= 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() )+ 1, 1, 1 ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ))&amp;&amp;
+Stop_Request_Date__c   &gt; 
+IF( 
+MONTH( TODAY()) = 12, 
+DATE( YEAR( TODAY() ), 12, (31 - $Setup.Days_Before_EOM__c.Number_Of_Days__c) ), 
+DATE( YEAR( TODAY() ), MONTH ( TODAY() ) + 1, 1 ) - ($Setup.Days_Before_EOM__c.Number_Of_Days__c +1) ),
+$User.Validation_Exempted__c &lt;&gt; TRUE)</errorConditionFormula>
+        <errorMessage>Stop date is within Bill Run period. Please select a date on or after the 2nd of next month</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_End_Date_Rule_1</fullName>
+        <active>true</active>
+        <description>Order line END DATE must be greater than the order line START DATE.</description>
+        <errorConditionFormula>AND(End_Date__c  &lt; Start_Date__c,   NOT(ISPICKVAL(Main_Package_Sub_Type__c,&quot;Evergreen&quot; ))  )</errorConditionFormula>
+        <errorDisplayField>End_Date__c</errorDisplayField>
+        <errorMessage>Order line END DATE must be greater than the order line START DATE.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Start_Date_Rule_1</fullName>
+        <active>false</active>
+        <description>Order line START DATE must be greater than today.</description>
+        <errorConditionFormula>AND(IF(ISCHANGED(Start_Date__c),IF(Start_Date__c &lt;= TODAY(),TRUE, FALSE),FALSE) || AND(ISNEW(),Start_Date__c &lt;= TODAY()),$User.Validation_Exempted__c &lt;&gt; TRUE)</errorConditionFormula>
+        <errorMessage>Start Date must be greater than today</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_End_Date</fullName>
+        <active>true</active>
+        <description>End Date must have a value
+[KCampang] 08/13/2014. Updated error condition to include direct and not evergreen.</description>
+        <errorConditionFormula>CONTAINS(Case__r.Account.RecordType.Name, &apos;Direct&apos;) &amp;&amp; 
+(End_Date__c = NULL) &amp;&amp;   NOT (ISPICKVAL(Main_Package_ID__r.Subscription_Type__c, &apos;Evergreen&apos;))</errorConditionFormula>
+        <errorDisplayField>End_Date__c</errorDisplayField>
+        <errorMessage>Please enter End Date value</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Qty</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/15/2014. Required qty for Direct.</description>
+        <errorConditionFormula>ISNULL(Qty__c) &amp;&amp;   CONTAINS(Order__r.Account__r.RecordType.Name  , &apos;Direct&apos;)</errorConditionFormula>
+        <errorDisplayField>Qty__c</errorDisplayField>
+        <errorMessage>Qty is required for Direct Accounts.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Start_Date</fullName>
+        <active>true</active>
+        <description>Start Date must be required</description>
+        <errorConditionFormula>Start_Date__c = NULL</errorConditionFormula>
+        <errorDisplayField>Start_Date__c</errorDisplayField>
+        <errorMessage>Please enter a Start Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Stop_Request_Date</fullName>
+        <active>false</active>
+        <description>Stop Request Date is not allowed when the value is equal to Current date and earlier than the Current Date.</description>
+        <errorConditionFormula>Stop_Request_Date__c  &lt;= today()</errorConditionFormula>
+        <errorDisplayField>Stop_Request_Date__c</errorDisplayField>
+        <errorMessage>Stop Request Date should not be equal to Today&apos;s Date or Earlier Date!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Vendor_Subscription_ID</fullName>
+        <active>true</active>
+        <description>Vendor Subscription ID is require when Vendor Conversion is checked.</description>
+        <errorConditionFormula>Vendor_Conversion__c = True &amp;&amp; ISBLANK(Vendor_Subscription_ID__c)</errorConditionFormula>
+        <errorDisplayField>Vendor_Subscription_ID__c</errorDisplayField>
+        <errorMessage>Vendor Subscription ID is require when Vendor Conversion is checked.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Assign_Vendor</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Assign Vendor</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/26.0/connection.js&apos;)}
+{!REQUIRESCRIPT(&apos;/js/functions.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery-ui.min.js&apos;)}
+requireCssFile(&apos;/resource/jQuery/jquery-ui.css&apos;);
+function requireCssFile(filename) {
+var fileref = document.createElement(&apos;link&apos;);
+fileref.setAttribute(&apos;rel&apos;, &apos;stylesheet&apos;);
+fileref.setAttribute(&apos;type&apos;, &apos;text/css&apos;);
+fileref.setAttribute(&apos;href&apos;, filename);
+document.getElementsByTagName(&apos;head&apos;)[0].appendChild(fileref);
+}
+
+// Start UD-0190 05-03-2015 JohnD add logic to update related order line items
+var customJs = &apos;&lt;script type=&quot;text/javascript&quot;&gt;&apos;;
+customJs += &apos;var selectedVendorId = &quot;&quot;;\n&apos;;
+customJs += &apos;function getVendorId(v) {\n&apos;;
+
+customJs += &apos;selectedVendorId = v;\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;\n&apos;;
+customJs += &apos;function updateOrderLineItem() {\n&apos;;
+customJs += &apos;if (selectedVendorId != &quot;&quot;) {\n&apos;;
+
+customJs += &apos;var relatedOrdelineItemList = [];\n&apos;;
+customJs += &apos;var qryRelatedOrderLineItemsStr = &quot;select id from Order_Line_Item__c where Order__r.Name = \&apos;{!Order_Line_Item__c.Order__c}\&apos; and Delivered_By__c = \&apos;Vendor\&apos;&quot;;\n&apos;;
+customJs += &apos;var qryRelatedOrderLineItems = sforce.connection.query(qryRelatedOrderLineItemsStr);\n&apos;;
+customJs += &apos;var relatedOrderLineItems = qryRelatedOrderLineItems.getArray(&quot;records&quot;);\n&apos;;
+customJs += &apos;for (var i = 0; i &lt; relatedOrderLineItems.length; i++) {\n&apos;;
+customJs += &apos;var oli = new sforce.SObject(&quot;Order_Line_Item__c&quot;);\n&apos;;
+customJs += &apos;oli.Id = relatedOrderLineItems[i].Id;\n&apos;;
+customJs += &apos;oli.Vendor_Mailing_Agent__c = selectedVendorId;\n&apos;;
+customJs += &apos;relatedOrdelineItemList.push(oli);\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;try {\n&apos;;
+customJs += &apos;var result = sforce.connection.update(relatedOrdelineItemList);\n&apos;;
+customJs += &apos;location.reload();\n&apos;;
+customJs += &apos;} catch (error) {\n&apos;;
+customJs += &apos;alert(error);\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;\n&apos;;
+customJs += &apos;} else {\n&apos;;
+customJs += &apos;alert(&quot;No Vendor was selected. Please select from the list.&quot;);\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;&lt;/script&gt;&apos;;
+// End UD-0190 05-03-2015 JohnD
+
+var j$ = jQuery.noConflict();
+
+// get recipient postal code
+var queryRecipientStr = &quot;SELECT Id, Name, Recipient_Postal_Code__c, Vendor_Mailing_Agent__c from Order_Line_Item__c where Id = &apos;{!Order_Line_Item__c.Id}&apos;&quot;;
+var queryRecipient = sforce.connection.query(queryRecipientStr);
+var recipients = queryRecipient.getArray(&apos;records&apos;);
+
+// get vendor account record type
+var queryRecordTypeStr = &quot;SELECT Id from RecordType where Name = &apos;Vendor&apos;&quot;;
+var queryRecordType = sforce.connection.query(queryRecordTypeStr);
+var recordTypes = queryRecordType.getArray(&apos;records&apos;);
+
+// get vendor accounts
+var queryVendorStr = &quot;SELECT Id, Name, Vendor_Account__c, Vendor_Account__r.Telephone_Office__c, Vendor_Account__r.Handphone_Number__c, Vendor_Code__c FROM Vendor_Allocation__c WHERE SingPost_Address__r.Name = &apos;&quot; + recipients[0].Recipient_Postal_Code__c+ &quot;&apos; AND Vendor_Account__r.RecordTypeId = &apos;&quot; + recordTypes[0].Id + &quot;&apos; AND Status__c = &apos;Active&apos;&quot;; //updated by James 2/25/2015 D-0073(UAT)
+var queryVendor = sforce.connection.query(queryVendorStr);
+var vendors = queryVendor.getArray(&apos;records&apos;);
+
+var vendorList = &apos;&lt;table class=&quot;list&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&apos;;
+vendorList += &apos;&lt;tbody&gt;&lt;tr class=&quot;headerRow&quot;&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Select&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Vendor&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Telephone Office&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Handphone Number&lt;/th&gt;&lt;/tr&gt;&apos;;
+
+for (var i=0; i &lt; vendors.length; i++) {
+vendorList += &apos;&lt;tr class=&quot;dataRow&quot;&gt;&apos;;
+vendorList += &apos;&lt;td&gt;&lt;input name=&quot;vendor&quot; type=&quot;radio&quot; value=&quot;&apos; + vendors[i].Vendor_Account__c + &apos;&quot; onclick=&quot;javascript:getVendorId(this.value)&quot;/&gt;&apos;;
+vendorList += &apos;&lt;/td&gt;&apos;;
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos; + vendors[i].Vendor_Code__c + &apos;&lt;/td&gt;&apos;;  //updated by James 2/25/2015 D-0073(UAT) - Changed Name to Vendor Code
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos; + vendors[i].Vendor_Account__r.Telephone_Office__c + &apos;&lt;/td&gt;&apos;;
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos; + vendors[i].Vendor_Account__r.Handphone_Number__c + &apos;&lt;/td&gt;&apos;;
+vendorList += &apos;&lt;/tr&gt;&apos;;
+
+}
+vendorList += &apos;&lt;/tbody&gt;&lt;/table&gt;&apos;;
+vendorList += &apos;&lt;p align=&quot;center&quot;&gt;&lt;button type=&quot;submit&quot; onclick=&quot;javascript:updateOrderLineItem();&quot;&gt;Submit&lt;/button&gt;&lt;/p&gt;&apos;;
+vendorList += customJs;
+
+
+var j$modalDialog = j$(&apos;&lt;div&gt;&lt;/div&gt;&apos;)
+.html(vendorList)
+.dialog({
+autoOpen: false,
+title: &apos;Assign Vendor&apos;,
+resizable: false,
+width: 400,
+height: 400,
+autoResize: true,
+modal: false,
+draggable: true
+});
+
+j$(document).ready(function(){
+    //  
+        
+	if(&apos;{!Order_Line_Item__c.Vendor_Mailing_Agent__c}&apos; != &apos;&apos;) {
+		alert(&apos;Vendor or Mailing Agent has already been assigned!&apos;);
+	}
+        //START UD-0735 04-10-2015 Marvin Gatchalian
+        else if (&apos;{!Order_Line_Item__c.Delivered_By__c}&apos; == &apos;Vendor&apos;) {
+                j$modalDialog.dialog(&apos;open&apos;);
+        } 
+	else {
+                alert(&apos;Vendor Assignment is not applicable for this record!&apos;);
+	}
+        //END UD-0735 04-10-2015 Marvin Gatchalian
+});</url>
+    </webLinks>
+</CustomObject>

@@ -265,12 +265,12 @@
      */
 
     public void checkForTempStop(Set<Id> coaIdSet){  
-        
+        //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
         //START D-3388 11-Sept-2015 Added By S.Puli
         //Start UD-3379 20-Jan-2016 Added By S.Puli
-        coaNewList = [Select Id, RecordTypeId, Effective_Date__c, AccountId, Change_of_Address_Type__c From Case Where Id IN :coaIdSet AND RecordTypeId = :CASE_COA AND Effective_Date__c >= TODAY AND (Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD)];
+        coaNewList = [Select Id, RecordTypeId, Effective_Date__c, AccountId, Change_of_Address_Type__c From Case Where Id IN :coaIdSet AND RecordTypeId = :CASE_COA AND Effective_Date__c >= TODAY AND (Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Status != :GlobalVariableClass.STATUS_VOID];
         //End UD-3379 20-Jan-2016 Added By S.Puli
-
+        //END PD-0359 13Jun2016 Added By C. Lin
         if(coaNewList.size()>0){
             for(Case c : coaNewList){
                 if(c.Change_of_Address_Type__c == GlobalVariableClass.CHANGEVENDOR || c.Change_of_Address_Type__c == GlobalVariableClass.DELIVERYADDLOC || c.Change_of_Address_Type__c == GlobalVariableClass.BILLDELIVERYADD){
@@ -283,17 +283,23 @@
             coaNewSet.add(c.Id);
         }
         Set<Id> subsIdSet = new Set<Id>();
-        coaNewCaseSub_LIST = [Select Id, Case__c, Case__r.Effective_Date__c, Subscription__c From Case_Subscription__c Where Case__c IN :coaNewSet];
+        //START PD-0288 10Jun2016 Added By C. Lin - Added Billing_Address_Change_Only__c
+        coaNewCaseSub_LIST = [Select Id, Case__c, Case__r.Effective_Date__c, Subscription__c, Billing_Address_Change_Only__c From Case_Subscription__c Where Case__c IN :coaNewSet];
+        //END PD-0288 10Jun2016 Added By C. Lin
         system.debug('coaNewCaseSub_LIST>>>'+coaNewCaseSub_LIST);
         if(coaNewCaseSub_LIST.size()>0){
             for(Case_Subscription__c cs : coaNewCaseSub_LIST){
-                if(!coaCaseToSub_MAP.containsKey(cs.Case__c)){
-                    coaCaseToSub_MAP.put(cs.Case__c, new Set<Id>{cs.Subscription__c});
+                //START PD-0288 10Jun2016 Added By C. Lin - Exclude Case Sub with Billing Address == true
+                if(cs.Billing_Address_Change_Only__c == false){
+                    if(!coaCaseToSub_MAP.containsKey(cs.Case__c)){
+                        coaCaseToSub_MAP.put(cs.Case__c, new Set<Id>{cs.Subscription__c});
+                    }
+                    else{
+                        coaCaseToSub_MAP.get(cs.Case__c).add(cs.Subscription__c);
+                    }
+                    subsIdSet.add(cs.Subscription__c);
                 }
-                else{
-                    coaCaseToSub_MAP.get(cs.Case__c).add(cs.Subscription__c);
-                }
-                subsIdSet.add(cs.Subscription__c);
+                //END PD-0288 10Jun2016 Added By C. Lin
             }
         }
         

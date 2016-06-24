@@ -345,6 +345,14 @@ public virtual class BulkOrderUploadDeclarator {
     public map<string, string> countryCode_zoneCode = new map<string, string>();
     public map<string, set<id>> packageCode_productIdSet = new map<string, set<id>>();
     public map<id, Set<String>> productId_setDelMethod = new  map<id, Set<String>>();
+    // Start D-4801 23Jun16 JohnD - local address pre-validation
+    public map<string, boolean> localAddressIdentifier_isInAddressDetail = new map<string, boolean>();
+    public set<string> localAddressIdentifierSet = new set<string>();
+    public string localAddressIdentifier = '';
+    public final string ADD_IDEN_SEPARATOR = ';';
+    public final string ADD_IDEN_DELIMITER = 'xxxxx';
+    public final string ADD_IDEN_FLAG = '@';
+    // End D-4801 23Jun16 JohnD - local address pre-validation
     
     public list<Case> caseList = new list<Case>();
     public list<string> warningList = new list<string>();
@@ -446,6 +454,12 @@ public virtual class BulkOrderUploadDeclarator {
         zoneProduct_postageCharge = new map<string, decimal>();
         countryCode_zoneCode = new map<string, string>();
         packageCode_productIdSet = new map<string, set<id>>();
+	    // Start D-4801 23Jun16 JohnD - local address pre-validation
+	    map<string, boolean> localAddressIdentifier_isInAddressDetail = new map<string, boolean>();
+	    set<string> localAddressIdentifierSet = new set<string>();
+	    string localAddressIdentifier = '';
+	    // End D-4801 23Jun16 JohnD - local address pre-validation
+        
     }
         
 }        // End D-4456 07Mar16 JohnD - credit card validation

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Used as reference if requests are within circulation planning schedule.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Mon_Fri_End_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Mon-Fri End Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Mon_Fri_Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Mon-Fri Start Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sat_PH_End_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Sat/PH End Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sat_PH_Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Sat/PH Start Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sun_End_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Sun End Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sun_Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Sun Start Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Cir Planner Schedule</label>
+    <visibility>Public</visibility>
+</CustomObject>

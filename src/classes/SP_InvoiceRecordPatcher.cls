@@ -19,10 +19,13 @@ global class SP_InvoiceRecordPatcher implements Database.Batchable<sObject>, Dat
         //START 26 October 2015 UD-3056 Kevin Evasco - ARMS Interface Timestamp patch
         if(batchJobSchedulerList.size() == 1){
             DateTime lastExecution = batchJobSchedulerList[0].Start_Time__c;            
-            
-            return Database.getQueryLocator([SELECT Id, Is_PDF_Generated__c, ARMS_Interface_Timestamp__c, CreatedDate, ARMS_invoice_id__c, Zuora__TotalAmount__c FROM Zuora__ZInvoice__c WHERE CreatedDate <=: lastExecution AND ((Is_PDF_Generated__c = false OR (ARMS_Interface_Timestamp__c = null AND ARMS_invoice_id__c != null AND Zuora__TotalAmount__c > 0)) OR (Zuora__TotalAmount__c < 0 AND Is_CN_Processed__c = false))]); 
+            //Start CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
+            return Database.getQueryLocator([SELECT Id, Is_PDF_Generated__c, ARMS_Interface_Timestamp__c, CreatedDate, ARMS_invoice_id__c, Zuora__TotalAmount__c FROM Zuora__ZInvoice__c WHERE CreatedDate <=: lastExecution AND ((Is_PDF_Generated__c = false OR (ARMS_Interface_Timestamp__c = null AND ARMS_invoice_id__c != null AND Zuora__TotalAmount__c > 0)) OR (Is_CN_Processed__c = false))]); 
+            //End CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
         } else {
-            return Database.getQueryLocator([SELECT Id, Is_PDF_Generated__c, ARMS_Interface_Timestamp__c, CreatedDate, ARMS_invoice_id__c, Zuora__TotalAmount__c FROM Zuora__ZInvoice__c WHERE ((Is_PDF_Generated__c = false OR (ARMS_Interface_Timestamp__c = null AND ARMS_invoice_id__c != null AND Zuora__TotalAmount__c > 0)) OR (Zuora__TotalAmount__c < 0 AND Is_CN_Processed__c = false))]);
+            //Start CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
+            return Database.getQueryLocator([SELECT Id, Is_PDF_Generated__c, ARMS_Interface_Timestamp__c, CreatedDate, ARMS_invoice_id__c, Zuora__TotalAmount__c FROM Zuora__ZInvoice__c WHERE ((Is_PDF_Generated__c = false OR (ARMS_Interface_Timestamp__c = null AND ARMS_invoice_id__c != null AND Zuora__TotalAmount__c > 0)) OR (Is_CN_Processed__c = false))]);
+            //End CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
         }        
         //END 26 October 2015 UD-3056 Kevin Evasco - ARMS Interface Timestamp patch
         //End UD-3253 29-Feb-2016 Added By S.Puli
@@ -38,9 +41,11 @@ global class SP_InvoiceRecordPatcher implements Database.Batchable<sObject>, Dat
             //END 26 October 2015 UD-3056 Kevin Evasco - ARMS Interface Timestamp patch
             
             //Start UD-3253 29-Feb-2016 Added By S.Puli
-            if(invoiceElement.Zuora__TotalAmount__c < 0 && invoiceElement.Is_CN_Processed__c == false){
+            //Start CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
+            if(invoiceElement.Is_CN_Processed__c == false){
                 invoiceElement.Is_CN_Processed__c = true;
             }
+            //End CreditNote2 6/23/2016 Added by s. puzon - remove negative invoices condition
             //End UD-3253 29-Feb-2016 Added By S.Puli
         }
         

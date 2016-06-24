@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Using this email will attach knowledge articles related to the case.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Knowledge Article</name>
+    <style>none</style>
+    <subject>Information on Subscription {!Case.Email_Thread}</subject>
+    <type>text</type>
+</EmailTemplate>

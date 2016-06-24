@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Temp Stop</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Temp Stops</value>
+    </caseValues>
+    <fields>
+        <label><!-- Cancelled? --></label>
+        <name>Cancelled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Temp Stops --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Temp Stops --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- POP Start Date --></label>
+        <name>POP_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pop Start --></label>
+        <name>Pop_Start__c</name>
+    </fields>
+    <fields>
+        <label><!-- Qty --></label>
+        <name>Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Credit --></label>
+        <name>Request_Total_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Issue --></label>
+        <name>Request_Total_Issue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Restart Date --></label>
+        <name>Restart_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- TEMP CON --></label>
+        <name>TEMP_CON__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Date --></label>
+        <name>Temp_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Legacy Id --></label>
+        <name>Temp_Stop_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Qty --></label>
+        <name>Temp_Stop_Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Status --></label>
+        <name>Temp_Stop_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year To Date Count --></label>
+        <name>Year_To_Date_Count__c</name>
+    </fields>
+    <layouts>
+        <layout>MIG - Temp Stop Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Temp Stop Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Restart date Should be greater than or equal to sub start date --></errorMessage>
+        <name>Validate_Restart_Date_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restart date Should be less than or equal to sub stop date --></errorMessage>
+        <name>Validate_Restart_Date_2</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restart date Should not be greater than request stop date --></errorMessage>
+        <name>Validate_Restart_Date_3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Should be greater than or equal to sub start date --></errorMessage>
+        <name>Validate_Restart_Date_4</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restart date should be publication day --></errorMessage>
+        <name>Validate_Restart_Date_5</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Tempstop date should be greater than current date --></errorMessage>
+        <name>Validate_Temp_Stop_Date_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Tempstop date should be less than sub stop date --></errorMessage>
+        <name>Validate_Temp_Stop_Date_2</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Tempstop date Should be greater than or equal to sub start date --></errorMessage>
+        <name>Validate_Temp_Stop_Date_3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restart date should be greater than Temp Stop date --></errorMessage>
+        <name>Validate_Temp_Stop_Date_4</name>
+    </validationRules>
+</CustomObjectTranslation>

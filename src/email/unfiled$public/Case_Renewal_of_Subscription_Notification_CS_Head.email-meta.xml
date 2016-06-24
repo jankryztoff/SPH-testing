@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for Renewal of Subscription Email Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Case: Renewal of Subscription Notification (CS Head)</name>
+    <style>none</style>
+    <subject>Case Escalation Alert - Case Not Closed Yet (&gt;96 hours) - Case ID {!Case.Id}</subject>
+    <type>text</type>
+</EmailTemplate>

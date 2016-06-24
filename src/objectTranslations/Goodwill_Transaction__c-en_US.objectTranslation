@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Goodwill Transaction</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Goodwill Transactions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- Goodwill Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount Change --></label>
+        <name>Goodwill_Amt_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Goodwill Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Transaction Amount --></label>
+        <name>Trans_Amt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Date --></label>
+        <name>Trans_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- CR: New Goodwill Amount added
+DR: Existing Goodwill Amount deducted --></help>
+        <label><!-- Transaction Type --></label>
+        <name>Trans_Type__c</name>
+        <picklistValues>
+            <masterLabel>CR</masterLabel>
+            <translation><!-- CR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DR</masterLabel>
+            <translation><!-- DR --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Product Publication</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Product Publications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Product Code --></label>
+        <name>Product_Code_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Code --></label>
+        <name>Product_Code__c</name>
+        <relationshipLabel><!-- Product Publications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication_Code__c</name>
+        <relationshipLabel><!-- Product Publications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- UniquenessCheck --></label>
+        <name>UniquenessCheck__c</name>
+    </fields>
+    <fields>
+        <label><!-- ZProduct --></label>
+        <name>ZProduct_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- ZProduct --></label>
+        <name>ZProduct__c</name>
+        <relationshipLabel><!-- Product Publications --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Product Publication Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

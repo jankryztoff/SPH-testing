@@ -1,7 +1,7 @@
 @isTest (seeAllData = false)
 public class SP_VendorSubscriptionNotificationsTest{
     
-    static void setCustomSettings() {
+    /*static void setCustomSettings() {
     
         //Cir_Planner_Schedule__c
         List<Cir_Planner_Schedule__c> cpsList = new List<Cir_Planner_Schedule__c>{
@@ -22,7 +22,7 @@ public class SP_VendorSubscriptionNotificationsTest{
         //.getInstance('Vendor Rep Role')
         List<Key_Id__c> kisList = new List<Key_Id__c>{
             new Key_Id__c(Name='Vendor Rep Role', Id__c='123456789', Type__c='Number'),
-            /*new Key_Id__c(Name='NEXT_RECIPIENT_NUMBER', Id__c='123456789', Type__c='Number'),*/
+            //new Key_Id__c(Name='NEXT_RECIPIENT_NUMBER', Id__c='123456789', Type__c='Number'),
             new Key_Id__c(Name='Case_Change in Address', Id__c=Case_ChangeinAddress.id ,Type__c='Id'),
             new Key_Id__c(Name='Case_Temp Stop', Id__c=Case_TempStop.id ,Type__c='Id'),
             new Key_Id__c(Name='Contact_Vendor Staff', Id__c=Contact_VendorStaff.id ,Type__c='Id'),
@@ -38,11 +38,27 @@ public class SP_VendorSubscriptionNotificationsTest{
         };
         Database.insert(bcsList);
         
-    }
+    }*/
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createBatchConfig(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createCharge();
+        insert CustomSettingsDataFactory.createChargeType();
+        insert CustomSettingsDataFactory.createZuora_HPM_Settings();
+        insert CustomSettingsDataFactory.createError_Messages();
+        insert CustomSettingsDataFactory.createARMSInterface();
+        insert CustomSettingsDataFactory.createUom();
+        insert CustomSettingsDataFactory.createUnit_of_Measure();
+    } 
     
     static testmethod void test_SP_VendorSubscriptionNotifications01(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
   
         //Singpost Address
@@ -216,7 +232,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VondorSubscriptionNotificationsSelective() {
 
-        setCustomSettings();
+        //setCustomSettings();
         
   
         //Singpost Address
@@ -362,7 +378,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VendorSubscriptionNotifications02(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
         //Singpost Address
         Singpost_Address__c singAdd = TestDataFactory.createSingpostAddress(1)[0];
@@ -499,7 +515,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VendorSubscriptionNotifications03(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
         //Singpost Address
         Singpost_Address__c singAdd = TestDataFactory.createSingpostAddress(1)[0];
@@ -618,7 +634,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VendorSubscriptionNotifications04(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
         //Singpost Address
         Singpost_Address__c singAdd = TestDataFactory.createSingpostAddress(1)[0];
@@ -738,7 +754,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VendorSubscriptionNotifications05(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
         //Singpost Address
         Singpost_Address__c singAdd = TestDataFactory.createSingpostAddress(1)[0];
@@ -872,7 +888,7 @@ public class SP_VendorSubscriptionNotificationsTest{
     
     static testmethod void test_SP_VendorSubscriptionNotifications06(){
         
-        setCustomSettings();
+        //setCustomSettings();
         
         //Singpost Address
         Singpost_Address__c singAdd = TestDataFactory.createSingpostAddress(1)[0];

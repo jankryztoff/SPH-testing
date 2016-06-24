@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Gift Letter Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Gift Letter Batches</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch Date --></label>
+        <name>Batch_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Account Number --></label>
+        <name>Customer_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- DTL End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Code --></label>
+        <name>Gift_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift --></label>
+        <name>Gift__c</name>
+        <relationshipLabel><!-- Gift Letter Batches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Letter Template --></label>
+        <name>Letter_Template__c</name>
+        <picklistValues>
+            <masterLabel>IPP (Eng)</masterLabel>
+            <translation><!-- IPP (Eng) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premium (Chi)</masterLabel>
+            <translation><!-- Premium (Chi) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premium (Eng)</masterLabel>
+            <translation><!-- Premium (Eng) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retention (Eng)</masterLabel>
+            <translation><!-- Retention (Eng) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Mag w/o Date (Eng)</masterLabel>
+            <translation><!-- SPH Mag w/o Date (Eng) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPHM (Eng)</masterLabel>
+            <translation><!-- SPHM (Eng) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Promo Chinese Name --></label>
+        <name>Promo_Chinese_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promo Code --></label>
+        <name>Promo_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion --></label>
+        <name>Promotion__c</name>
+        <relationshipLabel><!-- Gift Letter Batches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Redemption End Date --></label>
+        <name>Redemption_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Start Date --></label>
+        <name>Redemption_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Redemption Venue --></label>
+        <name>Redemption_Venue__c</name>
+    </fields>
+    <fields>
+        <label><!-- DTL Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Gift Letter Batch Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- DTL End Date must not less than DTL Start Date --></errorMessage>
+        <name>DTLEndDateLessThanDTLStartDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This field should only be populated if the Letter Template is &quot;Premium (Chi)&quot;. --></errorMessage>
+        <name>PromoNameNotRequiredForNonChinese</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please input the Chinese Name of the selected Promotion in this field. For example, if selected Promotion is Lianhe Zaobao, Promo Chinese Name should be 联合早报. --></errorMessage>
+        <name>PromoNameRequiredForChinese</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Redemption End Date must not less than Redemption Start Date --></errorMessage>
+        <name>Redemption_End_Date_Less_Than_Start_Date</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Generate_List --></label>
+        <name>Generate_List</name>
+    </webLinks>
+</CustomObjectTranslation>

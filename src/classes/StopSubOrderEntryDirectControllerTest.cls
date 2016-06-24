@@ -321,8 +321,8 @@ private class StopSubOrderEntryDirectControllerTest{
             
             
             
-            PageReference pRef = Page.StopSub_Order_Entry_Direct_Edit;
-            Test.setCurrentPage(pRef);
+           /* PageReference pRef = Page.StopSub_Order_Entry_Direct_Edit;
+            Test.setCurrentPage(pRef);*/
             //ApexPages.currentPage().getParameters().put('def_parent_id', cas.Id);
             ApexPages.currentPage().getParameters().put('accountId', acc.Id);
             ApexPages.currentPage().getParameters().put('orderId', order.Id);
@@ -333,6 +333,8 @@ private class StopSubOrderEntryDirectControllerTest{
 
             
             StopSubOrderEntryDirectController StopSubOrderEntryDirect = new StopSubOrderEntryDirectController();
+            PageReference pRef = Page.StopSub_Order_Entry_Direct_Edit;
+            Test.setCurrentPage(pRef);
             StopSubOrderEntryDirect.myId = subRecord.id;
             StopSubOrderEntryDirect.getOrder();
             StopSubOrderEntryDirect.setOrder();     
@@ -343,6 +345,7 @@ private class StopSubOrderEntryDirectControllerTest{
             StopSubOrderEntryDirect.getGivenCopies(StopSubOrderEntryDirect.getSelectedSubscription());
             StopSubOrderEntryDirect.getAdminFee(StopSubOrderEntryDirect.getSelectedSubscription());
             StopSubOrderEntryDirect.getRefund(StopSubOrderEntryDirect.getSelectedSubscription());
+            //StopSubOrderEntryDirect.isSRDValidEqualAfterStart();
 
             //Will not enter the If condition because of the Case created that is MAGAZINE
             StopSubOrderEntryDirect.getMissedCopies(StopSubOrderEntryDirect.getSelectedSubscription());
@@ -350,7 +353,9 @@ private class StopSubOrderEntryDirectControllerTest{
             
             StopSubOrderEntryDirect.doSave();
             StopSubOrderEntryDirect.saveAsDraft();  
-            StopSubOrderEntryDirect.doCancel();    
+            //pRef.setRedirect(true);
+            StopSubOrderEntryDirect.doCancel();
+            StopSubOrderEntryDirect.setRefundToZero();
             
             List<Order_Line_Item__c> myOliList = new List<Order_Line_Item__c>();
             myOliList.add(oli);
@@ -1010,7 +1015,8 @@ private class StopSubOrderEntryDirectControllerTest{
         
         StopSubOrderEntryDirect.doSave();
         StopSubOrderEntryDirect.saveAsDraft();  
-        StopSubOrderEntryDirect.doCancel();
+        //pRef.setRedirect(true);
+        StopSubOrderEntryDirect.doCancel().getUrl();
         
         Test.stopTest();
         }catch(Exception e){}

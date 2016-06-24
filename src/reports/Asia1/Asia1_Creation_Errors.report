@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Asia1__c$Name</field>
+    </columns>
+    <columns>
+        <field>Asia1__c$Log__c</field>
+    </columns>
+    <columns>
+        <field>Asia1__c.Asia1_Subscriptions__r$Name</field>
+    </columns>
+    <columns>
+        <field>Asia1__c.Asia1_Subscriptions__r$Reason_for_Failure__c</field>
+    </columns>
+    <columns>
+        <field>Asia1__c.Asia1_Subscriptions__r$Service_Access_Flag__c</field>
+    </columns>
+    <crossFilters>
+        <criteriaItems>
+            <column>Reason_for_Failure__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <operation>without</operation>
+        <primaryTableColumn>Asia1__c$Id</primaryTableColumn>
+        <relatedTable>Asia1_Subscription__c</relatedTable>
+        <relatedTableJoinColumn>Asia1__c</relatedTableJoinColumn>
+    </crossFilters>
+    <filter>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <column>Asia1__c.Asia1_Subscriptions__r$Name</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Asia1__c.Asia1_Subscriptions__r$Reason_for_Failure__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Asia1__c$Status__c</column>
+            <operator>equals</operator>
+            <value>Error Creation</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Asia1 Creation Errors</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Asia1_Error__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Asia1__c$Name</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Asia1__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
+    </timeFrameFilter>
+</Report>

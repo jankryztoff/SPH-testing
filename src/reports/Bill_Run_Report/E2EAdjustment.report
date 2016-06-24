@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case$Invoice__c</field>
+    </columns>
+    <columns>
+        <field>Case$Subscription_Name__c</field>
+    </columns>
+    <columns>
+        <field>Case$Adjustment_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Case$Adjustment_Status__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Adjustments</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$CreatedDate</column>
+            <operator>greaterOrEqual</operator>
+            <value>7/20/2015 12:00 AM</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>E2E - Adjustment</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Cases_Only__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case$ClosedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

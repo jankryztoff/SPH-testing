@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BATCH_JOB_SCHEDULER</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BATCH_JOB_SCHEDULER</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Parallel Jobs --></label>
+        <name>Allow_Parallel_Jobs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Code --></label>
+        <name>Batch_Code__c</name>
+        <picklistValues>
+            <masterLabel>SP001</masterLabel>
+            <translation><!-- SP001 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP002</masterLabel>
+            <translation><!-- SP002 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP003</masterLabel>
+            <translation><!-- SP003 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP004</masterLabel>
+            <translation><!-- SP004 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP005</masterLabel>
+            <translation><!-- SP005 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP006</masterLabel>
+            <translation><!-- SP006 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP007</masterLabel>
+            <translation><!-- SP007 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP008</masterLabel>
+            <translation><!-- SP008 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP009</masterLabel>
+            <translation><!-- SP009 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP010</masterLabel>
+            <translation><!-- SP010 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP011</masterLabel>
+            <translation><!-- SP011 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP012</masterLabel>
+            <translation><!-- SP012 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP013</masterLabel>
+            <translation><!-- SP013 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP014</masterLabel>
+            <translation><!-- SP014 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP015</masterLabel>
+            <translation><!-- SP015 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP016</masterLabel>
+            <translation><!-- SP016 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP017</masterLabel>
+            <translation><!-- SP017 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP018</masterLabel>
+            <translation><!-- SP018 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP019</masterLabel>
+            <translation><!-- SP019 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP020</masterLabel>
+            <translation><!-- SP020 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP021</masterLabel>
+            <translation><!-- SP021 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP022</masterLabel>
+            <translation><!-- SP022 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP023</masterLabel>
+            <translation><!-- SP023 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP024</masterLabel>
+            <translation><!-- SP024 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP025</masterLabel>
+            <translation><!-- SP025 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP026</masterLabel>
+            <translation><!-- SP026 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Details of Parallel jobs --></label>
+        <name>Details_of_Parallel_jobs__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Time --></label>
+        <name>End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- LP - Days Before Expiration --></label>
+        <name>LP_Days_Before_Expiration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Letter Print Request Count --></label>
+        <name>Letter_Print_Request_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Parallel Jobs Executed --></label>
+        <name>Number_of_Parallel_Jobs_Executed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Parallel Jobs --></label>
+        <name>Number_of_Parallel_Jobs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Job --></label>
+        <name>Parent_Job__c</name>
+        <relationshipLabel><!-- BATCH_JOB_SCHEDULER --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SFDC_Job_id --></label>
+        <name>SFDC_Job_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Session ID --></label>
+        <name>Session_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>ABORTED</masterLabel>
+            <translation><!-- ABORTED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FAILED</masterLabel>
+            <translation><!-- FAILED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STARTED</masterLabel>
+            <translation><!-- STARTED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SUCCESS</masterLabel>
+            <translation><!-- SUCCESS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status of Parallel jobs --></label>
+        <name>Status_of_Parallel_jobs__c</name>
+    </fields>
+    <layouts>
+        <layout>BATCH_JOB_SCHEDULER Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

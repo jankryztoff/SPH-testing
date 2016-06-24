@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>SOURCE__c</fullName>
+        <defaultValue>&quot;CRSM&quot;</defaultValue>
+        <description>value to be set to CRSM</description>
+        <externalId>false</externalId>
+        <label>SOURCE</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ESHOPSettings</label>
+    <visibility>Protected</visibility>
+</CustomObject>

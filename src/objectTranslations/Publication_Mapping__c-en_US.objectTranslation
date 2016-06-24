@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Publication Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Publication Mappings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Direct Subscription - Mailing Agents --></label>
+        <name>Direct_Subscription_Mailing_Agents__c</name>
+    </fields>
+    <fields>
+        <label><!-- Direct Subscription - Vendors --></label>
+        <name>Direct_Subscription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Subscription - Mailing Agents --></label>
+        <name>Vendor_Subscription_Mailing_Agents__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Subscription - Vendors --></label>
+        <name>Vendor_Subscription__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

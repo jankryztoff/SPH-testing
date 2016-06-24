@@ -1,0 +1,169 @@
+<apex:component >
+    <div id="renewal2ndPageNewspaperEnglishComponent">
+        <table width="100%" border="0" style="font-size:12px; font-name:Arial" cellspacing="0">
+            <tr>
+                <td colspan="5" class="cf"><u><b>一、   条例</b></u></td>
+            </tr>
+            <tr><td colspan="5"></td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td colspan="5"></td></tr>
+            <tr>
+                <td colspan="5" class="cf"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;付款方式</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• </td>
+                <td colspan="3" class="cf">所有订阅是根据预付方式</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• </td>
+                <td colspan="3" class="cf">付款可通过以下方式：</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%">o</td>
+                <td class="cf">支票、汇票（必须通过本地银行并以新元付款），领款者必须指定为</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td><b>“Singapore Press Holdings Limited”</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%">o</td>
+                <td class="cf">信用卡 (Visa/MasterCard)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td colspan="2" class="cf">可通过传真/电子邮件订阅。请注明信用卡号码和有效日期</td>
+            </tr>
+        </table>
+        <br/>
+        <table cellspacing="0">
+            <tr><td colspan="3"> </td></tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td colspan="3" class="cf"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认订阅程序</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• </td>
+                <td class="cf">一旦确认您的订阅，您将收到一份确认通知</td>
+            </tr>
+        </table>
+        <br/>
+        <!--table cellspacing="0">
+            <tr><td colspan="3"> </td></tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td colspan="3"><b>DELIVERY FEE</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">• </td>
+                <td>Subscription rates exclude delivery fee. The monthly delivery fee, dependent on house type, is payable as follows:</td>
+            </tr>
+            <tr><td colspan="3"> </td></tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$3 – HDB ($36 per annum)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$4 – Private apartments, walk-up apartments, factories and offices ($48 per annum)</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%"> </td>
+                <td>$5 – Landed properties ($60 per annum)</td>
+            </tr>
+        </table-->
+        <table cellspacing="0">
+            <tr>
+                <td colspan="3" class="cf"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其他</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+                <td class="cf">订阅标价包括7% 消费税</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+                <td class="cf" >订阅标价以及行政费（如有）的更改将不需预先通知</td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+                <td class="cf" >订单处理需4到6个星期</td>
+            </tr>
+        </table>
+        <br/>
+        <table cellspacing="0">
+            <tr>
+                <td colspan="6" class="cf"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联络方式</b></td>
+            </tr>
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+                <td width="" class="cf">电话：(65) 6388 3838 </td>
+                <td width="8%"> </td>
+                <td width="2%">•</td>
+                <td width="" class="cf">传真：(65) 6744 4875/ (65) 6744 1646</td>
+            </tr>
+
+            <tr>
+                <td width="3%"> </td>
+                <td width="3%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+                <td width="" class="cf">电子邮件：circs@sph.com.sg</td>
+                <td width="8%"> </td>
+                <td width="2%">•</td>
+                <td width="" class="cf">网址：www.sphsubscription.com.sg</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table width="100%" style="font-size:10pt; font-name:Arial">
+            <tr>
+                <td colspan="3" class="cf" ><u><b>二、  更换地址</b></u></td>
+            </tr>
+            <tr><td colspan="3"></td></tr>
+            <tr><td colspan="3"></td></tr>
+            <tr>
+                <td width="2.5%"></td>
+                <td width="32%" align="left" class="cf">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请将更新通知单寄到：
+                    <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订户号码： ___________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名： _______________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址： _______________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_______________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮区： _______________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国家： _______________________________                
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生效日期： ___________________________
+                </td>
+                <td width="32%" valign="left" class="cf">
+                    请将杂志送到：
+                    <br/><br/> 订户号码： ___________________________
+                    <br/>姓名： _______________________________
+                    <br/>地址： _______________________________
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_______________________________
+                    <br/>邮区： _______________________________
+                    <br/>国家： _______________________________                 
+                    <br/>生效日期： ___________________________
+                </td>
+            </tr>           
+        </table>
+    </div>
+</apex:component>

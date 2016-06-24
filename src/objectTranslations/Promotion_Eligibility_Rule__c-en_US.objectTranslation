@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Promotion Eligibility Rule</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Promotion Eligibility Rules</value>
+    </caseValues>
+    <fields>
+        <label><!-- Current Platform --></label>
+        <name>Current_Platform__c</name>
+        <picklistValues>
+            <masterLabel>All-In-One</masterLabel>
+            <translation><!-- All-In-One --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone</masterLabel>
+            <translation><!-- Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet</masterLabel>
+            <translation><!-- Tablet --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days --></label>
+        <name>Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Eligibility Rule --></label>
+        <name>Eligibility_Rule__c</name>
+        <relationshipLabel><!-- Promotion Eligibility Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Package List --></label>
+        <name>Package_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Prod_Family__c</name>
+        <relationshipLabel><!-- Promotion Eligibility Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+        <picklistValues>
+            <masterLabel>AFR</masterLabel>
+            <translation><!-- AFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BH</masterLabel>
+            <translation><!-- BH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BT</masterLabel>
+            <translation><!-- BT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FT</masterLabel>
+            <translation><!-- FT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MY</masterLabel>
+            <translation><!-- MY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NP</masterLabel>
+            <translation><!-- NP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SM</masterLabel>
+            <translation><!-- SM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TABL</masterLabel>
+            <translation><!-- TABL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBS</masterLabel>
+            <translation><!-- TBS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TM</masterLabel>
+            <translation><!-- TM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUP</masterLabel>
+            <translation><!-- TUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUPJ</masterLabel>
+            <translation><!-- TUPJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WB</masterLabel>
+            <translation><!-- WB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WSJA</masterLabel>
+            <translation><!-- WSJA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZB</masterLabel>
+            <translation><!-- ZB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Promotion --></label>
+        <name>Promotion__c</name>
+        <relationshipLabel><!-- Promotion Eligibility Rules --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Promotion Eligibility Rule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You cannot fill both Date and Days. Please fill only one. --></errorMessage>
+        <name>Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You cannot fill both Days and Date. Please fill only one. --></errorMessage>
+        <name>Days</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Either Days or Date must be filled. --></errorMessage>
+        <name>Days_or_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Package List must not null. --></errorMessage>
+        <name>Package_List</name>
+    </validationRules>
+</CustomObjectTranslation>

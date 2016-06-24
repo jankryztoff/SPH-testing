@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Zone Product</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Zone Products</value>
+    </caseValues>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postage Charge --></label>
+        <name>Postage_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- ZProduct --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Zone Mappings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Zone --></label>
+        <name>Zone_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zone --></label>
+        <name>Zone__c</name>
+        <relationshipLabel><!-- ZProducts --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Zone Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Effective Start Date should be a future date. --></errorMessage>
+        <name>Validate_Effective_Start_Date</name>
+    </validationRules>
+</CustomObjectTranslation>

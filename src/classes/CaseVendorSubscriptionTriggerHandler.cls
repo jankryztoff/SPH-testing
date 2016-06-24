@@ -116,9 +116,11 @@
                 coaCaseIds.add(csvrec.Case__c);
                 //caseVendorSubToVenSub_MAP.put(csvrec.Case__c, csvrec.Subscription_Vendor__c);
             }
+            //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
             //Start UD-3379 20-Jan-2016 Added By S.Puli
-            checkForVendorTempStopFinal_LIST = [Select Id, RecordTypeId, Effective_Date__c, AccountId, Change_of_Address_Type__c, Vendor__c, Vendor__r.RecordType.Name, Vendor__r.Email__c, New_Address__r.Postal_Code__c From Case Where Id IN :coaCaseIds AND RecordTypeId = :ConstantsSLB.getKeyId('Case_Change in Address') AND Effective_Date__c >= TODAY AND (Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Sub_Status__c != :GlobalVariableClass.SUB_STATUS_COA_REJECTED];
+            checkForVendorTempStopFinal_LIST = [Select Id, RecordTypeId, Effective_Date__c, AccountId, Change_of_Address_Type__c, Vendor__c, Vendor__r.RecordType.Name, Vendor__r.Email__c, New_Address__r.Postal_Code__c From Case Where Id IN :coaCaseIds AND RecordTypeId = :ConstantsSLB.getKeyId('Case_Change in Address') AND Effective_Date__c >= TODAY AND (Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Sub_Status__c != :GlobalVariableClass.SUB_STATUS_COA_REJECTED AND Status != :GlobalVariableClass.STATUS_VOID];
             //End UD-3379 20-Jan-2016 Added By S.Puli
+            //END PD-0359 13Jun2016 Added By C. Lin
             if(checkForVendorTempStopFinal_LIST.size()>0){
                 //START D-3727 16-Oct-2015 Added by S.Puli
                 for(Case c : checkForVendorTempStopFinal_LIST){
@@ -160,8 +162,9 @@
         }
         Date curDate;
         if(tempToSubsIds_MAP.size()>0 && subsIdSet.size()>0){
-            checkSubsWithCoa_LIST = [Select Id,Subscription_Vendor__c,Case__c,Case_Record_Type__c, Case__r.Change_of_Address_Type__c,Case__r.Sub_Status__c, Case__r.Effective_Date__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :subsIdSet AND Case__r.RecordTypeId = :ConstantsSLB.getKeyId('Case_Change in Address') AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_WAITING_FOR_COA_APPROVAL AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_COA_REJECTED];
-
+            //START PD-0359 13Jun2016 Added By C. Lin - Excluded Void Cases
+            checkSubsWithCoa_LIST = [Select Id,Subscription_Vendor__c,Case__c,Case_Record_Type__c, Case__r.Change_of_Address_Type__c,Case__r.Sub_Status__c, Case__r.Effective_Date__c From Case_Vendor_Subscription__c Where Subscription_Vendor__c IN :subsIdSet AND Case__r.RecordTypeId = :ConstantsSLB.getKeyId('Case_Change in Address') AND (Case__r.Change_of_Address_Type__c = :GlobalVariableClass.CHANGEVENDOR OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.DELIVERYADDLOC OR Case__r.Change_of_Address_Type__c = :GlobalVariableClass.BILLDELIVERYADD) AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_WAITING_FOR_COA_APPROVAL AND Case__r.Sub_Status__c != :GlobalVariableClass.SUB_STATUS_COA_REJECTED AND Case__r.Status != :GlobalVariableClass.STATUS_VOID];
+            //END PD-0359 13Jun2016 Added By C. Lin
             if(checkSubsWithCoa_LIST.size()>0){
                 for(Id temp : tempToSubsIds_MAP.keySet()){
                     for(Id subId : tempToSubsIds_MAP.get(temp)){
@@ -251,13 +254,21 @@
                 //END:Code Review Implementation 2/18/15 Added by Manolo Valeña
             }
             if (caseIdCir.size() > 0){
-                CaseTeamTemplate cirRepTeam = [Select id from CaseTeamTemplate where Name =: ConstantsSLB.getKeyId('Cir Predefined Case Team')LIMIT 1];
-                cirRepQueueId = cirRepTeam.id;
+                //START PD-0359 13Jun2016 Added By C. Lin
+                List<CaseTeamTemplate> cirRepTeam = [Select id from CaseTeamTemplate where Name =: ConstantsSLB.getKeyId('Cir Predefined Case Team')LIMIT 1];
+                if(!cirRepTeam.isEmpty()){
+                    cirRepQueueId = cirRepTeam[0].id;
+                }
+                //END PD-0359 13Jun2016 Added By C. Lin
                 System.debug('line 141');
            }
             if (caseIdCsoAdmin.size() > 0){
-                CaseTeamTemplate csoAdminTeam = [Select id from CaseTeamTemplate where Name =: ConstantsSLB.getKeyId('CSO Predefined Case Team')LIMIT 1];
-                csoAdminTeamId = csoAdminTeam.id;
+                //START PD-0359 13Jun2016 Added By C. Lin
+                List<CaseTeamTemplate> csoAdminTeam = [Select id from CaseTeamTemplate where Name =: ConstantsSLB.getKeyId('CSO Predefined Case Team')LIMIT 1];
+                if(!csoAdminTeam.isEmpty()){
+                    csoAdminTeamId = csoAdminTeam[0].id;
+                }
+                //END PD-0359 13Jun2016 Added By C. Lin
                 System.debug('line 146');
             }                                                                               
         }            

@@ -1,8 +1,26 @@
-@isTest (SeeAllData = true)
+@isTest (SeeAllData = false)
 private class CaseSubscriptionTriggerHandlerTest { 
         // prepares the data needed for the testing of the base class
         
         static CaseSubscriptionTriggerHandler casSub;    
+    
+    @testSetup 
+    static void setupData() {
+        insert CustomSettingsDataFactory.createKey_Id();
+        insert CustomSettingsDataFactory.createOther(); 
+        insert CustomSettingsDataFactory.createPlannerSched();
+        insert CustomSettingsDataFactory.createBatchConfig(); 
+        insert CustomSettingsDataFactory.createIntegration_Settings();
+        insert CustomSettingsDataFactory.createCharge();
+        insert CustomSettingsDataFactory.createChargeType();
+        insert CustomSettingsDataFactory.createZuora_HPM_Settings();
+        insert CustomSettingsDataFactory.createError_Messages();
+        insert CustomSettingsDataFactory.createARMSInterface();
+        insert CustomSettingsDataFactory.createUom();
+        insert CustomSettingsDataFactory.createUnit_of_Measure();
+        
+        
+    } 
     
     static testMethod void CaseSubscriptionTriggerHandlertest(){
         
@@ -32,10 +50,93 @@ private class CaseSubscriptionTriggerHandlerTest {
         
         System.assertNotEquals(null,caseSub);
         
-    } catch (Exception e) {
-       }
+        } catch (Exception e) {
+        
+        }
     }
     
+    static testMethod void CaseSubscriptionTriggerHandlerTestUpdate(){
+        try{
+            //Test.setMock(WebServiceMock.class, new zLoginMock());
+            
+            Account acct = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            insert acct;
+            
+            Zuora__CustomerAccount__c billingAccount = TestDataFactory.createBillingAccount(1)[0];
+            billingAccount.Zuora__Account__c = acct.Id;
+            insert billingAccount;
+            
+            Case cas = TestDataFactory.createCase(1, 'Complaint - Newspaper')[0];
+            insert cas;
+            
+            List<Zuora__Subscription__c> subscription = TestDataFactory.createSubscription(2);
+            subscription[0].Zuora__CustomerAccount__c = billingAccount.Id;
+            subscription[1].Zuora__CustomerAccount__c = billingAccount.Id;
+            insert subscription;
+            
+            Test.startTest();
+            Case_Subscription__c caseSub = TestDataFactory.createCaseSubscription(1)[0];
+            caseSub.Case__c = cas.Id;
+            caseSub.Subscription__c = subscription[0].Id;
+            insert caseSub;
+            
+            caseSub.Subscription__c = subscription[1].Id;
+            update caseSub;
+            Test.stopTest();
+            
+            System.assertNotEquals(null,caseSub);
+        } catch (Exception e) {
+        
+        }
+    }
+    
+    static testMethod void CaseSubscriptionTriggerHandlerTestCOA(){
+        //try{
+            //Test.setMock(WebServiceMock.class, new zLoginMock());
+            
+            Account acct = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            insert acct;
+            
+            Zuora__CustomerAccount__c billingAccount = TestDataFactory.createBillingAccount(1)[0];
+            billingAccount.Zuora__Account__c = acct.Id;
+            insert billingAccount;
+            
+            List<Zuora__Subscription__c> subscription = TestDataFactory.createSubscription(2);
+            subscription[0].Zuora__CustomerAccount__c = billingAccount.Id;
+            subscription[1].Zuora__CustomerAccount__c = billingAccount.Id;
+            insert subscription;
+            
+            Temp_Stop__c tempStop = TestDataFactory.createTempStop(1)[0];
+            tempStop.Temp_Stop_Date__c = date.today() + 1;
+            tempStop.Restart_Date__c = date.today() + 8;
+            insert tempStop;
+            
+            Case casTemp = TestDataFactory.createCase(1, 'Temp Stop Subscription')[0];
+            casTemp.Temp_Stop_Sub__c = subscription[0].Id;
+            casTemp.Temp_Stop__c = tempStop.Id;
+            insert casTemp;
+            
+            Case cas = TestDataFactory.createCase(1, 'Change of Address/Vendor')[0];
+            cas.Effective_Date__c = date.today() + 1;
+            cas.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+            insert cas;
+            
+            Test.startTest();
+            Case_Subscription__c caseSub = TestDataFactory.createCaseSubscription(1)[0];
+            caseSub.Case__c = cas.Id;
+            caseSub.Billing_Address_Change_Only__c = false;
+            caseSub.Subscription__c = subscription[0].Id;
+            insert caseSub;
+            
+            caseSub.Subscription__c = subscription[1].Id;
+            update caseSub;
+            Test.stopTest();
+            
+            System.assertNotEquals(null,caseSub);
+        //} catch (Exception e) {
+            //system.debug(e);
+        //}
+    }
     
     static void test2(){
         

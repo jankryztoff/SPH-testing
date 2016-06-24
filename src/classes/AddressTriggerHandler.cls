@@ -17,7 +17,14 @@ public class AddressTriggerHandler implements TriggerHandlerInterface {
     
     Map <String, Singpost_Address__c> matchPostal = new Map <String, Singpost_Address__c> ();
     Set<String> postalCodeName = new Set<String>();
-    map<string, boolean> addressIdentifier_isValid = new map<string, boolean>();	// Start/End Singpost Database JohnD
+    map<string, boolean> addressIdentifier_isValid = new map<string, boolean>();    // Start/End Singpost Database JohnD
+    //START D-4441 SingPostCR FrancisBenzon 22Mar16 : vars
+    Map<String, Boolean> identifier_inAddressDetail = new Map<String, Boolean>();
+    Boolean isExistingRec = false;
+    String levelNum = ' ';
+    String unitNum = ' ';
+    String postalCode = ' ';
+    //END D-4441 SingPostCR FrancisBenzon 22Mar16 : vars   
     
     public Boolean runBeforeInsertTrigger() {
         Boolean returnVar = !AddressTriggerHandler.isBeforeInsertTriggerCalled;
@@ -57,25 +64,40 @@ public class AddressTriggerHandler implements TriggerHandlerInterface {
     
     
     public void bulkBefore() {
-    	
-    	set<string> addressIdentifierSet = new set<string>();	// Start/End Singpost Database JohnD
-    	string addressIdentifier = '';	// Start/End Singpost Database JohnD
-    	
+        
+                //START D-4441 SingPostCR FrancisBenzon 22Mar16
+        List<Address_Details__c> adDetailsLst = new List<Address_Details__c>(); //START/END SingPostCR FrancisBenzon 22Mar16             
+                //END D-4441 SingPostCR FrancisBenzon 22Mar16
         if(Trigger.isUpdate || Trigger.isInsert) {
             for(SObject singPostAddressLookup : Trigger.new) {
                 Address__c postalCodeInput = (Address__c)singPostAddressLookup;
                 postalCodeName.add(postalCodeInput.Postal_Code__c);
+                //START D-4441 SingPostCR FrancisBenzon 22Mar16
+                levelNum = postalCodeInput.Level_Number__c;
+                unitNum = postalCodeInput.Unit_Number__c;
+                postalCode = String.valueOf(postalCodeInput.Postal_Code__c).subString(0,15);
                 
-                // Start Singpost Database JohnD
-                
-                // End Singpost Database JohnD
-                
+                identifier_inAddressDetail.put(postalCode+';'+levelNum+';'+unitNum, isExistingRec);
+                system.debug(':::MAPBefore1' + identifier_inAddressDetail);
+                //END D-4441 SingPostCR FrancisBenzon 22Mar16
             }
+            
+            //START D-4441 SingPostCR FrancisBenzon 22Mar16
+            system.debug(':::KeySet ' + identifier_inAddressDetail.keySet());
+            adDetailsLst = [Select Identifier__c From Address_Details__c Where Identifier__c IN :identifier_inAddressDetail.keySet()];
+            system.debug(':::ListAddDet ' + adDetailsLst);
+            for(Address_Details__c details : adDetailsLst) 
+            {
+                identifier_inAddressDetail.put(details.Identifier__c, true);
+                system.debug(':::MAPBefore2' + identifier_inAddressDetail);
+            }
+            system.debug(':::MAPBefore3' + identifier_inAddressDetail);
+            //END D-4441 SingPostCR FrancisBenzon 22Mar16
             //Start Code Review 02/18/2015 James
             if (postalCodeName.size() > 0){
-            	for (Singpost_Address__c singPost : [SELECT ID, Street_Name__c, Building_Name__c, Name, Address_Type__c, House_Block_Number__c from Singpost_Address__c WHERE ID in : postalCodeName]){
-                	matchPostal.put(singPost.ID, singPost);
-            	}
+                for (Singpost_Address__c singPost : [SELECT ID, Street_Name__c, Building_Name__c, Name, Address_Type__c, House_Block_Number__c from Singpost_Address__c WHERE ID in : postalCodeName]){
+                    matchPostal.put(singPost.ID, singPost);
+                }
             }
             //End Code Review 02/18/2015 James
         }
@@ -150,9 +172,22 @@ public class AddressTriggerHandler implements TriggerHandlerInterface {
         //End UD-0713 James 04/01/2015 
         //END: D-1035 12/3/2014 Added by C. Lin
            }
+            //START D-4441 SingPostCR FrancisBenzon 22Mar16
+            String identifier = String.valueOf(address.Postal_Code__c).subString(0,15) + ';' + address.Level_Number__c + ';' + address.Unit_Number__c;
+            system.debug(':::identifier ' + identifier);
+            if (!Test.isRunningTest()) {    
+                if(identifier_inAddressDetail.containsKey(identifier))
+                {
+                    if(identifier_inAddressDetail.get(identifier) == false)
+                    {
+                        address.addError(System.Label.ERR_SingPost);                    
+                    }
+                }
+                else {
+                    address.addError(System.Label.ERR_SingPost);               
+                }
+            }             
+            //END D-4441 SingPostCR FrancisBenzon 22Mar16
         }
-    }
-    
-    
-    
+    }     
 }

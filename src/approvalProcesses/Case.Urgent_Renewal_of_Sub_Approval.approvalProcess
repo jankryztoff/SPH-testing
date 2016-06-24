@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>CreatedDate</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>CSO_Team_Leader_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Step 1</label>
+        <name>Step_1</name>
+    </approvalStep>
+    <emailTemplate>unfiled$public/Case_Approver_Notification_Team_Lead</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(
+ISPICKVAL( Sub_Status__c , &quot;Waiting for Urgent Start Approval&quot;),
+ISPICKVAL( Status, &quot;Pending&quot;),
+RecordType.Name = &quot;Renewal of Subscription&quot;
+)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Approved_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notification_to_CSO_for_Approved_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Ready_Submission</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Notification_to_CSO_for_Rejected_Urgent_approval</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Rejected_Renewal</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Rejected_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Urgent_Start_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Approval_Process_Submission_Date</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Case_Status_Pending</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Urgent Renewal of Sub Approval</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Balance_Quantity_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>Gift_Inventory__c - Gift_Issued_New__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Balance Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Balance_Quantity__c</fullName>
+        <description>System calculated. This is to display the number of gifts available:
+Balance Qty = Gift Inventory – Gift Issued</description>
+        <externalId>false</externalId>
+        <formula>Gift_Inventory__c  -  Gift_Issued__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Balance Quantity Old</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Inventory__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Inventory level of the gift for the promotion.</description>
+        <externalId>false</externalId>
+        <label>Promotion Quantity</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Issued_New__c</fullName>
+        <externalId>false</externalId>
+        <label>Ordered Quantity</label>
+        <summarizedField>Order_Line_Item_Gift__c.Order_Quantity__c</summarizedField>
+        <summaryFilterItems>
+            <field>Order_Line_Item_Gift__c.Hidden_Status__c</field>
+            <operation>equals</operation>
+            <value>Close, Provisioning</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Order_Line_Item_Gift__c.Promotion_Gift__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Issued__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Count for the gift that has been issued to the customer via an order.</description>
+        <externalId>false</externalId>
+        <label>Gift Issued</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Redeemed_New__c</fullName>
+        <externalId>false</externalId>
+        <label>Redeemed Quantity</label>
+        <summarizedField>Order_Line_Item_Gift__c.Redemption_Quantity__c</summarizedField>
+        <summaryFilterItems>
+            <field>Order_Line_Item_Gift__c.Hidden_Status__c</field>
+            <operation>equals</operation>
+            <value>Close, Provisioning</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Order_Line_Item_Gift__c.Promotion_Gift__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Redeemed__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Count for the gift that has been issued based on the order gift redemption status.</description>
+        <externalId>false</externalId>
+        <label>Gift Redeemed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Gift__r.Gift_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Gift Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Promotion Gifts</relationshipLabel>
+        <relationshipName>Promotion_Gifts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Promotion__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Promotion</label>
+        <referenceTo>Promotion__c</referenceTo>
+        <relationshipLabel>Promotion Gifts</relationshipLabel>
+        <relationshipName>Promotion_Gifts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_End_Date__c</fullName>
+        <description>This field is to specify the last date when a customer can redeem his gift from the redemption center.</description>
+        <externalId>false</externalId>
+        <label>Redemption End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_Letter_Details__c</fullName>
+        <description>This field is to specify the text within the letter to be sent to the customer. This includes the redemption venue details.</description>
+        <externalId>false</externalId>
+        <label>Redemption Letter Details</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Redemption_Start_Date__c</fullName>
+        <description>This field is to specify the start date from when a customer can start redeeming his gift from the redemption center.</description>
+        <externalId>false</externalId>
+        <label>Redemption Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Promotion Gift</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Gift__c</columns>
+        <columns>NAME</columns>
+        <columns>Gift_Issued__c</columns>
+        <columns>Promotion__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gift_Type__c</field>
+            <operation>equals</operation>
+            <value>Premium</value>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PG-{00000000}</displayFormat>
+        <label>Promotion Gift Id</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Promotion Gifts</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

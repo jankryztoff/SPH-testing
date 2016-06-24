@@ -911,12 +911,14 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                             Order_Line_Item_Gift__c orderLineItemGift = new Order_Line_Item_Gift__c();
                             orderLineItemGift.Order_Line_Item__c = orderLineItem.Id;
                             orderLineItemGift.Promotion_Gift__c = gw.PromotionGift.Id;
+                            //Start PD-0200 6/15/16 -L.Reyes Added to decrease Quantity Balance
                             orderLineItemGift.Order_Quantity__c = orderLineItem.Qty__c;
+                            //End PD-0200 6/15/16 -L.Reyes Added to decrease Quantity Balance
                             orderLineItemGifts.add(orderLineItemGift);
                         }
                     }
                     
-                    INSERT orderLineItemGifts;
+                    insert orderLineItemGifts;
                     // end create order line item gifts
                     
                     // retrieve total gift prices and update order line item
@@ -932,7 +934,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                     
                     orderLineItem.Total_Gift_Price__c = totalGiftPrice;
                                         
-                    UPDATE orderLineItem;
+                    update orderLineItem;
                     // end retrieve total gift prices and update order line item
                 }
                 
@@ -959,7 +961,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                 // checkAndSetDeliveryType();   // Start/End UD-1431 JohnD - commented out 
                 //END D-2879 05-09-2015 Marvin G
                 
-                UPDATE thisOrder;
+                update thisOrder;
 
                 // START : D-1033 12/11/2014 Alyana Navarro - call method for delivery charge.
                 computePrepaid();
@@ -977,8 +979,7 @@ public class SM_StartSubscriptionEntryController extends SM_SubscriptionHelper {
                 isReInitializedItem = false;
             }
             //START D-3305 8/6/15 AddedBy FrancisBenzon : reParentAsia1Subs if OLI is new
-            if(isDigital)
-            {
+            if(isDigital){
                 reParentAsia1SubToNewOLI();
             }
             //END D-3305 8/6/15 AddedBy FrancisBenzon : reParentAsia1Subs if OLI is new

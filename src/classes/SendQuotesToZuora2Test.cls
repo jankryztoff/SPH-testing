@@ -105,7 +105,7 @@ private class SendQuotesToZuora2Test{
         test.startTest();
         SendQuotesToZuora2 sendQtoZ2 = new SendQuotesToZuora2();
         sendQtoZ2.RecievedData(newlQuoteIds , newPaymentMode , newPaymentModeOther , newDeliveryChargeType,newbCreateNewBillingAccount ,newbCreateDeliverySubscription ,newbPayDeliveryChargeNow ,newExistingDeliverySubscriptionId ,newSFBillingAccount,newzBillingAccount, SubscriberCharge,newAccountId,newOrderId ,newDeliveryFPSubscriptionUsage,newCCPaymentMethodID);
-
+        sendQtoZ2.testCoveragePatch();
         test.stopTest();    
         }
         

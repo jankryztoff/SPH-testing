@@ -213,9 +213,10 @@ public class BT_TH_STP050DX_StopPressSubscription
             {
                 createOrderLineItem(orderRecord, recipientContact, latestSubscription);
                 
+                //START/End PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - Added Order__c.Order_Type__c in SOQL
                 //START 22 October 2015 Kevin Evasco D-3381 D-3732 Kevin Evasco - Mailing Agent Assignment
                 List<Order_Line_Item__c> lOrderLineItems = [SELECT Id, Delivered_By__c, Recipient_Postal_Code__c, Vendor_Mailing_Agent__c, 
-                                Main_Package_Product_Platform__c, Order__r.Recipient_Contact__r.Address__r.Recordtype.DeveloperName, 
+                                Main_Package_Product_Platform__c, Order__r.Recipient_Contact__r.Address__r.Recordtype.DeveloperName,Order__r.Order_Type__c,  
                                 Case__r.Subscription_Name__c, Case__r.Subscription_Name__r.Delivered_By_1__c, Case__r.Subscription_Name__r.Vendor_1__c
                                 FROM Order_Line_Item__c where Order__c =: orderRecord.Id];
                 Vendor_Assignment vendorAssignment = new Vendor_Assignment();
@@ -407,9 +408,19 @@ public class BT_TH_STP050DX_StopPressSubscription
         //START 11 October 2015 UD-3074 Kevin Evasco - Look for existing ENETS Billing Accounts.
         List<Zuora__CustomerAccount__c> billingAccountList;
         if(paymentMode == GlobalVariableClass.ENETS)
-            billingAccountList = [SELECT Id, Name, Zuora__Account__r.Id, Billing_Contact__r.Id, Other_PaymentMethod__c FROM Zuora__CustomerAccount__c WHERE Billing_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode AND Billing_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode AND Billing_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber AND Billing_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber AND Billing_Type__c = :billingTypeParam AND Other_PaymentMethod__c = :GlobalVariableClass.ENETS]; 
+            billingAccountList = [SELECT Id, Name, Zuora__Account__r.Id, Billing_Contact__r.Id, Other_PaymentMethod__c FROM Zuora__CustomerAccount__c 
+                                                                                                                                WHERE Billing_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode 
+                                                                                                                                    AND Billing_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode 
+                                                                                                                                    AND Billing_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber 
+                                                                                                                                    AND Billing_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber 
+                                                                                                                                    AND Billing_Type__c = :billingTypeParam AND Other_PaymentMethod__c = :GlobalVariableClass.ENETS]; 
         else
-            billingAccountList = [SELECT Id, Name, Zuora__Account__r.Id, Billing_Contact__r.Id, Other_PaymentMethod__c FROM Zuora__CustomerAccount__c WHERE Billing_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode AND Billing_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode AND Billing_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber AND Billing_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber AND Billing_Type__c = :billingTypeParam];
+            billingAccountList = [SELECT Id, Name, Zuora__Account__r.Id, Billing_Contact__r.Id, Other_PaymentMethod__c FROM Zuora__CustomerAccount__c 
+                                                                                                                              WHERE Billing_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode 
+                                                                                                                                  AND Billing_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode 
+                                                                                                                                  AND Billing_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber 
+                                                                                                                                  AND Billing_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber 
+                                                                                                                                  AND Billing_Type__c = :billingTypeParam];
         //END 11 October 2015 UD-3074 Kevin Evasco - Look for existing ENETS Billing Accounts.
         
         for(Zuora__CustomerAccount__c billingAccountElement : billingAccountList) {
@@ -447,6 +458,8 @@ public class BT_TH_STP050DX_StopPressSubscription
         accountRecord.Sub_Group__c = 'Public';
         accountRecord.SMS_Renewal_Notification__c = false;
         
+        //START PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - Handphone Number not madatory
+        /*
         //START 14 October 2015 UD-3008 Kevin Evasco - Handphone Number Assignment
         try
         {
@@ -460,6 +473,12 @@ public class BT_TH_STP050DX_StopPressSubscription
             isValid = false;
         }               
         //END 14 October 2015 UD-3008 Kevin Evasco - Handphone Number Assignment
+        */
+        
+        accountRecord.Handphone_Number__c = so.subscriber_hphnn__c;
+        accountRecord.Mobile__c = so.subscriber_hphnn__c;
+            
+        //END PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - Handphone Number not madatory
         
         try
         {
@@ -471,7 +490,9 @@ public class BT_TH_STP050DX_StopPressSubscription
         }
         catch(Exception e)
         {
-            validationDetails += 'Office Telephone Number is not valid. ';
+            //START/END PD-0572-I-0498 17-Jun-2016 Added by Raviteja - Updating valid error
+            //validationDetails += 'Office Telephone Number is not valid. ';
+            validationDetails += 'Subscriber Home Telephone Number is not valid. ';
             isValid = false;
         }
         try
@@ -481,7 +502,9 @@ public class BT_TH_STP050DX_StopPressSubscription
         }
         catch(Exception e)
         {
-            validationDetails += 'Office Telephone Number is not valid. ';
+            //START/END PD-0572-I-0498 17-Jun-2016 Added by Raviteja - Updating valid error
+            //validationDetails += 'Office Telephone Number is not valid. ';
+            validationDetails += 'Subscriber Office Telephone Number is not valid. ';
             isValid = false;
         }
         try
@@ -648,11 +671,20 @@ public class BT_TH_STP050DX_StopPressSubscription
         List<Address__c> addressList;
         if(addressDetails.countryCode == GlobalVariableClass.SINGAPORE_CODE)
         {
-            addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c WHERE Country__r.Code__c = :addressDetails.countryCode AND Postal_Code__r.Name = :addressDetails.postalCode AND Unit_Number__c = :addressDetails.unitNumber AND Level_Number__c = :addressDetails.levelNumber];
+            addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c 
+                                                                                                    WHERE Country__r.Code__c = :addressDetails.countryCode 
+                                                                                                        AND Postal_Code__r.Name = :addressDetails.postalCode 
+                                                                                                        AND Unit_Number__c = :addressDetails.unitNumber 
+                                                                                                        AND Level_Number__c = :addressDetails.levelNumber];
         }
         else
         {
-            addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c WHERE Country__r.Code__c = :addressDetails.countryCode AND Address_1__c = :addressDetails.Address1 AND Address_2__c = :addressDetails.Address2 AND Address_3__c = :addressDetails.Address3 AND Address_4__c = :addressDetails.Address4];
+            addressList = [SELECT Id, Postal_Code__r.Name, Country_Name__c, Country__r.Code__c FROM Address__c 
+                                                                                                    WHERE Country__r.Code__c = :addressDetails.countryCode 
+                                                                                                        AND Address_1__c = :addressDetails.Address1 
+                                                                                                        AND Address_2__c = :addressDetails.Address2 
+                                                                                                        AND Address_3__c = :addressDetails.Address3 
+                                                                                                        AND Address_4__c = :addressDetails.Address4];
         }
         
         if(addressList.size() > 0)
@@ -675,12 +707,18 @@ public class BT_TH_STP050DX_StopPressSubscription
                 newAddress.Postal_Code__c = singpostAddress.Id;
             }
             newAddress.Block_House_Number__c = addressDetails.houseBlockNumber;
-            if(addressDetails.levelNumber.length() > 1)
+            //START PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - checking null value
+            //if(addressDetails.levelNumber.length() > 1)
+            if(addressDetails.levelNumber != Null && addressDetails.levelNumber.length() > 1)
+            //END PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - checking null value
                 newAddress.Level_Number__c = addressDetails.levelNumber;
             else
                 newAddress.Level_Number__c = '0' + addressDetails.levelNumber;
             
-            if(addressDetails.unitNumber.length() > 1)
+            //START PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - checking null value
+            //if(addressDetails.unitNumber.length() > 1)
+            if(addressDetails.unitNumber != Null && addressDetails.unitNumber.length() > 1)
+            //END PD-0572 - I-0498 17-Jun-2016 Added by Raviteja - checking null value
                 newAddress.Unit_Number__c = addressDetails.unitNumber;
             else
                 newAddress.Unit_Number__c = '0' + addressDetails.unitNumber;
@@ -761,7 +799,13 @@ public class BT_TH_STP050DX_StopPressSubscription
     
     public static Zuora__Subscription__c getLatestSubscription(Id parentAccountIdParam, ContactWrapper contactDetails){
         Zuora__Subscription__c latestSubscription;
-        List<Zuora__Subscription__c> subscriptionList = [SELECT Id, Zuora__SubscriptionEndDate__c FROM Zuora__Subscription__c WHERE Recipient_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode AND Recipient_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode AND Recipient_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber AND Recipient_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber AND Product_Code__c = :basePackageItemRecord.Product_Rate_Plan__r.Product_Code__c AND Zuora__Account__r.Id = :parentAccountIdParam ORDER BY Zuora__SubscriptionEndDate__c DESC LIMIT 1]; //START/END 11 October 2015 UD-3075 Kevin Evasco - Use product code filter instead of package code
+        //START/END 11 October 2015 UD-3075 Kevin Evasco - Use product code filter instead of package code
+        List<Zuora__Subscription__c> subscriptionList = [SELECT Id, Zuora__SubscriptionEndDate__c FROM Zuora__Subscription__c WHERE Recipient_Contact__r.Address__r.Country__r.Code__c = :contactDetails.address.countryCode 
+                                                                                                                                        AND Recipient_Contact__r.Address__r.Postal_Code__r.Name = :contactDetails.address.postalCode 
+                                                                                                                                        AND Recipient_Contact__r.Address__r.Unit_Number__c = :contactDetails.address.unitNumber 
+                                                                                                                                        AND Recipient_Contact__r.Address__r.Level_Number__c = :contactDetails.address.levelNumber 
+                                                                                                                                        AND Product_Code__c = :basePackageItemRecord.Product_Rate_Plan__r.Product_Code__c 
+                                                                                                                                        AND Zuora__Account__r.Id = :parentAccountIdParam ORDER BY Zuora__SubscriptionEndDate__c DESC LIMIT 1]; 
         
         if(subscriptionList.size() > 0)
             latestSubscription = subscriptionList.get(0);

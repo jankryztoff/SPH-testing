@@ -1,0 +1,13 @@
+Hi, 
+
+The following case is awaiting approval for refund 
+
+Case No: {!Case.CaseNumber}
+Account: {!Case.Account} 
+Refund Amount: {!Case.Amount_To_Refund__c}
+
+Please click link below to view case details 
+
+{!Case.Link}
+
+Thanks.

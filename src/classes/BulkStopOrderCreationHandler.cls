@@ -46,7 +46,7 @@ public class BulkStopOrderCreationHandler {
         system.debug('>>>>>subList ' + subList);
         system.debug('>>>>>subList ' + subList.size());
         prepareRecords(subList); //START-END UD-2549 3/23/2016 Added by J.Sarion - changed param
-        executeRecordCreation();
+        executeRecordCreation(subList); //START-END PD-0506 6/24/2016 Added by J.Sarion - added param
         //executeCancellation();
         
         logger.save();
@@ -96,8 +96,10 @@ public class BulkStopOrderCreationHandler {
                 accountId_subscriptionList.get(sub.Zuora__Account__c).add(sub);
             }
             
-            sub.Zuora__SubscriptionEndDate__c = date.today();
-            subscriptionList.add(sub);
+            //START PD-0506 6/14/2016 Added by J.Sarion - commented out
+            //sub.Zuora__SubscriptionEndDate__c = date.today();
+            //subscriptionList.add(sub);
+            //END PD-0506 6/14/2016 Added by J.Sarion - commented out
             
             productCode_earliestStartDate.put(sub.Product_Code__c, null);
             billingAccountIdList.add(sub.Zuora__CustomerAccount__c);
@@ -164,6 +166,11 @@ public class BulkStopOrderCreationHandler {
                 orderLineItemx.Earliest_Stop_Date__c = productCode_earliestStartDate.get(sub.Product_Code__c);
                 //START UD-2549 3/29/2016 Added by J.Sarion - Set fields
                 orderLineItemx.Stop_Request_Date__c = productCode_earliestStartDate.get(sub.Product_Code__c); 
+                //START PD-0506 6/13/2016 Added by J.Sarion - set date for cancelled subs
+                if(sub.Zuora__Status__c == GlobalVariableClass.STATUS_CANCELLED && sub.Zuora__SubscriptionEndDate__c != null) {
+                    orderLineItemx.Stop_Request_Date__c = sub.Zuora__SubscriptionEndDate__c.addDays(1);
+                }
+                //END PD-0506 6/13/2016 Added by J.Sarion - set date for cancelled subs
                 orderLineItemx.Subscription_Name__c = sub.Name;
                 //END UD-2549 3/29/2016 Added by J.Sarion - Set fields
                 //START UD-2549 3/24/2016 Added by J.Sarion 
@@ -186,7 +193,8 @@ public class BulkStopOrderCreationHandler {
         // end - create related objects
     }
     
-    private void executeRecordCreation() {
+    //START PD-0506 6/24/2016 Added by J.Sarion - added param
+    private void executeRecordCreation(List<Zuora__Subscription__c> subList) {
         
         savepoint sp = Database.setSavepoint();
         
@@ -209,7 +217,7 @@ public class BulkStopOrderCreationHandler {
             system.debug('>>>>>caseSubscriptionList ' + caseSubscriptionList);
             system.debug('>>>>>subscriptionList ' + subscriptionList);
             insert caseSubscriptionList;
-            update subscriptionList;
+            //update subscriptionList; //START-END PD-0506 6/14/2016 Added by J.Sarion - commented out
                 
         } catch (exception e) {
             
@@ -219,12 +227,13 @@ public class BulkStopOrderCreationHandler {
             
             //START UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
             if (e.getMessage() != null && e.getMessage().contains(ERR_LOCK_ROW)) {
-                System.enqueueJob(new BulkStopOrderCreationQueueable(subscriptionIdSet));
+                System.enqueueJob(new BulkStopOrderCreationQueueable(subList));
             }
             //END UD-2549 4/6/2016 Added by John D - retry mechanism for unable to lock row error
         }
         
     }
+    //END PD-0506 6/24/2016 Added by J.Sarion - added param
     
     
     private void populateCaseLookupFields() {

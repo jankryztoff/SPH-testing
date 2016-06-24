@@ -170,11 +170,11 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
         Logger logger = new Logger(InvoicePaymentTriggerHandler.class.getName()); //START-END UD-2549 4/5/2016 Added by J.Sarion
         
         ZuoraCallout zCallout = new ZuoraCallout();
-        system.debug('>>>>>invZuoraIdSet ' + invZuoraIdSet);
+        system.debug('>>>>>invZuoraIdSet: ' + invZuoraIdSet);
         
         //START UD-2549 4/5/2016 Added by J.Sarion - update invoice 
         invoiceList = [SELECT Id, Is_CN_Processed__c FROM Zuora__ZInvoice__c WHERE Zuora__Zuora_Id__c IN :invZuoraIdSet];
-        system.debug('>>>>>invoiceList ' + invoiceList);
+        system.debug('>>>>>invoiceList: ' + invoiceList);
         for(Zuora__ZInvoice__c inv :invoiceList) {
             inv.Is_CN_Processed__c = false;
         }
@@ -195,7 +195,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
         if(!updateInvoiceMapList.isEmpty()) {
             resultMapList = new List<Map<String, String>>();
             resultMapList = zCallOut.updateZObjects(updateInvoiceMapList, 'Invoice');
-            system.debug('>>>>>resultMapList ' + resultMapList);
+            system.debug('>>>>>resultMapList: ' + resultMapList);
             for(Map<String, String> resultMap :resultMapList) {
                 if(resultMap.get('Status') != 'Success') {
                     logger.log(false, resultMap.get('Message'));
@@ -212,19 +212,21 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
             invoiceLineItemList = zCallout.bulkQueryZObjects(zoqlString); //START-END UD-2549 3/15/2016 Added by J.Sarion - added params
         }
         
-        system.debug('>>>>>invoiceLineItemList ' + invoiceLineItemList);
+        system.debug('>>>>>invoiceLineItemList: ' + invoiceLineItemList);
         if(!invoiceLineItemList.isEmpty()) {
             for(Zuora.zObject zobj :invoiceLineItemList) {
                 subZuoraIdSet.add((String) zobj.getValue('SubscriptionId'));
             }
         }
-        system.debug('>>>>>subZuoraIdSet ' + subZuoraIdSet);
+        system.debug('>>>>>subZuoraIdSet: ' + subZuoraIdSet);
         if(!subZuoraIdSet.isEmpty()) {
             subList = [SELECT Id, (SELECT Id, Case__r.CreatedById, Case__r.Account__c, Case__r.AccountId FROM Case_Subscriptions__r 
                         WHERE Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.RECTYPE_START_SUBSCRIPTION) 
                         //START PD-0116 Gdelrosario/JDacutan : added condition for RENEWAL and COS
+                        //START PD-0601 A.Nayal
                         or Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.CASECHANGEOFSUBSCRIPTION) 
                         or Case__r.RecordTypeId = :ConstantsSLB.getKeyId(GlobalVariableClass.RECTYPE_RENEWAL_OF_SUBSCRIPTION)) 
+                        //END PD-0601 A.Nayal
                         //END PD-0116 Gdelrosario/JDacutan : added condition for RENEWAL and COS
                         FROM Zuora__Subscription__c 
                         WHERE Zuora__Zuora_Id__c IN :subZuoraIdSet AND Subscription_Type_1__c = 'Publication'];
@@ -243,7 +245,7 @@ public class InvoicePaymentTriggerHandler implements TriggerHandlerInterface{
             taskList.add(t);
             system.debug('>>>>>task ' + t);
         }
-        
+        system.debug('taskList size: ' + taskList.size());
         if(!taskList.isEmpty()) {
             try {
                 insert taskList;

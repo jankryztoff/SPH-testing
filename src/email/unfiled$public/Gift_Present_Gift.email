@@ -1,0 +1,70 @@
+<pre>
+{{Today}}	
+
+Account no: {{Account.AccountNumber}}
+{{Contact.FirstName}} {{Contact.LastName}}
+{{Contact.MailingAddress}}
+
+Dear {{Contact.Salutation}} {{Contact.FirstName}} {{Contact.LastName}},
+
+Thank you for subscribing to {{Publication__c.Name}}. As a gesture of our appreciation for your support, we would like to present you with a {{Gift__c.Name}}.
+
+ 
+    1. For collection of the {{Gift__c.Name}}, please produce this original letter, your original NRIC (for verification), along with a photocopy of your NRIC (for retention) in person to collect your gift at the below address:
+
+    Service Hub
+    Funan DigitaLife Mall
+    109 North Bridge Road, #06-03, Singapore 179097
+
+    Operating Hours : 10.00am – 7.00pm (Monday – Saturday)
+                    : 10.00am – 3.00pm (Sunday)
+                    : Closed on Eve of Public Holidays & Public Holidays
+
+    Telephone       : 6883 0512
+    
+    Gift Redemption : Now to 05 March 2014
+    period  
+
+    2. If you’re unable to collect the gift personally, you may authorise someone else to collect it on your behalf. Your representative must present this letter (with Section A completed) together with a photocopy of your NRIC and his/her NRIC. Do note that the authorized collector’s NRIC will be verified and may be photocopied for documentation purposes.
+
+    3. All product queries and warranty matters should be referred back to the respective Brand’s service centre or customer service.
+
+    4. All gifts which are not redeemed by 05 March 2014 will be forfeited.
+
+We thank you for your support and should you require further assistance on your subscription, please call our Customer Service Hotline at 6388 3838 from 6am to 6pm on Monday to Friday, or 6am to 12pm on Saturday, Sunday. The hotline will not be available on Public Holidays. Alternatively, you may email circs@sph.com.sg.
+
+Marketing
+Circulation
+Singapore Press Holdings Limited
+
+
+Please note that this is a computerized printout. No signature is required.
+____________________________________________________________________
+
+<center><b>SECTION A: AUTHORISATION</b></center>
+
+ 
+
+I, ______________________, hereby authorise of NRIC No. _____________ to collect the prize on my behalf.
+
+ 
+
+____________________________                ____________________________
+    
+Subscriber’s Signature & NRIC               Contact Number
+Account No. : {{Account.AccountNumber}}
+ 
+
+<center><b>SECTION B: ACKNOWLEDGEMENT</b></center>
+
+[] I hereby acknowledge receipt of {{Gift__c.Name}}.
+ 
+
+____________________________                ____________________________
+NRIC                                        Recipient’s Name
+Account No. : {{Account.AccountNumber}}
+ 
+
+____________________________                ____________________________
+Redemption Date                             Contact Number 
+</pre>

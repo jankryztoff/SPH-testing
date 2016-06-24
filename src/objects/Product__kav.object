@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleTypeChannelDisplay>
+        <articleTypeTemplates>
+            <channel>App</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Prm</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Csp</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Pkb</channel>
+            <template>Toc</template>
+        </articleTypeTemplates>
+    </articleTypeChannelDisplay>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This Product Article type will capture all existing products details of SPH.</description>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <fields>
+        <fullName>File_Attachment__c</fullName>
+        <externalId>false</externalId>
+        <label>File Attachment</label>
+        <required>false</required>
+        <type>File</type>
+    </fields>
+    <fields>
+        <fullName>Flag__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Today()&lt;= Valid_Until__c  , IMAGE(&quot;/img/samples/flag_green.gif&quot;, &quot;green&quot;),IMAGE(&quot;/img/samples/flag_red.gif&quot;, &quot;red&quot;))</formula>
+        <label>Flag</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Details</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Valid_Until__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid Until</label>
+        <required>true</required>
+        <type>Date</type>
+    </fields>
+    <label>Product</label>
+    <pluralLabel>Products</pluralLabel>
+</CustomObject>

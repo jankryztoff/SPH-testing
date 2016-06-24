@@ -1,0 +1,111 @@
+<!-- *VF Page Name: ReportHardCopy
+     * @author: Rica Kirsten Joy Mayo
+     * Date: 11/08/2014
+     * Requirement/Project Name: SPH 
+     * D-2013 3/20/2015 Alyana Navarro - Reconstruct whole VF Page
+     -->
+
+<!--START : D-3015 05/25/2015 S.Puli-->
+<!--START : UD-1839 07/15/2015 S.Puli-->
+<apex:page controller="PackingLabelsController" renderAs="PDF" action="{!initializeMagazineWrap}" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+<!--END : D-3015 05/25/2015 S.Puli-->
+<!--img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N00000002ulS&oid=00DN0000000PmPG&lastMod=1403676977000" height="90" width="110"/-->
+    <head>
+      <style>
+        body {
+            font-family: 'Arial Unicode MS'; 
+            font-size:14px;
+            }  
+        @page 
+        { 
+        <!-- START UD-2409 Jason Abolac 10/13/15-->
+            size: 13.90in 9.84in;
+        <!-- END UD-2409 Jason Abolac 10/13/15-->
+            <!-- Start UD-2254 VPernicia 08/11/15-->
+            @bottom-right {
+                
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: Arial;
+                font-size: 9pt;
+            }
+            <!-- End UD-2254 VPernicia 08/11/15-->
+        }
+<!--END : UD-1839 07/15/2015 S.Puli-->
+      </style> 
+    </head>
+    <body>
+    <!--START: UD-2416 19-Aug-2015 Added By S.Puli-->
+    <!--START: UD-3044 10/30/2015 Added By Mel Mallorca for Logo Dimension-->
+    <apex:image url="{!$Resource.SPHlogov2}" height="20mm" width="28.5mm" />
+    <!--END: UD-3044 10/30/2015 Added By Mel Mallorca for Logo Dimension-->
+    <!--END: UD-2416 19-Aug-2015 Added By S.Puli-->
+        <blockquote>
+            <blockquote>
+                <blockquote>
+                    <blockquote>
+                    <!--START : D-3015 05/25/2015 S.Puli-->
+                    <p/> {!PackagingLabel.Account_Name__r.AccountNumber}&nbsp;{!recipientNumber}&nbsp;{!magPubCode}
+                    <!-- START: UD-1165 5/13/2015 Alyana Navarro -->
+                    <!--START : UD-1839 07/15/2015 S.Puli-->
+                    <apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+                    <div class= "address">
+                    <!--START UD-2914 10/26/2015 added by Jason A. -->
+            <!--START UD-3201 16-Nov-2015 Added By S.Puli-->
+                    <p/> Attn: {!PackagingLabel.Subscription__r.Recipient_Contact__r.Company_Name__c}
+            <!--END UD-3201 16-Nov-2015 Added By S.Puli-->
+                    <!--END UD-2914 10/26/2015 added by Jason A. -->
+                    <!--START D-3529 Gdelrosario 14/10/2015 : for address change variables -->
+                    <br/>
+                    <apex:outputText value="{!finalAddress}" escape="false"/>
+                    <!--END D-3529 Gdelrosario 14/10/2015 : for address change variables -->
+                    <!--END : UD-1839 07/15/2015 S.Puli-->
+                    <!--END : D-3015 05/25/2015 S.Puli-->
+                    </div>
+                    <!-- END : UD-1165 5/13/2015 Alyana Navarro -->
+                    <br/> <br/> <br/> 
+                    <p/> <b> For Internal Mailing only </b>
+                    </blockquote>
+                </blockquote>
+            </blockquote>
+        </blockquote>    
+        <br/> 
+        <table width="100%" cellpadding="5">
+        <tr>
+        
+        <td width="40%" align="left" > 
+        <br/>Printed Matter 
+        <br/> <br/> <p/>If undelivered, Please return to:
+        <br/> <br/>
+        <p/>Singapore Press Holdings Limited
+        <p/>Circulation, Customer Service
+        <p/>82 Genting Lane
+        <p/>Singapore 349567
+        <p/>Tel: 63883838
+        <p/>Fax: 65-67444875
+        <p/>Co. Regn. No.: 198402868E
+        </td>
+        <td width="60%" align="left" style="border: 1px solid">
+    Moving Soon?
+    <p/>Please update us your new address: (In block letters)
+    <br/>
+    <br/>
+    <!--START : D-3015 05/25/2015 S.Puli-->
+    <p/>Sub A/C No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {!PackagingLabel.Account_Name__r.AccountNumber}&nbsp;{!recipientNumber}&nbsp;{!dateString}&nbsp;{!magPubCode}
+    <!--END : D-3015 05/25/2015 S.Puli-->
+    <p/>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+    <p/>New Address&nbsp;&nbsp;&nbsp;&nbsp; :
+    <br/>
+    <br/>
+    <br/>
+    <p/>Postal/Zip Code :
+    <p/>Effective Date &nbsp;&nbsp;&nbsp;:
+    <p/>Tel / Fax No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+    
+    
+    </td>
+        
+               
+        </tr>
+        </table>    
+    </body>
+</apex:page>

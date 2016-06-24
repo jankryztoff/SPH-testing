@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_STPPRS_StopPressSubscription</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_STPPRS_StopPressSubscription</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- BT_CO_STPPRS_StopPressSubscription --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quotes Created --></label>
+        <name>Quotes_Created__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- amount paid --></label>
+        <name>amount_paid__c</name>
+    </fields>
+    <fields>
+        <label><!-- auto renewal indicator --></label>
+        <name>auto_renewal_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- card expiry date --></label>
+        <name>card_expiry_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- credit card type --></label>
+        <name>credit_card_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- delivery fee indicator --></label>
+        <name>delivery_fee_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- filler --></label>
+        <name>filler__c</name>
+    </fields>
+    <fields>
+        <label><!-- free gift2 --></label>
+        <name>free_gift2__c</name>
+    </fields>
+    <fields>
+        <label><!-- free gift3 --></label>
+        <name>free_gift3__c</name>
+    </fields>
+    <fields>
+        <label><!-- free gift4 --></label>
+        <name>free_gift4__c</name>
+    </fields>
+    <fields>
+        <label><!-- free gift --></label>
+        <name>free_gift__c</name>
+    </fields>
+    <fields>
+        <label><!-- hse type --></label>
+        <name>hse_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- mlgagt --></label>
+        <name>mlgagt__c</name>
+    </fields>
+    <fields>
+        <label><!-- online order num --></label>
+        <name>online_order_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- pay type --></label>
+        <name>pay_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- payment number --></label>
+        <name>payment_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- product code --></label>
+        <name>product_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- promo indicator --></label>
+        <name>promo_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient age group --></label>
+        <name>recipient_age_group__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient blgm --></label>
+        <name>recipient_blgm__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient country --></label>
+        <name>recipient_country__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient country code --></label>
+        <name>recipient_country_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient coym --></label>
+        <name>recipient_coym__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient date of birth --></label>
+        <name>recipient_date_of_birth__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient dsg --></label>
+        <name>recipient_dsg__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient email id --></label>
+        <name>recipient_email_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient fax num --></label>
+        <name>recipient_fax_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient home tel num --></label>
+        <name>recipient_home_tel_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient house block num --></label>
+        <name>recipient_house_block_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient house level number --></label>
+        <name>recipient_house_level_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient house unit number --></label>
+        <name>recipient_house_unit_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient hphnn --></label>
+        <name>recipient_hphnn__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient icn --></label>
+        <name>recipient_icn__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient income range --></label>
+        <name>recipient_income_range__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient local address --></label>
+        <name>recipient_local_address__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient name --></label>
+        <name>recipient_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient office ext num --></label>
+        <name>recipient_office_ext_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient office tel num --></label>
+        <name>recipient_office_tel_num__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient overseas add1 --></label>
+        <name>recipient_overseas_add1__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient overseas add2 --></label>
+        <name>recipient_overseas_add2__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient overseas add3 --></label>
+        <name>recipient_overseas_add3__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient overseas add4 --></label>
+        <name>recipient_overseas_add4__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient postal code --></label>
+        <name>recipient_postal_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient privacy indicator --></label>
+        <name>recipient_privacy_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient profession --></label>
+        <name>recipient_profession__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient race --></label>
+        <name>recipient_race__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient salutation --></label>
+        <name>recipient_salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient sex --></label>
+        <name>recipient_sex__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipient strm --></label>
+        <name>recipient_strm__c</name>
+    </fields>
+    <fields>
+        <label><!-- recurring indicator --></label>
+        <name>recurring_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- referred start date --></label>
+        <name>referred_start_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- sub copies --></label>
+        <name>sub_copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- sub period --></label>
+        <name>sub_period__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscribe local address --></label>
+        <name>subscribe_local_address__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber age group --></label>
+        <name>subscriber_age_group__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber blgm --></label>
+        <name>subscriber_blgm__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber country --></label>
+        <name>subscriber_country__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber country code --></label>
+        <name>subscriber_country_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber coym --></label>
+        <name>subscriber_coym__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber date of birth --></label>
+        <name>subscriber_date_of_birth__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber dsg --></label>
+        <name>subscriber_dsg__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber email id --></label>
+        <name>subscriber_email_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber fax number --></label>
+        <name>subscriber_fax_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber home tel number --></label>
+        <name>subscriber_home_tel_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber house block number --></label>
+        <name>subscriber_house_block_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber house level number --></label>
+        <name>subscriber_house_level_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber house unit number --></label>
+        <name>subscriber_house_unit_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber hphnn --></label>
+        <name>subscriber_hphnn__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber icn --></label>
+        <name>subscriber_icn__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber income range --></label>
+        <name>subscriber_income_range__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber name --></label>
+        <name>subscriber_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber office ext number --></label>
+        <name>subscriber_office_ext_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber office tel number --></label>
+        <name>subscriber_office_tel_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber overseas add1 --></label>
+        <name>subscriber_overseas_add1__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber overseas add2 --></label>
+        <name>subscriber_overseas_add2__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber overseas add3 --></label>
+        <name>subscriber_overseas_add3__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber overseas add4 --></label>
+        <name>subscriber_overseas_add4__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber postal code --></label>
+        <name>subscriber_postal_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber privacy indicator --></label>
+        <name>subscriber_privacy_indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber profession --></label>
+        <name>subscriber_profession__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber race --></label>
+        <name>subscriber_race__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber salutation --></label>
+        <name>subscriber_salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber sex --></label>
+        <name>subscriber_sex__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber strm --></label>
+        <name>subscriber_strm__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriber type --></label>
+        <name>subscriber_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscription package code --></label>
+        <name>subscription_package_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- unit discount price --></label>
+        <name>unit_discount_price__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This is to configure the Billing Batch Allocation by Payment Methods</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Batch__c</fullName>
+        <description>Zuora Billing Batch Number allocated to this Payment Methods, separate by Comma &quot;,&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Separate by Comma &quot;,&quot;</inlineHelpText>
+        <label>Billing Batch Number</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Next_Batch_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Batch Number</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Billing Batch Allocation</label>
+    <visibility>Protected</visibility>
+</CustomObject>

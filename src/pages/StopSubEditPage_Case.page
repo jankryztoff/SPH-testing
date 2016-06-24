@@ -1,0 +1,64 @@
+<apex:page controller="StopSubCaseOfferController">
+    <apex:form >    
+        <apex:pageBlock title="Case Edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!caseView}" />
+                <apex:commandButton value="Cancel" action="{!cancelEditCase}"/> 
+            </apex:pageBlockButtons>
+            
+            <apex:pageMessages id="msg"/>
+            
+            <apex:pageBlockSection title="Case Information">
+                <apex:outputField value="{! existingCase.Owner.name}" label="Case Owner"/>
+                <apex:outputField value="{! existingCase.Category__c}"/>
+                <apex:outputField value="{! existingCase.CaseNumber}"/>                
+                <apex:outputField value="{! existingCase.Sub_Category__c}"/> 
+                <apex:outputField value="{! existingCase.Order_Number__c}"/>
+                <apex:outputText value="{! existingCase.RecordType.name}"/>                
+                <apex:outputField value="{! existingCase.Earliest_Stop_Date__c}"/>
+                                            
+                <apex:outputField value="{! existingCase.Status}"/>
+                <apex:outputField value="{! existingCase.Stop_Request_Date__c}"/>                   
+
+                <apex:outputField value="{! existingCase.Sub_Status__c}"/>
+                <apex:outputField value="{! existingCase.AccountId}"/>                
+
+                <apex:outputField value="{! existingCase.Reason_Code__c}"/>
+                <apex:outputField value="{! existingCase.ContactId}"/>
+                <apex:outputField value="{! existingCase.Reason_for_Terminating__c}"/>
+                <apex:outputField value="{! existingCase.Charges_Waived__c}"/>
+                <apex:inputField value="{! existingCase.ParentId}"/>
+                <apex:outputField value="{! existingCase.Eligible_for_Retention_Offer__c}"/><br/>
+                <!-- START: D-0807 12/4/2014 Added by Jerella Ledesma Added field to the VF Page and removed field not necessary for the page.-->
+                <apex:inputField value="{! existingCase.Route_to_Retention__c}"/><br/>
+                <!-- <apex:inputField value="{! existingCase.Send_to_Retention__c}"/><br/> -->
+                <!-- END: D-0807 12/4/2014 Added by Jerella Ledesma -->
+                <apex:outputField value="{! existingCase.Amount_to_Refund__c}"/><br/>                
+                <apex:outputField value="{! existingCase.Admin_Charges__c}"/><br/>
+                <apex:outputField value="{! existingCase.Overridden_Admin_Charges_Amount__c}"/><br/>
+                <apex:outputField value="{! existingCase.Reason_for_Overriding__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" title="Retention Information">
+                <apex:outputField value="{! existingCase.Offer_Promotion__c}" label="Offer Promotion"/>
+                <apex:commandButton value="Search" action="{!redirectToOfferPromotion}"/>
+                <apex:outputField value="{! existingCase.Offer_Package__c}" label="Offer Package"/>
+                <apex:commandButton value="Search" action="{!redirectToOfferPackage}"/>
+                <!--START: UD-3473 1/29/16 Added by Manolo Valena-->
+                <apex:outputField value="{! existingCase.Add_On_Package__c}" label="Offer Add On"/>
+                <!--END: UD-3473 1/29/16 Added by Manolo Valena-->
+                <apex:commandButton value="Search" action="{!redirectToOfferAddOn}"/>
+                <apex:inputField value="{! existingCase.Offer_Type__c}"/>    
+                <br/>
+                <apex:inputField value="{! existingCase.Outcome__c}"/>
+                <br/>
+                <apex:inputField value="{! existingCase.Origin}"/>
+                <br/>
+                <apex:inputField value="{! existingCase.Priority}"/>
+                <br/>
+                <apex:inputField value="{! existingCase.Subject}"/>
+                <br/>
+                <apex:inputTextarea value="{! existingCase.Description}" rows="5" cols="50" label="Description"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

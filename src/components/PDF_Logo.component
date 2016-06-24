@@ -1,0 +1,12 @@
+<apex:component >
+
+    <img src="http://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N00000007u0U&oid=00DN0000000OdC2&lastMod=1436422003000" height="90" width="100"/>
+    <div style="font-size:9pt; font-name: arial">
+        <br/><b>Singapore Press Holdings Limited</b>
+        <br/><b>Circulation</b>
+        <br/>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+        <br/>Enquiries: +65 6388  3838, Email: circs@sph.com.sg
+        <br/>Co. Regn. No.: 198402868E
+    </div>
+    
+</apex:component>

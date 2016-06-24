@@ -10,7 +10,9 @@ global class CaseVoidButtonController{
     
    webService static String voidCase(Id caseId, Id userId) {
         //START UD-3911 FrancisBEnzon 9Apr16 : added status in query
-        Case caseRec =  [SELECT Id, Status, RecordType.Name, Owner.Name, Owner.Id, Effective_Date__c FROM Case WHERE Id=:caseId];
+        //START PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario
+        Case caseRec =  [SELECT Id, Status, RecordType.Name, Owner.Name, Owner.Id, Effective_Date__c, Order__r.Status__c FROM Case WHERE Id=:caseId];
+        //END PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario
         Boolean isCaseClosed = false;
         //END UD-3911 FrancisBEnzon 9Apr16 : added status in query
         List<Order_Line_Item__c> lstOLIs = new List<Order_Line_Item__c>();
@@ -44,19 +46,79 @@ global class CaseVoidButtonController{
             Date earliestStartStopDate;
             Boolean startStopDateError = false;
             String startStop = '';
+            //START PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario
+            Boolean isImmediateCOS = false; 
+            String recurringPrepaid = GlobalVariableClass.BILLING_TYPE_MR_PRE;
+            String fullPrepaid = GlobalVariableClass.BILLING_TYPE_FULL_PRE; 
+            String oldCosSubBType;
+            String newCosSubBType;
+            Integer oldSubMonth;
+            Integer newSubMonth;
+            Integer oldSubYear;
+            Integer newSubYear;
+            Set<Id> orderIds = new Set<Id>();
+            List<Order__c> ordersToUpdate = new List<Order__c>();
             
-            lstOLIs = [SELECT Id, Main_Package_ID__c, Start_Date__c, Stop_Request_Date__c FROM Order_Line_Item__c WHERE Case__c =:caseId];
+            Case cosCase = [Select Subscription_Name__r.Billing_Type__c, Subscription_Name__r.Zuora__SubscriptionStartDate__c From Case Where Id = :caseId];
             
+            if(cosCase.Subscription_Name__r.Billing_Type__c  != null)   
+                oldCosSubBType = cosCase.Subscription_Name__r.Billing_Type__c ;
+            
+            if(cosCase.Subscription_Name__r.Zuora__SubscriptionStartDate__c != null)
+            {
+                oldSubMonth = cosCase.Subscription_Name__r.Zuora__SubscriptionStartDate__c.Month();
+                oldSubYear = cosCase.Subscription_Name__r.Zuora__SubscriptionStartDate__c.Year();
+            }
+            
+            try 
+            {
+                Order_Line_Item__c oli = [Select Order__r.Billing_Type__c, Start_Date__c From Order_Line_Item__c Where Case__c = :caseId];
+                if(oli != null && oli.Order__r.Billing_Type__c != null)
+                    newCosSubBType = oli.Order__r.Billing_Type__c;
+                
+                if(oli.Start_Date__c != null)
+                {
+                    newSubMonth = oli.Start_Date__c.Month();
+                    newSubYear = oli.Start_Date__c.Year();
+                }
+            }catch(exception e) {
+                system.debug(':::ERROR ' + e);
+            }
+                     
+            if(oldCosSubBType == fullPrepaid && newCosSubBType == fullPrepaid)          
+                isImmediateCOS= true;
+            if(oldCosSubBType == fullPrepaid && newCosSubBType == recurringPrepaid)
+                isImmediateCOS= true;
+            if(oldCosSubBType == recurringPrepaid && newCosSubBType == fullPrepaid && oldSubMonth == newSubMonth && oldSubYear == newSubYear)
+            {
+                isImmediateCOS= true;
+            }                           
+           
+            
+            lstOLIs = [SELECT Id, Main_Package_ID__c, Start_Date__c, Stop_Request_Date__c, Order__c FROM Order_Line_Item__c WHERE Case__c =:caseId];
+            //END PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario
             if(caseRec.RecordType.Name == GlobalVariableClass.RECTYPE_CHANGE_OF_SUBSCRIPTION){
-                startStop = 'Start';
+                //START PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario
+                if(isImmediateCOS)
+                {
+                    result  = Label.ERROR_VOID;
+                    return result;
+                }
+                //END PD-0113 FrancisBenzon 10Jun16 : cannot void COS with Immedaite scenario               
+                startStop = 'Start';                                
             }else{
                 startStop = 'Stop';
             }
-            if(!lstOLIs.isEmpty()){
+            
+            if(!lstOLIs.isEmpty()){ 
                 for(Order_Line_Item__c oli:lstOLIs){
                     if(oli.Main_Package_ID__c != null){
                         mainPackageIds.add(oli.Main_Package_ID__c);
                     }
+                    //START PD-0113 FrancisBenzon 10Jun16 : void order
+                    if(oli.Order__c != null)
+                        orderIds.add(oli.Order__c);
+                    //END PD-0113 FrancisBenzon 10Jun16 : void order
                 }
                 if(!mainPackageIds.isEmpty()){
                     earliestStartStopDate = getEarliestStopStartDate(mainPackageIds);
@@ -85,7 +147,25 @@ global class CaseVoidButtonController{
                             result = 'This case cannot be VOIDED – the ' + startStop + ' Date is before the Earliest ' +  + startStop +  ' Date';
                         }else{
                             //START UD-3911 13Apr16 FrancisBenzon : reverted original logic as per new new design
-                            result = updateCase(caseRec);
+                            result = updateCase(caseRec); 
+                            
+                            //START PD-0113 FrancisBenzon 10Jun16 : void order
+                            for(Order__c ord : [Select Status__c From Order__c Where Id IN :orderIds])
+                            {
+                                ord.Status__c = GlobalVariableClass.STATUS_VOID;
+                                ordersToUpdate.add(ord);
+                            }
+                            if(ordersToUpdate.size() > 0)
+                            {
+                                try
+                                {
+                                    update ordersToUpdate;
+                                }catch(exception e) {
+                                    ordersToUpdate = new List<Order__c>();
+                                    system.debug('ERROR ' + e);
+                                }
+                            }   
+                            //END PD-0113 FrancisBenzon 10Jun16 : void order
                             /*
                             //START UD-3911 9Apr16 FrancisBenzon : check case status
                              if(caseRec.Status == GlobalVariableClass.STATUS_CLOSED)
@@ -105,10 +185,10 @@ global class CaseVoidButtonController{
                     result = 'Order Line Items of Case has no Main Package. This data is invalid.';
                 }
             }else{
+                
                 result = 'Case has no related Order Line Item. This data is invalid.';
-            }                   
-        }
-            
+            }           
+        }           
         return result;
    }
    

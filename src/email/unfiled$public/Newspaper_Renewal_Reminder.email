@@ -1,0 +1,173 @@
+<html>
+<body>
+<font face="Time New Roman">
+
+<table width="100%">
+<tr>
+<td width=65% align="left">
+<br><font size="5"> <b> Subscription {{notifRenewal}} Advice </b></font>
+<br><br>DATE 		: {{DateToday}}
+<br><br>Billing A/C NO  	: {{BillingAccountNumber}}
+<br><br>{{ContactName}}
+<br>{{AttentionTo}}
+{{ContactMailingAddress}}
+</td>
+
+
+<td width=35% align="left">
+<img src="{{baseURL}}" height="95" width="135"/>
+<br/><b>Singapore Press Holdings Limited Circulation</b>
+<br/>82 Genting Lane, Level 2, Media Centre, Singapore 349567
+<br/>Enquiries: +65 6388 3838, Email: circs@sph.com.sg
+<br/>Co. Regn. No.: 198402868E
+</td>
+
+</tr>
+</table>
+
+<br/><br/>Thank you for subscribing to our publication/s in the past years.
+
+
+
+<table width="100%">
+	<tr>
+		<td width="100%" valign="top">
+                Your subscription is expiring soon. To renew your subscription, please complete the form below and mail all pages back to us with the attached envelope or fax all pages to us at (65) 6744 4875 or email us before<u> {{expiryDate}}</u>.
+				
+				<br><br>As part of our go green initiative, we will be sending acknowledgement letter via email.  Kindly update us your email address and contact number.  Please tick here if you wish to receive acknowledgement letter in hard copy.
+		</td>
+	</tr>
+</table>
+
+
+	<table width="100%">
+	<tr>	
+	<td width="25%">Email : {{EmailAddress}}</td>
+	<td width="25%">Tel: (H) {{Homenumber}}</td>
+	<td width="25%">(O)  {{OfficeNumber}}</td>
+	<td width="25%">(Mobile) {{MobileNumber}}</td>
+	</tr>
+	</table>
+
+<br/>Please ignore this advice if you have renewed all your subscription. We look forward to your continuous support.<br/><br/>
+
+<div style = "border-style: solid; border-width: 1px;">
+	<table frame="box" width="100%" bgcolor="#cccccc">
+		<tr>					
+                        <td width=40% align=left>
+				<b>Subscription &amp;</b>
+				<br><b>Recipient Details</b>
+                        </td>
+			<td width=15% align=center><b>Copy/s</b></td>
+			<td width=15% align=center><b>Stop Date</b></td> 
+			<td width=15% align=center><b>Amount</b><br><b>S$</b></td>
+			<td width=15% align=center><b>Please</b><br><b>Tick</b></td>
+</tr>
+
+</table>
+</div>
+<table frame="box" width="100%"  cellpadding="0" >
+{{Insert Table}}
+</table>						
+	
+	<br/><b>Yes, I wish to renew my subscription/s for another year. (Please tick the above)</b>
+	<br> Monthly payment (applicable only via credit card payment, subscription will remain in force until we receive your termination notification)
+	<br>  Full payment at S$___________________ . (Please include newspaper delivery fee. Refer to T&C for Delivery Fee)
+	<br>* Inclusive of newspaper delivery fee / postage fee
+	
+	<br><br/><b><u>Payment Mode (please tick where applicable)</u></b>
+	<br/> Credit Card Payment (Please tick where applicable): 
+    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VISA&nbsp;&nbsp;&nbsp;&nbsp; MASTER
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cardholder name : ________________________________________________________________________
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Credit Card No. : __________________________________ Expiry Date (mm/yy) : ____________________
+	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signature : _______________________________________ Date : _________________________________
+	
+	<br><br> Cheque Payment (Payable to Singapore Press Holdings Limited)
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Bank/Cheque No : _________________________________ Amount : ______________________________
+
+	<br><font size="1"> SUB A/C NO  : {{AccountNumber}}  </font>
+	
+
+			<br><br><b><u>A.   TERMS AND CONDITIONS</u></b>
+			<br/><br/><b>MODE OF PAYMENT</b>
+			<p style="text-indent: 3em;">•	All subscriptions are available on a prepaid basis.</p>
+			<p style="text-indent: 3em;">•	Payment can be made through:</p>
+			<p style="text-indent: 4em;">o	Cheque, Money Order (payment to be drawn in Singapore currency on a local bank), made payable to:</p>
+			<p style="text-indent: 5em;"><b>“Singapore Press Holdings Limited”</b></p>
+			<p style="text-indent: 4em;">o	Credit Card (Visa/MasterCard)</p>
+			<p style="text-indent: 5em;">Subscription is accepted via fax/e-mail for this mode of payment. Please indicate card number and expiry date.</p>
+
+			<b>CONFIRMATION OF SUBSCRIPTION</b>
+			<p style="text-indent: 3em;">•	You will receive an acknowledgement advice upon the confirmation of your subscription.</p>
+
+			<b>DELIVERY FEE</b>
+			<p style="text-indent: 3em;">•	Subscription rates exclude delivery fee. The monthly delivery fee, dependent on house type, is payable as follows:</p>
+			<p style="text-indent: 4em;">$3 – HDB ($36 per annum)</p>
+			<p style="text-indent: 4em;">$4 – Private apartments, walk-up apartments, factories & offices ($48 per annum)</p>
+			<p style="text-indent: 4em;">$5 – Landed properties ($60 per annum)</p>
+			
+			
+			
+			
+			<b>OTHERS</b>
+			<p style="text-indent: 3em;">•	Subscription rates are inclusive of 7% Goods and Services Tax (GST)</p>
+			<p style="text-indent: 3em;">•	Subscription rates and administrative charges (if any) are subject to change without prior notice.</p>
+
+
+			<b>CONTACT US</b>
+			
+			<table width=80% align=left style="text-indent: 2em;">
+			<tr>
+			<td>•	Tel:   (65) 6388 3838 </td>
+			<td>•	Fax:   (65) 6744 4875 / (65) 6744 1646</td>
+			</tr>
+
+			<tr>
+			<td>•  Email:   circs@sph.com.sg</td>
+			<td>•  Website:   www.sphsubscription.com.sg</td>
+			</tr>
+			</table>
+
+
+			<br/><br/><br/><br/><u><b>B.   CHANGE OF ADDRESS (IF ANY)</b></u>
+			
+			
+					<br/><br/>
+	<table width="70%" style="text-indent: 3em;">
+		<tr>
+			<td width="35%" align="left">Please send renewal advice to:</td>
+			<td width="35%" align="left">Please deliver papers to:</td>			
+		</tr>
+		<tr>
+			<td width="35%" align="left"> &nbsp; </td>
+			<td width="35%" align="left"> &nbsp; </td>			
+		</tr>
+		<tr>
+			<td width="35%" align="left">Name: ______________________________________</td>
+			<td width="35%" align="left">Name: ______________________________________</td>
+		</tr>
+		<tr>
+			<td width="35%" align="left">Sub A/C No: _________________________________</td>
+			<td width="35%" align="left">Sub A/C No: _________________________________</td>
+		</tr>
+		<tr>
+			<td width="35%" align="left">Address: ____________________________________</td>
+			<td width="35%" align="left">Address: ____________________________________</td>
+		</tr>
+		<tr>
+			<td width="35%" align="left" style = "text-indent: 7em;">________________ PC ________________</td>
+			<td width="35%" align="left" style = "text-indent: 7em;">________________ PC ________________</td>
+		</tr>
+		<tr>
+			<td width="35%" align="left">Country: ____________________________________</td>
+			<td width="35%" align="left">Country: ____________________________________</td>
+		</tr>
+		<tr>
+			<td width="35%" align="left">Effective date: _______________________________</td>			
+			<td width="35%" align="left">Effective date: _______________________________</td>
+		</tr>
+	</table>
+
+</font>
+</body>
+</html>

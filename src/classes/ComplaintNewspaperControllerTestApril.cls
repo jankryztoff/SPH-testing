@@ -14,7 +14,7 @@ public class ComplaintNewspaperControllerTestApril {
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standard10@test.com'
         );
         
       //System.assertEquals('', String.valueOf(u));
@@ -224,7 +224,7 @@ public class ComplaintNewspaperControllerTestApril {
             LocaleSidKey='en_US',
             ProfileId = (Id) ConstantsSLB.getKeyId('Profile_Standard User'), 
             TimeZoneSidKey='America/Los_Angeles',
-            UserName='standard@test.com'
+            UserName='standard11@test.com'
         );
         
       //System.assertEquals('', String.valueOf(u));

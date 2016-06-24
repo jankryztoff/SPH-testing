@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Address_Assignment__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Address Assignment with Address and Contact</description>
+    <label>Address Assignment with Address and Contact</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Address__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Effective_Date__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Status__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address ID</displayNameOverride>
+            <field>Address__c.Id</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Indicator</displayNameOverride>
+            <field>Contact__c.Billing_Indicator__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Recipient Address Detail</displayNameOverride>
+            <field>Contact__c.Contact_Address_Detail__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Recipient First Name</displayNameOverride>
+            <field>Contact__c.FirstName</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Recipient Last Name</displayNameOverride>
+            <field>Contact__c.LastName</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Salutation</displayNameOverride>
+            <field>Contact__c.Salutation</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Subscriber Account Number</displayNameOverride>
+            <field>Contact__c.Account.Account_Auto_Number__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Record Type</displayNameOverride>
+            <field>Contact__c.Account.RecordType</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Vendor Code</displayNameOverride>
+            <field>Contact__c.Account.Vendor_Code__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address Record Type</displayNameOverride>
+            <field>Address__c.RecordType</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact Person</displayNameOverride>
+            <field>Contact__c.Account.Contact_Person__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Business Address Indicator</displayNameOverride>
+            <field>Contact__c.Business_Address_Indicator__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact : Mailing Address</displayNameOverride>
+            <field>Contact__c.MailingAddress</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Subscriber Name</displayNameOverride>
+            <field>Contact__c.Account.Name</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Pub Tag</displayNameOverride>
+            <field>Subscription__c.Pub_Tag__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Product Code</displayNameOverride>
+            <field>Subscription__c.Product_Code__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DOW Pattern</displayNameOverride>
+            <field>Subscription__c.Order_Number_1__c.DOW_Pattern__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Suppress Vendor Notification</displayNameOverride>
+            <field>Subscription__c.Order_Number_1__c.Suppress_Vendor_Notification__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Attention To Care Of</displayNameOverride>
+            <field>Contact__c.Account.Attention_To_Care_Of__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Address_ID__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Active__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>End_Date__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Effective_From_Date__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Address_Assignment_Number__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Remarks</displayNameOverride>
+            <field>Case__c.Remarks__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Case Record Type</displayNameOverride>
+            <field>Case__c.RecordType</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Change of Address Type</displayNameOverride>
+            <field>Case__c.Change_of_Address_Type__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>New_Address__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>old_address__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Subscription__c.Vendor_1__c.Vendor_Code__c</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.Status</field>
+            <table>Address_Assignment__c</table>
+        </columns>
+        <masterLabel>Address Assignments</masterLabel>
+    </sections>
+</ReportType>

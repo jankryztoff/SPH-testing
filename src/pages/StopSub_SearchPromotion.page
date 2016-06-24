@@ -1,0 +1,228 @@
+<apex:page controller="StopSubCaseOfferController">
+<style> 
+        .dataRow {
+            cursor: pointer; 
+            cursor: hand;
+        }
+        .subItemTitle {
+            color: green;
+            font-weight: bold;
+        }
+        .scroll {
+            overflow: auto;
+            width:1170px;
+            height: 300px !important;
+            background-color:#ffffff;
+        }
+
+        #lineItemTable, #giftItems {
+            background-color: #cccccc;
+        }
+                        
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+        
+        #lineItemTable th, #giftItems th {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        #giftItems {
+            width: 50%;
+            border-spacing: 1px;
+        }
+            
+        #lineItemTable td, #lineItemTable th, 
+        .resultContainer td, .resultContainer th {
+            border: 0 !important;
+            padding: 2px;
+        }
+        
+        #lineItemTable tr, .resultContainer tr,  #giftItems tr {
+            background-color: #ffffff;
+        }
+        
+        .childList {
+            background-color: #0099FF;
+        }
+        
+        .removeButtonCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        
+        .resultContainer > thead > tr > th {
+            background-color: #6666CC !important;
+            color: #ffffff !important;
+        }               
+        
+        .packageResults th {
+            background-color: #800000 !important;
+            color: #ffffff !important;      
+        }
+        
+        
+        .packageResults tbody tr {
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
+        
+        
+        .packageContainer  {
+            padding-left: 50px !important;
+        }
+        
+        .selectedPackage {
+            background-color: #99CCFF !important;
+        }
+        
+        .numericField {
+            width: 50px;
+        }        
+        
+        </style>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:messages id="promoMsg" />
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Cancel" action="{! doCancel}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection collapsible="true" title="Search Promotion" columns="1">
+            <!-- search container -->
+                <apex:outputPanel id="searchContainer">                   
+                    <apex:actionRegion >
+                        
+                        <apex:pageBlockSection columns="3">
+                            <apex:outputText value="Search Text" />
+                            <apex:outputText value="Billing Type" />
+                            <br/>
+                            <apex:inputText id="searchTerm"  value="{!searchText}" />
+                            <apex:selectList value="{!searchBillingType}" size="1" id="searchBillingType">
+                                <apex:selectOption itemValue="Full Prepaid" itemLabel="Full Prepaid" />
+                                <apex:selectOption itemValue="Recurring Prepaid" itemLabel="Recurring Prepaid" />
+                                <apex:selectOption itemValue="Recurring Postpaid" itemLabel="Recurring Postpaid" />
+                            </apex:selectList>
+                            <apex:commandButton value="Search" reRender="searchResults" action="{! executeSearch}"/>
+                            <apex:outputText value="" />
+                            <apex:outputPanel >
+                                Show ineligible promotion 
+                                <apex:inputCheckBox value="{!isRemoveEligibilityRuleSearchFilter}" onkeypress="validateEvent(event);" />
+                            </apex:outputPanel>                            
+                            <apex:outputText value="" />
+                            <apex:outputText value="" />                               
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="1">
+                                <apex:outputPanel styleClass="subItemTitle" id="searchResults">
+                                    <table class="list resultContainer">
+                                        <thead class="rich-table-thead">
+                                            <tr>
+                                                <th width="10%">Select</th>
+                                                <th width="30%">Promotion Name</th>
+                                                <th width="20%">Start Date</th>
+                                                <th width="20%">End Date</th>
+                                                <th width="10%">Eligible?</th>
+                                                <th width="10%">Contract Period</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+										<!--START: D-0566 12/2/2104 Added by C. Lin For Eligibility Rule and Searching Promotion-->
+                                            <apex:repeat value="{!promotionResultList}" var="pro" rendered="{!promotionResultList != null}">
+                                                <tr class="dataRow" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                    onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}"
+                                                    onclick="showPackageDetails(this); toggleLoader('packageLoader', 'show'); ">
+                                                    <td>
+                                                        <span onclick="promo('{!pro['promoId']}');" class="btn">Select</span>
+                                                    </td>
+                                                    <td> {!pro['promoName']} 
+                                                         <apex:inputHidden id="promotionId" value="{!pro['promoId']}" />
+                                                    </td>
+                                                    <td> {!pro['promoStartDate']} </td>
+                                                    <td> {!pro['promoEndDate']}</td>
+                                                    <td align="center">
+                                                        <apex:variable value="{!pro['promoId']}" var="promoId" />
+                                                        <apex:image value="{!IF(promotionCode_isEligible[promoId],'/resource/check','/s.gif')}" />
+                                                    </td>                                                   
+                                                    <td align='center'> {!pro['promoContractPeriod']} </td>
+                                                </tr>
+                                            </apex:repeat>
+										<!--END: D-0566 12/2/2104 Added by C. Lin-->	
+                                        </tbody>
+                                    </table>                                                                       
+                                </apex:outputPanel>                      
+                            </apex:pageBlockSection>
+                    </apex:actionRegion>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+		<!--START: D-0566 12/2/2104 Added by C. Lin For Eligibility Rule and Searching Promotion-->
+		<apex:actionRegion >
+        <apex:actionFunction name="promo" action="{!xsetPromotion}"  reRender="promoMsg">
+            <apex:param name="param1" assignto="{!promotionId}" value=""/> 
+        </apex:actionFunction>
+        </apex:actionRegion>
+		<!--END: D-0566 12/2/2104 Added by C. Lin-->
+    </apex:form>
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'SM_StartSubscriptionEntryJs.js')}" />
+
+    <script>
+    
+        function showPackageDetails(promoSelected){            
+            var promotionIdHiddenField = $(promoSelected).find("input[id*='promotionId']").val();
+            //var billingType = $("input[id*='searchBillingType']").val();
+            var billingType = $("select[id*='searchBillingType']").val();
+            
+            //alert(billingType);
+            
+            $("#packageContainerWrapper").remove();                    
+            
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.StopSubCaseOfferController.retrieveRelatedPackages}',
+                promotionIdHiddenField,
+                billingType,
+                function(result, event) {
+                    
+                    var template = "<table class=\"list packageResults shadow\">";
+                    template += "<thead class=\"rich-table-thead\">";
+                    template += "   <tr>";
+                    template += "       <th width=\"40%\">Package Name</th>";
+                    template += "       <th width=\"25%\">Package Type</th>";
+                    template += "       <th width=\"10%\">Sub Period</th>";
+                    template += "       <th width=\"10%\">Sub Type</th>";
+                    template += "       <th width=\"15%\">Subscription Rate</th>";
+                    template += "   </tr>";
+                    template += "</thead>";
+                    template += "<tbody>";
+                    
+                    var counter = 0;
+                    $.each($.parseJSON(result), function(key, value) {
+                        var packageIdPromotionId = value.packageId + ":" + promotionIdHiddenField;
+                        
+                        template += "<tr>";
+                        template += "<td>" + value.packageName + "</td>";
+                        template += "<td>" + value.packageType + "</td>";
+                        template += "<td>" + value.packageSubscriptionPeriod + "</td>";
+                        template += "<td>" + value.packageSubscriptionType + "</td>";
+                        template += "<td>" + value.packageSubscriptionRate;
+                        template += "<input type=\"hidden\" value=\"" + packageIdPromotionId + "\" id=\"" + counter + ":value.packageId\" />";
+                        //template += "<input type=\"hidden\" value=\"" + value.packageId + "\" id=\"" + counter + ":value.packageId\" />";
+                        template += "</td>"; 
+                        template += "</tr>";
+                    });
+                    
+                    template += "</tbody>";
+                    template += "</table>";
+                    
+                    var packageContainer = "<tr id=\"packageContainerWrapper\"><td class=\"packageContainer\" colspan=\"5\">" + template + "</td></tr>";
+                    
+                    $(packageContainer).insertAfter(promoSelected);
+                    toggleLoader('packageLoader', 'hide');
+                },
+                {
+                    escape: false
+                }
+            );
+        }    
+    </script>
+</apex:page>

@@ -1,0 +1,1700 @@
+<!--History 18/12/2014 D-0716 D-1303 Wenjun-->
+<!--History 07/01/2014 D-1592 Wenjun: Postage Charges-->
+<apex:page id="SM_StartSubscriptionEntry" controller="SM_StartSubscriptionEntryController" tabStyle="Order__c" 
+                      action="{!initialize}" title="Order: {!thisOrder.Name}">
+   
+    <!--Start: ARMS pop up CSS-->
+    <style type="text/css">
+        .popup
+        {
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 37%;
+            padding:10px;
+            position: fixed;
+            width: 300px;
+            top:45%;
+        }
+        
+        .popup01
+        { 
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 15%;
+            padding:10px;
+            position: fixed;
+            width: 900px;
+            top:20%;
+            overflow: auto; 
+            max-height: 400px;
+            
+            
+        }
+
+        .popupBg
+        {
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 70);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>    
+    <!--End: ARMS pop up CSS--><!--ANUP DEFECT Iframe-->
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+
+    <apex:styleSheet value="{!URLFOR($Resource.css, 'css/SM_StartSubscription.css')}" />
+        <apex:form >
+        <apex:pageMessages id="pageMessage" />
+        <apex:pageBlock >
+            <!-- buttons -->
+            <apex:pageBlockButtons location="both" id="pageButtons">
+                <apex:commandButton value="Edit" disabled="true" />
+                <apex:commandButton value="Save as Draft" action="{!save}" onclick="getPaymentId();"/>
+                <apex:commandButton value="Submit" disabled="true" />
+                <apex:commandButton value="Void" disabled="true" />
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+            <!-- end buttons -->
+            <!--link-->
+           <h1>Knowledge Article:</h1>&nbsp;<a id="theLink" name="{!$Label.Article_Name_StartSubDirect}" href="https://{!$Label.Article_Link_StartSubDirect}">Order Entry Related Article</a> <br/><br/>
+            <!-- end link -->            
+            <!-- account -->
+            <apex:outputPanel id="AccountInfo">
+            <apex:actionRegion >
+            <apex:pageBlockSection collapsible="true" title="Account and Order Information" columns="2">
+                <apex:outputField value="{!thisOrder.Account__c}" id="accountId" rendered="{!isFromAccount}"/>
+                <apex:inputField value="{!thisOrder.Account__c}" id="accountIdCase" rendered="{!Not(isFromAccount)}">
+                    <apex:actionSupport event="onchange" action="{!Initialize}" reRender="deliveryChargesSection,orderLineItems,pageMessage,AccountInfo,creditAndChargesSection,billingAccountPanel"/>
+                </apex:inputfield>
+                <apex:outputField value="{!thisOrder.Name}"/>
+                <apex:outputField value="{!thisOrder.Account__r.AccountNumber}"/>
+                <apex:outputField value="{!thisOrder.Status__c}"/>
+                <apex:inputCheckbox value="{!thisOrder.Sponsor__c}" />
+                <apex:inputField value="{!thisOrder.Acquisition_Type__c}" />
+                <apex:pageBlockSectionItem />
+                <apex:outputText label="DTL Date" value="{!dtlDate}"/>
+            </apex:pageBlockSection>
+            </apex:actionRegion>
+            </apex:outputPanel>
+            <!-- end account -->
+            
+            
+            <apex:pageBlockSection collapsible="true" title="Delivery Information" columns="1">
+                <apex:actionRegion >
+                    <apex:pageBlockSection id="deliveryInformationSection" collapsible="false" columns="2">
+                        <!-- START 08/01/2015 Wenjun : Recipient Contact is Mandatory -->
+                        <apex:inputField value="{!thisOrder.Recipient_Contact__c}" id="parentRecipient" required="true">
+                        <!-- Start MMallorca 05/25/2015 MMallorca UD-1274 add compute_v2() in oncomplete  -->
+                                <!-- Start UD-1431 08Jul15 JohnD - removed rerender toggleDeliveryCharges, creditAndChargesSection from oncomplete -->
+                                <!-- Start UD-1431v2 11Jul15 JohnD - reverted original -->
+                                <apex:actionSupport event="onchange" action="{!populateRecipientContactRelatedDetails}" 
+                                    reRender="individualTable, deliveryChargesSection, creditAndChargesSection, pageMessage, asiaUserName, asiaEmail" 
+                                    oncomplete="toggleDeliveryCharge();compute_v2();" />
+                                <!-- End UD-1431v2 11Jul15 JohnD - reverted original -->
+                                <!-- End UD-1431 08Jul15 JohnD - removed toggleDeliveryCharges, creditAndChargesSection from oncomplete -->
+                        <!-- End MMallorca 05/25/2015  MMallorca UD-1274 -->
+                        </apex:inputField>
+                        <!-- END 08/01/2015 Wenjun -->
+                        <apex:inputField value="{!thisOrder.Cost_Centre__c}" />
+                        <apex:outputText value="" />
+                        <apex:inputField value="{!thisOrder.Vendor_Sms_Remarks__c}" style="width:250px" />
+                    </apex:pageBlockSection>
+                </apex:actionRegion>
+                <apex:pageBlockSection id="recipientSectionItem" collapsible="true"  title="Create Recipient" columns="1">
+                     <apex:iframe id="recipientContactFrame" src="/apex/CreateModifyContactAddress?accountId={!$CurrentPage.parameters.accountId}&RecordType=Recipient" scrolling="true" />                      
+                    <!-- <apex:iframe id="recipientContactFrame" src="/apex/CreateModifyContactAddress?accountId={!$CurrentPage.parameters.accountId}&RecordType=Recipient" scrolling="true" /> -->         
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+                
+            <apex:pageBlockSection collapsible="true" title="Subscription Details and Packages" columns="1">
+                
+                <!-- order line items -->
+                <apex:outputPanel id="orderLineItems">
+                    <apex:outputPanel rendered="{!IF(orderLineItemList.size > 0, true, false)}">
+                        <apex:outputText value="Line Items" styleClass="subItemTitle" />
+                        <apex:outputPanel styleClass="scroll">
+                            <table id="lineItemTable" class="list">
+                                <thead>
+                                    <tr>
+                                        <th>Order Line Item</th>
+                                        <th>Promotion Name</th>
+                                        <th>Package Name</th>
+                                        <!--START D-0716 18/12/14 Wenjun : Change to Quantity -->
+                                        <th>Quantity</th>
+                                        <!--END D-0716 Wenjun-->
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Subscription Type</th>
+                                        <th>Billing Type</th>
+                                        <th>Subscription Rate</th>
+                                        <th>Option</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!orderLineItemList}" var="oli">
+                                        <apex:variable value="{!IF(oli.Addon_Package__r.Name != '', 2, 0)}" var="rowAddOn" />
+                                        <apex:variable value="{!IF(oli.Order_Line_Item_Gifts__r.size > 0, oli.Order_Line_Item_Gifts__r.size + 1, 0)}" var="rowGifts" />
+                                        <tr class="dataRow pointer" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                    onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}" >
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();">{!oli.Name}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();">{!oli.Promotion_ID__r.Name}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();">{!oli.Main_Package_ID__r.Name}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();" align="center">{!oli.Qty__c}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();">
+                                                <apex:outputText value="{0,date,dd'-'MMM'-'yy}">
+                                                    <apex:param value="{!oli.Start_Date__c}" /> 
+                                                </apex:outputText>              
+                                            </td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); toggleLoader('retrieveLineItemLoader', 'show'); hideAddOrderLineItemButton();">
+                                                <apex:outputText value="{0,date,dd'-'MMM'-'yy}">
+                                                    <apex:param value="{!oli.End_Date__c}" /> 
+                                                </apex:outputText>              
+                                            </td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); hideAddOrderLineItemButton();">{!oli.Main_Package_Type__c}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); hideAddOrderLineItemButton();">{!oli.Main_Package_Billing_Type__c}</td>
+                                            <td onclick="simulateActionFunctionLink('{!oli.Id}'); hideAddOrderLineItemButton();"><apex:outputField value="{!oli.Total_Subscription_Rate__c}" /></td>
+                                            <td rowspan="{!rowAddOn + rowGifts + 1}" class="removeButtonCell">
+                                                <span onclick="toggleLoader('removeOrderLineItemLoader', 'show'); removeOrderLineItem('{!oli.Id}');" class="btn">Remove</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="display: {!IF(rowGifts > 0, '', 'none')}">
+                                            <td rowspan="{!rowAddOn + rowGifts}" colspan="6"></td>
+                                            <td class="childList">Gift Name</td>
+                                            <td class="childList">Type</td>
+                                            <td class="childList">Price</td>
+                                        </tr>
+                                        <apex:repeat value="{!oli.Order_Line_Item_Gifts__r}" var="gift">
+                                        <tr>
+                                            <td>{!gift.Gift_Name__c}</td>
+                                            <td>{!gift.Type__c}</td>
+                                            <!--Start PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->
+                                                <td><apex:outputField value="{!gift.Promotion_Gift__r.Gift__r.One_Time_Charge__c}" /></td>
+                                            <!--End PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->
+                                        </tr>
+                                        </apex:repeat>
+                                        <tr style="display: {!IF(rowAddOn > 0, '', 'none')}" >
+                                            <td rowspan="{!IF(rowGifts > 0, '', 2)}" colspan="{!IF(rowGifts > 0, '', 6)}"  style="display: {!IF(rowGifts > 0, 'none', '')}"></td>
+                                                <!--START UD-1034 5/4/15 AddedBy FrancisBenzon : changed name to Add On-->
+                                                <td class="childList">Add On ID</td>
+                                                <!--END UD-1034 5/4/15 AddedBy FrancisBenzon : changed name to Add On-->
+                                            <td class="childList" colspan="2">Package Name</td>
+                                        </tr>
+                                        <tr style="display: {!IF(rowAddOn > 0, '', 'none')}">
+                                            <td>{!oli.Addon_Package__r.Package_Code__c}</td>
+                                            <td colspan="2">{!oli.Addon_Package__r.Name}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>    
+                            </table>
+                            <hr />           
+                        </apex:outputPanel>
+                        <div id="removeOrderLineItemLoader" class="hide">
+                            <img src="/resource/loading_gif" /> <span class="loaderText">Removing selected order line item...</span>
+                        </div>
+                        <div id="retrieveLineItemLoader" class="hide">
+                            <img src="/resource/loading_gif" /> <span class="loaderText">Loading subscription details...</span>
+                        </div>
+                        
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end order line items -->
+                
+                
+                <!-- search container -->
+                <apex:outputPanel id="searchContainer">
+                    <apex:outputText value="Search" styleClass="subItemTitle" />
+                    <apex:actionRegion >
+                        <apex:pageBlockSection columns="4">
+                            <apex:outputText value="Search Via:" />
+                            <apex:outputText value="Search Text" />
+                            <apex:outputText value="Billing Type" />
+                            <apex:outputText value="" />
+                            <apex:selectList value="{!searchFrom}" onkeypress="validateEvent(event);" size="1">
+                                <apex:selectOption itemValue="Promotion" itemLabel="Promotion" />
+                                <apex:selectOption itemValue="Package" itemLabel="Package" />
+                                <apex:selectOption itemValue="Both" itemLabel="Both" />
+                            </apex:selectList>
+                            <apex:inputText id="searchTerm"  value="{!searchText}" onkeypress="validateEvent(event);" />
+                            <apex:selectList value="{!searchBillingType}" onkeypress="validateEvent(event);" size="1">
+                                <apex:selectOption itemValue="Full Prepaid" itemLabel="Full Prepaid" />
+                                <apex:selectOption itemValue="Recurring Prepaid" itemLabel="Recurring Prepaid" />
+                                <apex:selectOption itemValue="Recurring Postpaid" itemLabel="Recurring Postpaid" />
+                            </apex:selectList>
+                            
+                            <apex:commandButton value="Search" action="{!executeSearch}" reRender="searchResults" 
+                                    oncomplete="showElement('{!$Component.searchResults}'); toggleLoader('searchLoader', 'hide');" 
+                                    onclick="validateSearchText(event); toggleLoader('searchLoader', 'show');" onkeypress="validateSearchText(event);"/>
+                            <!-- START:D-1629 2/5/15 Added by Manolo Vale?a - Added Joban's code which adds a new checkbox -->
+                            <!-- Changes by Joban Start -->        
+                            <apex:outputPanel >
+                                Vendor Conversion Eligibility 
+                                <apex:inputCheckbox value="{!vendorEligibilityCheck}"/>
+                            </apex:outputPanel>
+                            <!-- Changes by Joban End -->
+                            <!-- END:D-1629 2/5/15 Added by Manolo Vale?a -->
+                            <apex:outputPanel >
+                                Show ineligible promotion 
+                                <apex:inputCheckBox id="isPromoChecked" value="{!isRemoveEligibilityRuleSearchFilter}" onkeypress="validateEvent(event);" />
+                            </apex:outputPanel>
+                            <apex:outputText value="" />
+                            <apex:outputText value="" /> 
+                        </apex:pageBlockSection>
+                        <div id="searchLoader" class="hide">
+                            <img src="/resource/loading_gif" /> <span class="loaderText">Searching...</span>
+                        </div>
+                    </apex:actionRegion>
+                    <!-- start search result -->
+                    <apex:outputPanel id="searchResults"> 
+                        <br /><hr />
+                        <apex:outputText value="Search Results" styleClass="subItemTitle" />
+                        
+                        <apex:outputPanel layout="block" styleClass="scroll">
+                            <apex:outputPanel rendered="{!promotionResultList.size != null}" >
+                                <p>{!searchPromotionMsg}</p>
+                                <table class="list resultContainer">
+                                    <thead>
+                                        <tr>
+                                            <th width="60%">Promotion Name</th>
+                                            <th width="10%">Start Date</th>
+                                            <th width="10%">End Date</th>
+                                            <th width="10%">Eligible?</th>
+                                            <th width="10%">Contract Period</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!promotionResultList}" var="pro" rendered="{!promotionResultList.size !=0 }">
+                                            <tr class="dataRow" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                    onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}"
+                                                    onclick="toggleLoader('packageLoader', 'show'); showPackage(this);">
+                                                <td>{!pro['promoName']}</td>
+                                                <td>
+                                                    <apex:outputText value="{0,date,dd'-'MMM'-'yy}">
+                                                        <apex:param value="{!pro['promoStartDate']}" />
+                                                    </apex:outputText>
+                                                </td>
+                                                <td>
+                                                    <apex:outputText value="{0,date,dd'-'MMM'-'yy}">
+                                                        <apex:param value="{!pro['promoEndDate']}" />
+                                                    </apex:outputText>
+                                                </td>
+                                                <td align="center">
+                                                    <apex:variable value="{!pro['promoId']}" var="promoId" />
+                                                    <apex:image value="{!IF(promotionCode_isEligible[promoId],'/resource/check','/s.gif')}" />
+                                                </td>
+                                                <td>
+                                                    {!pro['promoContractPeriod']}
+                                                    <apex:inputHidden id="promotionId" value="{!pro['promoId']}" />
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        <tr><td colspan="5" align="center"><apex:outputText value="No result found." rendered="{!promotionResultList.size == 0 }" /></td></tr>
+                                    </tbody>
+                                </table>
+                                <apex:inputHidden id="billingTypeFromPromotion" value="{!billingTypeFromPromotion}" />
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!packageResultList.size != null}">
+                                <p>{!searchPackageMsg}</p>
+                                <table class="list resultContainer">
+                                    <!--START:D-0051 2/25/15 Added by Manolo Vale?a - Changed header from "Package(s) Not Under Promotions" to "Packages" since the query that fills up the table now gets packages that don't have a promotion and packages that are connected to a promotion.-->
+                                    <thead><tr><th>Packages</th></tr></thead>
+                                    <!--END:D-0051 2/25/15 Added by Manolo Vale?a-->
+                                    <tbody>
+                                        <tr>
+                                            <td class="packageContainer">
+                                                <apex:outputPanel layout="block" rendered="{!packageResultList.size != 0}">
+                                                    <table class="list packageResults shadow">
+                                                        <thead class="rich-table-thead">
+                                                            <tr>
+                                                                <th width="40%">Package Name</th>
+                                                                <th width="25%">Package Type</th>
+                                                                <th width="10%">Sub Period</th>
+                                                                <th width="10%">Sub Type</th>
+                                                                <th width="15%">Subscription Rate</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:repeat value="{!packageResultList}" var="pkg">
+                                                                <tr class="dataRow" onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" 
+                                                                        onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}"
+                                                                        onclick="toggleLoader('subscriptionLoader', 'show'); showPackageDetails(this); toggleTermsCondition(false);">
+                                                                    <td>{!pkg['Name']}</td>
+                                                                    <td>{!pkg['Package_Type__c']}</td>
+                                                                    <td>{!pkg['Subscription_Period__c']}</td>
+                                                                    <td>{!pkg['Subscription_Type__c']}</td>
+                                                                    <td>
+                                                                        <!--//START UAT D-0080 and D-0097 Marvin Gatchalian-->
+                                                                        {!pkg['Package_Price__c']}
+                                                                        <!--{!packageId_subscriptionCharge[pkg['Id']]}-->
+                                                                        <!--//END UAT D-0080 and D-0097 Marvin Gatchalian-->
+                                                                        
+                                                                        <apex:inputHidden id="packageId" value="{!pkg['Id']}" />
+                                                                    </td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!packageResultList.size == 0}">
+                                                    <p align="center">No result found.</p>
+                                                </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+            <!-- end search result -->
+                </apex:outputPanel>
+                <!-- end search container -->
+                 <div id="packageLoader" class="hide">
+                    <img src="/resource/loading_gif" /> <span class="loaderText">Loading related packages...</span>
+                </div>
+                 <div id="subscriptionLoader" class="hide">
+                    <img src="/resource/loading_gif" /> <span class="loaderText">Loading subscription details...</span>
+                </div>
+               
+                <apex:actionRegion >
+                
+                <!-- start subscription details -->
+                <apex:outputPanel id="subscriptionDetails">
+                     <hr />
+                     <apex:outputLabel value="Subscription Details" styleClass="subItemTitle" />
+                     <apex:outputPanel layout="block">
+                         <apex:pageBlockSection columns="2">
+                             <apex:outputField value="{!orderLineItem.Main_Package_ID__c}" />
+                             <!--Start D-1394 02/05/2015 Added by ABanaag - If the product subs type is magazine, vendor conversion is disabled -->
+                             <!--Start UD-0846 04/17/15 ABanaag - use inputField instead of inputCheckbox-->
+                             <apex:outputField label="Vendor Conversion" value="{!orderLineItem.Vendor_Conversion__c}" rendered="{!productIsMagazine}" />
+                             <apex:inputField id="isVendorSubscription" label="Vendor Conversion" value="{!orderLineItem.Vendor_Conversion__c}" rendered="{!NOT(productIsMagazine)}" onclick="changeStartDate(this); toggleVendorSubscription();"/>
+                             <!--Start UD-0846 04/17/15 ABanaag - use inputField instead of inputCheckbox-->
+                             <!--End D-1394 02/05/2015 Added by ABanaag - If the product subs type is magazine, vendor conversion is disabled -->
+                             <apex:pageBlockSectionItem >
+                                 <apex:outputLabel >Package Name</apex:outputLabel>
+                                 <apex:outputText value="{!selectedPackageName}" />
+                             </apex:pageBlockSectionItem>
+                             <!--Start D-1394 02/05/2015 Added by ABanaag - add label to match requirement -->
+                             <apex:inputField id="vendorSubscriptionId" label="Vendor Subscription" value="{!orderLineItem.Vendor_Subscription_ID__c}" />
+                             <!--End D-1394 02/05/2015 Added by ABanaag - add label to match requirement -->
+                             <apex:outputField id="earliestStartDate" value="{!orderLineItem.Earliest_Start_Date__c}"  />                
+                             <!-- charity -->
+                             <!--START: D-1425 01/07/15 Added by April Banaag - call the function that sets delivery charge type value to N if Charity checkbox is checked-->
+                             <!--Start D-1394 02/05/2015 Added by ABanaag - If the product subs type is magazine, charity is disabled -->
+                             <!-- Start UD-0333 03-12-15 ABanaag -->
+                             <apex:inputField id="charityField" value="{!orderLineItem.Charity__c}" rendered="{!isAllInOne}"  onClick="SetDefaultChargeType(document.getElementById('{!$Component.charityField}').checked);" onchange="document.getElementById('{!$Component.hiddenCharityField}').value = document.getElementById('{!$Component.charityField}').checked; ">
+                             <!--Start UD-0330 03-24-15 ABanaag - add deliveredByPickList-->
+                             <apex:actionSupport rerender="deliveryChargeType,hiddenCharityField,deliveredByPickList"/>
+                             <!--End UD-0330 03-24-15 ABanaag - add deliveredByPickList-->
+                             <script>document.getElementById('{!$Component.charityField}').disabled = {!productIsMagazine}; </script> 
+                             </apex:inputField>
+                             <!--End UD-0333 03-12-15 ABanaag-->
+                             <!--End D-1394 02/05/2015 Added by ABanaag - If the product subs type is magazine, charity is disabled -->
+                             <apex:pageBlockSectionItem rendered="{!NOT(isAllInOne)}">
+                             <!--END: D-1425 01/07/15 Added by April Banaag - call the function that sets delivery charge type value to N if Charity checkbox is checked-->
+                                <apex:outputLabel >Charity</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- end charity -->
+                             <!--START D-2882 5/9/2015 Added by Manolo Valena - added changeEndDate javascript function to onchange. This will also update the contract end date field.-->
+                                 <!-- Start UD-1276 22May15 GDelrosario -->
+                                 <apex:inputField value="{!orderLineItem.Start_Date__c}" id="subscriptionStartDate" 
+                                        onchange="changeSubEndDate('{!$Component.subscriptionTermLength}', '{!$Component.subscriptionStartDate}', '{!$Component.subscriptionEndDate}'); try { changeEndDate(document.getElementById('{!$Component.newContractPeriod}').value, '{!$Component.subscriptionStartDate}', '{!$Component.contractEndDate}'); } catch (err) {}" />
+                                 <!-- End UD-1276 22May15 GDelrosario-->
+                             <!--END D-2882 5/9/2015 Added by Manolo Valena-->
+                             <apex:pageBlockSectionItem >
+                                <apex:outputLabel >Delivered By</apex:outputLabel>
+                                <!--Start UD-0330 03-24-15 ABanaag - add id-->
+                                <apex:selectList id="deliveredByPicklist" value="{!orderLineItem.Delivered_By__c}" size="1">
+                                <!--End UD-0330 03-24-15 ABanaag - add id-->
+                                    <apex:selectOptions value="{!deliveryMethod}" />
+                                </apex:selectList>
+                             </apex:pageBlockSectionItem>
+                             
+                             <!-- term length -->
+                             <!--Start D-2390 03-02-15 ABanaag disable term length if full prepaid; use variable to avoid apex error: must resolve to string type-->
+                             <apex:inputText value="{!termLength}" styleClass="numericField" 
+                                    onchange="changeEndDate(this.value,  '{!$Component.subscriptionStartDate}', '{!$Component.subscriptionEndDate}');" 
+                                    id="subscriptionTermLength" rendered="{!orderLineItem.Main_Package_Sub_Type__c = 'Termed'}" 
+                                    label="Term Length (Mth)" disabled="{!isFullPrepaid}"/>
+                             <!--End D-2390 03-02-15 ABanaag disable term length if full prepaid; use variable to avoid apex error: must resolve to string type-->
+                             <apex:pageBlockSectionItem rendered="{!orderLineItem.Main_Package_Sub_Type__c = 'Evergreen'}">
+                                <apex:outputLabel >Term Length (Mth)</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- end term legth -->
+                             
+                             <apex:inputField value="{!orderLineItem.PO_Number__c}" />
+                             
+                             <!-- end date -->
+                             <apex:outputField value="{!orderLineItem.End_Date__c}" id="subscriptionEndDate" 
+                                    rendered="{!orderLineItem.Main_Package_Sub_Type__c = 'Termed'}" />
+                             <apex:pageBlockSectionItem rendered="{!orderLineItem.Main_Package_Sub_Type__c = 'Evergreen'}">
+                                <apex:outputLabel >End Date</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             
+                             <!-- end end date -->
+                             <apex:inputField value="{!orderLineItem.Suppress_Renewal_and_Reminder_Letter__c}" />
+                              
+                             <!-- new contract period -->
+                             <apex:inputField value="{!orderLineItem.New_Contract_Period__c}" styleClass="numericField" 
+                                    onchange="changeEndDate(this.value,  '{!$Component.subscriptionStartDate}', '{!$Component.contractEndDate}');" 
+                                    id="newContractPeriod" rendered="{!IF(TEXT(orderLineItem.New_Contract_Period__c) != '999', true, false)}"/>
+                             <apex:pageBlockSectionItem rendered="{!IF(TEXT(orderLineItem.New_Contract_Period__c )= '999', true, false)}">
+                                <apex:outputLabel >New Contract Period</apex:outputLabel>
+                                <apex:outputText value="N/A"/>
+                             </apex:pageBlockSectionItem>
+                             <!-- end new contract period -->
+                             <apex:inputField value="{!orderLineItem.Supressed_Acknowledgement_Letter__c}" />
+                             
+                             <!-- contract end date -->
+                             <apex:outputField value="{!orderLineItem.Contract_End_Date__c}" id="contractEndDate" 
+                                    rendered="{!TEXT(orderLineItem.Contract_End_Date__c) != '1970-01-01'}"/>                                    
+                             <apex:pageBlockSectionItem rendered="{!IF(TEXT(orderLineItem.Contract_End_Date__c) = '1970-01-01', true, false)}" >
+                                <apex:outputLabel >Contract End Date</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- end contract end date -->
+                             
+                             <!--START/END D-4479 14-Mar-2016 Raviteja - Apply the label for  Supressed_Vendor_Notification_New_Sub__c -->
+                             <apex:inputField value="{!orderLineItem.Supressed_Vendor_Notification_New_Sub__c}" label="Suppress Vendor Start Notification" />
+                             
+                             <!-- penalty charge -->
+                             <apex:outputField value="{!orderLineItem.Penalty_Charge__c}" 
+                                    rendered="{!IF(TEXT(orderLineItem.Penalty_Charge__c) != '9999999999999999.99', true, false)}"/>
+                             <apex:pageBlockSectionItem rendered="{!IF(TEXT(orderLineItem.Penalty_Charge__c) = '9999999999999999.99', true, false)}">
+                                <apex:outputLabel >Penalty Charge</apex:outputLabel>
+                                <apex:outputText value="N/A" />
+                             </apex:pageBlockSectionItem>
+                             <!-- end penalty charge -->
+                             
+                             <!-- <apex:inputField value="{!orderLineItem.Generate_Invoice__c}" /> --><!--START/END D-4479 14-Mar-2016 Raviteja - Commented teh line -->
+                             <!--START D-0716 18/12/14 Wenjun : Change Qty to Quantity -->
+                             <!-- START UD-3339 12/02/15 RReyes - added removeAsia1SubscriptionBulk -->
+                             <!--START UD-3545 1/12/16 JSarion : Set/Delete Asia1 and Asia1 Subscriptions -->
+                             
+                             <!--END UD-3545 1/12/16 JSarion : Set/Delete Asia1 and Asia1 Subscriptions -->
+                             <!-- END UD-3339 12/02/15 RReyes -->
+                             <!--END D-0716 -->
+                             <!-- START D-4479 17-mar-2016 Jason A -->
+                             <apex:inputField value="{!orderLineItem.Auto_Renew__c}" />
+                             <apex:inputField value="{!orderLineItem.Qty__c}" id="quantity" styleClass="numericField" label="Quantity"
+                                    onchange="toggleMode(this.value); checkAsia1Limit(); validateQuantity(); updateSubscriptionRate(); "/>
+                             <!-- Start 17Apr15 UD-0759 ronald dagaraga - replaced variable -->
+                             <apex:inputField value="{!orderLineItem.Subscribed_as__c}" />
+                             <apex:outputText value="{!totalSubscriptionPrice}" label="Subscription Rate" id="subRate"/>
+                             <!-- END D-4479 17-mar-2016 Jason A -->
+                             <!-- End 17Apr15 UD-0759 ronald dagaraga - replaced variable -->
+                             <!-- Start D-1394 02/05/2015 Added by ABanaag - suppress vendor start notice -->
+                             <!-- <apex:inputCheckbox label="Suppress Start Notice" value="{!orderLineItem.Suppress_Vendor_Start_notice__c}" disabled="{!productIsMagazine}"/> --><!--START/END D-4479 14-Mar-2016 Raviteja - Commented teh line -->
+                             <!-- End D-1394 02/05/2015 Added by ABanaag - suppress vendor start notice -->
+                             <!-- Start D-1307 1/30/15 FrancisBenzon : hidden field for subrate calculation -->                          
+                             <apex:inputHidden value="{!subscriptionRate}"  id="subRate1"/>                                                 
+                             <!-- End D-1307 1/30/15 FrancisBenzon : hidden field for subrate calculation -->                            
+                                 <!---START UD1276 5/27/2015 GDelrosario : hide for parent -->
+                                <apex:outputPanel id="parentIdPanel">
+                                <apex:inputField value="{!orderLineItem.Parent_Account__c}" id="isComplaint" label=""/>
+                                </apex:outputPanel>
+                                 <script>document.getElementById('{!$Component.parentIdPanel}').style.display = 'none'; $("[id*='parentIdPanel']").hide();</script>
+                                 <!----END UD 1276 GDELROSARIo--------------->    
+                             <!--START D-1624 29/1/16 MGaelo for Add On filter criteria: Product Family -->         
+                             <apex:pageBlockSectionItem >
+                             <apex:inputField value="{!orderLineItem.Main_Package_Product_Family__c}" style="display:none" />
+                             <!--Start D-1318/D-2196 02/10/2015-02/12/2015 added by ABanaag/JohnD-->                              
+                             <apex:inputHidden id="addOnIsDigital" value="{!addOnIsDigital}" />
+                             <!--End D-1318/D-2196 02/10/2015-02/12/2015 added by ABanaag/JohnD--> 
+                             </apex:pageBlockSectionItem>
+                             <!--END D-1624 29/1/16 MGaelo for Add On filter criteria: Product Family -->
+                             <!-- Start UD-0333 03-12-15 ABanaag -->
+                             <apex:inputHidden id="hiddenCharityField" value="{!charityField}" />
+                             <!-- End UD-0333 03-12-15 ABanaag -->
+                         </apex:pageBlockSection>
+                         <input id="isDigital" type="hidden" value="{!isDigital}" />
+                         
+                         <input id="isFromPromotion" type="hidden" value="{!isFromPromotion}" />
+                         <input id="orderLineItemCurrentId" type="hidden" value="{!orderLineItem.Id}" />
+                         <!-- Start D-0105 UAT 01-03-2015 JohnD activate numeric field validation -->
+                         <script>$(function(){$(".numericField").numericInput()});</script>
+                        <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                     </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end subscription details --> 
+                    
+                <!-- start add on -->
+                <apex:outputPanel id="addOnSection" >
+                    <apex:outputPanel >
+                        <br /><hr />
+                        <apex:outputLabel value="Select Add On" styleClass="subItemTitle" />
+                        <apex:pageBlockSection columns="2">
+                            <apex:inputField id="addOnPackageLookup" value="{!orderLineItem.Addon_Package__c}" onchange="retrieveAddOn(this.id);">
+                            </apex:inputField>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >Package ID</apex:outputLabel>
+                                <apex:outputText value="{!addOnPackage.Id}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:outputField value="{!orderLineItem.Add_On_Package_Subscription_Rate__c}" />
+                            <apex:outputField value="{!addOnPackage.Name}" />
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!--  end add on -->
+                
+                <!-- start promotion gifts -->
+                <apex:outputPanel id="giftSection" styleClass="hide">
+                    <apex:outputPanel >
+                        <br /><hr />
+                        <apex:outputLabel value="Select Gifts" styleClass="subItemTitle" />
+                           <table id="giftItems">
+                               <thead>
+                                   <tr>
+                                       <th>Gift Name</th>
+                                       <th>Type</th>
+                                       <th>Price</th>
+                                       <th>Stock</th>
+                                       <th>Select</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <apex:repeat value="{!promotionGifts}" var="gift">
+                                       <tr>
+                                            <!--Start PD-0200 6/23/16 - L.Reyes Added to decrease Quantity Balance-->
+                                                <td>{!gift['promotionGift']['Gift__r.Name']}</td>
+                                                <td>{!gift['promotionGift']['Gift__r.Gift_Type__c']}</td>
+                                                <td>{!gift['promotionGift']['Gift__r.One_Time_Charge__c']}</td><!-- D-0720 -->
+                                                
+                                                <!-- Start UD-2236 07Aug15 JohnD - replaced "Balance_Quantity__c" to "Balance_Quantity_New__c" -->
+                                                    <td>{!gift['promotionGift']['Balance_Quantity_New__c']}</td>
+                                                    <!-- Start UD-0593 03-27-15 ABanaag -->
+                                                        <td align="center">
+                                                            <apex:inputCheckBox value="{!gift.selectGift}" onclick="return validateGift(this, {!gift['promotionGift']['Balance_Quantity_New__c']});" />
+                                                            <apex:actionSupport rerender="selectedGifts"/>
+                                                        </td>
+                                                    <!-- End UD-0593 03-27-15 ABanaag -->
+                                                <!-- End UD-2236 07Aug15 JohnD - replaced "Balance_Quantity__c" to "Balance_Quantity_New__c" -->
+                                            <!--End PD-0200 6/23/16 - L.Reyes Added to decrease Quantity Balance-->
+                                        </tr>
+                                   </apex:repeat>                                                  
+                               </tbody>
+                           </table>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- end promotion gifts -->
+                
+                <!-- asia1 -->
+                
+                <apex:outputPanel id="asia1Section" layout="block">
+                    <hr />
+                    <apex:outputText value="Asia1" styleClass="subItemTitle" />
+                    <br />
+                    <apex:outputPanel styleClass="container" layout="block" style="border:none !important">
+                        <apex:pageMessages id="asia1message" />
+                    </apex:outputPanel>
+                    <apex:outputPanel id="creationModeContainer">
+                        <apex:outputLabel styleClass="labelCol" >Creation Mode</apex:outputLabel>
+                        <span id="creationModeSelected">Individual</span>
+                        <apex:inputHidden id="hidden_creationModeSelected" value="{!orderLineItem.Asia1_Creation_Mode__c}" />
+                    </apex:outputPanel>
+                    <br /><br />
+                    <div id="individualMode">                       
+                        <apex:outputPanel id="listToBeCreated" layout="block" styleClass="container"> 
+                            <div id="toBeCreated">User ID To Be Created</div>
+                            <!--Start D-2489 3/1/15 ABanaag -->
+                            <apex:inputHidden id="asia1TotalToBecreated" value="{!asia1SubscriptionsTotal}" />
+                            <!--End D-2489 3/1/15 ABanaag -->
+                             
+                            <apex:outputPanel id="tobeCreatedContainer" styleClass="scrollAsia1" 
+                                    rendered="{!IF(asia1Subscriptions.size = 0, false, true)}" layout="block">
+                                <div align="center">   
+                                    <table id="asia1Subscriptions" class="list">
+                                        <thead class="rich-table-thead">
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th width="100">Sevice Flag</th>
+                                                <th width="100">Concurrent</th>
+                                                <th width="100">Status</th>
+                                                <th class="centerTitle">Select</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!asia1Subscriptions}" var="asia1">
+                                                <apex:variable value="{!asia1['asia1Subscriptions']}" var="subs" />
+                                                    <tr class="dataRow">
+                                                        <td>{!asia1.userId}</td>
+                                                        <td colspan="3">
+                                                            <table id="asia1AccessFlag" class="list" width="100%" border="0" cellspacing="0" 
+                                                                    cellpadding="0" >
+                                                                <apex:repeat value="{!subs}" var="sub">
+                                                                    <tr class="asia1Cs">
+                                                                        <td width="100">{!sub['serviceFlagName']}</td>
+                                                                        <td width="100">{!sub['concurrent']}</td>
+                                                                        <td width="100">{!sub['status']}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </table>
+                                                        </td>
+                                                        <td align="center">
+                                                            <apex:actionRegion >
+                                                                <!-- Start D-3374 14Aug15 JohnD - replace existingList by individualModeContainer in reRender --><!--fritz-->
+                                                                <apex:commandButton value="Remove" action="{!removeAsia1Subscription}" 
+                                                                         oncomplete="checkAsia1Limit();" reRender="asia1, listToBeCreated, individualModeContainer, selectionSourceContainer">
+                                                                    <apex:param name="asia1IdToBeRemoved" assignTo="{!asia1IdToBeRemoved}" value="{!asia1.asia1Id}" />
+                                                                </apex:commandButton>
+                                                                <!-- End D-3374 14Aug15 JohnD - replace existingList by individualModeContainer in reRender -->
+                                                            </apex:actionRegion>
+                                                        </td>
+                                                    </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>                              
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <br />
+                        <apex:outputPanel id="selectionSourceContainer" styleClass="container noborder" layout="block">
+                            <table id="selectionSourceContainerTable">
+                                <tr>
+                                    <!-- START D-1065 12/22/14 JB Domingo - Changed the layout and label from 'Create New Asia 1 Account' to 'Create New User ID' -->
+                                    <td align="left"><input name="source" type="radio" onclick="javascript: toggleSource(false);" /> Select Existing User ID</td>
+                                    <td><input name="source" type="radio" checked="checked" onclick="javascript: toggleSource(true);" /> Create New User ID</td> 
+                                    <!-- END D-1065 12/22/14 JB Domingo -->                                   
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="individualModeContainer" styleClass="container" layout="block">
+                            
+                            <br />
+                            <apex:actionRegion >
+                                <apex:outputPanel id="individualTable">
+                                    <table id="createNewContainer">
+                                        <tr>
+                                            <th class="labelCol">LDAP Login ID/Username</th>
+                                            <td class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:inputField value="{!asia1SingleAccount.User_ID_LDAP_ID__c}" id="asiaUserName" required="false" />
+                                                <apex:image value="{!ldapValidityImg}" />
+                                            </td>
+                                            <td rowspan="2" valign="middle"><apex:commandButton value="Validate" action="{!validateNewAsia1Account}" reRender="individualTable" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Display Name</th>
+                                            <td class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:inputField value="{!asia1SingleAccount.Display_Name__c}" required="false" />
+                                                <apex:image value="{!displayNameValidityImg}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Password</th>
+                                            <td class="requiredInput"><div class="requiredBlock"></div><apex:inputField value="{!asia1SingleAccount.Password__c}" required="false" /></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Email</th>
+                                            <td class="requiredInput"><div class="requiredBlock"></div><apex:inputField value="{!asia1SingleAccount.Email__c}" required="false" id="asiaEmail"/></td>
+                                            <!--START D-0043 02-15-2015 Marvin Gatchalian-->
+                                            <td><apex:commandButton value="Add" onclick="return checkAsia1CreatedAgainstQuantity();" />  </td>
+                                                <!-- Start D-3374 14Aug15 Johnd - added oncomplete -->
+                                                <apex:actionFunction name="passStringToController" action="{!addAsia1NewAccount}" rerender="quantityText, listToBeCreated, individualTable, asia1message " 
+                                                        oncomplete="checkAsia1Limit()"/>
+                                                <!-- End D-3374 14Aug15 Johnd - added oncomplete -->
+                                            <!--EBD D-0043 02-15-2015 Marvin Gatchalian-->
+                                        </tr>
+
+                                    </table>
+                                </apex:outputPanel>
+                                <script>
+                                try {
+                                    populateAsia1();
+                                } catch(e) {
+                                
+                                }                            
+                                </script>
+                            </apex:actionRegion>
+                            
+                            <apex:actionRegion >
+                                <table id="createFromExistingContainer" class="hide">
+                                    <tr>
+                                        <td class="labelCol">LDAP Login ID/Username</td>
+                                        <td>
+                                            <apex:selectList id="existingList" value="{!asia1SelectedExistingId}" size="1" >
+                                                <apex:selectOptions value="{!asia1ExistingAccounts}" />
+                                            </apex:selectList> 
+                                        </td>
+                                        <td><apex:commandButton value="Add" action="{!addAsia1ExistingAccount}" reRender="listToBeCreated, existingList, asiaErrorMsg" oncomplete="checkAsia1Limit();" /></td>
+                                    </tr>
+                                </table>
+                            </apex:actionRegion>
+                        </apex:outputPanel>
+                    </div>
+                    
+                    <div id="bulkMode" class="container bulkMsg hide">
+                        Please perform batch upload for the creation of multiple Asia1 credentials.<br /><br />
+                        Email will be sent to you for the details of the subscriptions.
+                    </div>
+                </apex:outputPanel>
+                
+                <!-- end asia1 -->
+                
+                <!-- terms and conditions -->
+                <apex:outputPanel id="termsAndCondition">
+                    <br /><hr />
+                    <apex:outputLabel value="Subscriptions Terms & Conditions" styleClass="subItemTitle" />
+                    <br /><br />
+                    <apex:inputField value="{!orderLineItem.Term_is_discussed__c}" /> Terms and Conditions is communicated to Customer
+                    <br /><br />
+                    <a id="termsAndConditionLink" href="#" target="_blank" title="Terms and Conditions">Show Terms and Conditions</a> 
+                </apex:outputPanel> 
+                <!-- end terms and condtions -->
+                
+                <div align="center">
+                    <br />
+                <!-- Start UD-0597 Jason Abolac -->
+                <!-- START D-4062 RReyes 12/09/15 - changed onComplete to onClick -->
+                    <apex:commandButton id="addToLineItemButton" value="Add To Line Item"
+                            action="{!checkAddressAndProductFamily}" reRender="pageMessage" onClick="return doAddToLineItem()"/>
+                <!-- END D-4062 RReyes 12/09/15 changed onComplete to onClick -->
+                <!-- End UD-0597 Jason Abolac -->           
+                    <apex:commandButton id="updateLineItemButton" value="Update Line Item" action="{!updateOrderLineItem}" 
+                            reRender="orderLineItems, deliveryChargesSection, creditAndChargesSection, pageMessage"
+                            onclick="" oncomplete="reRenderSectionVisibility({!isReInitializedItem}); toggleDeliveryCharge();" /> 
+                </div>
+                </apex:actionRegion>
+            </apex:pageBlockSection>
+
+            <!-- delivery charges -->    
+            <apex:pageBlockSection id="deliveryChargesSection" collapsible="true" title="Delivery Charges" columns="2">
+            <!-- Start ABanaag - add inline helptext -->
+            <!-- Start UD-0105 06-03-2015 JohnD modified helptext -->
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Order__c.Fields.Delivery_Charge_Type__c.InlineHelpText}">
+                    <apex:outputLabel value="Delivery Charge Type" title="Delivery Charge Type" />
+            <!-- End UD-0105 06-03-2015 JohnD modified helptext -->
+            <!-- End ABanaag - add inline helptext -->
+                <!-- Start UD-1431 09Jul15 JohnD - removed toggleDeliveryCharge -->
+                <!-- Start UD-1958 20Jul15 JohnD - added setDeliveryTypeChange in onchange -->
+                        <apex:selectList id="deliveryChargeType" value="{!selectedDeliveryChargeType}" size="1" onchange="compute_v2(); setDeliveryTypeChange();">
+                            <apex:selectOptions value="{!DeliveryChargeTypes}" />                                
+                        </apex:selectList> 
+                <!-- End UD-1958 20Jul15 JohnD - added setDeliveryTypeChange in onchange -->
+                <!-- End UD-1431 09Jul15 JohnD - removed toggleDeliveryCharge -->
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{!thisOrder.Monthly_Delivery_Charge_for_Full_Payment__c}" id="monthlyDelCharge"/>
+                    <!-- Start UD-1431 08Jul15 JohnD - changed variable in rendendred attribute  -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel for="subscriberCharge" rendered="{!isOrderContainsVendorDelivery}" styleClass="hide">Subscriber Charge</apex:outputLabel>
+                        <!-- Start D-0105 UAT 01-03-2015 JohnD added class -->
+                        <apex:inputText id="subscriberCharge" styleClass="currencyField hide" value="{!subscriberCharge}" rendered="{!isOrderContainsVendorDelivery}" onchange="compute(this.value);" />
+                        <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                    </apex:pageBlockSectionItem>
+                    <!-- End UD-1431 08Jul15 JohnD - added rendendred attribute  -->
+                <apex:inputHidden value="{!hidSubCharge}" id="hidSubCharge"/>
+                    <!-- Start UD-1431 08Jul15 JohnD - changed variable in rendendred attribute  -->
+                    <apex:pageBlockSectionItem >
+                        <!-- Start UD-1431 09Jul15 JohnD - added style -->
+                        <apex:outputLabel for="vendorCharge" rendered="{!isOrderContainsVendorDelivery}" styleClass="hide">Vendor Credit</apex:outputLabel>
+                        <!-- Start D-0105 UAT 01-03-2015 JohnD added class -->
+                        <!--START UD-1826 Addedby FrancisBenzon 7/15/15 : make vendor Credit read only-->
+                        <!--Start UD-1958 22Jul15 JohnD - removed read-only attribute -->
+                        <apex:inputText id="vendorCharge" styleClass="currencyField hide" rendered="{!isOrderContainsVendorDelivery}" value="{!vendorCredit}"/>                   
+                        <!--End UD-1958 22Jul15 JohnD - removed read-only attribute -->
+                        <!--END UD-1826 Addedby FrancisBenzon 7/15/15 : make vendor Credit read only-->
+                        <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                        <!-- End UD-1431 09Jul15 JohnD - added style -->
+                    </apex:pageBlockSectionItem>
+                    <!-- START D-3382 CCB-135 Wenjun 04 Aug Mailing Agent for Airline -->
+                    <apex:pageBlockSectionItem rendered="{!chooseAgent}">
+                        <apex:outputLabel >Choose Mailing Agent</apex:outputLabel>
+                        <apex:selectList id="MailingAgentList" value="{!selectedMailingAgent}" size="1">
+                            <apex:selectOptions value="{!airlineAgents}" />
+                        </apex:selectList>                 
+                    </apex:pageBlockSectionItem>
+                    <!-- END D-3382 CCB-135 Wenjun 04 Aug-->
+                    <!-- End UD-1431 08Jul15 JohnD - added rendendred attribute  -->
+                <!-- Start D-0105 UAT 01-03-2015 JohnD activate numeric field validation -->
+                <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                <!-- End D-0105 UAT 01-03-2015 JohnD -->
+            </apex:pageBlockSection>
+            <!-- end delivery charges -->
+            
+            <!-- credit and charges -->
+            <apex:pageBlockSection id="creditAndChargesSection" collapsible="true" title="Credit and Charges" columns="2">
+                <apex:outputField value="{!thisOrder.Total_Full_Prepaid_Charge__c}" />
+                <!-- START D-1317 Wenjun 09/02/15 : using sObject Field -->  
+<!--START 05/06/2015 UD-1112 Added by J. Sarion - Display Total Full Prepaid  -->
+                    <!--START: D-3924 11/18/15 Added by Manolo Valena-->
+                    <apex:outputField value="{!thisOrder.Total_Due_to_SPH__c}" label="Full_Prepaid Inc Del Charge" />
+                    <!--END: D-3924 11/18/15 Added by Manolo Valena-->
+<!--START 05/06/2015 UD-1112 Added by J. Sarion - Display Total Full Prepaid  -->
+                <!-- END D-1317 Wenjun 09/02/15 -->                
+                <apex:outputField value="{!thisOrder.Total_Monthly_Recurring_Charge__c}" />
+                <apex:outputField value="{!thisOrder.Recurring_Inc_Del_Charge__c}" />
+                <!-- START D-1101 12/19/2014 JB Domingo - Changed the layout for the postage charge and credit balance -->
+                <apex:outputField value="{!thisOrder.Credit_Balance__c}" /> 
+                <!-- START: 07/01/2015 D-1592 Wenjun: Change the Postage Field -->
+                <apex:outputField value="{!thisOrder.Total_Monthly_Postage_Charge__c}"/>
+                <!-- END: 07/01/2015 D-1592 Wenjun -->
+                <!-- END D-1101 12/19/2014 JB Domingo --> 
+            </apex:pageBlockSection>
+            <!-- end credit charges -->
+    
+            <!-- start billing -->
+            <apex:pageBlockSection collapsible="true" title="Billing Sections" columns="1">
+                <apex:outputPanel id="billingAccountPanel">
+                    
+                    <!-- billing option -->
+                    <apex:outputPanel layout="block">
+                        <apex:actionRegion >
+                            <apex:selectRadio value="{!billingAccountOption}">
+                                <apex:SelectOptions value="{!billingAccountOptions}"/>
+                                     <!-- START D-3039 06/03/15 RReyes - added rerender of isCreateNew -->
+                                    <apex:actionSupport event="onchange" reRender="billingAccountPanel, isCreateNew" action="{!clearPaymentMethod}" 
+                                            oncomplete="uncollapseBillingContact();"/>
+                                    <!-- END D-3039 06/03/15 RReyes - added rerender of isCreateNew -->
+                            </apex:selectRadio>
+                        </apex:actionRegion>
+                    </apex:outputPanel>
+                    <!-- end billing option -->
+                    
+                    <!-- existing billing account -->
+                    <apex:outputPanel id="existingBillingAccountSection" rendered="{!billingAccountOption == 'useExisting'}" layout="block">
+                        <apex:actionRegion >
+                            <apex:pageBlockSection columns="1">
+                                <apex:inputField value="{!thisOrder.Billing_Account__c}">
+                                    <!--START D-3039 RReyes - added otherPaymentMethod in reRender-->
+                                        <apex:actionSupport event="onchange" action="{!fetchBillingAccount}" 
+                                                reRender="existingBillingAccountSection, creditAndChargesSection, pageMessage, otherPaymentMethod"/>
+                                    <!--END D-3039 RReyes - added otherPaymentMethod in reRender-->
+                                </apex:inputfield>
+                                <apex:outputField id="thisPaymentMethod" value="{!thisOrder.Payment_Mode__c}"/>   
+                                <!--Start UD-0204 FrancisBenzon addedfield-->
+                                <apex:outputField value="{!thisOrder.Other_Payment_Mode__c}" rendered="{!isOtherPayment}"/>
+                                    <!-- START D-3039 06/03/15 RReyes -->            
+                                    <apex:inputHidden id="otherPaymentMethod" value="{!thisOrder.Other_Payment_Mode__c}"/> 
+                                    <!-- END D-3039 06/03/15 RReyes -->
+                                <!--End UD-0204 FrancisBenzon addedfield-->
+                                    <!--START UD-2522 8/26/15 AddedBy FrancisBenzon-->
+                                                <!--START UD-3278 20Nov15 FrancisBenzon : changed rendering-->
+                                                <apex:outputPanel id="chequePanel" rendered="{!renderCheckDetails}"> 
+                                                <!--END UD-3278 20Nov15 FrancisBenzon : changed rendering-->
+                                                <!--rendered="{!thisOrder.Payment_Mode__c == 'Check'}"-->
+                                                    <apex:pageBlockSection columns="1">
+                                                        <apex:inputField value="{!thisOrder.Check_Issuing_Bank__c}"/>
+                                                        <apex:inputField value="{!thisOrder.Check_No__c}"/>
+                                                        <apex:inputField value="{!thisOrder.Check_Dated__c}"/>
+                                                        <apex:inputField styleClass="currencyField" value="{!thisOrder.Check_Amount__c}"/>
+                                                        <apex:inputField value="{!thisOrder.Remarks_Check__c}"/>
+                                                    </apex:pageBlockSection>
+                                                <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                                                </apex:outputPanel>
+                                        <!--END: UD-0673 4/13/15 RReyes Added input of check details for Existing Billing account where Payment mode = 'Check' -->
+                                    <!--END UD-2522 8/26/15 AddedBy FrancisBenzon-->
+                                <!-- Start D-0105 UAT 01-03-2015 JohnD added class-->
+                                <apex:inputField id="amountPaid" styleClass="currencyField" value="{!thisOrder.Amount_Paid__c}" rendered="{!thisBillingAccount.Zuora__DefaultPaymentMethod__c == 'Cash'}"/><!-- D-0852 -->
+                                <!-- Start D-0105 UAT 01-03-2015 JohnD added class-->
+                                <!-- Start D-0105 UAT 01-03-2015 JohnD activate numeric field validation -->
+                                <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                                <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                                
+                            </apex:pageBlockSection>
+                        </apex:actionRegion>
+                    </apex:outputPanel>
+                    <!-- end existing billing account -->
+                    
+                    <!-- create new billing account -->
+                    <apex:outputPanel id="newBillingAccountSection" rendered="{!billingAccountOption == 'createNew'}" layout="block">
+                        <!-- payment mode selection -->
+                        <apex:actionRegion >
+                            <apex:pageBlockSection columns="1">
+                                <apex:inputField value="{!thisOrder.Payment_Mode__c}">
+                                    <apex:actionSupport event="onchange" reRender="paymentModeEntrySection, pageMessage" action="{!clearOtherPaymentMethod}"/>
+                                </apex:inputfield>
+                            </apex:pageBlockSection>
+                        </apex:actionRegion>
+                        <!-- end payment mode selection -->
+                        
+                        <apex:outputPanel id="paymentModeEntrySection" layout="block">
+                            <!-- payment mode = credit card -->
+                            <apex:outputPanel id="paymentGatwayPanel" rendered="{!thisOrder.Payment_Mode__c == 'Credit Card'}">
+                                <!--START UD-3351 12-18-2015 Added by J.Sarion - Check Credit Card: Visa/MasterCard/AmericanExpress-->
+                                <apex:actionRegion >
+                                <apex:pageBlockSection columns="1">
+                                    
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="Credit Card Type"/>
+                                        <apex:selectRadio value="{!creditCardType}">
+                                            <apex:selectOption itemValue="Visa / MasterCard" itemLabel="Visa / MasterCard"/>
+                                            <apex:selectOption itemValue="American Express" itemLabel="Other"/>
+                                            <apex:actionSupport event="onchange" action="{!retrieveSource}" reRender="paymentGatwayPanel2"/>
+                                        </apex:selectRadio>
+                                    </apex:pageBlockSectionItem>
+                                    <apex:outputPanel id="paymentGatwayPanel2">
+                                        <apex:outputPanel rendered="{!paymentGetway != null}">
+                                    <!--START UD-1429 04-06-2015 Marvin Gatchalian - remove form tag as causing issue in IE-->
+                                        <!--<form id="theForm">-->
+                                            <iframe id="z_hppm_iframe" name="z_hppm_iframe" src="{!paymentGetway}"
+                                                width="60%"
+                                                height="200"
+                                                frameborder="0">
+                                            </iframe>
+                                            <br/>
+                                            <apex:outputPanel >
+                                                <input class="btn" type="button" value="Save Payment Id" onclick="submitPaymentMethod();"/> &nbsp;
+                                                <!-- Start UD-3351 21Jan16 Added by JohnD/JaysonS - added id and action -->
+                                                <apex:commandButton id="ccReloadButton" action="{!retrieveSource}" value="Reload Credit Card Screen" reRender="billingAccountPanel"/> &nbsp;
+                                                <!-- End UD-3351 21Jan16 Added by JohnD/JaysonS - added id and action -->
+                                                <input type="text" id="paymentMethodId" value="{!paymentMethodId}" style="width:30%" readonly="readonly"/>
+                                            </apex:outputPanel>
+                                        <!--</form>-->
+                                        <!--END UD-1429 04-06-2015 Marvin Gatchalian - remove form tag as causing issue in IE-->
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSection>
+                                </apex:actionRegion>
+                                <!--END UD-3351 12-18-2015 Added by J.Sarion - Check Credit Card: Visa/MasterCard/AmericanExpress-->
+                            </apex:outputPanel>                     
+                            <!-- end payment mode = credit card -->
+    
+                            <!-- payment mode = check -->
+                            <apex:outputPanel id="chequePanel" rendered="{!thisOrder.Payment_Mode__c == 'Check'}">
+                                <apex:pageBlockSection columns="1">
+                                    <apex:inputField value="{!thisOrder.Check_Issuing_Bank__c}"/>
+                                    <apex:inputField value="{!thisOrder.Check_No__c}"/>
+                                    <apex:inputField value="{!thisOrder.Check_Dated__c}"/>
+                                    <!-- Start D-0105 UAT 01-03-2015 JohnD added class-->
+                                    <apex:inputField styleClass="currencyField" value="{!thisOrder.Check_Amount__c}"/>
+                                    <!-- End D-0105 UAT 01-03-2015 JohnD-->
+                                    <apex:inputField value="{!thisOrder.Remarks_Check__c}"/>
+                                </apex:pageBlockSection>
+                                <!-- Start D-0105 UAT 01-03-2015 JohnD activate numeric field validation -->
+                                <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                                <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                            </apex:outputPanel>
+                            <!-- end payment mode = check -->
+                            
+                            <!-- payment mode = cash -->
+                            <apex:outputPanel rendered="{!thisOrder.Payment_Mode__c == 'Cash'}">
+                                <apex:pageBlockSection columns="1">
+                                    <!-- Start D-0105 UAT 01-03-2015 JohnD added class-->
+                                    <apex:inputField id="amountPaid" styleClass="currencyField" value="{!thisOrder.Amount_Paid__c}"/>
+                                    <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                                </apex:pageBlockSection>
+                                <!-- Start D-0105 UAT 01-03-2015 JohnD activate numeric field validation -->
+                                <script>$(function(){$(".currencyField").numericInput({ allowFloat: true })});</script>
+                                <!-- End D-0105 UAT 01-03-2015 JohnD -->
+                            </apex:outputPanel>
+                            <!-- end payment mode = cash -->
+                            
+                            <!-- payment mode = other -->
+                            <apex:outputPanel id="otherPaymentMode" rendered="{!thisOrder.Payment_Mode__c == 'Other'}">
+                               <!-- START Del Santos/FrancisBenzon Added actionRegion Parameter. Fix for UD-0260 -->
+                               <apex:actionRegion >
+                               <!-- END Del Santos/FrancisBenzon Added actionRegion Parameter. Fix for UD-0260 -->
+                                <apex:pageBlockSection columns="1">
+                    <!-- START D-3039 RReyes - 06/08/15 - added id= "OtherPayment" -->
+                                        <apex:inputField id="OtherPayment" value="{!thisOrder.Other_Payment_Mode__c}">
+                    <!-- END D-3039 RReyes - 06/08/15 - added id= "OtherPayment" -->
+                                        <!-----------START Update spuli include billAccMessage ----------------->
+                                        <apex:actionSupport event="onchange" action="{!getBillAccName}" reRender="otherPaymentModeSection, billAccMessage"/>
+                                    </apex:inputField>
+                                </apex:pageBlockSection>
+                                
+                                <apex:outputPanel id="otherPaymentModeSection" layout="block">
+                                    <!-- other payment mode - invoice -->
+                                    <!--D-969-->
+                                        <!--apex:outputText id="errorMsg" value="{!errorMsg}"/-->
+                                    <!--END D-969 -->
+                                    <apex:pageMessages id="billAccMessage" rendered="{!thisOrder.Other_Payment_Mode__c == 'Invoice' && billAcc == false}" />
+                                    <apex:pageBlockSection id="invoice" title="For ARMS Information" rendered="{!thisOrder.Other_Payment_Mode__c == 'Invoice' && billAcc == true}" columns="6">
+                                    <!-----------------------------------Start of ARMS---------------------------------------->
+                                            
+                                             
+                                                <tr>
+                                                         <apex:inputText label="ARMS Customer" id="aCustomer" value="{!aCust}" style="width:80%" /> 
+                                                        <apex:actionStatus id="armsProcessing">
+                                                            <apex:facet name="start">
+                                                            <center> <img style="position: relative" src="/img/loading.gif"/> </center>
+                                                            </apex:facet>
+                                                            <apex:facet name="stop">
+                                                                <!--START UD-3054 10/9 AddedBy FrancisBenzon: rerender pageMessage-->
+                                                                <apex:commandButton value="Search ARMS Customer" id="searchCustomer" action="{!searchCusName}" style="width:80%" status="armsProcessing" reRender="otherPaymentModeSection,pageMessage"/>
+                                                                <!--END UD-3054 10/9 AddedBy FrancisBenzon: rerender pageMessage-->
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                         <apex:outputLabel value="Selected ARMS Customer" />
+                                                        
+                                                    <apex:inputText value="{!accTextName}" />
+                                                    <apex:inputText value="{!accNum}" />      
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    
+                                                        <apex:inputCheckbox id="createCB" value="{!thisOrder.Create_ARMS_Customer_Account__c}" disabled="{!CBdisable}"/>
+                                                        <apex:outputLabel value="Create New ARMS Customer & Account account" /> 
+                            
+                                                    </apex:pageBlockSectionItem>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> <apex:outputLabel value="Business Profile" />  
+                                                   
+                                                        <apex:selectList multiselect="false" size="1" value="{!thisOrder.Business_Profile__c}" label="">
+                                                                                                                                                                                                                 <apex:selectOption itemValue="NONE" itemLabel="NONE"/>
+                                                            <apex:selectOption itemValue="NORM" itemLabel="NORM"/>
+                                                            <apex:selectOption itemValue="GOVT" itemLabel="GOVT"/>
+                                                            <!--apex:selectOption itemValue="GIRO" itemLabel="GIRO"/-->
+                                                        </apex:selectList>
+                                                    </td> 
+                                                </tr>
+                                                <tr>
+                                                    <td> <apex:outputLabel value="" /> </td>
+                                                    <td> </td>
+                                                    
+                                                    <td> <apex:outputLabel value="Debt Mgmt Treatment" /> 
+                                                     
+                                                        <apex:selectList multiselect="false" size="1" value="{!thisOrder.Debt_Management_Treatment__c}" label="">
+                                                                                                                                                                                                                 <apex:selectOption itemValue="NONE" itemLabel="NONE"/>
+                                                            <apex:selectOption itemValue="SUBH" itemLabel="SUBH"/>
+                                                            <apex:selectOption itemValue="NORM" itemLabel="NORM"/>
+                                                           <apex:selectOption itemValue="SUBL" itemLabel="SUBL"/>
+                                                            <apex:selectOption itemValue="GOVT" itemLabel="GOVT"/>
+                                                        </apex:selectList>
+                                                    </td>
+                                                </tr>
+                                                <tr>  
+                                                    
+                                                    <td> </td>
+                                                    <td> 
+                                                        <apex:actionStatus id="armsAccProcessing">
+                                                            <apex:facet name="start">
+                                                            <center> <img style="position: relative" src="/img/loading.gif"/> </center>
+                                                            </apex:facet>
+                                                            <apex:facet name="stop">
+                                                                <!--START UD-3054 10/9 AddedBy FrancisBenzon: rerender pageMessage-->
+                                                                <apex:commandButton value="Search ARMS Account" action="{!searchAccName}"  style="width:80%" status="armsAccProcessing" reRender="otherPaymentModeSection,pageMessage"/> 
+                                                                <!--END UD-3054 10/9 AddedBy FrancisBenzon: rerender pageMessage-->
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                    </td>
+                                                </tr>
+                                                
+                                        </apex:pageBlockSection>
+                                            
+                                        <apex:pageBlockSection id="searchResult" rendered="{!thisOrder.Other_Payment_Mode__c == 'Invoice' && billAcc == true && addAccount == true}" columns="1">
+                                            <apex:pageBlock >
+                                                <apex:pageBlockTable value="{!armsSelected}" var="aw" id="ResultsList" >
+                                                <apex:column headervalue="ARMS Account Number">
+                                                    <apex:outputText >{!aw.arAccNum}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Account Type">
+                                                    <apex:outputText >{!aw.arType}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Credit Term">
+                                                    <apex:outputText >{!aw.arCredTerm}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Credit Term Reference">
+                                                    <apex:outputText >{!aw.arCredTermRef}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Debt Mgmt Treatment">
+                                                    <apex:outputText >{!aw.arDebtMgmt}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Company Code">
+                                                    <apex:outputText >{!aw.arCompCode}</apex:outputText>
+                                                </apex:column>
+                                                <apex:column headervalue="Account Creation Date">
+                                                    <apex:outputText >{!aw.arCreateDate}</apex:outputText>
+                                                </apex:column>
+                                                </apex:pageBlockTable>   
+                                        </apex:pageBlock>
+                                    </apex:pageBlockSection>    
+                                                
+                                        <apex:outputPanel id="noCustomer">
+                                            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayCusErr}"/>
+                                                <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayCusErr}">
+                                                    <apex:outputLabel value="{!errorMsg}" /> <br>
+                                                    </br>                                                       
+                                                    <center> <apex:commandButton value="Ok" action="{!closePopup}" rerender="noCustomer, accSearch"/> </center>
+                                                </apex:outputPanel>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel id="accSearch">
+                                            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayAccList}"/>
+                                                <apex:outputPanel styleClass="popup01" layout="block" rendered="{!displayAccList}">
+                                                
+                                                    <apex:outputLabel value="ARMS Customer Search Results" style="font-weight: bold" />
+                                                    <br> </br>
+                                                    <apex:outputLabel value="{!aCust}" style="font-style:italic" />
+                                                    <apex:pageBlockTable value="{!armsCusWrapList}" var="aw" id="ResultsTable" >
+                                                    <apex:column headervalue="">
+                                                        <apex:inputCheckbox value="{!aw.isTick}"/>
+                                                    </apex:column>
+                                                    <apex:column headervalue="ARMS Customer Number">
+                                                        <apex:outputText >{!aw.arNum}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Customer Name">
+                                                        <apex:outputText >{!aw.arName}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Care of/attention-to Party">
+                                                        <apex:outputText >{!aw.arPOC}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Address">
+                                                        <apex:outputText >{!aw.arAddress}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Postcode">
+                                                        <apex:outputText >{!aw.arPostcode}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Status">
+                                                       <apex:outputText >{!aw.arStatus}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Business Profile">
+                                                        <apex:outputText >{!aw.arBusProf}</apex:outputText>
+                                                    </apex:column>
+                                                    <apex:column headervalue="Create Date">
+                                                        <apex:outputText >{!aw.arDate}</apex:outputText>
+                                                    </apex:column>
+                                                    </apex:pageBlockTable> 
+                                                    <!--START PD-0271 6June2016 FrancisBenzon: display error but display all accounts-->
+                                                    <br />
+                                                    <apex:outputLabel value="{!errorMessageARMS8}" style="font-style:italic, bold"/>                                                
+                                                    <br /> <br/>
+                                                    <!--END PD-0271 6June2016 FrancisBenzon: display error but display all accounts-->
+                                                    <apex:outputLabel value="Please select the correct Account and click Ok" style="font-style:italic" />
+                                                                                                        
+                                                    <center> <apex:outputPanel > 
+                                                        <apex:commandButton value="Ok" action="{!addPopAcc}" rerender="accSearch, otherPaymentModeSection"/> 
+                                                        <apex:commandButton value="Cancel" action="{!cancelSearch}" rerender="accSearch, otherPaymentModeSection"/>
+                                                    </apex:outputPanel></center>
+                                                
+                                                </apex:outputPanel>
+                                        </apex:outputPanel>
+
+                                    <!------------------------------------End of ARMS---------------------------------------->
+                                    <!-- end other payment mode - invoice -->
+                                    
+                                    <!-- other payment mode - internal charge -->
+                                    <apex:pageBlockSection id="internalCharge" rendered="{!thisOrder.Other_Payment_Mode__c == 'Internal Charge'}" columns="1">
+                                        <apex:inputField value="{!thisOrder.GL_Code__c}" />
+                                    </apex:pageBlockSection>                                   
+                                </apex:outputPanel>
+                              <!-- START Del Santos/FrancisBenzon Added actionRegion Parameter. Fix for UD-0260 -->                                                 
+                              </apex:actionRegion> 
+                              <!-- END Del Santos/FrancisBenzon Added actionRegion Parameter. Fix for UD-0260 -->
+                            </apex:outputPanel>
+                            <!-- end payment mode = other -->
+                        </apex:outputPanel>
+                        
+                        <!-- billing contact -->
+                        <apex:outputPanel layout="block">
+            <!-- Start D-2196 02/12/2015 JohnD added collapsible attribue -->                        
+                            <apex:pageBlockSection id="billingContactX" columns="1" collapsible="false">
+                                <apex:inputField value="{!thisOrder.Billing_Contact__c}" />
+                            </apex:pageBlockSection> 
+            <!-- End D-2196 02/12/2015 JohnD added collapsible attribue -->  
+                            <apex:pageBlockSection id="billingContactSectionItem" title="Create Billing Contact" columns="1" collapsible="true">
+                                <apex:iframe id="billingContactFrame" src="/apex/CreateModifyContactAddress?accountId={!$CurrentPage.parameters.accountId}&RecordType=Billing" scrolling="true" />
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <!-- end billing contact -->        
+                        
+                    </apex:outputPanel>
+                    <!-- end create new billing account -->
+
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            
+            <!-- end billing -->
+        </apex:pageBlock>                   
+        
+        <apex:actionRegion >
+            <apex:actionFunction name="removeOrderLineItem" action="{!removeLineItem}" 
+                    reRender="orderLineItems, deliveryChargesSection, creditAndChargesSection, pageMessage" 
+                    oncomplete="toggleLoader('removeOrderLineItemLoader', 'hide'); reRenderSectionVisibility({!isReInitializedItem}); toggleDeliveryCharge();">
+                <apex:param name="param1" value="" assignTo="{!orderLineItemIdToBeRemoved}" />
+            </apex:actionFunction>
+        </apex:actionRegion>
+        
+        <apex:actionRegion >
+            <!-- Start 17Apr15 UD-0759 Ronald Dagaraga - added call function in oncomplete -->
+            <!--Start D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD - call function that shows Asia1section upon selecting add on package-->
+            <apex:actionFunction name="populateAddOn" action="{!populateAddOn}" reRender="tobeCreatedContainer, addOnIsDigital, addOnSection, pageMessage"
+            oncomplete="updateSubscriptionRate(); showAsia1Section();">
+            <!--End D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD-->
+            <!-- End 17Apr15 UD-0759 Ronald Dagaraga - added call function in oncomplete -->
+                <apex:param name="addOnPackageId" assignTo="{!selectedAddOnPackage}" value="" />
+            </apex:actionFunction>
+        </apex:actionRegion>
+        
+        <apex:actionRegion >
+            <apex:actionFunction name="populateGifts" action="{!populatePromotionGifts}" reRender="giftSection, pageMessage, maxNoOfGifts" >
+                <apex:param name="promotionId" assignTo="{!selectedPromotionId}" value="" />
+            </apex:actionFunction>
+        </apex:actionRegion>
+        <!--Start D-4618 04/21/2016 Added by Kristine Balaoing - added for newly created add on-->
+        
+        <!--End D-4618 04/21/2016 Added by Kristine Balaoing-->
+        
+        <apex:actionRegion >
+    <!-- Start UD-0593 03-27-15 ABanaag - add selectedGifts to rerender -->
+        <!--START D-3090 PPancho 06-11-2015 Added updateSubrate2 function oncomplete -->
+        <!-- Start UD-1431 08Jul15 JohnD - removed toggleDeliveryCharges from oncomplete -->
+                <apex:actionFunction name="populateSubscriptionDetail" action="{!populateSubscriptionDetail}" 
+                        reRender="subscriptionDetails, addOnSection, giftSection, asia1Section, termsAndCondition, pageMessage, selectedGifts" 
+                        oncomplete="toggleLoader('subscriptionLoader', 'hide'); showRelatedSections(); toggleVendorSubscription(); 
+                        updateSubRate2()" >
+        <!-- End UD-1431 08Jul15 JohnD - removed toggleDeliveryCharges from oncomplete -->
+        <!--END D-3090 PPancho 06-11-2015 Added updateSubrate2 function oncomplete -->
+    <!-- End UD-0593 03-27-15 ABanaag - add selectedGifts to rerender -->
+                <apex:param name="packageId" assignTo="{!selectedPackageId}" value="" />
+                    <!-- Start UD-1431 08Jul15 JohnD - added parameters -->
+                    <apex:param name="subscriberChargeUserInput" assignTo="{!subscriberCharge}" value="" />
+                    <apex:param name="vendorCreditUserInput" assignTo="{!vendorCredit}" value="" />
+                    <!-- End UD-1431 08Jul15 JohnD - added parameters -->
+            </apex:actionFunction>
+        </apex:actionRegion>
+        
+        <apex:actionRegion >
+        <!-- Start D-2196 02/12/2015 JohnD added deliveryChargesSection in the rerendering -->
+    <!-- Start UD-0593 03-27-15 ABanaag - add selectedGifts,maxNoOfGifts to rerender -->
+            <!-- Start D-3374 14Aug15 JohnD - added hidden_selectedPackageIdContainer in reRender-->
+            <apex:actionFunction name="simulateActionFunctionLink" action="{!retrieveOrderLineItem}" 
+                    reRender="subscriptionDetails, addOnSection, giftSection, asia1Section, deliveryChargesSection, termsAndCondition, pageMessage, maxNoOfGifts, selectedGifts, hidden_selectedPackageIdContainer" 
+                    oncomplete="showRelatedSections(); toggleVendorSubscription(); checkAsia1Limit(); 
+                    toggleTermsCondition({!orderLineItem.Promotion_ID__c != ''});  toggleLoader('retrieveLineItemLoader', 'hide'); toggleDeliveryCharge();">
+            <!-- End D-3374 14Aug15 JohnD - added hidden_selectedPackageIdContainer in reRender-->
+    <!-- Start UD-0593 03-27-15 ABanaag - add selectedGifts,maxNoOfGifts to rerender -->
+
+                 <apex:param name="param1" assignTo="{!selectedOrderLineItem}" value="" />   
+            </apex:actionFunction>
+        <!-- End D-2196 02/12/2015 JohnD added deliveryChargesSection in the rerendering -->
+         <!-- START D-4062 RReyes -->
+         <apex:actionFunction name="addToLineItem" action="{!checkAddressAndProductFamily}" oncomplete="checkSubscription({!result}); buttonsEnabled(true);" rerender="pageMessage"> </apex:actionFunction>
+         <!-- END D-4062 RReyes -->
+        </apex:actionRegion>
+         
+            <!-- Start UD-1431 08Jul15 JohnD - added rerenders and oncomplete -->
+            <!-- Start UD-1431v2 11Jul15 JohnD - reverted original -->
+            <!-- Start UD-1958 18Jul15 JohnD- added deliveryChargesSection and oncomplete -->
+            <apex:actionFunction name="computePrepaid" action="{!computePrepaid}" reRender="fullPrepaid, monthlyDelCharge,hidSubCharge, deliveryChargesSection, creditAndChargesSection" 
+                    oncomplete="toggleDeliveryCharge(); clearSubscriberCharge();" />
+            <!-- End UD-1958 18Jul15 JohnD - added deliveryChargesSection and oncomplete -->
+            <!-- End UD-1431v2 11Jul15 JohnD - reverted original -->
+            <!-- End UD-1431 08Jul15 JohnD - added rerenders and oncomplete -->
+        <!-- Start UD-0597 Jason Abolac -->    
+        <apex:actionFunction action="{!addOrderLineItem}" name="addOrderLineItem" reRender="orderLineItems, creditAndChargesSection, deliveryChargesSection, pageMessage" 
+                            oncomplete="reRenderSectionVisibility({!isReInitializedItem}); toggleDeliveryCharge();" />
+        <!-- Start UD-0597 Jason Abolac -->                 
+        <apex:actionFunction action="{!checkAddressAndProductFamily}" name="checkAddressAndProductFamily" immediate="true"/>
+        <!-- START UD-3339 12/02/15 RReyes -->
+        <apex:actionFunction action="{!removeAsia1SubscriptionBulk}" name="removeAsia1SubscriptionBulk" rerender="listToBeCreated"/>
+        <!-- END UD-3339 12/02/15 RReyes -->
+        <!-- [JohnD 12/05] CCB-022 -->
+        <!-- Start D-2128 02/05/2015 added by ABanaag - enclose apex functions in actionRegion-->
+        <apex:actionRegion >
+        <!-- Start D-2664 02Apr15 JohnD added oncomplete action -->
+        <!-- Start D-2960 06Apr15 JohnD removed toggleDelivery from oncomplete -->
+        <apex:actionFunction name="retrieveLatestRecipientContact" action="{!retrieveLatestRecipientContact}" 
+                reRender="deliveryInformationSection, individualTable, deliveryChargesSection, creditAndChargesSection, 
+                pageMessage, asiaUserName, asiaEmail" oncomplete="uncollapseRecipientSection(); triggerRecipientOnChangeEvent();" />
+        <!-- End D-2960 06Apr15 JohnD removed toggleDelivery from oncomplete -->
+        <!-- End  D-2664 02Apr15 JohnD added oncomplete action -->
+        
+        <apex:actionFunction name="retrieveLatestBillingContact" action="{!retrieveLatestBillingContact}" 
+                reRender="billingContactX" oncomplete="uncollapseBillingSection();" />
+        </apex:actionRegion>
+        <!-- End D-2128 02/05/2015 added by ABanaag - enclose apex functions in actionRegion-->
+        <!-- end CCB-022 -->
+        <apex:inputHidden id="paymentMethodIdFromZuora" value="{!thisOrder.Payment_Method_ID__c}" />
+        <!-- Start D-3374 14Aug15 JohnD - added outputpanel -->
+        <apex:outputPanel id="hidden_selectedPackageIdContainer">
+            <apex:inputHidden id="hidden_selectedPackageId" value="{!selectedPackageId}" />
+        </apex:outputPanel>
+        <!-- End D-3374 14Aug15 JohnD - added outputpanel -->
+   <!-- Start UD-0593 03-27-15 ABanaag -->
+
+        <apex:inputHidden id="maxNoOfGifts" value="{!maxNoOfGifts}"  />
+        <apex:inputHidden id="selectedGifts" value="{!selectedGifts}"  />
+    <!-- End UD-0593 03-27-15 ABanaag -->
+        <!-- START D-3039 06/03/15 RReyes -->
+             <apex:inputHidden id="isCreateNew" value="{!billingAccountOption}"/>
+        <!-- END D-3039 06/03/15 RReyes -->
+    </apex:form>
+    
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/SM_StartSubscription.js')}" />
+    <!-- Start D-0105 UAT 03-01-2015 JohnD Added plugin for numeric input -->
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/JQueryNumbericPlugin.js')}" />
+    <!-- End D-0105 UAT 03-01-2015 JohnD -->
+    <script src="https://apisandbox.zuora.com/apps/Hosted/postmessage.js" type="text/javascript"/>
+    <script>    
+        
+        function showPackage(e) {
+            var promotionIdHiddenField = $(e).find("input[id*='promotionId']").val();
+            var billingType = $("input[id*='billingTypeFromPromotion']").val();
+            var action = 'Add';
+            var accountId = '{!thisOrder.Account__c}';
+            
+            //Start UD-0375 03-16-15 ABanaag - fixed by Manolo
+            var isEligibilityChecked = $("input[id*='isPromoChecked']").is(':checked');
+            //End UD-0375 03-16-15 ABanaag - fixed by Manolo
+          
+            $("#packageContainerWrapper").remove();         
+            
+            populateGifts(promotionIdHiddenField);
+            
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SM_StartSubscriptionEntryController.retrieveRelatedPackages}',
+                promotionIdHiddenField,
+                billingType,
+                accountId,
+                action,
+                isEligibilityChecked,
+                function(result, event) {
+                    
+                    var template = "<table class=\"list packageResults shadow\">";
+                    template += "<thead class=\"rich-table-thead\">";
+                    template += "   <tr>";
+                    template += "       <th width=\"40%\">Package Name</th>";
+                    template += "       <th width=\"25%\">Package Type</th>";
+                    template += "       <th width=\"10%\">Sub Period</th>";
+                    template += "       <th width=\"10%\">Sub Type</th>";
+                    template += "       <th width=\"15%\">Subscription Rate</th>";
+                    template += "   </tr>";
+                    template += "</thead>";
+                    template += "<tbody>";
+                    
+                    var counter = 0;
+                    $.each($.parseJSON(result), function(key, value) {
+
+                        var packageIdPromotionId = value.packageId + ":" + promotionIdHiddenField;
+                        
+                        template += "<tr class=\"dataRow\" onfocus=\"if (window.hiOn){hiOn(this);}\" onblur=\"if (window.hiOff){hiOff(this);}\" onmouseout=\"if (window.hiOff){hiOff(this);}\" onmouseover=\"if (window.hiOn){hiOn(this);}\" onclick=\"toggleLoader('subscriptionLoader', 'show'); showPackageDetails(this); toggleTermsCondition(true); populateAsia1();\">";
+                        template += "<td>" + value.packageName + "</td>";
+                        template += "<td>" + value.packageType + "</td>";
+                        template += "<td>" + value.packageSubscriptionPeriod + "</td>";
+                        template += "<td>" + value.packageSubscriptionType + "</td>";
+                        template += "<td>" + value.packageSubscriptionRate;
+                        template += "<input type=\"hidden\" value=\"" + packageIdPromotionId + "\" id=\"" + counter + ":value.packageId\" />";
+                        //template += "<input type=\"hidden\" value=\"" + value.packageId + "\" id=\"" + counter + ":value.packageId\" />";
+                        template += "</td>";
+                        template += "</tr>";
+                    });
+                    
+                    template += "</tbody>";
+                    template += "</table>";
+                    
+                    var packageContainer = "<tr id=\"packageContainerWrapper\"><td class=\"packageContainer\" colspan=\"5\">" + template + "</td></tr>";
+                    
+                    $(packageContainer).insertAfter(e);
+                    toggleLoader('packageLoader', 'hide');
+                },
+                {
+                    escape: false
+                }
+            );
+        }
+
+        function checkSubscription(flag) {
+            var stock = $("input[id*='quantity']").val();           
+            if(stock > 0){
+                if(flag == 'true' || flag == true) {
+                    var result = confirm('There is already an existing subscription with the same Product Family at the same Delivery Address. Do you want to continue?');
+                    if(result){
+                        addOrderLineItem();
+                    }                
+                } else {
+                    addOrderLineItem();
+                }
+            } else {
+                alert('Quantity must be greater than zero.');
+            }
+        }
+        
+        <!--D-0739 && D-0742 Validation for stock and Maximum allowable gifts----->
+        <!--Start PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->
+        var selectedGift = 0;
+        function validateGift(v, b) {
+            var max = $("input[id*='maxNoOfGifts']").val();
+            var stock = $("input[id*='quantity']").val();
+            selectedGift = $("input[id*='selectedGifts']").val(); //Start/End UD-0593 03-27-15 ABanaag
+            if(stock > 0){
+                if (v.checked == true) {
+                    selectedGift++;
+                    $("input[id*='selectedGifts']").val(selectedGift); //Start/End UD-0593 03-27-15 ABanaag
+                    if (selectedGift > max) {
+                        selectedGift--;
+                        $("input[id*='selectedGifts']").val(selectedGift); //Start/End UD-0593 03-27-15 ABanaag
+                        alert('Maximum allowable gift exceeded');
+                        return this.checked = false;
+                    }
+                    else {
+                        if (b < stock) {
+                            selectedGift--;
+                            $("input[id*='selectedGifts']").val(selectedGift); //Start/End UD-0593 03-27-15 ABanaag
+                            alert('Not enough stock.');
+                            return this.checked = false;
+                        }
+                    }
+                }
+                else {
+                    selectedGift--;
+                    $("input[id*='selectedGifts']").val(selectedGift); //Start/End UD-0593 03-27-15 ABanaag
+                }
+            } else {
+                alert('Quantity must be greater than zero.');
+                return this.checked = false;
+            }
+        }
+        <!--End PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->
+        
+        function validateQuantity(){
+            var stock = $("input[id*='quantity']").val();
+            if(stock <= 0){
+                // Start D-0105 UAT 01-03-2015 JohnD defaulted quantity to 1 instead of alert
+                $("input[id*='quantity']").val(1);
+                // End D-0105 UAT 01-03-2015 JohnD
+            }
+        }
+        
+        //START D-0043 02-25-2015 Marvin Gatchalian
+        function checkAsia1CreatedAgainstQuantity(){
+        //START UD-0161 03-03-2015 Marvin Gatchalian - stock and asia1count variable multiply by 1 to convert text into integer
+            var stock = $("input[id*='quantity']").val() * 1;
+            var asia1count = $("input[id*='asia1TotalToBecreated']").val() * 1;
+        //END UD-0161 03-03-2015 Marvin Gatchalian - stock and asia1count variable multiply by 1 to convert text into integer
+            if (asia1count >= stock) {
+                alert('Number of Asia1 id creation cannot be more than against Quantity.');
+            }
+            else {
+                passStringToController();
+            }
+            return false;
+        }
+        //END D-0043 02-25-2015  Marvin Gatchalian
+        
+        
+             //Start MMallorca UD-1826  Copy Subscription Charge into Vendor Credit 14/07/2015
+            function compute(v){
+                var selectedOption = $("select[id*='deliveryChargeType']").val();
+                $("[id*='hidSubCharge']").val(v);                            
+                if(selectedOption == 'S')
+                {
+                    $("[id*='vendorCharge']").val(v);
+                }
+                
+                 computePrepaid();
+            }
+            //End MMallorca UD-1826 14/07/2015
+        // START : D-1033 12/11/14 Alyana Navarro - Added H and L to if statement
+        function compute_v2(){
+            
+            var selectedOption = $("select[id*='deliveryChargeType']").val();
+            // Start UD-1958 21Jul15 JohnD
+            if (selectedOption == 'S') {
+                $('input[id*="vendorCredit"]').val($("input[id*='subscriberCharge']").val());
+            }
+            // End UD-1958 21Jul15 JohnD
+            
+            // START UD-1274 05/25/2015 MMallorca Added S and 9 to if statement
+            if(selectedOption == 'C' || selectedOption == 'N' || selectedOption == 'Z' || selectedOption == 'H' || selectedOption == 'L'  || selectedOption == 'S' || selectedOption == '9' ){
+            // END UD-1274 05/25/2015 MMallorca       
+                computePrepaid();
+            }
+            
+            
+            // START UD-1274 05/25/2015 MMallorca Compute Monthly Delivery Charge
+            // Start UD-1958 21Jul15 JohnD - commented out
+            /*
+            if(selectedOption == 'S' || selectedOption == '9'){
+             compute($("input[id*='subscriberCharge']").val());
+            }
+            */
+            // Start UD-1958 21Jul15 JohnD - commented out
+            
+            
+                //START UD-1826 AddedBy FrancisBenzon : remove readonly attribute
+                if(selectedOption != 'S')
+                {
+                    $("input[id*='vendorCharge']").removeAttr("readonly");
+                }
+                else {
+                    $("input[id*='vendorCharge']").prop("readonly", true);
+                }
+                //END UD-1826 AddedBy FrancisBenzon : remove readonly attribute
+            // END UD-1274 05/25/2015 MMallorca
+        }
+        // END : D-1033 12/11/14
+        function populateAsia1(){
+            $("[id*='parentRecipient']").trigger("change");
+            
+        }
+        
+        // [JohnD 12/04] CCB-002
+        function uncollapseRecipientSection() {
+            try {
+                $("iframe[id*='recipientContactFrame']").css('height', '50px');
+                twistSection($("img[id*='recipientSectionItem']")[0]);
+            } catch (error) {
+            }
+        }        
+
+        function uncollapseBillingSection() {
+            try {
+                $("iframe[id*='billingContactFrame']").css('height', '50px');
+                twistSection($("img[id*='billingContactSectionItem']")[0]);
+            } catch (error) {
+            }
+        }       
+        // end CCB-002
+        
+        
+        //START: D-1425 01/07/15 Added by April Banaag - this function sets delivery charge type value to N if Charity checkbox is checked
+        function SetDefaultChargeType(charityBoolean){
+            //Start UD-0330 03-24-15 ABanaag - delivered by Mailing Agent
+            $("[id*='deliveryChargeType']").val('N');
+            $("[id*='deliveredByPicklist']").val('Mailing Agent');
+            //End UD-0330 03-24-15 ABanaag - delivered by Mailing Agent
+        }
+        //END: D-1425 01/07/15 Added by April Banaag - this function sets delivery charge type value to N if Charity checkbox is checked
+        
+        //Start D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD - shows Asia1 secion if the add on package selected is Digital
+        function showAsia1Section() { 
+            var flag = $("[id*='addOnIsDigital']").val();         
+            if(typeof flag != 'undefined'){         
+                //alert('platform '+ flag);
+                if (flag == 'true' || flag == true) {
+                    showElement($("[id*='asia1Section']"));
+                } 
+                else {
+            if ($("#isDigital").val() == 'false' || $("#isDigital").val() == false) {
+                        hideElement($("[id*='asia1Section']"));
+            }
+                }
+            }
+        }
+        //End D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD
+
+        // Start D-2664 02Apr15 JohnD
+        function triggerRecipientOnChangeEvent() {
+            $("[id*='parentRecipient']").trigger("change");
+        }
+        // End D-2664 02Apr15 JohnD
+    //START D-3039 06/03/15 RReyes
+$(document).ready(function() {
+    $(".btn").click(function(event){
+        
+        var returnValue = true;
+        
+        if ($(this).hasClass("btnDisabled") == true) {
+            event.preventDefault();
+        } else {
+            var btnValue = $(this).val();
+            var text = "";
+            if(btnValue == 'Save as Draft'){
+                var delChargeType = $("select[id*='deliveryChargeType']").val();   
+                var newPaymentMethod = $("select[id*='OtherPayment']").val(); 
+                var billAcctOpt = $("input[id*='isCreateNew']").val();
+                var exPaymentMethod = $("input[id*='otherPaymentMethod']").val();
+                //alert(exPaymentMethod);
+                if((billAcctOpt == 'createNew' && newPaymentMethod == 'Freelist' && delChargeType != 'N') || (billAcctOpt == 'useExisting' && exPaymentMethod == 'Freelist' && delChargeType != 'N')) {
+                //START D-3263 07/20/15 RReyes - changed error message with the correct characters.
+                returnValue = confirm('For Payment method = Freelist, the Delivery Charge Type must be \'N\'. Are you sure you want to proceed?');
+                //END D-3263 07/20/15 RReyes - changed error message with the correct characters.
+                text = "Saving...";
+                $(this).val(text);
+                $(this).css("font-style", "italic");
+                }
+            }
+            
+        }
+        
+        if (returnValue == false) {
+            if (text == "Saving...") {
+                text = "Save as Draft"; 
+            }
+            $(this).val(text);
+            $(this).css("font-style","normal");
+        }
+        return returnValue; 
+        // Start UD-1736 04Jul15 Gio/JohnD
+        if ("{!thisOrder.Other_Payment_Mode__c}" != '') {
+        
+        $("select[id*='OtherPayment']").trigger('change');
+        $("input[id*='createCB']").prop("checked", "{!thisOrder.Create_ARMS_Customer_Account__c}");
+         }
+        // End UD-1736 04Jul15 Gio/JohnD
+    });    
+    });
+    //END D-3039 06/03/15 RReyes
+
+    // Start UD-1958 20Jul15 JohnD
+    var isDeliveryTypeChage = false;
+    function clearSubscriberCharge() {
+        if (isDeliveryTypeChage == true && ($('select[id*="deliveryChargeType"]').val() == 'S' 
+                || $('select[id*="deliveryChargeType"]').val() == '9')) { 
+            $('input[id*="subscriberCharge"]').val('0.00');
+            $('input[id*="hidSubCharge"]').val('0.00');
+            $('input[id*="subscriberCharge"]').trigger("change");
+            isDeliveryTypeChage = false;
+        }      
+    }
+    
+    function setDeliveryTypeChange() {
+        isDeliveryTypeChage = true;
+    }
+    // End UD-1958 20Jul15 JohnD    
+    //START D-4062 12/09/15 RReyes
+    function doAddToLineItem() {
+        // first, call the action function to post the form
+        addToLineItem();
+        // second, disable the buttons
+        buttonsEnabled(false);
+        // third, return false to prevent the click from
+        // posting the form a second time
+        return false;
+    }
+    
+    function buttonsEnabled(enabled) {
+        // retrieve all of the buttons or links on the page
+        // with the css class of btn
+        var $buttons = jQuery('.btn');
+        if (enabled === false) {
+            // add the btnDisabled class to give it the look of being disabled
+            // add the disabled attribute to actually disable interactability
+            $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+        } else {
+            // remove the css class and the disabled attribute
+            $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+        } 
+    }
+    //END D-4062 12/09/15 RReyes
+    
+    // Start UD-3351 21Jan16 Added by JohnD/JaysonS - trigger reload button
+    function reloadCrediCard() {
+        $("input[id*='ccReloadButton']").trigger("click");
+    }   
+    // End UD-3351 21Jan16 Added by JohnD/JaysonS - trigger reload button
+    
+    </script>
+       
+
+        
+</apex:page>

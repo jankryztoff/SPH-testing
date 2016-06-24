@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Legacy_Subscription_ID__c</field>
+    </columns>
+    <columns>
+        <field>CUST_CREATED_NAME</field>
+    </columns>
+    <description>Subscription check after the Enhancement.</description>
+    <filter>
+        <criteriaItems>
+            <column>CUST_CREATED_NAME</column>
+            <operator>notContain</operator>
+            <value>Karl Tan</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>MIG_CHECK - SubsCheckAfterEnhancement</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Zuora__Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_CMIS_POP_ImportVendorRouteInfo</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_CMIS_POP_ImportVendorRouteInfos</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- description --></label>
+        <name>description__c</name>
+    </fields>
+    <fields>
+        <label><!-- dropPoint --></label>
+        <name>dropPoint__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationCode --></label>
+        <name>publicationCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- routeSystem --></label>
+        <name>routeSystem__c</name>
+    </fields>
+    <fields>
+        <label><!-- route --></label>
+        <name>route__c</name>
+    </fields>
+    <fields>
+        <label><!-- variedFixed --></label>
+        <name>variedFixed__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorId --></label>
+        <name>vendorId__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>External Payment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>External Payments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+        <relationshipLabel><!-- External Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Number --></label>
+        <name>Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name --></label>
+        <name>Bank_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- External Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact First Name --></label>
+        <name>Billing_Contact_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact Last Name --></label>
+        <name>Billing_Contact_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact email --></label>
+        <name>Billing_Contact_email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bounced Cheque --></label>
+        <name>Bounced_Cheque__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cancelled Date --></label>
+        <name>Cancelled_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card Holder Name --></label>
+        <name>Card_Holder_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card Type --></label>
+        <name>Card_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cheque Date --></label>
+        <name>Cheque_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cheque No --></label>
+        <name>Cheque_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- External Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is PDF Generated --></label>
+        <name>Is_PDF_Generated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Transaction ID --></label>
+        <name>Parent_Transaction_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- PayPal BAID --></label>
+        <name>PayPal_BAID__c</name>
+    </fields>
+    <fields>
+        <label><!-- PayPal Email --></label>
+        <name>PayPal_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pay Pal Profile Status --></label>
+        <name>Pay_Pal_Profile_Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proceed</masterLabel>
+            <translation><!-- Proceed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment Date --></label>
+        <name>Payment_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- The display name of the payment method used for the payment. --></help>
+        <label><!-- Payment Method --></label>
+        <name>Payment_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Profile Status --></label>
+        <name>Payment_Profile_Status__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment Type --></label>
+        <name>Payment_Type__c</name>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PayPal</masterLabel>
+            <translation><!-- PayPal --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment amount --></label>
+        <name>Payment_amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference ID --></label>
+        <name>Reference_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sold To Contact Name --></label>
+        <name>Sold_To_Contact_Name__c</name>
+        <relationshipLabel><!-- External Payments (Sold To Contact Name) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total --></label>
+        <name>Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Amount --></label>
+        <name>Transaction_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Date --></label>
+        <name>Transaction_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction ID --></label>
+        <name>Transaction_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Status --></label>
+        <name>Transaction_Status__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>F</masterLabel>
+            <translation><!-- F --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Transaction Type --></label>
+        <name>Transaction_Type__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>F</masterLabel>
+            <translation><!-- F --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>External Payment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - External Payment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Transaction Type is required. --></errorMessage>
+        <name>RequiredTransactionType</name>
+    </validationRules>
+</CustomObjectTranslation>

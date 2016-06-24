@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Package__c.Subscriptions__r.Orders__r$Subscription_Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>Package__c.Subscriptions__r.Orders__r$Package_Name__c</field>
+    </columns>
+    <columns>
+        <field>Package__c.Subscriptions__r$Name</field>
+    </columns>
+    <columns>
+        <field>Package__c.Subscriptions__r$Classification__c</field>
+    </columns>
+    <description>This report shows the number of subscribers who have signed up for a subscription as a result of a promotion</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Promotion__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Print Promotion Status for the Past Week</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_with_package__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Package__c.Subscriptions__r.Orders__r$Subscription_Start_Date__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Package__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

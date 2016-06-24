@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Singpost Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Singpost Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Address Type Overridden --></label>
+        <name>Address_Type_Overridden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Type --></label>
+        <name>Address_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Type Description --></label>
+        <name>Building_Type_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name Overridden --></label>
+        <name>Building__c</name>
+    </fields>
+    <fields>
+        <label><!-- Floor --></label>
+        <name>Floor__c</name>
+    </fields>
+    <fields>
+        <label><!-- House/Block Number --></label>
+        <name>House_Block_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- House Type Description --></label>
+        <name>House_Type_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Units --></label>
+        <name>Number_of_Units__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Address Type --></label>
+        <name>Old_Address_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Sector Zone --></label>
+        <name>Postal_Sector_Zone__c</name>
+        <relationshipLabel><!-- Singpost Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Postal Sector --></label>
+        <name>Postal_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Number --></label>
+        <name>Service_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- SingPost Building Code --></label>
+        <name>SingPost_Building_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SingPost Address --></label>
+        <name>SingPost_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Code --></label>
+        <name>Street_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name Overriden --></label>
+        <name>Street_Name_Overriden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>Street_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit --></label>
+        <name>Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Walkup Indicator --></label>
+        <name>Walkup_Indicator__c</name>
+    </fields>
+    <layouts>
+        <layout>MIG - Singpost Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Singpost Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to edit &apos;Postal Code&apos; field after creation. --></errorMessage>
+        <name>Restrict_edit_postal_code_after_creation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only 1 Record per Postal Code is allowed --></errorMessage>
+        <name>Unique_record_entry_per_Postal_Code</name>
+    </validationRules>
+</CustomObjectTranslation>

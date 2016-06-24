@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_DIR_ImportSingpostFullDatabase</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_DIR_ImportSingpostFullDatabase</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- SingpostKey --></label>
+        <name>SingpostKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingCode --></label>
+        <name>buildingCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingDescription --></label>
+        <name>buildingDescription__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingName --></label>
+        <name>buildingName__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingNo --></label>
+        <name>buildingNo__c</name>
+    </fields>
+    <fields>
+        <label><!-- houseType --></label>
+        <name>houseType__c</name>
+    </fields>
+    <fields>
+        <label><!-- postalCodeImageBase64 --></label>
+        <name>postalCodeImageBase64__c</name>
+    </fields>
+    <fields>
+        <label><!-- postalCode --></label>
+        <name>postalCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- streetName --></label>
+        <name>streetName__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

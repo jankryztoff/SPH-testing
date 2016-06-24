@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Acknowledgement Letters</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Acknowledgement Letters</name>
+    <style>none</style>
+    <subject>SPH Subscription Acknowledgement Letter</subject>
+    <textOnly>Subscription Acknowledgement
+
+DATE 	: {{Date.Today}}
+
+SUB A/C NO  : {{Account.AccountNumber}}
+
+ATTN: {{Account.AccountName}}
+{{Account.MailingAddress}}
+
+{{Class.Barcode}}
+Singapore Press Holdings Limited
+Circulation
+83 Genting Lane, Level 2, Media Centre
+Singapore 349567
+Fax : 650 67448 Enquiries: 65-63883838
+Email : circs@sph.com.sg
+
+
+
+Thank you for your subscription order/renewal.
+
+
+
+Recipient No/ Recipient Detail
+Product
+Frequency   Start Date / Stop Date  Copy/s   Amount
+S$
+
+
+{{Contact.Contact_Recipient_Number__c}}
+SPH Subscriber {{Contact.Contact_Recipient_Number__c}}
+{{Contact.RecipientContact.MailingAddress}}
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If you have subscribed to a newspaper promotion package, no cancellation of subscription is allowed within the contract period.
+Otherwise, an administrative fee of SGD$100, $200 and $500 will be imposed for a 12, 24 and 36 months contract respectively.
+
+**Subscription is charged to your credit card account on a monthly basis.
+##Subscription will remain in force until receiving termination notification from you.
+
+
+
+Recipient No/ Recipient Detail
+Product
+Frequency   Start Date / Stop Date  Copy/s   Amount
+S$
+
+
+{{Contact.Contact_Recipient_Number__c}}
+SPH Subscriber {{Contact.Contact_Recipient_Number__c}}
+{{Contact.RecipientContact.MailingAddress}}
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Subscription is charged to your credit card account on a monthly basis.
+#Subscription will be invoiced on a monthly basis.
+Subscription will remain in force until receiving termination notification from you.
+**Please note that subscribers will receive the magazine(s) 3 to 5 working days after release at newstands.
+
+
+Subscription Acknowledgement
+
+DATE 	: {{Date.Today}}
+
+SUB A/C NO  : {{Account.AccountNumber}}
+
+ATTN: {{Account.AccountName}}
+{{Account.MailingAddress}}
+
+{{Class.Barcode}}
+Singapore Press Holdings Limited
+Circulation
+83 Genting Lane, Level 2, Media Centre
+Singapore 349567
+Fax : 650 67448 Enquiries: 65-63883838
+Email : circs@sph.com.sg
+
+
+
+Thank you for your subscription order/renewal.
+
+
+
+Recipient No/ Recipient Detail
+Product
+Frequency   Start Date / Stop Date  Copy/s   Amount
+S$
+
+
+{{Contact.Contact_Recipient_Number__c}}
+SPH Subscriber {{Contact.Contact_Recipient_Number__c}}
+{{Contact.RecipientContact.MailingAddress}}
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*Please make payment for subscription.
+**Subscription is charged to your credit account on a monthly basis.
+##Subscription will remain in force until receiving termination notification from you.
+
+
+
+Recipient No/ Recipient Detail
+Product
+Frequency   Start Date / Stop Date  Copy/s   Amount
+S$
+
+
+{{Contact.Contact_Recipient_Number__c}}
+SPH Subscriber {{Contact.Contact_Recipient_Number__c}}
+{{Contact.RecipientContact.MailingAddress}}
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+{{Subscription.Package_Name__c.Package_ID}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+{{Subscription.Start_Date__c}} - {{Subscription.End_Date__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+{{Subscription.Number_of_Copies__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+{{Subscription.Subscription_Amount__c}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*Subscription is charged to your credit account on a monthly basis.
+##Subscription will remain in force until receiving termination notification from you.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

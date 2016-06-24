@@ -81,13 +81,14 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
         
         //Start UD-3942 12-Apr-2016 Added By S.Puli 
         //Start UD-3207 01-Apr-2016 Added By S.Puli
+        //Start PD-0040 15-Jun-2016 Added By S.Puli - return direct corporate full prepaid exclusion
         if(selectAccountsOnly == false){
             return Database.getQueryLocator([SELECT Id, Zuora__Zuora_Id__c, ARMS_Invoice_ID__c, Zuora__BillingAccount__r.Other_PaymentMethod__c, 
                 Zuora__BillingAccount__r.Id, Zuora__Account__r.GST_Invoice__c,Zuora__TotalAmount__c, Is_PDF_Generated__c, Previous_Balance__c, 
                 Zuora__BillingAccount__r.Zuora__Balance__c, Zuora__PaymentAmount__c 
                 FROM Zuora__ZInvoice__c 
                 WHERE Is_PDF_Generated__c = false AND (Zuora__BillingAccount__r.Other_PaymentMethod__c != 'Invoice' OR (Zuora__TotalAmount__c > 0 AND Zuora__BillingAccount__r.ARMS_Account_Number__c != NULL)) 
-                //Start/End PD-0502 06-Jun-2016 Added By S.Puli - remove 3207 temporarily AND ((Zuora__Account__r.RecordTypeId = :corporateAcc AND Zuora__BillingAccount__r.Billing_Type__c <> :fullPrep) OR (Zuora__Account__r.RecordTypeId <> :corporateAcc)) 
+                AND ((Zuora__Account__r.RecordTypeId = :corporateAcc AND Zuora__BillingAccount__r.Billing_Type__c <> :fullPrep) OR (Zuora__Account__r.RecordTypeId <> :corporateAcc)) 
                 ORDER BY Zuora__InvoiceDate__c ASC]);
         } else {
              //START/END 20 September 2015 Kevin Evasco UD-2834. Do not process ARMS Invoices if the Billing Account does not have ARMS Accoutnt Number
@@ -97,10 +98,11 @@ global class SP_InvoiceRequestBatch implements Database.Batchable<sObject>, Data
                 Zuora__BillingAccount__r.Zuora__Balance__c, Zuora__PaymentAmount__c 
                 FROM Zuora__ZInvoice__c 
                 WHERE Is_PDF_Generated__c = false AND (Zuora__BillingAccount__r.Other_PaymentMethod__c != 'Invoice' OR (Zuora__TotalAmount__c > 0 AND Zuora__BillingAccount__r.ARMS_Account_Number__c != NULL)) 
-                //Start/End PD-0502 06-Jun-2016 Added By S.Puli - remove 3207 temporarily AND ((Zuora__Account__r.RecordTypeId = :corporateAcc AND Zuora__BillingAccount__r.Billing_Type__c <> :fullPrep) OR (Zuora__Account__r.RecordTypeId <> :corporateAcc)) 
+                AND ((Zuora__Account__r.RecordTypeId = :corporateAcc AND Zuora__BillingAccount__r.Billing_Type__c <> :fullPrep) OR (Zuora__Account__r.RecordTypeId <> :corporateAcc)) 
                 AND Id IN :invoiceIds ORDER BY Zuora__InvoiceDate__c ASC]);
             //END D-3620 01-Oct-2015 Added By S.Puli
         }
+        //End PD-0040 15-Jun-2016 Added By S.Puli
         //End UD-3207 01-Apr-2016 Added By S.Puli
         //End UD-3942 12-Apr-2016 Added By S.Puli
     }     

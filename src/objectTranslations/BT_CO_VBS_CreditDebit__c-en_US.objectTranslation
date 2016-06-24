@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_VBS_CreditDebit</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_VBS_CreditDebits</value>
+    </caseValues>
+    <fields>
+        <label><!-- Amount Before GST --></label>
+        <name>Amt_Before_GST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit/Debit Indicator --></label>
+        <name>Credit_Debit__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GST Amount --></label>
+        <name>GST_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Id --></label>
+        <name>Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit / Debit Note Number --></label>
+        <name>Note_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Posting Date --></label>
+        <name>Posting_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>24</masterLabel>
+            <translation><!-- 24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C5</masterLabel>
+            <translation><!-- C5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D3</masterLabel>
+            <translation><!-- D3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>I</masterLabel>
+            <translation><!-- I --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- isJobProcessed --></label>
+        <name>isJobProcessed__c</name>
+    </fields>
+    <layouts>
+        <layout>VBS Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,10 @@
+*** Case Escalation Alert *** 
+
+Below case is pending for update and has exceeded 96 hours : 
+
+Case : {!Case.CaseNumber} 
+Owner : {!Case.OwnerFullName} 
+Case Type : {!Case.RecordType} 
+Date Created : {!Case.CreatedDate} 
+
+Please click on link to access the case : {!Case.Link}

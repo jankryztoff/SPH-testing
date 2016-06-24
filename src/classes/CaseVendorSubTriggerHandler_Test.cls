@@ -42,7 +42,35 @@ private class CaseVendorSubTriggerHandler_Test {
         insert cvss;
     } 
     
-     static testMethod void testComplaintMagazine (){
+    /****************************************************************************************************************************
+    static testMethod void testCaseChangeAddress (){
+        List<Case_Vendor_Subscription__c> cvss = new List<Case_Vendor_Subscription__c> ();
+        othr = new Other__c();
+        othr.Name = 'ARMS CSO Admin';
+        othr.Value__c = 'CSO Admin';
+        insert othr;
+        othr = new Other__c();
+        othr.Name = 'Complaint counter days';
+        othr.Value__c = '1';
+        insert othr;
+        othr = new Other__c();
+        othr.Name = 'Complaint counter weeks';
+        othr.Value__c = '1';
+        insert othr;
+        
+        createUser ();
+        testDataPreparation();
+        Id caseRecorType = [SELECT Id FROM Recordtype where sObjectType = 'Case' and Name = 'Case_Change in Address' LIMIT 1].id;
+        createCustomSettings(caseRecorType, 'Case_Change in Address');
+        createCustomSettings('Cir Planner', 'Cir Predefined Case Team');
+        
+        Case_Vendor_Subscription__c cvs = addCase (caseRecorType, true);
+        cvss.add(cvs);
+        insert cvss;
+    } 
+    *****************************************************************************************************************************/
+    
+    static testMethod void testComplaintMagazine (){
         List<Case_Vendor_Subscription__c> cvss = new List<Case_Vendor_Subscription__c> ();
         Set <id> caseVendorSubsIDs = new Set <id>();
         othr = new Other__c();
@@ -65,6 +93,8 @@ private class CaseVendorSubTriggerHandler_Test {
     
     static testMethod void testCaseTempStop (){
         List<Case_Vendor_Subscription__c> cvss = new List<Case_Vendor_Subscription__c> ();
+        //EF tempchange
+        List<Case> tempStopCaseList = new List<Case> ();
         Set <id> caseVendorSubsIDs = new Set <id>();
         othr = new Other__c();
         othr.Name = 'ARMS CSO Admin';
@@ -170,11 +200,14 @@ private class CaseVendorSubTriggerHandler_Test {
         Key_Id__c key = new Key_Id__c();
         key.Name = 'NEXT_RECIPIENT_NUMBER';
         key.Id__c = '30012551';
+        //E.Hidalgo - 14-June-2016
+        insert key;
 
         Other__c other = new Other__c();
         other.Name = 'DTL';
         other.Value__c = '23:59';
         database.insert(other); 
+        System.debug('***other*** ' + other);
         
         Cir_Planner_Schedule__c cir = new Cir_Planner_Schedule__c();
         cir.Name = 'CIR Plan Schedule';
@@ -185,6 +218,7 @@ private class CaseVendorSubTriggerHandler_Test {
         cir.Sun_End_Time__c = DateTime.newInstance(2014, 08, 18, 17, 0, 0);
         cir.Sun_Start_Time__c = DateTime.newInstance(2014, 08, 18, 17, 0, 0);
         database.insert(cir); 
+        System.debug('***cir*** ' + cir);
        //try {
         Test.setMock(WebServiceMock.class, new zLoginMock());
        
@@ -193,37 +227,53 @@ private class CaseVendorSubTriggerHandler_Test {
                 Account newAccount = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
                 newAccount.NRIC__c = 'T1234567R';
                 insert new List<sObject>{newAccount};
+                        //EF tempchange
+                System.debug('***newAccount*** ' + newAccount);
 
                 acct = TestDataFactory.createAccount(1, 'Vendor')[0];
                 insert acct;
+                        //EF tempchange
+                System.debug('***acct*** ' + acct);
     
                 Singpost_Address__c postal = TestDataFactory.createSingpostAddress(1)[0];
                 postal.Name = '33';
                 insert postal;
+                        //EF tempchange
+                System.debug('***postal*** ' + postal);
     
                 Address__c addressRec = TestDataFactory.createAddress(1)[0];
                 addressRec.Address_Type__c='P';
                 addressRec.Postal_Code__c = postal.Id;
                 insert addressRec;
+                        //EF tempchange
+                System.debug('***addressRec*** ' + addressRec);
            
                 //START EGC 4/9/2016
                 Recordtype conRec = [SELECT Id FROM Recordtype where sObjectType = 'Contact' and Name = 'Customer Contact' LIMIT 1];
-                con = TestDataFactory.createContact(1)[0];
+                        //EF tempchange
+                //con = TestDataFactory.createContact(1)[0];
+                con = new Contact(FirstName='TestContactFirstname', LastName='TestContactLastname',Salutation='MR.', Email='sampleemailaddress' + '@email.com', Phone='111222333');
                 con.AccountId = acct.Id;
                 con.Address__c = addressRec.Id;
                 con.RecordTypeId = conRec.Id; //ConstantsSLB.getKeyId('Contact_customer contact');
                 con.Recipient_Indicator__c = TRUE;
                 insert con;
+                        //EF tempchange
+                System.debug('***con*** ' + con);
                 //END EGC 4/9/2016
                
                 Postal_Zone__c pZone = new Postal_Zone__c();
                 insert pZone; 
+                        //EF tempchange
+                System.debug('***pZone*** ' + pZone);
             
                 Post_Sector_Ops_Rep_Mapping__c postSec = TestDataFactory.createPostSector(1)[0];
                 postSec.Zone__c = pZone.id;
                 postSec.Postal_Sector_Code__c = integer.valueOf(postal.Name.substring(0,2));
                 postSec.Vendor_Ops__c = UserInfo.getUserId();
                 insert postSec;
+                        //EF tempchange
+                System.debug('***postSec*** ' + postSec);
          }
         
     }

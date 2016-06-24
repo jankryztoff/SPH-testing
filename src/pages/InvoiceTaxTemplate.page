@@ -1,0 +1,351 @@
+<!--@History: UD-3443 28Jan16 - over-all revision -->
+<apex:page controller="InvoiceController" renderAs="pdf" applyBodyTag="false" standardStylesheets="false">
+    <apex:styleSheet value="{!URLFOR($Resource.InvoiceTaxTemplate2)}" />
+    <apex:styleSheet value="{!URLFOR($Resource.AddressBarcodeTemplate)}" />
+    <div id="headerWrapper">
+    <table id="header" cellspacing="0">
+        <tr>
+            <td id="headerWrapper1">
+                <table cellspacing="0">
+                    <tr>
+                        <td id="headerWrapper1C1">
+                            <apex:image url="{!$Resource.SPHlogov2}" height="20mm" width="28.5mm"/>
+                        </td>
+                        <td id="headerWrapper1C2">
+                            <b><i>Singapore Press Holdings Limited</i></b><br/>
+                            Circulation, 82 Genting Lane, Media Centre, Singapore 349567<br/>
+                            Co. Regn. No.  198402868E &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GST Reg. No. MR-8500004-1
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td id="headerWrapper2">TAX INVOICE</td>
+        </tr>
+        <tr>
+            <td>
+                <table id="headerWrapper3">
+                    <tr>
+                        <td id="headerWrapper3C1">
+                            {!billingAccount.Billing_Contact__r.Firstname} {!billingAccount.Billing_Contact__r.LastName}<br/>
+                            <apex:outputText rendered="{!billingAccount.Billing_Contact__r.Company_Name__c<>NULL}">{!billingAccount.Billing_Contact__r.Company_Name__c}<br /></apex:outputText>
+                            <apex:outputText value="{!finalOutputAddress}" escape="false" />
+
+                            <div class="barcode">
+                                <apex:outputPanel rendered="{!barChecker}">
+                                    <apex:image url="{!URLFOR($Action.Attachment.Download, barcodeAttId)}" rendered="{!barChecker}" height="10mm" width="40mm"/> 
+                                </apex:outputPanel> 
+                            </div>
+                        </td>
+                        <td id="headerWrapper3C2">
+                            <i>{!paymentDescriptionFootnote}</i>
+                            <table id="headerBox1" cellspacing="0">
+                                <tr>
+                                    <td class="headerBox1ColumnHeader">Billing A/c No.</td>
+                                    <td class="headerBox1ColumnHeader">Invoice No.</td>
+                                    <td class="headerBox1ColumnHeader last">Date</td>
+                                </tr>
+                                <tr>
+                                    <td>{!billingAccountNumber}</td>
+                                    <td>{!armsInvId}</td>
+                                    <td class="last">
+                                        <apex:outputText value="{0, date, dd/MM/yyyy}">
+                                            <apex:param value="{!invoice.Zuora__InvoiceDate__c}" />
+                                        </apex:outputText>                                                    
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <apex:outputText rendered="{!isARMSAccount==false}">
+                                <b><i>Summary of Payment Details</i></b>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!isARMSAccount==true}"><br /></apex:outputText>
+                            <div id="summaryOfPaymentWrapper">
+                                <table id="summaryOfPayment" cellspacing="0">
+                                    <tr class="{!if(isARMSAccount==false, '', 'hiddenRow')}">
+                                        <td class="top">Previous Balance</td>
+                                        <td class="top last">S$&nbsp;
+                                            <apex:outputText value="{0,number,###,###,###,##0.00}">
+                                                  <apex:param value="{!previousBalance}"/>
+                                            </apex:outputText>
+                                        </td>
+                                    </tr>                                   
+                                    <tr>
+                                        <td class="{!if(isARMSAccount==false, '', 'bottom')}">Total Current Charges Due on 
+                                            <apex:outputText value="{0, date, dd/MM/yyyy}">
+                                                <apex:param value="{!dueDate}" />
+                                            </apex:outputText>
+                                        </td>
+                                        <td class="{!if(isARMSAccount==false, '', 'bottom')} last">S$&nbsp;                                          
+                                            <apex:outputText value="{0,number,###,###,###,##0.00}">
+                                                  <apex:param value="{!totalCurrentChargesPaymentDetails}"/>
+                                            </apex:outputText>
+                                        </td>
+                                    </tr>
+                                    <tr class="{!if(isARMSAccount==false, '', 'hiddenRow')}">
+                                        <td class="bottom">Total Outstanding Amount</td>
+                                        <td class="bottom last">S$&nbsp;
+                                            <apex:outputText value="{0,number,###,###,###,##0.00}">
+                                                  <apex:param value="{!totalOutstanding}"/>
+                                            </apex:outputText>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table id="headerWrapper4" cellspacing="0">
+                    <tr>
+                        <td>
+                            <apex:variable value="{!IF(headnoteType == 1, 'Total Outstanding Amount $', 'Please make payment for Outstanding Amount $')}" var="text1" />
+                            <!--Start D-4644 14-Apr-2016 Updated by S.Puli - Remove Date-->
+							<!--Start D-4644 22-Apr-2016 Updated by S.Puli - Add Date-->
+                            <apex:variable value="{!IF(headnoteType == 1, 'will be deducted from your account', 'by')}" var="text2" />
+                            <span>
+                                {!text1}
+                                <apex:outputText value="{0,number,###,###,###,##0.00} ">
+                                    <apex:param value="{!totalOutstanding}" />
+                                </apex:outputText>
+                                {!text2} 
+                                <apex:outputText style="font-size:13px" value="{0, date, dd/MM/yyyy}">
+                                    <apex:param value="{!IF(headnoteType == 1, '', dueDate)}" />
+                                </apex:outputText>
+								<!--End D-4644 22-Apr-2016 Updated by S.Puli - Add Date-->
+                                <!--End D-4644 14-Apr-2016 Updated by S.Puli - Remove Date-->
+                            </span>
+                            <br />
+                            <i>
+                                If you have already made payment, please disregard this invoice. Payment received three days before invoice date may not be included in this invoice.
+                            </i>
+                        </td>
+                        <td class="last">
+                            Page <span class="pagenumber"/> of <span class="pagecount"/>
+                            <apex:outputText rendered="{!isSPHIntercompanyBilling}">
+                                <br/><b>GST:Out-of-scope</b>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="headerWrapper5a">
+                    <table id="headerWrapper5" cellspacing="0">
+                        <tr>
+                            <!--START: PD-0559 06/21/2016 Jerome Liwanag -->
+                            <td>Subscription Details<br/>
+                            {!IF(BillingAccountPONumber != null, 'PO No. ' + BillingAccountPONumber, '')}</td>
+                            <!--END: PD-0559 06/21/2016 Jerome Liwanag -->
+                            <td class="second">Subscription Period</td>
+                            <td class="third">Copy(s)</td>
+                            <td class="last">S$</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div id="footerWrapper">
+        <div id="footer">
+            <span id="footnote">
+            The fees for subscription packages may comprise multiple taxable components, and the GST amount shown in the invoice is calculated based on the sum of the GST charged for each
+            individual component.
+            <br/><br/>
+            Payments should be made in Singapore Currency. Electronic payment mode is available via AXS Channels and DBS ATM/Telephone Banking/Internet Banking (please quote Billing A/c No). For enquiries on billings, please call (65) 6319 1111. For payment matters, please call (65) 6319 3060. Please quote your Billing A/c No./invoice no. on any correspondences pertaining to this invoice. More information and Terms &amp; Conditions on subscription matters can be found at our website www.sphsubscription.com.sg.
+            <hr class="dashed" />
+            Please notify us of any discrepancies within 14 days, otherwise, the invoice is considered conclusive evidence that the entries are true, correct and accurate. Detach this portion and send in together with your cheque or card payment advice. Receipts will be issued upon request only.
+            </span>
+            <br/><br/>
+            <table id="footerWrapper1">
+                <tr>
+                    <td width="40%">NAME: {!billingAccount.Billing_Contact__r.Name}</td>
+                    <td width="40%" class="lpad">BILLING A/C NO: {!billingAccountNumber}</td>
+                    <td width="20%">AMOUNT: S$&nbsp;
+                        <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                              <!--Start: UD-3893 31-Mar-2016 Added By S.Puli-->
+                              <apex:param value="{!footerAmount}"/>
+                              <!--End: UD-3893 31-Mar-2016 Added By S.Puli-->
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <!--tr><td colspan="4">&nbsp;</td></tr--> <!--Start D-4418 VPernicia -->
+                <tr>
+                    <td id="paymentByCheck">
+                        <b>PAYMENT BY CHEQUE</b><br/>
+                        1.Please pay by crossed cheque to <b>Singapore Press Holdings Limited.</b><br/>
+                        2. Indicate your Billing A/c No and invoice nos. at the back of the cheque and mail to :<br/>
+                        <div>
+                            Singapore Press Holdings Limited<br/>
+                            Robinson Road Post Office<br/>
+                            Locked Bag Service No. 10<br/>
+                            Singapore 908186
+                        </div>
+                    </td>
+                    <td id="paymentByCard" colspan="2">
+                        <b>FOR CARD PAYMENT ONLY</b><br/>
+                        <table id="cardType" cellspacing="0">
+                            <tr>
+                                <td><span>&#9744;</span> VISA</td>
+                                <td><span>&#9744;</span> MASTERCARD</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table id="" cellspacing="0">
+                            <tr>
+                                <td width="20%">NAME</td>
+                                <td width="1%" align="right">:</td>
+                                <td width="79%" class="bottomLine" colspan="4"></td>
+                            </tr>                           
+                            <tr><td height="5px"></td></tr>
+                            <tr>
+                                <td width="20%">CARD NO.</td>
+                                <td width="1%" align="right">:</td>
+                                <td width="35%" class="bottomLine"></td>
+                                <td width="20%" align="right">EXPIRY DATE</td>
+                                <td width="1%" align="right">:</td>
+                                <td width="23%" class="bottomLine"></td>
+                            </tr>                       
+                        </table>                            
+                        <table cellspacing="0">
+                            <tr><td colspan="6" height="5px"></td></tr>
+                            <tr>
+                                <td width="20%">AMOUNT PAID</td>
+                                <td width="1%" align="right">:</td>
+                                <td width="35%" class="bottomLine"></td>
+                                <td width="20%" align="right">SIGNATURE/DATE</td>
+                                <td width="1%" align="right">:</td>
+                                <td width="23%" class="bottomLine"></td>
+                            </tr>
+                        </table>                        
+                    </td>
+                </tr>
+            </table>
+            <br />
+            For Official Use Only (No writing or alteration below this line)<br />
+            <hr />
+            <table id="footnoteBottom" cellspacing="0">
+                <tr>
+                    <td width="15%" align="center">{!checkDigit}</td>
+                    <td width="17%" align="left"> 
+                        <apex:outputText value="{0, date, dd/MM/yyyy}">
+                            <apex:param value="{!invoice.Zuora__InvoiceDate__c}"/>
+                        </apex:outputText>  
+                    </td>
+                    <td width="17%" align="left">I</td>
+                    <td width="17%" align="left">{! invoiceNumber}</td>
+                    <td width="17%" align="left">{!billingAccountNumber}</td>
+                    <td width="17%" align="left">{! footerInvoiceAmount}</td>
+                </tr>
+            </table>        
+        </div>  
+    </div>
+    <table cellspacing="0" id="pageContent" class="content" cellpadding="0">
+        <apex:variable value="{!1}" var="rowNum" />
+        <apex:repeat value="{!subDetailsList}" var="sub">
+            <tr class="{!if(rowNum > 1, '', 'hiddenRow')}"><td colspan="4">&nbsp;</td></tr>
+            <tr>
+                <td> 
+                    {!sub.recipientName} / {!sub.recipientNumber}<br />
+                    <span><apex:outputText escape="false" value="{!sub.packageName}"/></span>
+                </td>
+                <td class="second"> 
+                    <apex:outputText value="{0, date, dd/MM/yyyy}">
+                        <apex:param value="{!sub.subStartDate}" />
+                    </apex:outputText> -
+                    <apex:outputText value="{0, date, dd/MM/yyyy}"> 
+                        <apex:param value="{!sub.subEndDate}" />
+                    </apex:outputText>
+                </td> 
+                <td class="third">{!sub.quantity}</td>
+                <td class="last"> 
+                    <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                          <apex:param value="{!sub.amtWithoutTax}"/>
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr class="{!if(sub.adminChargeFee > 0, '', 'hiddenRow')}">
+                <td colspan="3">Admin Charge</td>
+                <td class="last"> <!--D-4414 VPernicia 2/11/16: Added class="last"-->
+                    <apex:outputText value="{0,number,###,###,###,##0.00}">
+                        <apex:param value="{!sub.adminChargeFee}"/>
+                    </apex:outputText>                                      
+                </td>
+            </tr>        
+            <tr class="{!if(sub.discountAmountWithoutTax <> null, '','hiddenRow')}">
+                <td colspan="3">Less Discount</td>
+                <td class="last">
+                    <apex:outputText value="{0,number,###,###,###,##0.00}">
+                        <apex:param value="{!sub.discountAmountWithoutTax}"/>
+                    </apex:outputText>
+                </td>
+            </tr>
+        <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+        </apex:repeat>
+        <tr style="{!if(or(deliveryChargeFee > 0, postageChargeFee > 0, adjustmentsFee <> 0), '','hiddenRow')}"><td>&nbsp;</td></tr>
+        <tr class="{!if(deliveryChargeFee > 0, '','hiddenRow')}"> <!-- START D-4646 GDelrosario change style to class-->
+            <td colspan="3">Newspaper Delivery Fee</td>
+            <td class="last">                                                        
+                <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!deliveryChargeFee}"/>
+                </apex:outputText>
+            </td>
+        </tr> 
+                   
+        <tr class="{!if(postageChargeFee > 0, '','hiddenRow')}">
+            <td colspan="3">Newspaper Postage Fee</td>
+            <td class="last">                                                          
+                <apex:outputText value="{0,number,###,###,###,##0.00}">
+                      <apex:param value="{!postageChargeFee}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr class="{!if(adjustmentsFee <> 0, '','hiddenRow')}">
+            <td colspan="3">Adjustments</td>
+            <td class="last">                                                    
+                <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!adjustmentsFee}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>Total Current Charges</b></td>
+            <td class="last">                                    
+                <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!currentChargesBeforeGST}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>Inclusive of GST {!taxRate}%</b></td>
+            <td class="last">                                          
+               <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!invoice.Zuora__TaxAmount__c}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr class="{!if(giftChargeFee > 0, '','hiddenRow')}">
+            <td colspan="3"><br />Gift Subscription Fee</td>
+            <td class="last"><br />
+                <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!giftChargeFee}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr class="{!if(otherAdjustmentsFee < 0, '','hiddenRow')}">
+            <td colspan="3"><br />Miscellaneous</td>
+            <td class="last"><br />                                             
+                <apex:outputText value="{0,number,###,###,###,##0.00}"> 
+                      <apex:param value="{!otherAdjustmentsFee}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+    </table>
+</apex:page>

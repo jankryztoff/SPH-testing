@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Historical Non Delivery</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Historical Non Deliveries</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Historical Non Deliveries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cancelled? --></label>
+        <name>Cancelled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Date --></label>
+        <name>Complaint_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Non-Delivery Legacy Id --></label>
+        <name>Non_Delivery_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- POP Start Date --></label>
+        <name>POP_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Qty --></label>
+        <name>Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Number --></label>
+        <name>Record_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Credit --></label>
+        <name>Request_Total_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Issue --></label>
+        <name>Request_Total_Issue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Restart Date --></label>
+        <name>Restart_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Historical Non Delivery Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Historical Non Delivery Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

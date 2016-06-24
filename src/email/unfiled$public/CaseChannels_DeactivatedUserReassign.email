@@ -1,0 +1,9 @@
+This Case owner has is deactivated or the Case is been closed. Please reassign case to active users to entertain customer enquiries.
+
+Company: {!Account.Name} 
+Contact Name: {!Contact.Name} 
+Case #: {!Case.CaseNumber} 
+Subject: {!Case.Subject} 
+Description: {!Case.Description} 
+
+Click on the link to access the case: {!Case.Link}

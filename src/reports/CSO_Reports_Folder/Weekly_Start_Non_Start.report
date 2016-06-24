@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_80696077</developerName>
+        <masterLabel>Classifications</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Case.Account_Record_Type__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Direct SPH Inter-Division</sourceValue>
+            </sourceValues>
+            <value>SPH SUB</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Direct Corporate</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Direct Individual</sourceValue>
+            </sourceValues>
+            <value>SPH</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Vendor</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Vendor Subscriber</sourceValue>
+            </sourceValues>
+            <value>Vendor</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Account.Zone_Code__c</field>
+    </columns>
+    <columns>
+        <field>Account.Singpost_Address__c</field>
+    </columns>
+    <columns>
+        <field>RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>Case.Complaint_Pub_Code__c</field>
+    </columns>
+    <columns>
+        <field>Case_Subscription__c.Complaint_Copies__c</field>
+    </columns>
+    <columns>
+        <field>Case.Recipient_Address__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Case_Subscription__c.Complaint_From__c</field>
+    </columns>
+    <columns>
+        <field>Case_Subscription__c.Complaint_To__c</field>
+    </columns>
+    <description>This report provides a summary of starts, non-starts, restarts and non-restarts, there shall be two different reports created in CRSM to cater to this requirement.</description>
+    <filter>
+        <criteriaItems>
+            <column>BucketField_80696077</column>
+            <operator>equals</operator>
+            <value>SPH SUB,SPH,Vendor</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_80696077</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Weekly Start/Non Start</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseCustomEntity$Case_Subscription__c@Case_Subscription__c.Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

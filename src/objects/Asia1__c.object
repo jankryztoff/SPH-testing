@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ASIAONE_Legacy_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>ASIAONE Legacy Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Access_Flag_Name__c</fullName>
+        <description>This field has been created in order to ease batch process.</description>
+        <externalId>false</externalId>
+        <label>Access Flag Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Base_Date_Expiration__c</fullName>
+        <externalId>false</externalId>
+        <label>Base Date Expiration</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Recipient Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Asia1s</relationshipLabel>
+        <relationshipName>AsiaOne</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Display_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EnabledCount__c</fullName>
+        <externalId>false</externalId>
+        <label>EnabledCount</label>
+        <summaryFilterItems>
+            <field>Asia1_Subscription__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Enabled</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Asia1_Subscription__c.Asia1__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Enabled ?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ID_Active__c</fullName>
+        <externalId>false</externalId>
+        <formula>EnabledCount__c &gt; 0</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ID Already Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ID_Already_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ID Already Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Link_Expired_Used__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Link Expired/Used</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Created_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Created By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Created_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Created Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Updated_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Updated By</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Updated_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy Updated Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Log__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason for Failure</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Order_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Password__c</fullName>
+        <externalId>false</externalId>
+        <label>Password</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Contact__r.Phone)), Contact__r.Phone,
+IF(NOT(ISBLANK(Contact__r.HomePhone)), Contact__r.HomePhone, 
+IF(NOT(ISBLANK(Contact__r.HomePhone__c)), Contact__r.HomePhone__c, 
+IF(NOT(ISBLANK(Contact__r.Mobile_Number__c)), Contact__r.Mobile_Number__c,
+Contact__r.Mobile_Number_2__c))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Secret_Answer__c</fullName>
+        <externalId>false</externalId>
+        <label>Secret Answer</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Secret_Question__c</fullName>
+        <externalId>false</externalId>
+        <label>Secret Question</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pending Creation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Created</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error Creation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disabled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>User_ID_LDAP_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>User ID/LDAP ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Asia1</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Display_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>User_ID_LDAP_ID__c</columns>
+        <columns>Password__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Base_Date_Expiration__c</columns>
+        <columns>Display_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>ID_Already_Active__c</columns>
+        <columns>Is_Link_Expired_Used__c</columns>
+        <columns>Order_Number__c</columns>
+        <columns>Password__c</columns>
+        <columns>Log__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Secret_Answer__c</columns>
+        <columns>Secret_Question__c</columns>
+        <columns>Status__c</columns>
+        <columns>User_ID_LDAP_ID__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>A1{0000000000}</displayFormat>
+        <label>Asia1</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Asia1s</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>User_ID_LDAP_ID__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Display_Name_Validation_on_Chars</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/12/2014. SCR_OrderEntry_CAR_52. Display Name must be between 3 and 50 characters.</description>
+        <errorConditionFormula>(LEN( Display_Name__c )&lt;=3 || LEN( Display_Name__c )&gt;= 50) &amp;&amp; ISNEW() &amp;&amp;  ISNULL(Legacy_Created_Date__c)</errorConditionFormula>
+        <errorMessage>Display Name must be between 3 and 50 characters.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Display_Name_field_Validation</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/11/2014. SCR_OrderEntry_CAR_52.</description>
+        <errorConditionFormula>NOT(REGEX( Display_Name__c , &quot;[A-Za-z0-9]+([._,-@]?[A-Za-z0-9]+)*$&quot;)) &amp;&amp;  ISNEW() &amp;&amp;  ISNULL(Legacy_Created_Date__c)</errorConditionFormula>
+        <errorDisplayField>Display_Name__c</errorDisplayField>
+        <errorMessage>Display Name should start with at least one alphanumeric character. It may include a symbol like a dot(.), an underscore(_), a dash (-),  comma(,) or an at sign (@).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>LDAP_ID_Validation_on_Number_of_Chars</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/12/2014. SCR_OrderEntry_CAR_51. Username must be between 8 and 50 characters and cannot be greater than 50 characters.</description>
+        <errorConditionFormula>AND(
+OR(LEN( User_ID_LDAP_ID__c)&lt;8, LEN( User_ID_LDAP_ID__c)&gt;50 ),
+ISNULL(Legacy_Created_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>User_ID_LDAP_ID__c</errorDisplayField>
+        <errorMessage>Username must be between 8 and 50 characters and cannot be greater than 50 characters.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>LDAP_User_ID_Validation</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/11/2014. SCR_OrderEntry_CAR_51.</description>
+        <errorConditionFormula>AND( 
+Contact__r.Account.RecordType.Name = &quot;Direct Individual&quot;,
+(NOT
+	( 
+		OR
+		(
+			(REGEX( User_ID_LDAP_ID__c ,&quot;[A-Za-z0-9]+[._]?[A-Za-z0-9]+$&quot;)), 
+			(REGEX(User_ID_LDAP_ID__c , &quot;(.+)@(.+\\.){1,3}[\\w]{2,4}$&quot;))
+		)
+	)
+),
+ISNULL(Legacy_Created_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>User_ID_LDAP_ID__c</errorDisplayField>
+        <errorMessage>LDAP User Id should start with at least one alphanumeric character and end with at least one alphanumeric character. It may include a dot(.) or an underscore(_). It may also be in this form xxxxx@xxxx.xxxx.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Password_Validation_for_Number_of_Chars</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/12/2014. SCR_OrderEntry_CAR_53. Password is not in the range 5 through 40.</description>
+        <errorConditionFormula>AND(
+OR(LEN(Password__c)&lt;5, LEN( Password__c)&gt;40),
+ISNEW(),
+ISNULL(Legacy_Created_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Password__c</errorDisplayField>
+        <errorMessage>Password is not in the range 5 through 40.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validation_for_Password</fullName>
+        <active>true</active>
+        <description>[KCampang] 08/12/2014. SCR_OrderEntry_CAR_53. Password has to match regex ^[a-zA-Z0-9._]+$</description>
+        <errorConditionFormula>AND(
+NOT( REGEX( Password__c , &quot;^[a-zA-Z0-9._]+$&quot;)),
+ISNEW(),
+ISNULL(Legacy_Created_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Password__c</errorDisplayField>
+        <errorMessage>Invalid password format.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>[25 Feb 2016] [Credit Note CR] Credit Note is a commercial document issued by SPH to refund customer for the unconsumed copies of publications which Customer already paid in previous Invoices.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ARMS_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Account__r.ARMS_Account_Number__c</formula>
+        <label>ARMS Account Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Account__r.Zuora__Account__r.AccountNumber</formula>
+        <label>Subscriber Account Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Billing Account where this Credit Note belongs to</description>
+        <externalId>false</externalId>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>Credit Notes</relationshipLabel>
+        <relationshipName>Credit_Notes</relationshipName>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Note_Number__c</fullName>
+        <description>For ARMS,  Credit Note Number Range is :  0000200000 – 0000399999
+For Non ARMS Credit Note Number Format: CN-{00000000}. Same as Name field</description>
+        <externalId>false</externalId>
+        <label>Credit Note Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Date__c</fullName>
+        <description>Date when this Credit Note is generated</description>
+        <externalId>false</externalId>
+        <label>Document Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Is_PDF_Generated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicator if the Credit Note PDF is already generated</description>
+        <externalId>false</externalId>
+        <label>Is PDF Generated?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Source_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The negative invoice which this Credit Note is generated from</description>
+        <externalId>false</externalId>
+        <label>Source Invoice</label>
+        <referenceTo>Zuora__ZInvoice__c</referenceTo>
+        <relationshipLabel>Credit Notes (Converted To)</relationshipLabel>
+        <relationshipName>CN_Source_INV</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Rate__c</fullName>
+        <description>•	Local GST Applicable: GST Rate when the Credit Note is generated
+•	GST Out Scope Customers: 0%
+•	Overseas Customers: 0%</description>
+        <externalId>false</externalId>
+        <label>Tax Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>To_ARMS_Time__c</fullName>
+        <description>Time when this record is sent to ARMS. Only valid for ARMS Billing Account Credit Notes</description>
+        <externalId>false</externalId>
+        <label>ARMS Interface Time</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amt_After_Tax__c</fullName>
+        <description>Roll-up summary from Credit Note Items: Amount After Tax</description>
+        <externalId>false</externalId>
+        <label>Total Amount After Tax</label>
+        <summarizedField>Credit_Note_Item__c.Amt_After_Tax__c</summarizedField>
+        <summaryForeignKey>Credit_Note_Item__c.Credit_Note__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amt_Before_Tax__c</fullName>
+        <description>Roll-up summary from Credit Note Items: Amount Before Tax</description>
+        <externalId>false</externalId>
+        <label>Total Amount Before Tax</label>
+        <summarizedField>Credit_Note_Item__c.Amt_Before_Tax__c</summarizedField>
+        <summaryForeignKey>Credit_Note_Item__c.Credit_Note__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Tax_Amt__c</fullName>
+        <description>Roll-up summary from Credit Note Items: Tax Amount</description>
+        <externalId>false</externalId>
+        <label>Total Tax Amount</label>
+        <summarizedField>Credit_Note_Item__c.Tax_Amt__c</summarizedField>
+        <summaryForeignKey>Credit_Note_Item__c.Credit_Note__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Tax_Exempt_Amt__c</fullName>
+        <description>Roll-up summary from Credit Note Items: Tax Exempt  Amount</description>
+        <externalId>false</externalId>
+        <label>Total Tax Exempt Amount</label>
+        <summarizedField>Credit_Note_Item__c.Tax_Exempt_Amt__c</summarizedField>
+        <summaryForeignKey>Credit_Note_Item__c.Credit_Note__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <label>Credit Note</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Credit_Note_Number__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Document_Date__c</columns>
+        <columns>Account_Number__c</columns>
+        <columns>ARMS_Number__c</columns>
+        <columns>Source_Invoice__c</columns>
+        <columns>Total_Amt_Before_Tax__c</columns>
+        <columns>Tax_Rate__c</columns>
+        <columns>Total_Tax_Amt__c</columns>
+        <columns>Total_Tax_Exempt_Amt__c</columns>
+        <columns>Total_Amt_After_Tax__c</columns>
+        <columns>Is_PDF_Generated__c</columns>
+        <columns>To_ARMS_Time__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CN-{00000000}</displayFormat>
+        <label>Record Number</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Credit Notes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Billing_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Credit_Note_Number__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Document_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Source_Invoice__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Amt_Before_Tax__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Tax_Rate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Tax_Amt__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Tax_Exempt_Amt__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Amt_After_Tax__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Credit_Note_Number__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Document_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Amt_Before_Tax__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Tax_Rate__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Tax_Amt__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Tax_Exempt_Amt__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Amt_After_Tax__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Source_Invoice__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Credit_Note_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Document_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Source_Invoice__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Amt_Before_Tax__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Tax_Rate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Tax_Amt__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Tax_Exempt_Amt__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Amt_After_Tax__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

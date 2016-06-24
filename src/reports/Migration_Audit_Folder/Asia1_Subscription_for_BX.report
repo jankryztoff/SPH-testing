@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Asia1__c.Asia1_Subscriptions__r$Id</field>
+    </columns>
+    <columns>
+        <field>Asia1__c.Asia1_Subscriptions__r$ASIAONE_Subscription_Legacy_Id__c</field>
+    </columns>
+    <columns>
+        <field>Asia1__c$Name</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <column>Asia1__c$LastModifiedBy</column>
+            <operator>equals</operator>
+            <value>Migration2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Asia1__c$LastModifiedBy</column>
+            <operator>equals</operator>
+            <value>Migration</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Asia1 Subscription for BX</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Asia1__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Asia1__c.Asia1_Subscriptions__r$LastModifiedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-01-26</startDate>
+    </timeFrameFilter>
+</Report>

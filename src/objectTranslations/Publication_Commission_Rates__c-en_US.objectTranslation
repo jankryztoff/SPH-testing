@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Publication Commission Rate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Publication Commission Rates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Commission Rate Fri --></label>
+        <name>Commission_Rate_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Mon --></label>
+        <name>Commission_Rate_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate PHD --></label>
+        <name>Commission_Rate_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate PHE --></label>
+        <name>Commission_Rate_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Sat --></label>
+        <name>Commission_Rate_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Fri --></label>
+        <name>Commission_Rate_Special_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Mon --></label>
+        <name>Commission_Rate_Special_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) PHD --></label>
+        <name>Commission_Rate_Special_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) PHE --></label>
+        <name>Commission_Rate_Special_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Sat --></label>
+        <name>Commission_Rate_Special_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate  (Special)  Sun --></label>
+        <name>Commission_Rate_Special_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Thur --></label>
+        <name>Commission_Rate_Special_Thur__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Tue --></label>
+        <name>Commission_Rate_Special_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate (Special) Wed --></label>
+        <name>Commission_Rate_Special_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Sun --></label>
+        <name>Commission_Rate_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Thur --></label>
+        <name>Commission_Rate_Thur__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Tue --></label>
+        <name>Commission_Rate_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate Wed --></label>
+        <name>Commission_Rate_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Fri --></label>
+        <name>Cover_Price_Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Mon --></label>
+        <name>Cover_Price_Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price PHD --></label>
+        <name>Cover_Price_PHD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price PHE --></label>
+        <name>Cover_Price_PHE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Sat --></label>
+        <name>Cover_Price_Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Sun --></label>
+        <name>Cover_Price_Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Thur --></label>
+        <name>Cover_Price_Thur__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Tue --></label>
+        <name>Cover_Price_Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cover Price Wed --></label>
+        <name>Cover_Price_Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deliver Fee --></label>
+        <name>Deliver_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Start Date --></label>
+        <name>Effective_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insertion Rate --></label>
+        <name>Insertion_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Publication Commission Rates --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Publication Commission Rate Layout</layout>
+        <sections>
+            <label><!-- Commission Rate --></label>
+            <section>Commission Rate</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -16,8 +16,8 @@ public class BulkStopOrderCreationQueueableTest {
         addressRec.Address_Type__c = 'A';
         addressRec.Postal_Code__c = postal.Id;
         addressRec.Block_House_Number__c ='TEST';
-        addressRec.Level_Number__c ='xx';
-        addressRec.Unit_Number__c = 'yy';
+        addressRec.Level_Number__c ='55';
+        addressRec.Unit_Number__c = '10';
         insert addressRec;
         
         Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
@@ -119,7 +119,7 @@ public class BulkStopOrderCreationQueueableTest {
         insert subRecs;
         
         Set<Id> zuoraSubIds = new Set<Id>();
-        List<Zuora__Subscription__c> zuoraSubs = [SELECT Id, Name FROM Zuora__Subscription__c];
+        //List<Zuora__Subscription__c> zuoraSubs = [SELECT Id, Name FROM Zuora__Subscription__c]; //START-END PD-0506 6/23/2016 Added by J.Sarion
         //START 12April2016 Added By C. Lin
         //zuoraSubIds.add(zuoraSubs[0].Id);
         zuoraSubIds.add(subRecs.Id);

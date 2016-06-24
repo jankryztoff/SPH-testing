@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Start</label>
+                <name>Start</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Stop</label>
+                <name>Stop</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Temp Stop</label>
+                <name>Temp_Stop</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Renewal</label>
+                <name>Renewal</name>
+            </dataCategory>
+            <label>Subscription</label>
+            <name>Subscription</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Complaint</label>
+            <name>Complaint</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Address</label>
+                <name>Address</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Credit Card</label>
+                <name>Credit_Card</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Payment Mode</label>
+                <name>Payment_Mode</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Subscription Packages</label>
+                <name>Subscription_Packages</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Subscription Frequency</label>
+                <name>Subscription_Frequency</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Others</label>
+                <name>Others</name>
+            </dataCategory>
+            <label>Change Of Details</label>
+            <name>Change_Of_Details</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Collection/Payment</label>
+                <name>Collection_Payment</name>
+            </dataCategory>
+            <dataCategory>
+                <label>General Inquiry</label>
+                <name>General_Inquiry</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Newspaper Delivery</label>
+                <name>Newspaper_Delivery</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Subscription Delivery</label>
+                <name>Subscription_Delivery</name>
+            </dataCategory>
+            <label>Enquiry</label>
+            <name>Enquiry</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Password Reset</label>
+                <name>Password_Reset</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Account Creation</label>
+                <name>Account_Creation</name>
+            </dataCategory>
+            <label>Technical Issue</label>
+            <name>Technical_Issue</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Request category is linked to SPH case types</description>
+    <label>Request Type</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__CustomerAccount__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r$Zuora__SubscriptionStartDate__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r$Zuora__SubscriptionEndDate__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r.Case_Subscriptions__r$Case__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r.Case_Subscriptions__r$Case_Record_Type_ID__c</field>
+    </columns>
+    <columns>
+        <field>Zuora__CustomerAccount__c.Zuora__Subscriptions__r.Case_Subscriptions__r$Case__c.RecordType.DeveloperName</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Billing Account To Cases Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Bill_Acc_W_Sub_W_Case_Sub__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__CustomerAccount__c.Zuora__Subscriptions__r.Case_Subscriptions__r$CreatedDate</dateColumn>
+        <endDate>2015-09-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-09-19</startDate>
+    </timeFrameFilter>
+</Report>

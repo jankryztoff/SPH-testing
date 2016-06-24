@@ -738,15 +738,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                     accountId_accountStatus.put(sub.Zuora__Account__c, sub.Zuora__Account__r.Status__c);
                 }
                 //END D-2249 2/27/2015 Added By C. Lin
-                //START: PD-0035 May 16, 2016 Added by Kristine Balaoing - added query for package access flags
-                pafList = [SELECT Id, No_of_Concurrent_Users__c, Package__c, Package_Service_Access_Flag__c, Package_Service_Access_Flag__r.Name FROM Package_Access_Flag__c WHERE Package__c IN :subscriptionPackagesSet];
-                for(Package_Access_Flag__c paf : pafList){
-                    if(mapPackToServiceFlags.containsKey(paf.Package__c)){
-                        mapPackToServiceFlags.get(paf.Package__c).add(paf.Package_Service_Access_Flag__r.Name);
-                    }else{
-                        mapPackToServiceFlags.put(paf.Package__c, new Set<String>{paf.Package_Service_Access_Flag__r.Name});      
-                    }
-                }
+                
                 
                 //START D-3236 11-07-2015 Marvin/JOhn - removing all UD-1544 codes
                 // Start UD-1544
@@ -779,6 +771,17 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                 //END UD-3652 4Feb2016 FrancisBenzon: get subs that status went from active to cancelled
                 
             }
+            
+            //START: PD-0035 May 16, 2016 Added by Kristine Balaoing - added query for package access flags
+                pafList = [SELECT Id, No_of_Concurrent_Users__c, Package__c, Package_Service_Access_Flag__c, Package_Service_Access_Flag__r.Name FROM Package_Access_Flag__c WHERE Package__c IN :subscriptionPackagesSet];
+                for(Package_Access_Flag__c paf : pafList){
+                    if(mapPackToServiceFlags.containsKey(paf.Package__c)){
+                        mapPackToServiceFlags.get(paf.Package__c).add(paf.Package_Service_Access_Flag__r.Name);
+                    }else{
+                        mapPackToServiceFlags.put(paf.Package__c, new Set<String>{paf.Package_Service_Access_Flag__r.Name});      
+                    }
+                }
+            
             //Start UD-3888 14-Apr-2016 Added By S.Puli - update LPR of the transferred Subs
             if(!oldBillAcToNewBillAc.isEmpty()){
                 String ackLtr = SP_GenerateLetterPrintBatch.acknowledgmentLetter;
@@ -1055,7 +1058,9 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                 System.debug('@@bill '+billingAcctId_billingAcctObj.get(sub_billingAcctId.get(sub)));
                 System.debug('@@sub_billingAcctId.get(sub) '+sub_billingAcctId.get(sub));
                 System.debug('@@sub: '+sub);
-                if(billingAcctId_billingAcctObj.get(sub_billingAcctId.get(sub)).Zuora__DefaultPaymentMethod__c != GlobalVariableClass.CREDITCARD
+                //PD-0006 Tops
+                if(billingAcctId_billingAcctObj.containsKey(sub_billingAcctId.get(sub)) &&
+                billingAcctId_billingAcctObj.get(sub_billingAcctId.get(sub)).Zuora__DefaultPaymentMethod__c != GlobalVariableClass.CREDITCARD
                 && sub.Zuora__Account__r.RecordTypeID != ConstantsSLB.getKeyId('Account_Direct Corporate')
                 && !(sub.Sponsor_1__c)){
                     billingAccountIdToCheck.add(sub.Zuora__CustomerAccount__c);
@@ -1103,20 +1108,24 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
         if (Trigger.isInsert) {
             //START: PD-0035 May 16, 2016 Added by Kristine Balaoing - added mapping of oli to service flags
             Map<String, Id> mapServiceFlagtoSub = new Map<String, Id>();
+            //START: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
+            integer x = 0;
             for(Zuora__Subscription__c sub : (list<Zuora__Subscription__c>)trigger.new){
                 //mapServiceFlagtoSub = new Map<String, Id>();
                 if(sub.Subscription_Type_1__c == PUBLICATION){
                     if(mapPackToServiceFlags.containsKey(sub.Main_Package_1__c)){
                         for(String svc : mapPackToServiceFlags.get(sub.Main_Package_1__c)){
-                            mapServiceFlagtoSub.put(svc, sub.Id);
+                            mapServiceFlagtoSub.put(svc + x, sub.Id);
+                            x++;
                         }
                     }
                     mapOliToMapSvcToSub.put(sub.Order_Line_Item_Number__c, mapServiceFlagtoSub);
                     
                 }
             }
+            //END: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
             //END: PD-0035 May 16, 2016 Added by Kristine Balaoing
-            
+            System.debug(mapOliToMapSvcToSub + 'mapOliToMapSvcToSub');
             //D-0721 1122 MS
             if (!relatedSubscription4TempStopSet.isEmpty()) {
                 
@@ -1664,6 +1673,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             
             if (!orderLineItemId_asia1SubscriptionList_serviceActivation.isEmpty()) {
 
+                integer x = 0; //START/END: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
                 for (id orderLineItemId : orderLineItemId_asia1SubscriptionList_serviceActivation.keySet()) {
                     
                     serviceFlag = null;
@@ -1675,10 +1685,11 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                     map<id, string> subscriptionId_serviceFlags = new map<id, string>();
                     map<id, Set<Id>> subscriptionId_asia1SubscriptionList = new map<id, Set<Id>>();
                     map<string, id> serviceFlag_subscriptionId = mapOliToMapSvcToSub.get(orderLineItemId);
-
+                    System.debug(serviceFlag_subscriptionId + ' serviceFlag_subscriptionId');
+                    System.debug(mapOliToMapSvcToSub + ' mapOliToMapSvcToSub');
                     for (Asia1_Subscription__c a1 : orderLineItemId_asia1SubscriptionList_serviceActivation.get(orderLineItemId)) {
-    
-                        id subscriptionId = serviceFlag_subscriptionId.get(a1.Service_Access_Flag__r.Name);
+                        
+                        id subscriptionId = serviceFlag_subscriptionId.get(a1.Service_Access_Flag__r.Name + x);
                         
                         
                         //START 27 August 2015 UD-2271 Kevin Evasco - Asia1 Subscription creation for ESHOP
@@ -1717,10 +1728,11 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                             i++;
                         } else {
                             //a1.Subscription__c = orderLineItemId_subscriptionId.get(orderLineItemId);
-                            a1.Subscription__c = mapOliToMapSvcToSub.get(orderLineItemId).get(a1.Service_Access_Flag__r.Name);
-                            asia1SubscriptionList.add(a1);
+                            a1.Subscription__c = mapOliToMapSvcToSub.get(orderLineItemId).get(a1.Service_Access_Flag__r.Name + x); //START/END: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
+                            asia1SubscriptionList.add(a1); 
                         }
                         //END 27 August 2015 UD-2271 Kevin Evasco - Asia1 Subscription creation for ESHOP
+                        x++; //START/END: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
                     }
                     System.debug('SUB ID LDAP >> ' + subscriptionId_ldapId);
                     System.debug('SUB SVC FLAGS >> ' +   subscriptionId_serviceFlags);
@@ -1733,20 +1745,23 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                 
             }
             // end for asia1 activation
-            
+            //START: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
             // start for asia1 deactivation
             //START UD-2036 07/24/2015 Added by J.Sarion - Commented out. Tie Subscription to Asia1 Subscription
             System.debug(' ORDERLINE MAP >> ' + orderLineItemId_asia1SubscriptionList_FromExistingAsia1);
             System.debug('ORDER LINE MAP TO SUB >> ' + mapOliToMapSvcToSub);
             if(!orderLineItemId_asia1SubscriptionList_FromExistingAsia1.isEmpty()){
+                integer x = 0;
                 for (id orderLineItemId : orderLineItemId_asia1SubscriptionList_FromExistingAsia1.keySet()){
                     for (Asia1_Subscription__c a1 : orderLineItemId_asia1SubscriptionList_FromExistingAsia1.get(orderLineItemId)){
                         //a1.Subscription__c = orderLineItemId_subscriptionId.get(orderLineItemId);
-                        a1.Subscription__c = mapOliToMapSvcToSub.get(orderLineItemId).get(a1.Service_Access_Flag__r.Name);
+                        a1.Subscription__c = mapOliToMapSvcToSub.get(orderLineItemId).get(a1.Service_Access_Flag__r.Name + x);
                         updateAsia1SubFromExistingAsia1List.add(a1);
+                        x++;
                     }
                 }
             }
+            //END: PD-0035 June 22, 2016 Added by Von Pernicia - added subscription to right service flag
             /*
             if (!orderLineItemId_asia1SubscriptionList_serviceDeactivation.isEmpty()) {
                 for (id orderLineItemId : orderLineItemId_asia1SubscriptionList_serviceDeactivation.keySet()) {
@@ -2470,7 +2485,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
             }
             /******************** Publication Subscription *************************/
             else if(sub.Subscription_Type_1__c == GlobalVariableClass.SUBSCRIPTION_TYPE_PUBLICATION)
-            {
+            {/*
                 //START UD-1317 06/09/2015 Added by J. Sarion - Set Subscription Charge to 0 if Freelist
                 if (sub.Payment_Mode__c == 'Other' && sub.Other_PaymentMethod__c == 'Freelist') {
                     return 0;
@@ -2518,7 +2533,7 @@ public class SubscriptionTriggerHandler implements TriggerHandlerInterface {
                         }
                         else return mainPack.Package_Price__c * sub.Number_of_Copies__c;
                     }
-                }
+                }*/
                 //END UD-1317 06/09/2015 Added by J. Sarion - Set Subscription Charge to 0 if Freelist
             }
         }

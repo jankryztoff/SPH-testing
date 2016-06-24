@@ -46,6 +46,7 @@ global class StopSubOrderEntryDirectController{
     public String orderNumber {get; set;}
     public String subscriberAccount {get; set;}
     public String recipientName {get; set;}
+    public decimal originalAdminFee { get; set; } // Start/End PD-0471 16Jun16 JohnD
     
     //START D-3842 10/30/2015 Added by J.Sarion - Add Delivery fee to only 1 sub for bundle subscriptions
     public Set<Id> oliIdForBundleSet = new Set<Id>();
@@ -174,7 +175,10 @@ global class StopSubOrderEntryDirectController{
         public Decimal others {get;set;}
         public String publication1 {get; set;}
         public String publication2 {get; set;}
-    
+        // Start PD-0471 16Jun16 JohnD
+        public string billingType { get; set; }   
+        public decimal originalAdminFee { get; set; }
+    	// End PD-0471 16Jun16 JohnD
     //START:D-3344 8/10/15 Added by Manolo Valena
     public Boolean underPromotion {get; set;}
     //END:D-3344 8/10/15 Added by Manolo Valena
@@ -291,15 +295,17 @@ global class StopSubOrderEntryDirectController{
      */
      //START UD-0364 4/14/2015 MGaelo Added Fee_Override_Amount__c
     public void getOLI(){
+        // Start PD-0471 16Jun16 JohnD - added subscription__r.billing_type field
         existingOLIList = [SELECT id, name, subscription__r.name, subscription__c, earliest_stop_date__c, stop_request_date__c,
                            terminating_reason__c, amount_to_refund__c, admin_charge__c, fee_waiver__c, fee_override__c, Fee_Override_Amount__c,
                            override_reason__c, Suppress_Notification_Stop__c, main_package_type__c, Main_Package_ID__c,
                            order__c, subscription__r.order_number__c, Publication_1__c, Publication_2__c, Pending_Copies__c, Pending_Copies_2__c,
                            //START:D-3344 8/10/15 Added by Manolo Valena
-               subscription__r.Promotion_1__c
+               subscription__r.Promotion_1__c, subscription__r.billing_type__c
                //END:D-3344 8/10/15 Added by Manolo Valena
                FROM Order_Line_Item__c
-                           WHERE order__c =: order.id];               
+                           WHERE order__c =: order.id];
+        // End PD-0471 16Jun16 JohnD - added subscription__r.billing_type field              
      //END UD-0364 4/14/2015 MGaelo Added Fee_Override_Amount__c                                               
         for(Order_Line_Item__c existingOLine : existingOLIList){
             oLineWrapper = new OrderLineItemWrapper();
@@ -346,6 +352,7 @@ global class StopSubOrderEntryDirectController{
             oLinewrapper.publication2 = existingOLine.Publication_2__c;
             oLinewrapper.copiespending1 = existingOLine.Pending_Copies__c;
             oLinewrapper.copiespending2 = existingOLine.Pending_Copies_2__c;
+            oLinewrapper.billingType = existingOline.subscription__r.billing_type__c;   // Start/End PD-0471 16Jun16 JohnD
             //oLineWrapper.stopRequestDate = existingOLine.stop_request_date__c;
             //copyRelatedSubscriptionList.add(oLineWrapper);
             copyRelatedSubscriptionMap.put(oLineWrapper.id, oLineWrapper);
@@ -753,13 +760,15 @@ global class StopSubOrderEntryDirectController{
         }
         //END UD-3911 FrancisBenzon 9Apr16 : consider if case not void
         //END UD-3652 4Feb2016 FrancisBenzon: check if sub has stop order, if yes throw error
-        try {         
+        try {
+			// Start PD-0471 16Jun16 JohnD - added Billing_Type__c field
             Zuora__Subscription__c subscription = [SELECT id, name, Main_Package_1__r.Package_Type__c, Main_Package_1__c, Subscription_Type_1__c,
                                                Main_Package_1__r.name, Order_Number__c, Contract_End_Date_1__c, Bundled_With__c, Zuora__Zuora_Id__c,
                          //START:D-3330 8/18/15 Added by Manolo Valena
-                         Order_Line_Item_Number_1__c
+                         Order_Line_Item_Number_1__c, Billing_Type__c 
                          //END:D-3330 8/18/15 Added by Manolo Valena
                                                FROM Zuora__Subscription__c WHERE id = :myId];
+			// End PD-0471 16Jun16 JohnD - added Billing_Type__c field
             publications = getPublication12(subscription);
             
             String publication1;
@@ -807,6 +816,7 @@ global class StopSubOrderEntryDirectController{
                                 oLineWrapper.subscriptionType = subscription.subscription_type_1__c;
                                 oLineWrapper.publication1 = publication1;
                                 oLineWrapper.publication2 = publication2;
+								oLineWrapper.billingType = subscription.Billing_Type__c;	// Start/End PD-0471 16Jun16 JohnD
                 
                 //START:D-3344 8/10/15 Added by Manolo Valena
                 oLineWrapper.underPromotion = false;
@@ -852,6 +862,7 @@ global class StopSubOrderEntryDirectController{
                                 oLineWrapper.publication1 = publication1;
                                 oLineWrapper.publication2 = publication2;
                                 oLineWrapper.oliFieldAccess = new Order_Line_Item__c();
+								oLineWrapper.billingType = subscription.Billing_Type__c;	// Start/End PD-0471 16Jun16 JohnD
                                 
                 //START:D-3344 8/10/15 Added by Manolo Valena
                 oLineWrapper.underPromotion = false;
@@ -914,7 +925,7 @@ global class StopSubOrderEntryDirectController{
                
             }
         } catch (exception e1) {
-           ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid Subscription Id.');
+           ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid Subscription Id.' + e1);
            ApexPages.addMessage(myMsg);              
         }
         
@@ -1495,9 +1506,10 @@ global class StopSubOrderEntryDirectController{
                     relSub.adminFee = AdminFeeComputation.computeAdminCharge(subscription.id, subscription.oliFieldAccess.stop_request_date__c);
                 }
             //END: UD-3852 2-24-2016 Added by Kristine Balaoing
+            	relSub.originalAdminFee = relSub.adminFee;	// Start/End PD-0471 16Jun16 JohnD
+			}
         }
-        }
-    }
+    } 
     
     
     /*Description: Method for getting Refund
@@ -2556,6 +2568,17 @@ global class StopSubOrderEntryDirectController{
                 oliWrapper.refund = 0.00;
             }
         }
+        
+        // Start PD-0471 16Jun16 JohnD - set admin fee to zero for fpp
+        if (oliWrapper.oliFieldAccess.terminating_reason__c != null 
+        		&& oliWrapper.oliFieldAccess.terminating_reason__c.contains('Payment failure')
+        		&& oliWrapper.billingType == GlobalVariableClass.SUBSCRIPTION_BILLING_TYPE_FULL_PREPAID) {
+        
+        	oliWrapper.adminFee = 0.00;
+        } else if (oliWrapper.adminFee == 0) {
+        	oliWrapper.adminFee = oliWrapper.originalAdminFee;
+        }
+        // End PD-0471 16Jun16 JohnD - set admin fee to zero for fpp
     }
     //END UD-2549 3/24/2016 Added by J.Sarion - set refund to 0
 }

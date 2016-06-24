@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Vendor_Code__c</field>
+    </columns>
+    <columns>
+        <field>Account.Vendor_Communication_Preference__c</field>
+    </columns>
+    <columns>
+        <field>Account.Handphone_Number__c</field>
+    </columns>
+    <columns>
+        <field>Account.Email__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <operator>equals</operator>
+            <value>Account.Vendor</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Email__c</column>
+            <operator>contains</operator>
+            <value>sph</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Vendors to be updated</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Account.Handphone_Number__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

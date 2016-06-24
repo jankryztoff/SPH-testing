@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Department Information</label>
+            <name>Department_Information</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Contacts</label>
+            <name>Contacts</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Staff Performance</label>
+            <name>Staff_Performance</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Internal operations category refers to all articles related to SPH operations. These include Department Information, Contacts, Staff Performances.</description>
+    <label>Internal Operations</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

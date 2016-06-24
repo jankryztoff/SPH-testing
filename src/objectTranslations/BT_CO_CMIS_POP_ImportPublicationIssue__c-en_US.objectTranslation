@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationIssue</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_CMIS_POP_ImportPublicationIssues</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- consolidationDate --></label>
+        <name>consolidationDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- orderCloseDate --></label>
+        <name>orderCloseDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- orderClosedIndicator --></label>
+        <name>orderClosedIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- pagination --></label>
+        <name>pagination__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationCode --></label>
+        <name>publicationCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationIssueDate --></label>
+        <name>publicationIssueDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationIssueNumber --></label>
+        <name>publicationIssueNumber__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

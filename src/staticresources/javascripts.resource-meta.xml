@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Private</cacheControl>
+    <contentType>application/x-zip-compressed</contentType>
+    <description>Repository of all javascripts that being used in all vf pages.
+[2/25] Change Of Sub JS FBenzon
+[18 Dec 14] D-1303
+[19 Jan 15] D-1345
+[01/30/15]  D-1307 FMB
+[02/25/15] D-2344 Wenjun
+[04/17/15] UD-0759 Ronald
+[05/22/15] UD-1276 GDelrosario</description>
+</StaticResource>

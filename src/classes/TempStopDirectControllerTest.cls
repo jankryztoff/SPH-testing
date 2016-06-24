@@ -794,6 +794,7 @@ private Class TempStopDirectControllerTest{
         test.stopTest();    
     }
     
+    /*******************************************************************************************************************************************************
     static testMethod void testTempStopDirectController3() {
         Integer counter=0;
         
@@ -1182,4 +1183,5 @@ private Class TempStopDirectControllerTest{
             cont.setCancelRecords();
         test.stopTest();    
     }
+    **********************************************************************************************************************************************/
 }

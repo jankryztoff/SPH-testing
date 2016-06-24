@@ -1,0 +1,106 @@
+<apex:page controller="CustomCallbackController" action="{!onload}" sidebar="false" showHeader="false" id="callbackPage">
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <script src="https://www.zuora.com/apps/Hosted/postmessage.js" type="text/javascript"/>
+    <script>
+        jQuery(document).ready(function() {
+            var paramObj = new Object();
+            paramObj.success = param("success"); 
+            paramObj.success2 = param("errorCode");
+            paramObj.errorMsg = param("errorMessage");
+            paramObj.errorMsg1 = param("errorField_creditCardNumber");
+            paramObj.errorMsg2 = param("errorField_creditCardExpirationYear");
+            paramObj.errorMsg5 = param("errorField_creditCardExpirationMonth");
+            paramObj.errorMsg3 = param("errorField_cardSecurityCode");
+            paramObj.errorMsg4 = param("errorField_creditCardHolderName");
+            paramObj.refId = '{!refId}';
+            
+            if(paramObj.success == 'true') {
+                document.getElementById('message').innerHTML = '<b>Successfully Created Payment Method Record.</b>';
+                window.parent.document.getElementById('paymentMethodId').value = paramObj.refId;
+            }
+            else {
+                var errorMessage = '<font color="red"><b>An error was encountered while trying to create a Payment Method.</b></font><br/>';
+                if(paramObj.errorMsg != 'null') {
+                    errorMessage = errorMessage  + '<br/>' + paramObj.errorMsg;
+                }
+                    errorMessage = errorMessage + gerErrorMessage('<br/><b>Card Number:</b> ', paramObj.errorMsg1);
+                    errorMessage = errorMessage + gerErrorMessage('<br/><b>Expiration Year:</b> ', paramObj.errorMsg2);
+                    errorMessage = errorMessage + gerErrorMessage('<br/><b>CVV:</b> ', paramObj.errorMsg3);
+                    errorMessage = errorMessage + gerErrorMessage('<br/><b>CardHolder Name:</b> ', paramObj.errorMsg4);
+                    errorMessage = errorMessage + gerErrorMessage('<br/><b>Expiration Month:</b> ', paramObj.errorMsg5);
+                //Start UD-545 04/29 Jason A./John
+                document.getElementById('message').innerHTML = decodeURIComponent(errorMessage);
+                
+
+                var second = 3;
+                var counter = setInterval(function() {
+                    
+                    document.getElementById('counter').innerHTML = 'Reload at ' + second;
+                    
+                    if (second == 0) {
+                        clearInterval(counter);
+                        //window.history.back(); 
+                        parent.window.reloadCrediCard();
+                    }
+                    second--;
+                    
+                }, 1000);
+                // END UD-545 04/29 Jason A./John
+            }
+            
+            
+            
+            window.parent.window.postMessage(paramObj.refId, "https://c.cs5.visual.force.com/apex/CustomCallbackPage");
+        });
+        
+        function gerErrorMessage(message, errCode) {
+            if(errCode == 'GeneralSystemError') {
+                return message + 'One or more general system errors have occurred.';
+            }
+            else if(errCode == 'BusinessValidationError') {
+                return message + 'One or more business validation errors have occurred';
+            }
+            else if(errCode == 'GatewayTransactionError') {
+                return message + 'One or more gateway transaction errors have occurred.';
+            }
+            else if(errCode == 'HostedPageFieldValidationError') {
+                return message + 'One or more field validation errors have occurred.';
+            }
+            else if(errCode == 'NullValue') {
+                return message + 'Please enter a value.';
+            }
+            else if(errCode == 'InvalidFormat') {
+                return message + 'Please enter a valid value';
+            }
+            else if(errCode == 'ExceededMaxLength') {
+                return message + 'Length of value entered exceeds the maximum length.';
+            }
+            return '';
+        }
+            
+        function getUrlVars(){ 
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) 
+            {
+            vars[key] = value;
+            });
+            return vars;
+        }
+            
+        function param(st){
+            var x = getUrlVars()[st];
+            return x;
+        } 
+    </script>
+    
+    <div id="message" name="message"/>
+    <!-- Start UD-545 04/29 Jason A./John -->
+    <br />
+    <br />
+    <p id="counter" align="center" />
+    <!-- Start UD-545 04/29 Jason A./John -->
+    
+    <!-- Start UD-3351 12/24 J.Sarion - commented -->
+    <!--<apex:messages />-->
+    <!-- END UD-545 12/24 J.Sarion - commented -->
+</apex:page>

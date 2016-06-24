@@ -214,7 +214,11 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
     }
     
     global void finish(Database.BatchableContext BC){
-
+        //Start PD-0040 16-Jun-2016 Aded By S.Puli - signal to control M
+        Boolean isSucess;   
+        isSucess = BatchJobHelper.getJobStatus(letterType,'SP062',GlobalVariableClass.STATUS_PENDING);
+        BatchJobHelper.updateBatchJobScheduler(BC.getJobId(),isSucess);
+        
         List<BATCH_JOB_SCHEDULER__c> batchJobSchedulerList = new List<BATCH_JOB_SCHEDULER__c>();
         batchJobSchedulerList = [SELECT id, name, CreatedDate, Start_Time__c
                                 FROM BATCH_JOB_SCHEDULER__c 
@@ -225,14 +229,21 @@ global class SP_DailyInvoiceRequestBatch implements Database.Batchable<sObject>,
             sp.sessionId = sessionId;
             sp.requestCount = requestCount;
             sp.letterType = letterType;
+            sp.parentjobid = BC.getJobId();//Start/End PD-0040 16-Jun-2016 Aded By S.Puli - signal to control M
             sp.batchCode = 'SP063';
-            Database.executeBatch(sp, 100);
+            if(!Test.isRunningTest()){
+                Database.executeBatch(sp, 100);
+            }
         }else{
-            SP_BatchJobSchedulerService.initializeBatches('SP063','Start', null, sessionId,requestCount);
+            SP_BatchJobSchedulerService.setParentBatchJobSchedulerId(BC.getJobId());
+            if(!Test.isRunningTest()){
+                SP_BatchJobSchedulerService.initializeBatches('SP063','Start', null, sessionId,requestCount);
+            }
         }
-        BatchJobHelper.updateJobStatus(BC.getJobId());
+
         latestARMSInvoiceIdSetting.Value__c = SETTING_PREFIX_ARMS_INVOICE_ID + latestARMSInvoiceId;
         update latestARMSInvoiceIdSetting;
+        //End PD-0040 16-Jun-2016 Aded By S.Puli
     }
     
     public Boolean updateGSTRate(String invoiceZuoraId){        

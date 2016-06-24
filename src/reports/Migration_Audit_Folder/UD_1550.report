@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contact$Id</field>
+    </columns>
+    <columns>
+        <field>Contact$Recipient_Number_Show__c</field>
+    </columns>
+    <columns>
+        <field>Contact$LastModifiedDate</field>
+    </columns>
+    <columns>
+        <field>Contact$LastModifiedBy</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Contact$LastModifiedDate</column>
+            <operator>equals</operator>
+            <value>9/18/2015 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Contact$LastModifiedBy</column>
+            <operator>contains</operator>
+            <value>Migration</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>UD-1550</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Contacts__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Contact$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

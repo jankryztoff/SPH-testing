@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>spc dum 2</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>spc_dums_2s</value>
+    </caseValues>
+    <fields>
+        <label><!-- spcname --></label>
+        <name>spcname__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

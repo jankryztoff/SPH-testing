@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CMIS POP Packing label Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CMIS POP Packing label Batchs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Address 1 --></label>
+        <name>Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 2 --></label>
+        <name>Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 3 --></label>
+        <name>Address_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 4 --></label>
+        <name>Address_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Record Type --></label>
+        <name>Address_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline City Code --></label>
+        <name>Airline_City_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Name --></label>
+        <name>Airline_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Number --></label>
+        <name>Airline_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Packing Group --></label>
+        <name>Airline_Packing_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attention To/Care Of Indicator --></label>
+        <name>Attention_To_Care_Of_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attn To Name --></label>
+        <name>Attn_To_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Block House Number --></label>
+        <name>Block_House_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Code --></label>
+        <name>City_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Name --></label>
+        <name>City_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Department --></label>
+        <name>Department__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division Code --></label>
+        <name>Division_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fillers --></label>
+        <name>Fillers__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 2 --></label>
+        <name>Flight_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number --></label>
+        <name>Flight_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Schedule --></label>
+        <name>Flight_Schedule__c</name>
+    </fields>
+    <fields>
+        <label><!-- Freelist Indicator --></label>
+        <name>Freelist_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level Number --></label>
+        <name>Level_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code --></label>
+        <name>Location_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mailing Agent --></label>
+        <name>Mailing_Agent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Normalized View --></label>
+        <name>Normalized_View__c</name>
+    </fields>
+    <fields>
+        <label><!-- Packing Group Description --></label>
+        <name>Packing_Group_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Zone --></label>
+        <name>Postal_Zone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Issue Date --></label>
+        <name>Publication_Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Number --></label>
+        <name>Recipient_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Section Code --></label>
+        <name>Section_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sequence Number --></label>
+        <name>Sequence_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>Street_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Account Number --></label>
+        <name>Subscriber_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Name --></label>
+        <name>Subscription_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- CMIS POP Packing label Batchs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Direct Subscriptions --></label>
+        <name>Total_Direct_Subscriptions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Local Freelist Copies --></label>
+        <name>Total_Local_Freelist_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Local Subscription Copies --></label>
+        <name>Total_Local_Subscription_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Overseas Freelist Copies --></label>
+        <name>Total_Overseas_Freelist_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Overseas Subscription Copies --></label>
+        <name>Total_Overseas_Subscription_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Sponsored Copies --></label>
+        <name>Total_Sponsored_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Number --></label>
+        <name>Unit_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <layouts>
+        <layout>CMIS POP Packing label Batch Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

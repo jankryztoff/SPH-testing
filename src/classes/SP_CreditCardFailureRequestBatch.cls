@@ -70,7 +70,7 @@ global class SP_CreditCardFailureRequestBatch implements Database.Batchable<sObj
             //START UD-2556 08/31/2015 added by Jason A./Alyana N.
             Date dateYesterday = Date.Today() -1; 
             query += 'SELECT Id, CreatedDate FROM External_Payment__c ';
-            query += 'WHERE Payment_Type__c = :creditCard AND CreatedDate = TODAY AND Is_PDF_Generated__c = false'; //START UD-3316 Gdelrosario: changed to yesterday
+            query += 'WHERE Payment_Type__c = :creditCard AND CreatedDate = YESTERDAY AND Is_PDF_Generated__c = false'; //START UD-3316 Gdelrosario: changed to yesterday
         }
         //END 02 May 2016 UD-3872 Kevin Evasco - Added Is PDF Generated = false
         return Database.getQueryLocator(query);

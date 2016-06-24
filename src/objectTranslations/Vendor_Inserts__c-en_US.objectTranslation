@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vendor Inserts</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vendor Inserts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Insert Value --></label>
+        <name>Insert_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Inserts --></label>
+        <name>Number_of_Inserts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Issue Date --></label>
+        <name>Publication_Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Vendor Inserts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

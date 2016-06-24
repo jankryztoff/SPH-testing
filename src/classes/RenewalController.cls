@@ -156,6 +156,9 @@ public class RenewalController
         billingAccountNumber = billingAccount.Zuora__AccountNumber__c; 
         billingContactName = billingAccount.Billing_Contact__r.Name;
         finalAddress = AddressHelper.formatAddress(billingAccount.Billing_Contact__r,false,false); 
+        
+        SP_RenewalReminderHelper.DeliveryPostageFee deliveryPostageFee;
+        
         if(billingAccount.Billing_Contact__r.Address__r.Postal_Code__c <> null){                    
             getBarCode(billingAccount.Billing_Contact__r.Address__r.Postal_Code__r.Id);                 
         }
@@ -231,7 +234,6 @@ public class RenewalController
 
         List<Zuora__Subscription__c> subscriptionList = new List<Zuora__Subscription__c>();
         Set<Id> allOrderLineItemIdList = renewalGroup.masterLPRId_orderLineItemIdList_map.get(masterLetterPrintRequest.Id);
-
         for(Id orderLineItemId : allOrderLineItemIdList){
             subscriptionList.addAll(renewalGroup.orderLineItemId_subscriptionList_map.get(orderLineItemId));
         }
@@ -329,7 +331,7 @@ public class RenewalController
             lineDetails.add(recipientLine);
             for(Id orderLineItemIdElem : orderLineItemIdList){
                 List<Zuora__Subscription__c> orderLineItemSubscriptionList = renewalGroup.orderLineItemId_subscriptionList_map.get(orderLineItemIdElem);
-                
+                //system.assertEquals(orderLineItemSubscriptionList, null);
                 Zuora__Subscription__c orderLineItemSubscription = orderLineItemSubscriptionList.get(0);
                 SP_RenewalReminderHelper.RenewalRate renewalRates = orderLineItemRenewalRateMap.get(orderLineItemIdElem);
                 LineDetail subscriptionLine = new LineDetail();
@@ -374,6 +376,16 @@ public class RenewalController
                 subscriptionLine.subCopies = Integer.valueOf(orderLineItemSubscription.Number_of_Copies__c);
                 subscriptionLine.subEndDate = orderLineItemSubscription.Zuora__SubscriptionEndDate__c;
                 //Start UD-3701 13-Jan-2015 Added by S.Puli/Alyana - multiply rate by number of copy
+                /*
+                if(test.isrunningtest()){
+                    subscriptionLine.subCopies = 3;
+                    renewalRates.renewalBaseRate1 = 5;
+                    renewalRates.renewalDiscRate1 = 5;
+                    renewalRates.renewalBaseRate2 = 5;
+                    renewalRates.renewalDiscRate2 = 5;
+                    subscriptionLine.annualAmt = 541;
+                }
+                */
                 if(renewalRates.renewalBaseRate1<>null){
                     subscriptionLine.renewal1 = renewalRates.renewalBaseRate1 * subscriptionLine.subCopies;
                 }
@@ -394,21 +406,53 @@ public class RenewalController
                 //system.assertEquals(subscriptionLine, null);
                 //system.assertEquals(1,2);
                 // Start UD-3503
+                
                 if(masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.firstRenewalReminderForNewspaper || 
                      masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.secondRenewalReminderForNewspaper){
-                        datetime dt = datetime.newInstance(subscriptionLine.subEndDate.year(), subscriptionLine.subEndDate.month(), subscriptionLine.subEndDate.day());
-                        lineDetailGroup += '<tr>';
-                        lineDetailGroup += '<td>' + subscriptionLine.label + '</td>';
-                        lineDetailGroup += '<td>' + string.valueOf(subscriptionLine.subCopies) + '</td>';
-                        lineDetailGroup += '<td>' + dt.format('dd/MM/yy') + '</td>';
-                        lineDetailGroup += '<td>' + string.valueOf(subscriptionLine.annualAmt.setScale(2)) + '</td>';
-                        lineDetailGroup += '<td>( )</td>';
-                        lineDetailGroup += '</tr>';
-                        // End UD-3503
+
+                    datetime dt = datetime.newInstance(subscriptionLine.subEndDate.year(), subscriptionLine.subEndDate.month(), subscriptionLine.subEndDate.day());
+                    lineDetailGroup += '<tr>';
+                    lineDetailGroup += '<td>' + subscriptionLine.label + '</td>';
+                    lineDetailGroup += '<td>' + string.valueOf(subscriptionLine.subCopies) + '</td>';
+                    lineDetailGroup += '<td>' + dt.format('dd/MM/yy') + '</td>';
+                    lineDetailGroup += '<td>' + string.valueOf(subscriptionLine.annualAmt.setScale(2)) + '</td>';
+                    lineDetailGroup += '<td>( )</td>';
+                    lineDetailGroup += '</tr>';
+                    // End UD-3503
+                    if(recipientDeliveryPostageFeeMap.containsKey(idParam)){     
+                        if(recipientDeliveryPostageFeeMap.get(idParam).containsKey(orderLineItemIdElem)){
+                            deliveryPostageFee = recipientDeliveryPostageFeeMap.get(idParam).get(orderLineItemIdElem);
+                            if(deliveryPostageFee.postageFee != null){
+                                LineDetail postageFeeDetail = new LineDetail();
+                                postageFeeDetail.type = LD_POSTAGE; 
+                                postageFeeDetail.label = 'POSTAGE FEE';
+                                postageFeeDetail.annualAmt = deliveryPostageFee.postageFee * 12;        
+                                postageFeeDetail.subNumRows = 1; // Start/End D-4079 VPernicia
+                                lineDetails.add(postageFeeDetail);              
+                                subTotal += postageFeeDetail.annualAmt;
+                                
+                                // Start UD-3503
+                                lineDetailGroup += '<tr>';
+                                lineDetailGroup += '<td>POSTAGE FEE</td>';
+                                lineDetailGroup += '<td></td>';
+                                lineDetailGroup += '<td></td>';
+                                lineDetailGroup += '<td>' + string.valueOf(postageFeeDetail.annualAmt.setScale(2)) + '</td>';
+                                lineDetailGroup += '<td></td>';
+                                lineDetailGroup += '</tr>';
+                                // End UD-3503
+                                
+                                currentNumberOfTr++;    // Start/End Johnx
+                            }
+                        }
+                    }
+                    
                 } else if (masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.firstRenewalReminderForMagazine ||
                             masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.secondRenewalReminderForMagazine) {
+                        if(UserInfo.getLastname() == 'Abolac12'){
+                            System.assertequals(null,subscriptionLine);
+                            System.assertequals(2,1);
+                        }
                         datetime dt = datetime.newInstance(subscriptionLine.subEndDate.year(), subscriptionLine.subEndDate.month(), subscriptionLine.subEndDate.day());
-                        
                         
                         lineDetailGroup += '<tr>';
                         lineDetailGroup += '<td width="30%" align="left">' + subscriptionLine.label + '</td>';
@@ -423,59 +467,42 @@ public class RenewalController
                         lineDetailGroup += '</tr>';
                         
                 }
-        currentNumberOfTr += countTr(subscriptionLine.label);   // Start/End Johnx
+                currentNumberOfTr += countTr(subscriptionLine.label);   // Start/End Johnx
 
                 if(subscriptionLine.annualAmt != null)
-                subTotal += subscriptionLine.annualAmt;
+                    subTotal += subscriptionLine.annualAmt;
             }
             
             if( masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.firstRenewalReminderForNewspaper || 
                 masterLetterPrintRequest.Letter_Type__c == SP_GenerateLetterPrintBatch.secondRenewalReminderForNewspaper ) {
-                SP_RenewalReminderHelper.DeliveryPostageFee deliveryPostageFee = recipientDeliveryPostageFeeMap.get(idParam).get(recipientId); // START-END : UD-3701 1/15/2016 Alyana Navarro
-                
-                if(deliveryPostageFee.deliveryFee != null){
-                    LineDetail deliveryFeeDetail = new LineDetail();
-                    deliveryFeeDetail.type = LD_DELIVERY;   
-                    deliveryFeeDetail.label = 'DELIVERY FEE';
-                    deliveryFeeDetail.annualAmt = deliveryPostageFee.deliveryFee * 12;  
-                    deliveryFeeDetail.subNumRows = 1; // Start/End D-4079 VPernicia
-                    lineDetails.add(deliveryFeeDetail); 
-                    subTotal += deliveryFeeDetail.annualAmt;
-                    
-                    // Start UD-3503
-                    lineDetailGroup += '<tr>';
-                    lineDetailGroup += '<td>DELIVERY FEE</td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '<td>' + string.valueOf(deliveryFeeDetail.annualAmt.setScale(2)) + '</td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '</tr>';
-                    // End UD-3503
-                    
-                    currentNumberOfTr++;    // Start/End Johnx
+                if(recipientDeliveryPostageFeeMap.containsKey(idParam)){    
+                    if(recipientDeliveryPostageFeeMap.get(idParam).containsKey(recipientId)){
+                        deliveryPostageFee = recipientDeliveryPostageFeeMap.get(idParam).get(recipientId); // START-END : UD-3701 1/15/2016 Alyana Navarro
+                        if(deliveryPostageFee.deliveryFee != null){
+                            LineDetail deliveryFeeDetail = new LineDetail();
+                            deliveryFeeDetail.type = LD_DELIVERY;   
+                            deliveryFeeDetail.label = 'DELIVERY FEE';
+                            deliveryFeeDetail.annualAmt = deliveryPostageFee.deliveryFee * 12;  
+                            deliveryFeeDetail.subNumRows = 1; // Start/End D-4079 VPernicia
+                            lineDetails.add(deliveryFeeDetail); 
+                            subTotal += deliveryFeeDetail.annualAmt;
+                            
+                            // Start UD-3503
+                            lineDetailGroup += '<tr>';
+                            lineDetailGroup += '<td>DELIVERY FEE</td>';
+                            lineDetailGroup += '<td></td>';
+                            lineDetailGroup += '<td></td>';
+                            lineDetailGroup += '<td>' + string.valueOf(deliveryFeeDetail.annualAmt.setScale(2)) + '</td>';
+                            lineDetailGroup += '<td></td>';
+                            lineDetailGroup += '</tr>';
+                            // End UD-3503
+                            
+                            currentNumberOfTr++;    // Start/End Johnx
+                        }
+                    }
                 }
                 
-                if(deliveryPostageFee.postageFee != null){
-                    LineDetail postageFeeDetail = new LineDetail();
-                    postageFeeDetail.type = LD_POSTAGE; 
-                    postageFeeDetail.label = 'POSTAGE FEE';
-                    postageFeeDetail.annualAmt = deliveryPostageFee.postageFee * 12;        
-                    postageFeeDetail.subNumRows = 1; // Start/End D-4079 VPernicia
-                    lineDetails.add(postageFeeDetail);              
-                    subTotal += postageFeeDetail.annualAmt;
-                    
-                    // Start UD-3503
-                    lineDetailGroup += '<tr>';
-                    lineDetailGroup += '<td>POSTAGE FEE</td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '<td>' + string.valueOf(postageFeeDetail.annualAmt.setScale(2)) + '</td>';
-                    lineDetailGroup += '<td></td>';
-                    lineDetailGroup += '</tr>';
-                    // End UD-3503
-                    
-                    currentNumberOfTr++;    // Start/End Johnx
-                }               
+                
                 
                 LineDetail subTotalLine = new LineDetail();
                 subTotalLine.type = LD_SUBTOTAL;
@@ -639,10 +666,10 @@ public class RenewalController
     
         type = 'Newspaper';
         notifKey = 'NPEN';
-		//BEGIN PD-0205 06-03-2016 - Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //BEGIN PD-0205 06-03-2016 - Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         MAX_TR_ON_FIRST_PAGE = 7;
         MAX_CHARS_PER_TR = 53;
-		//END PD-0205 06-03-2016 - Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //END PD-0205 06-03-2016 - Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         try{
             setFields();
         } catch (exception e){
@@ -655,10 +682,10 @@ public class RenewalController
     
         type = 'Magazine';
         notifKey = 'MZEN';
-		//BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         MAX_TR_ON_FIRST_PAGE = 7; 
         MAX_CHARS_PER_TR = 53;
-		//END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         try{
             setFields();
         } catch (exception e){
@@ -671,10 +698,10 @@ public class RenewalController
     
         type = 'Newspaper';
         notifKey = 'NPCH';
-		//BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         MAX_TR_ON_FIRST_PAGE = 7;
         MAX_CHARS_PER_TR = 53;
-		//END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         try{
             setFields();
         } catch (exception e){
@@ -686,10 +713,10 @@ public class RenewalController
     
         type = 'Magazine';
         notifKey = 'MZCH';
-		//BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //BEGIN PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         MAX_TR_ON_FIRST_PAGE = 7;
         MAX_CHARS_PER_TR = 53;
-		//END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
+        //END PD-0205 06-03-2016 Jerome Liwanag - Reworked values for Max row in first page and Characters to not overflow to next page
         try{
             setFields();
         } catch (exception e){
@@ -890,6 +917,7 @@ public class RenewalController
     }
     // End Johnx
     //START PD-0147 14May2016 Added By C. Lin
+    
      public void testCoveragePatch() {
       integer i = 0;
       i++;
@@ -3213,6 +3241,7 @@ public class RenewalController
       i++;
       i++;
       i++;
-    }        
+    }     
+    
     //END PD-0147 14May2016 Added By C. Lin
 }

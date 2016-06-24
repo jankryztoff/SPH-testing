@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Address_Assignment__c$Name</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Address__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Effective_Date__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Case__c.RecordType</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Case__c.Status</field>
+    </columns>
+    <filter>
+        <booleanFilter>(1 AND 2 AND 3)</booleanFilter>
+        <criteriaItems>
+            <column>Address_Assignment__c$Active__c</column>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Address_Assignment__c$End_Date__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Address_Assignment__c$Case__c.Status</column>
+            <operator>equals</operator>
+            <value>Closed</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>SP050 - BatchAddressAssignmentEffectiveD</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Address_Assignment_with_Address_and_Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Address_Assignment__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

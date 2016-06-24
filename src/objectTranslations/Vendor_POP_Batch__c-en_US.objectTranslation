@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vendor POP Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vendor POP Batches</value>
+    </caseValues>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fillers --></label>
+        <name>Fillers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Normalized View --></label>
+        <name>Normalized_View__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Issue Date --></label>
+        <name>Publication_Issue_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Name --></label>
+        <name>Subscription_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Vendor POP Batches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Direct Subscriptions --></label>
+        <name>Total_Direct_Subscriptions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Local Freelist Copies --></label>
+        <name>Total_Local_Freelist_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Local Subscription Copies --></label>
+        <name>Total_Local_Subscription_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Overseas Freelist Copies --></label>
+        <name>Total_Overseas_Freelist_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Overseas Subscription Copies --></label>
+        <name>Total_Overseas_Subscription_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Sponsored Copies --></label>
+        <name>Total_Sponsored_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Vendor POP Batch Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

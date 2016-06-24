@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vendor Assignment History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vendor Assignment History</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account ID --></label>
+        <name>Account_ID__c</name>
+        <relationshipLabel><!-- Vendor Assignment History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Effective From --></label>
+        <name>Effective_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription History --></label>
+        <name>Subscription_History__c</name>
+        <relationshipLabel><!-- Vendor Assignment History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription ID --></label>
+        <name>Subscription_ID__c</name>
+        <relationshipLabel><!-- Vendor Assignment History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) --></label>
+        <name>Subscription_Vendor__c</name>
+        <relationshipLabel><!-- Vendor Assignment History --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>MIG - Vendor Assignment History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

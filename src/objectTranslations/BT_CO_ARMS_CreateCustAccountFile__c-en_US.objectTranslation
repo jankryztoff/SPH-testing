@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_CreateCustAccountFile</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_CreateCustAccountFiles</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address1 --></label>
+        <name>Address1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address2 --></label>
+        <name>Address2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address3 --></label>
+        <name>Address3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address4 --></label>
+        <name>Address4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved Debt Exposure Amount --></label>
+        <name>Approved_Debt_Exposure_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Block House Number --></label>
+        <name>Block_House_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Secondary --></label>
+        <name>Building_Secondary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Profile --></label>
+        <name>Business_Profile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Sector --></label>
+        <name>Business_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- City Zip --></label>
+        <name>City_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Co Attention To Indicator --></label>
+        <name>Co_Attention_To_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Create Id --></label>
+        <name>Create_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit External --></label>
+        <name>Credit_Limit_External__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit Internal --></label>
+        <name>Credit_Limit_Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term Reference --></label>
+        <name>Credit_Term_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term --></label>
+        <name>Credit_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Name1 --></label>
+        <name>Customer_Name1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Name2 --></label>
+        <name>Customer_Name2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Status --></label>
+        <name>Customer_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debt Mgt Treatment --></label>
+        <name>Debt_Mgt_Treatment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Floor Number --></label>
+        <name>Floor_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- GST OutOfScope Indicator --></label>
+        <name>GST_OutOfScope_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ID No --></label>
+        <name>ID_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- ID Type --></label>
+        <name>ID_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- PO Box No --></label>
+        <name>PO_Box_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Passport Country Code --></label>
+        <name>Passport_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- valid values &apos;Master&apos; or &apos;Detail&apos; only --></help>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Key --></label>
+        <name>Reference_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retrieve Account Indicator --></label>
+        <name>Retrieve_Account_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Group --></label>
+        <name>SOA_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Supression Indicator --></label>
+        <name>SOA_Supression_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- SPH Staff Indicator --></label>
+        <name>SPH_Staff_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sort Order --></label>
+        <name>Sort_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub ContactNo Email --></label>
+        <name>Sub_ContactNo_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Contact Designation --></label>
+        <name>Sub_Contact_Designation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Contact Ext --></label>
+        <name>Sub_Contact_Ext__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Contact Name --></label>
+        <name>Sub_Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Contact Type --></label>
+        <name>Sub_Contact_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transient Indicator --></label>
+        <name>Transient_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Key --></label>
+        <name>Unique_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit No --></label>
+        <name>Unit_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- co Attention To Party --></label>
+        <name>co_Attention_To_Party__c</name>
+    </fields>
+    <layouts>
+        <layout>BT_CO_ARMS_CreateCustAccountFile Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for Case Team Member Email Notification &lt;final format is TBC&gt;</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Case: Case Team Member Email Notification</name>
+    <style>none</style>
+    <subject>Added as Case Team Member  - Case ID {!Case.CaseNumber}</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -285,6 +285,7 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
                         try{
                             if(billingAccountMap.get(parentLetterPrintRequest.Billing_Account__c).Billing_Contact__r.Email != null || billingAccountMap.get(parentLetterPrintRequest.Billing_Account__c).Billing_Contact__r.Email_Secondary__c != null){
               // START : UD-3338 12/7/2015 Alyana Navarro
+
                                 //START UD-3699 Gdelrosario : added the letter type to change the dependecy from dates to Letter type of Letter Print Request
                                 singleEmail = getParsedEmail(emailTemplate, publicationType, subscriptionList[0].Zuora__SubscriptionEndDate__c, billingAccountMap.get(parentLetterPrintRequest.Billing_Account__c), recipientContactMap, recipientOrderLineItemListMap, mapper.orderLineItemId_subscriptionList_map, parentLPRRecipientIdDelPostChargeMap.get(parentLetterPrintRequest.id), sphLogo, renewalRateGroupRec.orderLineItemRenewalRateMap, productMap, packageMap, parentLetterPrintRequest.Letter_Type__c); // START-END : UD-3701 1/14/2016 Alyana Navarro
                                 //END UD-3699 Gdelrosario : added the letter type to change the dependecy from dates to Letter type of Letter Print Request
@@ -476,6 +477,7 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
         //subMap.put('AttentionTo', billingAccount.Billing_Contact__r.Company_Name__c + '<br/>');
         subMap.put('ContactName', billingAccount.Billing_Contact__r.Name);
         subMap.put('notifRenewal', notifRenewal);
+
         
         while(startIndex != 1) {
             startIndex = template.indexOf('{{') + 2;
@@ -609,29 +611,33 @@ global class SP_SendEmailNotifForSubsRenewalsBatch implements Database.Batchable
                                     subs += '</td>';
                                     
                                     subs += '<td width=15% align=center>(  )</td>';
-                                subs += '</tr>';                                
+                                subs += '</tr>'; 
+                                
+                                if(recipientIdDelPostChargeMap.containsKey(orderLineItemId)){
+                                    if(recipientIdDelPostChargeMap.get(orderLineItemId).postageFee != null && isDeliveredByMailingAgent){
+                                        subs += '<tr>';
+                                            subs += '<td width=70% align=left colspan=3>POSTAGE FEE</td>';                              
+                                            subs += '<td width=15% align=center>';
+                                                subs += '$' + (recipientIdDelPostChargeMap.get(orderLineItemId).postageFee * 12).setScale(2);
+                                            subs += '</td>';
+                                            subs += '<td width=15% align=center></td>';
+                                        subs += '</tr>';
+                                        subTotal += recipientIdDelPostChargeMap.get(orderLineItemId).postageFee * 12;
+                                    }   
+                                }
                             }
-                            
-                            if(recipientIdDelPostChargeMap.get(recipientId).deliveryFee != null && isDeliveredByVendor){
-                                subs += '<tr>';
-                                    subs += '<td width=70% align=left colspan=3>DELIVERY FEE</td>';
-                                    subs += '<td width=15% align=center>';                                  
-                                        subs += '$' + (recipientIdDelPostChargeMap.get(recipientId).deliveryFee * 12).setScale(2);                      
-                                    subs += '</td>';
-                                    subs += '<td width=15% align=center></td>';
-                                subs += '</tr>';
-                                subTotal += recipientIdDelPostChargeMap.get(recipientId).deliveryFee * 12;
-                            } 
-                            
-                            if(recipientIdDelPostChargeMap.get(recipientId).postageFee != null && isDeliveredByMailingAgent){
-                                subs += '<tr>';
-                                    subs += '<td width=70% align=left colspan=3>POSTAGE FEE</td>';                              
-                                    subs += '<td width=15% align=center>';
-                                        subs += '$' + (recipientIdDelPostChargeMap.get(recipientId).postageFee * 12).setScale(2);
-                                    subs += '</td>';
-                                    subs += '<td width=15% align=center></td>';
-                                subs += '</tr>';
-                                subTotal += recipientIdDelPostChargeMap.get(recipientId).postageFee * 12;
+
+                            if(recipientIdDelPostChargeMap.containsKey(recipientId)){
+                                if(recipientIdDelPostChargeMap.get(recipientId).deliveryFee != null && isDeliveredByVendor){
+                                    subs += '<tr>';
+                                        subs += '<td width=70% align=left colspan=3>DELIVERY FEE</td>';
+                                        subs += '<td width=15% align=center>';                                  
+                                            subs += '$' + (recipientIdDelPostChargeMap.get(recipientId).deliveryFee * 12).setScale(2);                      
+                                        subs += '</td>';
+                                        subs += '<td width=15% align=center></td>';
+                                    subs += '</tr>';
+                                    subTotal += recipientIdDelPostChargeMap.get(recipientId).deliveryFee * 12;
+                                } 
                             }
                             
                             subs += '<tr>';

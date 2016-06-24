@@ -1,0 +1,442 @@
+<apex:page id="LinkAsia1IdtoSubscription" controller="LinkAsia1IdtoSubscriptionController" >
+<style type="text/css">
+        .popup
+        {
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 37%;
+            padding:10px;
+            position: fixed;
+            width: 300px;
+            top:45%;
+        }
+        
+        .popup01
+        { 
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 15%;
+            padding:10px;
+            position: fixed;
+            width: 900px;
+            top:20%;
+            overflow: auto; 
+            max-height: 400px;
+            
+            
+        }
+
+        .popupBg
+        {
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 70);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>    
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <apex:styleSheet value="{!URLFOR($Resource.css, 'css/LinktoAsia1Subscription.css')}" />
+    
+  <apex:form >
+  <apex:inputHidden value="{!asia1layoutshow}" id="asia1layout"/>
+   <apex:pageMessages id="pageMessage" />
+        <apex:pageBlock >
+           <apex:pageBlockButtons location="both" id="pageButtons">
+                
+                <apex:commandButton value="Confirm" action="{!confirm}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+   <!-- asia1 -->
+                
+                <apex:outputPanel id="asia1Section" >
+                   <apex:pageBlockSection collapsible="true" title="Create/Select User ID" columns="1">
+                  
+                    
+                 
+                   <apex:outputPanel styleClass="container" layout="block" style="border:none !important">
+                        <apex:pageMessages id="asia1message" />
+                    </apex:outputPanel>
+
+                    <div  id="individualMode">                       
+                         <apex:outputPanel id="listToBeCreated" layout="block" style="border:none !important"> 
+                         <div id="toBeCreated" style="width:40%" >User ID To Be Created</div>
+                        </apex:outputPanel>
+                           <!--<div id="toBeCreated">User ID To Be Created</div>-->
+                            <!--Start D-2489 3/1/15 ABanaag -->
+                            <!--End D-2489 3/1/15 ABanaag -->
+                             
+                        <!--    <apex:outputPanel id="tobeCreatedContainer" styleClass="scrollAsia1" 
+                                    rendered="{!IF(asia1Subscriptions.size = 0, false, true)}" layout="block">
+                                <div align="center">   
+                                    <table id="asia1Subscriptions" class="list">
+                                        <thead class="rich-table-thead">
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th width="100">Sevice Flag</th>
+                                                <th width="100">Concurrent</th>
+                                                <th width="100">Status</th>
+                                                <th class="centerTitle">Select</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!asia1Subscriptions}" var="asia1">
+                                                <apex:variable value="{!asia1['asia1Subscriptions']}" var="subs" />
+                                                    <tr class="dataRow">
+                                                        <td>{!asia1.userId}</td>
+                                                        <td colspan="3">
+                                                            <table id="asia1AccessFlag" class="list" width="100%" border="0" cellspacing="0" 
+                                                                    cellpadding="0" >
+                                                                <apex:repeat value="{!subs}" var="sub">
+                                                                    <tr class="asia1Cs">
+                                                                        <td width="100">{!sub['serviceFlagName']}</td>
+                                                                        <td width="100">{!sub['concurrent']}</td>
+                                                                        <td width="100">{!sub['status']}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </table>
+                                                        </td>
+                                                        <td align="center">
+                                                            <apex:actionRegion >
+                                                            
+                                                               <! <apex:commandButton value="Remove" action="{!removeAsia1Subscription}" 
+                                                                         oncomplete="checkAsia1Limit();" reRender="asia1, listToBeCreated, individualModeContainer, selectionSourceContainer">
+                                                                    <apex:param name="asia1IdToBeRemoved" assignTo="{!asia1IdToBeRemoved}" value="{!asia1.asia1Id}" />
+                                                                </apex:commandButton>
+                                 
+                                                            </apex:actionRegion>
+                                                        </td>
+                                                    </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>                              
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <br />---->
+                        <apex:outputPanel id="selectionSourceContainer" styleClass="container noborder"   layout="block" >
+                            <table id="selectionSourceContainerTable">
+                                <tr>
+                                    
+                                    <td><input id="isExisting" name="source" type="radio" onclick="javascript: toggleSource(false);" /> Select Existing User ID</td>
+                                    <td><input id="createuser" name="source" type="radio" onclick="javascript: toggleSource(true);" /> Create New User ID</td> 
+                                                                     
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                        <apex:inputHidden value="{!asia1layoutshow}" id="asia1layout"/>
+                 
+                        <apex:outputPanel id="individualModeContainer" styleClass="container" layout="block">
+                 
+                            <apex:actionRegion >
+                                <apex:outputPanel id="individualTable">
+                                    <table id="createNewContainer">
+                                        <tr>
+                                            <th class="labelCol">LDAP Login ID/Username</th>
+                                            <td class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:inputField value="{!asia1SingleAccount.User_ID_LDAP_ID__c}" id="asiaUserName" required="false" />
+                                                <apex:image value="{!ldapValidityImg}" />
+                                            </td>
+                                            <td rowspan="2" valign="middle"><apex:commandButton value="Validate" action="{!validateNewAsia1Account}" reRender="individualTable" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Display Name</th>
+                                            <td class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:inputField value="{!asia1SingleAccount.Display_Name__c}" required="false" />
+                                                <apex:image value="{!displayNameValidityImg}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Password</th>
+                                            <td class="requiredInput"><div class="requiredBlock"></div><apex:inputField value="{!asia1SingleAccount.Password__c}" required="false" /></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="labelCol">Email</th>
+                                            <td class="requiredInput"><div class="requiredBlock"></div><apex:inputField value="{!asia1SingleAccount.Email__c}" required="false" id="asiaEmail"/></td>
+                                            <!--START D-0043 02-15-2015 Marvin Gatchalian-->
+                                            <td><apex:commandButton value="Add" onclick="return checkAsia1CreatedAgainstQuantity();" />  </td>
+                                                <!-- Start D-3374 14Aug15 Johnd - added oncomplete -->
+                                                <apex:actionFunction name="passStringToController" action="{!addAsia1NewAccount}" rerender="quantityText, listToBeCreated, individualTable, asia1message " 
+                                                        />
+                                                <!-- End D-3374 14Aug15 Johnd - added oncomplete -->
+                                            <!--EBD D-0043 02-15-2015 Marvin Gatchalian-->
+                                        </tr>
+
+                                    </table>
+                                </apex:outputPanel>
+                            </apex:actionRegion>
+                            
+                            <apex:actionRegion >
+                                <table id="createFromExistingContainer" class="hide">
+                                    <tr>
+                                        <td class="labelCol">LDAP Login ID/Username</td>
+                                        <td>
+                                            <apex:selectList id="existingList" value="{!asia1SelectedExistingId}" size="1" >
+                                                <apex:selectOptions value="{!asia1ExistingAccounts}" />
+                                            </apex:selectList> 
+                                        </td>
+                                        <td><apex:commandButton value="Add" action="{!addAsia1ExistingAccount}" reRender="listToBeCreated, existingList, asiaErrorMsg" oncomplete="checkAsia1Limit();" /></td>
+                                    </tr>
+                                </table>
+                            </apex:actionRegion>
+                        </apex:outputPanel>
+                    </div>
+                    
+                 
+                 </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                 <apex:outputPanel id="subscriptionsection" >
+                   <apex:pageBlockSection collapsible="true" title="Select Subscriptions to Link" columns="1">
+                   <apex:pageblockTable value="{!getSubs}" var="mw">
+                   <apex:column >
+    <apex:facet name="header">
+        <input type="checkbox" id="checkAllBox" onclick="toggleCheckAll(this)"/>
+    </apex:facet>
+    <apex:inputCheckbox value="{!mw.selected}" styleClass="selectInput" id="checkedone" />
+</apex:column>
+                      <apex:column value="{!mw.sub.Name}"/>
+                      <apex:column value="{!mw.sub.Billing_Type__c}"/>
+                      <apex:column value="{!mw.sub.Main_Package_1__r.Name}"/>
+                      <apex:column value="{!mw.sub.Product_Code__c}"/>
+                      <apex:column value="{!mw.sub.Number_of_Copies__c}"/>
+                      <apex:column value="{!mw.sub.Zuora__SubscriptionStartDate__c}"/>
+                      <apex:column value="{!mw.sub.Zuora__SubscriptionEndDate__c}"/>
+                      <apex:column value="{!mw.sub.Status_Formula__c}"/>
+                   </apex:pageBlockTable>                 
+                 </apex:pageBlockSection>
+                </apex:outputPanel>
+               
+                </apex:pageBlock>
+                
+       </apex:form>
+           <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery.js')}" />
+    <!-- Start D-0105 UAT 03-01-2015 JohnD Added plugin for numeric input -->
+    <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/JQueryNumbericPlugin.js')}" />
+       <apex:includeScript value="{!URLFOR($Resource.javascripts, 'js/LinktoAsia1Subscription.js')}" />
+       
+      <script src="https://apisandbox.zuora.com/apps/Hosted/postmessage.js" type="text/javascript"/>
+    <script>    
+        
+
+
+        function checkSubscription(flag) {
+            var stock = $("input[id*='quantity']").val();           
+            if(stock > 0){
+                if(flag == 'true' || flag == true) {
+                    var result = confirm('There is already an existing subscription with the same Product Family at the same Delivery Address. Do you want to continue?');
+                    if(result){
+                        addOrderLineItem();
+                    }                
+                } else {
+                    addOrderLineItem();
+                }
+            } else {
+                alert('Quantity must be greater than zero.');
+            }
+        }
+        
+        <!--D-0739 && D-0742 Validation for stock and Maximum allowable gifts----->
+        <!--Start PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->
+        var selectedGift = 0;
+        
+        <!--End PD-0200 6/15/16 - L.Reyes Added to decrease Quantity Balance-->       
+        //START D-0043 02-25-2015 Marvin Gatchalian
+        function checkAsia1CreatedAgainstQuantity(){
+        //START UD-0161 03-03-2015 Marvin Gatchalian - stock and asia1count variable multiply by 1 to convert text into integer
+            var stock = $("input[id*='quantity']").val() * 1;
+            var asia1count = $("input[id*='asia1TotalToBecreated']").val() * 1;
+        //END UD-0161 03-03-2015 Marvin Gatchalian - stock and asia1count variable multiply by 1 to convert text into integer
+            if (asia1count >= stock) {
+                alert('Number of Asia1 id creation cannot be more than against Quantity.');
+            }
+            else {
+                passStringToController();
+            }
+            return false;
+        }
+        //END D-0043 02-25-2015  Marvin Gatchalian
+        
+        
+             //Start MMallorca UD-1826  Copy Subscription Charge into Vendor Credit 14/07/2015
+            function compute(v){
+                var selectedOption = $("select[id*='deliveryChargeType']").val();
+                $("[id*='hidSubCharge']").val(v);                            
+                if(selectedOption == 'S')
+                {
+                    $("[id*='vendorCharge']").val(v);
+                }
+                
+                 computePrepaid();
+            }
+            //End MMallorca UD-1826 14/07/2015
+        // START : D-1033 12/11/14 Alyana Navarro - Added H and L to if statement
+        function compute_v2(){
+            
+            var selectedOption = $("select[id*='deliveryChargeType']").val();
+            // Start UD-1958 21Jul15 JohnD
+            if (selectedOption == 'S') {
+                $('input[id*="vendorCredit"]').val($("input[id*='subscriberCharge']").val());
+            }
+            // End UD-1958 21Jul15 JohnD
+            
+            // START UD-1274 05/25/2015 MMallorca Added S and 9 to if statement
+            if(selectedOption == 'C' || selectedOption == 'N' || selectedOption == 'Z' || selectedOption == 'H' || selectedOption == 'L'  || selectedOption == 'S' || selectedOption == '9' ){
+            // END UD-1274 05/25/2015 MMallorca       
+                computePrepaid();
+            }
+            
+            
+            // START UD-1274 05/25/2015 MMallorca Compute Monthly Delivery Charge
+            // Start UD-1958 21Jul15 JohnD - commented out
+            /*
+            if(selectedOption == 'S' || selectedOption == '9'){
+             compute($("input[id*='subscriberCharge']").val());
+            }
+            */
+            // Start UD-1958 21Jul15 JohnD - commented out
+            
+            
+                //START UD-1826 AddedBy FrancisBenzon : remove readonly attribute
+                if(selectedOption != 'S')
+                {
+                    $("input[id*='vendorCharge']").removeAttr("readonly");
+                }
+                else {
+                    $("input[id*='vendorCharge']").prop("readonly", true);
+                }
+                //END UD-1826 AddedBy FrancisBenzon : remove readonly attribute
+            // END UD-1274 05/25/2015 MMallorca
+        }
+        // END : D-1033 12/11/14
+
+        
+        // [JohnD 12/04] CCB-002
+        function uncollapseRecipientSection() {
+            try {
+                $("iframe[id*='recipientContactFrame']").css('height', '50px');
+                twistSection($("img[id*='recipientSectionItem']")[0]);
+            } catch (error) {
+            }
+        }        
+
+        function uncollapseBillingSection() {
+            try {
+                $("iframe[id*='billingContactFrame']").css('height', '50px');
+                twistSection($("img[id*='billingContactSectionItem']")[0]);
+            } catch (error) {
+            }
+        }       
+        // end CCB-002
+        
+        
+        //START: D-1425 01/07/15 Added by April Banaag - this function sets delivery charge type value to N if Charity checkbox is checked
+        function SetDefaultChargeType(charityBoolean){
+            //Start UD-0330 03-24-15 ABanaag - delivered by Mailing Agent
+            $("[id*='deliveryChargeType']").val('N');
+            $("[id*='deliveredByPicklist']").val('Mailing Agent');
+            //End UD-0330 03-24-15 ABanaag - delivered by Mailing Agent
+        }
+        //END: D-1425 01/07/15 Added by April Banaag - this function sets delivery charge type value to N if Charity checkbox is checked
+        
+        //Start D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD - shows Asia1 secion if the add on package selected is Digital
+        function showAsia1Section() { 
+            var flag = $("[id*='addOnIsDigital']").val();         
+            if(typeof flag != 'undefined'){         
+                //alert('platform '+ flag);
+                if (flag == 'true' || flag == true) {
+                    showElement($("[id*='asia1Section']"));
+                } 
+                else {
+            if ($("#isDigital").val() == 'false' || $("#isDigital").val() == false) {
+                        hideElement($("[id*='asia1Section']"));
+            }
+                }
+            }
+        }
+        //End D-1318/D-2196 02/10/2015-02/12/2015 Added by April/JohnD
+
+        // Start D-2664 02Apr15 JohnD
+        function triggerRecipientOnChangeEvent() {
+            $("[id*='parentRecipient']").trigger("change");
+        }
+        // End D-2664 02Apr15 JohnD
+    //START D-3039 06/03/15 RReyes
+
+
+    // Start UD-1958 20Jul15 JohnD
+    var isDeliveryTypeChage = false;
+    
+    function setDeliveryTypeChange() {
+        isDeliveryTypeChage = true;
+    }
+    // End UD-1958 20Jul15 JohnD    
+    //START D-4062 12/09/15 RReyes
+    function doAddToLineItem() {
+        // first, call the action function to post the form
+        addToLineItem();
+        // second, disable the buttons
+        buttonsEnabled(false);
+        // third, return false to prevent the click from
+        // posting the form a second time
+        return false;
+    }
+    
+    function buttonsEnabled(enabled) {
+        // retrieve all of the buttons or links on the page
+        // with the css class of btn
+        var $buttons = jQuery('.btn');
+        if (enabled === false) {
+            // add the btnDisabled class to give it the look of being disabled
+            // add the disabled attribute to actually disable interactability
+            $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+        } else {
+            // remove the css class and the disabled attribute
+            $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+        } 
+    }
+    //END D-4062 12/09/15 RReyes
+    
+    // Start UD-3351 21Jan16 Added by JohnD/JaysonS - trigger reload button
+    function reloadCrediCard() {
+        $("input[id*='ccReloadButton']").trigger("click");
+    }   
+    // End UD-3351 21Jan16 Added by JohnD/JaysonS - trigger reload button
+    
+    </script>
+    <script>
+    function toggleCheckAll(id) {
+            var inputList = document.getElementsByClassName('selectInput');
+            for(var i=0;i<inputList.length;i++)
+                document.getElementsByClassName('selectInput')[i].checked = id.checked;
+        } 
+    
+ var previousOnload = window.onload;
+ window.onload = function() { 
+
+
+
+ if({!asia1layoutshow} == true){
+     toggleSource(false);
+     document.getElementById("isExisting").checked = true;
+     
+     
+ }else{
+     document.getElementById("createuser").checked = true;
+     
+ }
+ } 
+</script>
+</apex:page>

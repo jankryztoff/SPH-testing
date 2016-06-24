@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Grace Period</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Grace Period</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Subscription Indicator --></label>
+        <name>Airline_Subscription_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allow frequency other than Default --></label>
+        <name>Allow_frequency_other_than_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective From --></label>
+        <name>Effective_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Efffective To --></label>
+        <name>Efffective_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grace Days --></label>
+        <name>Grace_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Subscription Indicator --></label>
+        <name>Local_Subscription_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Subscription Period (months) --></label>
+        <name>Minimum_Subscription_Period_months__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overseas Subscription Indicator --></label>
+        <name>Overseas_Subscription_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+        <relationshipLabel><!-- Grace Period --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Special Delivery Fee Indicator --></label>
+        <name>Special_Delivery_Fee_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sponsored Subscription Indicator --></label>
+        <name>Sponsored_Subscription_Indicator__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

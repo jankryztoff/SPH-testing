@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Daily Invoice (FPP)</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Daily Invoices (FPP)</value>
+    </caseValues>
+    <fields>
+        <label><!-- ARMS Invoice ID --></label>
+        <name>ARMS_Invoice_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Balance --></label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- Daily Invoices (FPP) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is PDF Generated? --></label>
+        <name>Is_PDF_Generated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Amount --></label>
+        <name>Payment_Amt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Balance --></label>
+        <name>Prev_Bal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Amount --></label>
+        <name>Tax_Amt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Exempt Amount --></label>
+        <name>Tax_Exempt_Amt__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Interface Time --></label>
+        <name>To_ARMS_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amt__c</name>
+    </fields>
+    <layouts>
+        <layout>Daily Invoice (FPP) Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

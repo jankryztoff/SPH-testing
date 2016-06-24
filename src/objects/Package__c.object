@@ -1,0 +1,1664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Base_Product_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Base Product Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Base Product</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Type</label>
+        <picklist>
+            <controllingField>Package_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Full Prepaid</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Prepaid</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Postpaid</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+                <controllingFieldValues>Grace Period</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Bundle_Discount_Count__c</fullName>
+        <description>Roll-up summary of package items where record type is Bundle Discount. This will use for validation rule where only one Bundle Discount must be allowed for Bundle package type.</description>
+        <externalId>false</externalId>
+        <label>Bundle Discount Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Bundle Discount</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Bundle_Product_Count__c</fullName>
+        <description>Roll-up summary of package items where record type is Bundle Product. This will use for validation rule where only one Bundle Product must be allowed for Bundle package type.</description>
+        <externalId>false</externalId>
+        <label>Bundle Product Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Bundle Product</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Channel_Direct__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Channel: Direct</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Channel_E_shop_overseas__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Channel: E-shop (overseas)</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Channel_E_shop_private__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Channel: E-shop (private)</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Channel_E_shop_public__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Channel: E-shop (public)</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Discount_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Discount</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Duration_Hidden__c</fullName>
+        <externalId>false</externalId>
+        <formula>( Effective_End_Date__c - Effective_Start_Date__c )/30</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Duration Hidden</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Effective_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective End Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective Start Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Eligible_Product_Family_for_Add_On_Pack__c</fullName>
+        <externalId>false</externalId>
+        <label>EligibleProductFamily(forAdd-OnPackage)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extension_Discount_Count__c</fullName>
+        <description>Roll-up summary of package items where record type is Extension Discount. This will use for validation rule where only one Extension Discount must be allowed for Discount package type.</description>
+        <externalId>false</externalId>
+        <label>Extension Discount Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Extension Discount</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Extension_Product_Count__c</fullName>
+        <description>Roll-up summary of package items where record type is Extension Product. This will use for validation rule where only one Extension Product must be allowed for Discount package type.</description>
+        <externalId>false</externalId>
+        <label>Extension Product Count</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Extension Product</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Frequency_Identifier__c</fullName>
+        <description>[Kristine Campang 10/20/2014] created field for Item #2 in Build Remaining Items.</description>
+        <externalId>false</externalId>
+        <label>Frequency Identifier</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GST_Exclusive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicator for those Packages where there is no GST applied in order to handle GST at Package Price in ACK Letters</inlineHelpText>
+        <label>GST Exclusive</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Promotions__c</fullName>
+        <description>Total number of promotions that the package is associated.</description>
+        <externalId>false</externalId>
+        <label>Number Of Promotions</label>
+        <summaryForeignKey>Promotion_Package__c.Package_Name__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Package_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Package Code</label>
+        <length>80</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Package_Item_Base_Hidden__c</fullName>
+        <externalId>false</externalId>
+        <label>Package Item Base Hidden</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Base Product</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Package_Item_Bundle_Hidden__c</fullName>
+        <externalId>false</externalId>
+        <label>Package Item Bundle Hidden</label>
+        <summaryFilterItems>
+            <field>Package_Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Bundle Product</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Package_Item__c.Package__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Package_Price__c</fullName>
+        <description>[Kristine Campang 10/15/2014] created field for Item #2 Line 4 Build Remaining Items v07</description>
+        <externalId>false</externalId>
+        <label>Package Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Package_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Package Sub Type</label>
+        <picklist>
+            <controllingField>Package_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Single</fullName>
+                <default>false</default>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tiered</fullName>
+                <default>false</default>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Extension</fullName>
+                <default>false</default>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Package_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Package Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Add On</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Base</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bundle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discount</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grace Period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Platform__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Updated by workflow with value from product platform on package item, used for reporting</inlineHelpText>
+        <label>Platform</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Family_Current_Package_Map__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product_Family_Current_Package__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Family(Current Package)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Family_Current_Package__c</fullName>
+        <description>[Kristine Campang 10/14/2014]  Additional Item : Build Remaining Items v07 Item #36</description>
+        <externalId>false</externalId>
+        <label>Product Family(Current Package)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Family_for_Add_On_Packages__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Family (for Add-On Packages)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ZB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TUP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TUPJ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TBS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TABL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AFR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WSJA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Product_Family_for_Add_On_Packages_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Family (for Add On Packages)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ZB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TUP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TUPJ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TBS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TABL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AFR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WSJA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RenewalPkgCodeMag1YrBase__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renewal Pkg Code (Mag 1 Yr Base)</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Packages</relationshipLabel>
+        <relationshipName>Packages</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RenewalPkgCodeMag1YrDisc__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renewal Pkg Code (Mag 1 Yr Disc)</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Packages (Renewal Pkg Code (Mag 1 Yr Disc))</relationshipLabel>
+        <relationshipName>Packages1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RenewalPkgCodeMag2YrBase__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renewal Pkg Code (Mag 2 Yr Base)</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Packages (Renewal Pkg Code (Mag 2 Yr Base))</relationshipLabel>
+        <relationshipName>Packages2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RenewalPkgCodeMag2YrDisc__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renewal Pkg Code (Mag 2 Yr Disc)</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Packages (Renewal Pkg Code (Mag 2 Yr Disc))</relationshipLabel>
+        <relationshipName>Packages3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RenewalPkgCodeNewspaper__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renewal Pkg Code (Newspaper)</label>
+        <referenceTo>Package__c</referenceTo>
+        <relationshipLabel>Packages (Renewal Pkg Code (Newspaper))</relationshipLabel>
+        <relationshipName>Packages4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Same_Pck_Renewal_Mag_1_Yr_Base__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Same Pck Renewal (Mag 1 Yr Base)?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Same_Pck_Renewal_Mag_1_Yr_Disc__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Same Pck Renewal (Mag 1 Yr Disc)?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Same_Pck_Renewal_Mag_2_Yr_Base__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Same Pck Renewal (Mag 2 Yr Base)?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Same_Pck_Renewal_Mag_2_Yr_Disc__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Same Pck Renewal (Mag 2 Yr Disc)?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Same_Pck_Renewal_Newspaper__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Same Pck Renewal (Newspaper)?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sequence__c</fullName>
+        <externalId>false</externalId>
+        <label>Sequence</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subs_Period_Hidden__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Subscription_Period__c, &quot;1&quot;), 1, 
+IF(ISPICKVAL(Subscription_Period__c, &quot;2&quot;), 2,
+IF(ISPICKVAL(Subscription_Period__c, &quot;3&quot;), 3,
+IF(ISPICKVAL(Subscription_Period__c, &quot;4&quot;), 4,
+IF(ISPICKVAL(Subscription_Period__c, &quot;5&quot;), 5,
+IF(ISPICKVAL(Subscription_Period__c, &quot;6&quot;), 6,
+IF(ISPICKVAL(Subscription_Period__c, &quot;7&quot;), 7,
+IF(ISPICKVAL(Subscription_Period__c, &quot;8&quot;), 8,
+IF(ISPICKVAL(Subscription_Period__c, &quot;9&quot;), 9,
+IF(ISPICKVAL(Subscription_Period__c, &quot;10&quot;), 10,
+IF(ISPICKVAL(Subscription_Period__c, &quot;11&quot;), 11,
+IF(ISPICKVAL(Subscription_Period__c, &quot;12&quot;), 12,
+IF(ISPICKVAL(Subscription_Period__c, &quot;13&quot;), 13,
+IF(ISPICKVAL(Subscription_Period__c, &quot;14&quot;), 14,
+IF(ISPICKVAL(Subscription_Period__c, &quot;15&quot;), 15,
+IF(ISPICKVAL(Subscription_Period__c, &quot;16&quot;), 16,
+IF(ISPICKVAL(Subscription_Period__c, &quot;17&quot;), 17,
+IF(ISPICKVAL(Subscription_Period__c, &quot;18&quot;), 18,
+IF(ISPICKVAL(Subscription_Period__c, &quot;19&quot;), 19,
+IF(ISPICKVAL(Subscription_Period__c, &quot;20&quot;), 20,
+IF(ISPICKVAL(Subscription_Period__c, &quot;21&quot;), 21,
+IF(ISPICKVAL(Subscription_Period__c, &quot;22&quot;), 22,
+IF(ISPICKVAL(Subscription_Period__c, &quot;23&quot;), 23,
+IF(ISPICKVAL(Subscription_Period__c, &quot;24&quot;), 24,
+IF(ISPICKVAL(Subscription_Period__c, &quot;25&quot;), 25,
+IF(ISPICKVAL(Subscription_Period__c, &quot;26&quot;), 26,
+IF(ISPICKVAL(Subscription_Period__c, &quot;27&quot;), 27,
+IF(ISPICKVAL(Subscription_Period__c, &quot;28&quot;), 28,
+IF(ISPICKVAL(Subscription_Period__c, &quot;29&quot;), 29,
+IF(ISPICKVAL(Subscription_Period__c, &quot;30&quot;), 30,
+IF(ISPICKVAL(Subscription_Period__c, &quot;31&quot;), 31,
+IF(ISPICKVAL(Subscription_Period__c, &quot;32&quot;), 32,
+IF(ISPICKVAL(Subscription_Period__c, &quot;33&quot;), 33,
+IF(ISPICKVAL(Subscription_Period__c, &quot;34&quot;), 34,
+IF(ISPICKVAL(Subscription_Period__c, &quot;35&quot;), 35,
+36)))))))))))))))))))))))))))))))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subs Period Hidden</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Period_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Period</label>
+        <picklist>
+            <controllingField>Package_Type__c</controllingField>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+                <controllingFieldValues>Grace Period</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>11</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>13</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>14</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>15</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>16</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>17</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>18</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>19</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>21</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>22</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>23</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>25</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>26</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>27</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>28</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>29</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>30</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>31</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>32</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>33</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>34</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>35</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>36</fullName>
+                <default>false</default>
+                <controllingFieldValues>Add On</controllingFieldValues>
+                <controllingFieldValues>Base</controllingFieldValues>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Discount</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>37</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>38</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>39</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>40</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>41</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>42</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>43</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>44</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>45</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Period__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Period</label>
+        <picklist>
+            <controllingField>Subscription_Type__c</controllingField>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>11</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>13</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>14</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>15</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>16</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>17</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>18</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>19</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>21</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>22</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>23</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>25</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>26</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>27</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>28</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>29</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>30</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>31</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>32</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>33</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>34</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>35</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>36</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>true</default>
+                <controllingFieldValues>Evergreen</controllingFieldValues>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>37</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>38</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>39</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>40</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>41</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>42</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>43</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>44</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>45</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>46</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>47</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>48</fullName>
+                <default>false</default>
+                <controllingFieldValues>Termed</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Termed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Evergreen</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Tagged_to_Promo_for_Add_On_Discount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tagged to Promo</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Package</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Package_Code__c</columns>
+        <columns>Base_Product_Count__c</columns>
+        <columns>Billing_Type__c</columns>
+        <columns>Package_Type__c</columns>
+        <columns>Package_Price__c</columns>
+        <columns>Effective_End_Date__c</columns>
+        <columns>Effective_Start_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All2</fullName>
+        <columns>NAME</columns>
+        <columns>Package_Type__c</columns>
+        <columns>Subscription_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>tete</fullName>
+        <columns>NAME</columns>
+        <columns>Package_Code__c</columns>
+        <columns>Base_Product_Count__c</columns>
+        <columns>Billing_Type__c</columns>
+        <columns>Package_Type__c</columns>
+        <columns>Package_Price__c</columns>
+        <columns>Effective_End_Date__c</columns>
+        <columns>Effective_Start_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>BUSINESS TIMES</value>
+        </filters>
+        <label>test</label>
+    </listViews>
+    <nameField>
+        <label>Package Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Packages</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Package_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subscription_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Package_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Package_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Type__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Billing_Type_For_Grace_Period</fullName>
+        <active>false</active>
+        <description>Billing Type must be Recurring Postpaid if Package Type is Grace Period.</description>
+        <errorConditionFormula>AND(TEXT(Package_Type__c)= &apos;Grace Period&apos;, ISBLANK(TEXT  (Billing_Type__c)))</errorConditionFormula>
+        <errorDisplayField>Billing_Type__c</errorDisplayField>
+        <errorMessage>Field must be populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Calc_Total_Subscription_Period</fullName>
+        <active>false</active>
+        <description>Calculation of total subscription period for extension discount package</description>
+        <errorConditionFormula>ISPICKVAL(Package_Type__c, &apos;Discount&apos;) &amp;&amp; 
+ISPICKVAL(Package_Sub_Type__c, &apos;Extension&apos;) &amp;&amp; 
+ISPICKVAL(Subscription_Type__c, &apos;Termed&apos;) &amp;&amp; Subs_Period_Hidden__c &gt; Duration_Hidden__c</errorConditionFormula>
+        <errorDisplayField>Subscription_Period__c</errorDisplayField>
+        <errorMessage>Subscription Period exceeds the Effectivity Duration</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EffectiveEndisBeforeEffectiveStart</fullName>
+        <active>true</active>
+        <description>Effective End Date cannot be before the effective start date</description>
+        <errorConditionFormula>Effective_End_Date__c &lt; Effective_Start_Date__c</errorConditionFormula>
+        <errorDisplayField>Effective_End_Date__c</errorDisplayField>
+        <errorMessage>Effective End Date is before the effective start date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Grace_Period_Evergreen</fullName>
+        <active>true</active>
+        <description>D-1537</description>
+        <errorConditionFormula>AND(ISPICKVAL( Package_Type__c ,&apos;Grace Period&apos;),ISPICKVAL( Subscription_Type__c ,&apos;Evergreen&apos;))</errorConditionFormula>
+        <errorDisplayField>Subscription_Type__c</errorDisplayField>
+        <errorMessage>Grace Period Package should not have an Evergreen Subscription Type</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>One_Month_Subscription_Period</fullName>
+        <active>true</active>
+        <description>Subscription Period must be one month if Package Type is Grace Period.</description>
+        <errorConditionFormula>AND(ISPICKVAL(Package_Type__c,&apos;Grace Period&apos;),NOT(ISPICKVAL(Subscription_Period__c,&apos;1&apos;)),ISPICKVAL(Subscription_Type__c, &apos;Termed&apos;))</errorConditionFormula>
+        <errorDisplayField>Subscription_Period__c</errorDisplayField>
+        <errorMessage>Subscription Period must be one month.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Code_Validation</fullName>
+        <active>true</active>
+        <description>Do not allow the user to change the Package Code.</description>
+        <errorConditionFormula>IF(ISNULL( PRIORVALUE( Package_Code__c )),FALSE,ISCHANGED( Package_Code__c ) )</errorConditionFormula>
+        <errorMessage>Package Code not allowed to be changed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Add_On</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+    NOT(ISPICKVAL(Package_Type__c, &apos;Add On&apos;)),
+    NOT(ISBLANK(Product_Family_for_Add_On_Packages__c))
+)</errorConditionFormula>
+        <errorDisplayField>Product_Family_for_Add_On_Packages__c</errorDisplayField>
+        <errorMessage>Product Family should be NULL if Package type is not “Add on”</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Bundle</fullName>
+        <active>false</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Bundle&apos; &amp;&amp; Bundle_Discount_Count__c &gt; 1</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Only 1 Bundle Discount per Bundle Product is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Add_On</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Add On&apos; &amp;&amp; 
+(Bundle_Discount_Count__c &gt; 0 || 
+Bundle_Product_Count__c &gt; 0 || 
+Extension_Discount_Count__c &gt; 0 || 
+Extension_Product_Count__c &gt; 0)</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only Base Product and Discount package items is allowed for Add On package type.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Base</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Base&apos; &amp;&amp; (Bundle_Discount_Count__c &gt; 0 || Bundle_Product_Count__c &gt; 0 || Extension_Discount_Count__c &gt; 0 || Extension_Product_Count__c &gt; 0)</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only Base Product package items is allowed for Base package type.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Bundle</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Bundle&apos; &amp;&amp;  (Extension_Discount_Count__c &gt; 0 || 
+Extension_Product_Count__c &gt; 0 || 
+Discount_Count__c &gt; 0 ||
+Base_Product_Count__c &gt; 0)</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only Bundle Product and Bundle Discount package items are allowed for Bundle package type.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Discount</fullName>
+        <active>false</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Discount&apos; &amp;&amp; (Bundle_Discount_Count__c &gt; 0 || 
+Bundle_Product_Count__c &gt; 0 || 
+Discount_Count__c &gt; 0 || 
+Base_Product_Count__c &gt; 0)</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only Extension Product and Extension Discount package items are allowed for Discount package type.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Discount_Extension</fullName>
+        <active>true</active>
+        <description>Restricts a Package to only 1 &quot;Base Product&quot; , 1 &quot;Discount&quot; , 1&quot;Extension Product&quot;, and 1&quot;Extension Discount&quot;  Package Item.</description>
+        <errorConditionFormula>ISPICKVAL(Package_Sub_Type__c, &apos;Extension&apos;) &amp;&amp; TEXT(Package_Type__c) = &apos;Discount&apos; &amp;&amp; (Base_Product_Count__c &gt; 1 || Discount_Count__c &gt; 1 || Extension_Product_Count__c &gt; 1 || Extension_Discount_Count__c &gt; 1)</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot;,  1 &quot;Discount&quot;, 1 &quot;Extension Product&quot;, and 1 &quot;Extension Discount&quot; Package Item is allowed for a Package of type &quot;Discount&quot; with Sub Type &quot;Extension&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Discount_Test</fullName>
+        <active>true</active>
+        <description>Restricts a Package to only 1 &quot;Base Product&quot;  and 1 &quot;Discount&quot; Package Item.</description>
+        <errorConditionFormula>(ISPICKVAL(Package_Sub_Type__c, &apos;Single&apos;) || ISPICKVAL(Package_Sub_Type__c, &apos;&apos;)) &amp;&amp; ((TEXT(Package_Type__c) = &apos;Discount&apos; || ISPICKVAL(Package_Type__c, &apos;Add On&apos;)) &amp;&amp; (Base_Product_Count__c &gt; 1 || Discount_Count__c &gt; 1))</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot; and 1 &quot;Discount&quot; Package Item are allowed for a Package of type &quot;Discount&quot; or &quot;Add On&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Change_Discount_Tiered</fullName>
+        <active>true</active>
+        <description>Restricts a Discount Package of &quot;Tiered&quot; subtype to only 1 &quot;Base Product&quot;</description>
+        <errorConditionFormula>ISPICKVAL(Package_Sub_Type__c, &apos;Tiered&apos;) &amp;&amp; TEXT(Package_Type__c) = &apos;Discount&apos; &amp;&amp; Base_Product_Count__c &gt; 1</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Conflict with Package Items that already exist. Only 1 &quot;Base Product&quot;  is allowed for a Package of type &quot;Discount&quot; with &quot;Tiered&quot; Sub Type</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Discount</fullName>
+        <active>true</active>
+        <description>A Package Sub Type must be chosen if the Package Type specified is &quot;Discount&quot;</description>
+        <errorConditionFormula>ISPICKVAL(Package_Type__c, &apos;Discount&apos;) &amp;&amp;  ISPICKVAL(Package_Sub_Type__c, &apos;&apos;)</errorConditionFormula>
+        <errorDisplayField>Package_Sub_Type__c</errorDisplayField>
+        <errorMessage>A Package Sub Type must be chosen for Package Type: Discount.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Discount_Package_Sub_Ext</fullName>
+        <active>true</active>
+        <description>Displays an error message if Package Type is &quot;Discount&quot;, Package Sub Type is &quot;Extension&quot;, and Subscription Type is &quot;Evergreen&quot;</description>
+        <errorConditionFormula>ISPICKVAL(Package_Type__c, &apos;Discount&apos;) &amp;&amp; ISPICKVAL(Package_Sub_Type__c, &apos;Extension&apos;) &amp;&amp;  ISPICKVAL(Subscription_Type__c, &apos;Evergreen&apos;)</errorConditionFormula>
+        <errorDisplayField>Subscription_Type__c</errorDisplayField>
+        <errorMessage>Subscription Type should not be &quot;Evergreen&quot; if Package Type is &quot;Discount&quot; and Package Sub Type is &quot;Extension&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Extension_Discount</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Discount&apos; &amp;&amp; Extension_Discount_Count__c &gt; 1</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Only 1 Extension Discount must be allowed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Package_Type_Extension_Product</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Package_Type__c) = &apos;Discount&apos; &amp;&amp; Extension_Product_Count__c &gt; 1</errorConditionFormula>
+        <errorDisplayField>Package_Type__c</errorDisplayField>
+        <errorMessage>Only 1 Extension Product must be allowed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ProductFamilyforAddOnPackages</fullName>
+        <active>false</active>
+        <description>Product Family field must be populated for Add-On Packages</description>
+        <errorConditionFormula>ISBLANK(Product_Family_for_Add_On_Packages__c)  &amp;&amp;   ISPICKVAL( Package_Type__c , &quot;Add On&quot;)</errorConditionFormula>
+        <errorDisplayField>Product_Family_for_Add_On_Packages__c</errorDisplayField>
+        <errorMessage>Please enter the Product family for which this package is eligible.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Product_Family_is_Required</fullName>
+        <active>false</active>
+        <description>Product Family is required if Package Type is Grace Period.</description>
+        <errorConditionFormula>AND(ISPICKVAL(Package_Type__c, &apos;Grace Period&apos;),Product_Family_Current_Package__c = null)</errorConditionFormula>
+        <errorDisplayField>Product_Family_Current_Package__c</errorDisplayField>
+        <errorMessage>Field must be populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubscriptionPeriodforSubTypeEvergreen</fullName>
+        <active>true</active>
+        <description>Subscription Period must be filled for Subscription Type: Termed.</description>
+        <errorConditionFormula>ISPICKVAL(Subscription_Type__c, &quot;Evergreen&quot;)  &amp;&amp; ISPICKVAL(Subscription_Period__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Subscription_Period__c</errorDisplayField>
+        <errorMessage>If subscription type is evergreen, the subscription period must be N/A</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubscriptionPeriodforSubTypeTerm</fullName>
+        <active>true</active>
+        <description>Subscription Period must be filled for Subscription Type: Termed.</description>
+        <errorConditionFormula>ISPICKVAL(Subscription_Type__c, &quot;Termed&quot;)  &amp;&amp; ISPICKVAL(Subscription_Period__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Subscription_Period__c</errorDisplayField>
+        <errorMessage>Subscription period is not filled</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TaggedtoPromoforDiscountAddOn</fullName>
+        <active>true</active>
+        <description>Tagged to Promo should be filled only for Discount and Add-On packages. Base and Bundle packages must not be ticked for this field</description>
+        <errorConditionFormula>Tagged_to_Promo_for_Add_On_Discount__c &amp;&amp; 
+
+(ISPICKVAL( Package_Type__c , &quot;Base&quot;) ||
+ISPICKVAL( Package_Type__c, &quot;Bundle&quot;))</errorConditionFormula>
+        <errorDisplayField>Tagged_to_Promo_for_Add_On_Discount__c</errorDisplayField>
+        <errorMessage>Tagged to Promo must not be ticked for Base or Bundle packages</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Termed_Subscription_Type</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISPICKVAL(Package_Type__c, &apos;Grace Period&apos;),ISPICKVAL(Subscription_Type__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>Subscription_Type__c</errorDisplayField>
+        <errorMessage>Field must be populated.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>The Order Line Item Object will represent the item selected during Order Entry. 
+The record looks up to Order record.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Termination_Comment_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional Termination Comments</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Order Line Items (Vendor)</relationshipLabel>
+        <relationshipName>Order_Line_Items1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>DTL_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>DTL Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Earliest_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Earliest Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Earliest_Stop_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Earliest Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Fri__c</fullName>
+        <externalId>false</externalId>
+        <label>Fri</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mon__c</fullName>
+        <externalId>false</externalId>
+        <label>Mon</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notify_Vendor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify Vendor</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order__c</referenceTo>
+        <relationshipLabel>Order Line Items (Vendor)</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>PHd__c</fullName>
+        <externalId>false</externalId>
+        <label>PHd</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PHe__c</fullName>
+        <externalId>false</externalId>
+        <label>PHe</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Order_Line_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Order Line Item</label>
+        <referenceTo>Order_Line_Item_Vendor__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Publication__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Publication</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Vendor Subscription can only select Newspapers</errorMessage>
+            <filterItems>
+                <field>Publication__c.Publication_Type__c</field>
+                <operation>equals</operation>
+                <value>N</value>
+            </filterItems>
+            <filterItems>
+                <field>Publication__c.Platform_Type__c</field>
+                <operation>equals</operation>
+                <value>Print</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Publication__c</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Prefer Vendor Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prefer Cash Payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Odd Subscription Patterns</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SPH Policy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Recipient_Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order__r.Recipient_Contact__r.Address__r.Postal_Code__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Recipient Postal Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sat__c</fullName>
+        <externalId>false</externalId>
+        <label>Sat</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_to_Retention__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check to route the Case to Retention Team</description>
+        <externalId>false</externalId>
+        <label>Send to Retention</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Stop_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Stop_Request_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Stop Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Vendor_Publication__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription (Vendor) Publication</label>
+        <referenceTo>Subscription_Vendor_Publication__c</referenceTo>
+        <relationshipLabel>Order Line Items (Vendor)</relationshipLabel>
+        <relationshipName>Order_Line_Items_Vendor</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Vendor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription (Vendor)</label>
+        <referenceTo>Subscription_Vendor__c</referenceTo>
+        <relationshipLabel>Publications</relationshipLabel>
+        <relationshipName>Order_Line_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sun__c</fullName>
+        <externalId>false</externalId>
+        <label>Sun</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suppress_Vendor_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suppress Vendor Notification</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Terminating_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Terminating Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Package - Upgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Package - Downgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Package - Misc. Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change to another pub</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - Credit card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - PayPal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment failure - Invoice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Not reading</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Moving overseas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Service / Delivery issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Digital / apps issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - Policy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer request - No reason given</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reduction in quantity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Thu__c</fullName>
+        <externalId>false</externalId>
+        <label>Thu</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tue__c</fullName>
+        <externalId>false</externalId>
+        <label>Tue</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Urgent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Urgent?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vendor_Sms_Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor Sms Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Vendor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vendor</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Order Line Items</relationshipLabel>
+        <relationshipName>Order_Line_Items1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Wed__c</fullName>
+        <externalId>false</externalId>
+        <label>Wed</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wrapper_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Wrapper Number</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Order Line Item (Vendor)</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Order__c</columns>
+        <columns>Recipient_Postal_Code__c</columns>
+        <columns>Vendor__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>OLIV{0000000000}</displayFormat>
+        <label>Order Line Item</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Order Line Items (Vendor)</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Order_Start_Date_Rule_1</fullName>
+        <active>true</active>
+        <description>Order Line START DATE must be equal or greater than today.</description>
+        <errorConditionFormula>IF(ISCHANGED(Start_Date__c),IF(Start_Date__c &lt;= TODAY(),TRUE, FALSE),FALSE) || AND(ISNEW(),Start_Date__c &lt;= TODAY())</errorConditionFormula>
+        <errorMessage>Start Date must be greater than today.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Stop_Date_Rule_1</fullName>
+        <active>true</active>
+        <description>Order line STOP DATE must be greater than the order line START DATE.</description>
+        <errorConditionFormula>Stop_Date__c &lt; Start_Date__c</errorConditionFormula>
+        <errorDisplayField>Stop_Date__c</errorDisplayField>
+        <errorMessage>Order line STOP DATE must be greater than the order line START DATE.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Start_Subscription_Date</fullName>
+        <active>true</active>
+        <description>Requires user to enter Start Subscription Date
+[KCampang] 08/11/2014. Updated Error Condition.</description>
+        <errorConditionFormula>ISNULL(Start_Date__c) &amp;&amp;  NOT(ISPICKVAL(Order__r.Case_Record_Type__c , &apos;Stop Subscription&apos;))</errorConditionFormula>
+        <errorDisplayField>Start_Date__c</errorDisplayField>
+        <errorMessage>Please enter Start Subscription Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Stop_Request_Date_not_valid</fullName>
+        <active>false</active>
+        <description>Stop Request Date must be later than Earliest Stop Date and Non-Publication day.</description>
+        <errorConditionFormula>Stop_Request_Date__c = Earliest_Stop_Date__c</errorConditionFormula>
+        <errorDisplayField>Stop_Request_Date__c</errorDisplayField>
+        <errorMessage>Stop Request Date must be later than Earliest Stop Date and Non-Publication day.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_entered_qty</fullName>
+        <active>false</active>
+        <description>Qty must be greater than 0 and must not be Null
+[KCampang] 08/11/2014. SCR_ OrderEntry_Vendor_VR_6. Updated Error condition.</description>
+        <errorConditionFormula>((Mon__c &lt;0 )|| (Tue__c &lt;0)  || (Wed__c &lt;0) || (Thu__c &lt;0) || (Fri__c &lt;0) ||
+ (Sat__c &lt;0) ||(Sun__c &lt;0) || ((Mon__c + Tue__c + Wed__c + Thu__c + Fri__c + Sat__c + Sun__c) &lt; 0))
+&amp;&amp;
+CONTAINS(Case__r.Account.RecordType.Name, &apos;Direct&apos;)</errorConditionFormula>
+        <errorMessage>Qty should not be less than zero and there should be at least a day with qty greater than zero.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Assign_Vendor</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Assign Vendor</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/26.0/connection.js&apos;)}
+{!REQUIRESCRIPT(&apos;/js/functions.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/jQuery/jquery-ui.min.js&apos;)}
+requireCssFile(&apos;/resource/jQuery/jquery-ui.css&apos;);
+function requireCssFile(filename) {
+var fileref = document.createElement(&apos;link&apos;);
+fileref.setAttribute(&apos;rel&apos;, &apos;stylesheet&apos;);
+fileref.setAttribute(&apos;type&apos;, &apos;text/css&apos;);
+fileref.setAttribute(&apos;href&apos;, filename);
+document.getElementsByTagName(&apos;head&apos;)[0].appendChild(fileref);
+}
+
+var customJs = &apos;&lt;script type=&quot;text/javascript&quot;&gt;&apos;;
+customJs += &apos;var selectedVendorId = &quot;&quot;;\n&apos;;
+customJs += &apos;function getVendorId(v) {\n&apos;;
+customJs += &apos;selectedVendorId = v;\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;\n&apos;;
+customJs += &apos;function updateOrderLineItem() {\n&apos;;
+customJs += &apos;if (selectedVendorId != &quot;&quot;) {\n&apos;;
+customJs += &apos;var oli = new sforce.SObject(&quot;Order_Line_Item_Vendor__c&quot;);\n&apos;;
+customJs += &apos;oli.Id = &quot;&apos; + &apos;{!Order_Line_Item_Vendor__c.Id}&apos; + &apos;&quot;;\n&apos;;
+customJs += &apos;oli.Vendor__c = selectedVendorId;\n&apos;;
+customJs += &apos;sforce.connection.update([oli]);\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - added Case__r.Sub_Status__c to query
+customJs += &apos;var queryRecipientUpdStr = &quot;SELECT Id, Name, Case__c, Case__r.Sub_Status__c, Order__c, Subscription_Vendor__c FROM Order_Line_Item_Vendor__c WHERE Id =&apos; + &apos;\&apos;{!Order_Line_Item_Vendor__c.Id}\&apos;&apos; +&apos;&quot;;\n&apos;;
+//End UD-0916 04/14/15 ABanaag - added Case__r.Sub_Status__c to query
+customJs += &apos;var queryRecipientUpd = sforce.connection.query(queryRecipientUpdStr);\n&apos;;
+customJs += &apos;var recipientsUpd = queryRecipientUpd.getArray(\&apos;records\&apos;);\n&apos;;
+customJs += &apos;if(recipientsUpd[0].vendor__c != &quot;&quot;){\n&apos;;
+
+
+//Populated vendor
+customJs += &apos;if(recipientsUpd[0].Subscription_Vendor__c != &quot;&quot;){\n&apos;;
+customJs += &apos;var subVendor = new sforce.SObject(&quot;Subscription_Vendor__c&quot;);\n&apos;;
+customJs += &apos;subVendor.Id = recipientsUpd[0].Subscription_Vendor__c ;\n&apos;;
+customJs += &apos;subVendor.Vendor__c = selectedVendorId;\n&apos;;
+customJs += &apos;sforce.connection.update([subVendor]);\n&apos;;
+customJs += &apos;}\n&apos;;
+
+
+//Update Case status and substatus
+customJs += &apos;if(recipientsUpd[0].Case__c != &quot;&quot;){\n&apos;;
+customJs += &apos;var recipientCase = new sforce.SObject(&quot;Case&quot;);\n&apos;;
+customJs += &apos;recipientCase.Id = recipientsUpd[0].Case__c ;\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - add filter; changing of status to closed must not happen if urgent
+customJs += &apos;recipientCase.Sub_Status__c = recipientsUpd[0].Case__r.Sub_Status__c ;\n&apos;;
+customJs += &apos;if(recipientCase.Sub_Status__c != &quot;Waiting for Urgent Start Approval&quot;){\n&apos;; 
+//Start UD-0916 04/14/15 ABanaag - add filter; changing of status to closed must not happen if urgent
+customJs += &apos;recipientCase.Status = &quot;Closed&quot; ;\n&apos;;
+customJs += &apos;recipientCase.Sub_Status__c = &quot;Subscription Created&quot;;\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - add }
+customJs += &apos;}\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - add } 
+customJs += &apos;sforce.connection.update([recipientCase]);\n&apos;;
+customJs += &apos;}\n&apos;;
+
+//Update order status
+customJs += &apos;if(recipientsUpd[0].Order__c != &quot;&quot;){\n&apos;;
+customJs += &apos;var recipientAcc = new sforce.SObject(&quot;Order__c&quot;);\n&apos;;
+customJs += &apos;recipientAcc.Id = recipientsUpd[0].Order__c ;\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - comment out; already taken of by CaseTriggerHandler
+//customJs += &apos;recipientAcc.Status__c = &quot;Close&quot; ;\n&apos;;
+//Start UD-0916 04/14/15 ABanaag - comment out; already taken of by CaseTriggerHandler
+customJs += &apos;sforce.connection.update([recipientAcc]);\n&apos;;
+customJs += &apos;}\n&apos;;
+
+customJs += &apos;}\n&apos;;
+customJs += &apos;\n&apos;;
+customJs += &apos;location.reload();\n&apos;;
+customJs += &apos;} else {\n&apos;;
+customJs += &apos;alert(&quot;No Vendor was selected. Please select from the list.&quot;);\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;}\n&apos;;
+customJs += &apos;&lt;/script&gt;&apos;;
+
+var j$ = jQuery.noConflict();
+
+// get recipient postal code
+var queryRecipientStr = &quot;SELECT Id, Name,Recipient_Postal_Code__c, Vendor__c FROM Order_Line_Item_Vendor__c WHERE Id = &apos;{!Order_Line_Item_Vendor__c.Id}&apos;&quot;;
+var queryRecipient = sforce.connection.query(queryRecipientStr);
+var recipients = queryRecipient.getArray(&apos;records&apos;);
+
+// get vendor account record type
+var queryRecordTypeStr = &quot;SELECT Id from RecordType where Name = &apos;Vendor&apos;&quot;;
+var queryRecordType = sforce.connection.query(queryRecordTypeStr);
+var recordTypes = queryRecordType.getArray(&apos;records&apos;);
+
+// get vendor accounts
+var queryVendorStr = &quot;SELECT Id, Name, Vendor_Account__c, Vendor_Account__r.Telephone_Office__c, Vendor_Account__r.Handphone_Number__c, Vendor_Code__c FROM Vendor_Allocation__c WHERE SingPost_Address__r.Name = &apos;&quot; + recipients[0].Recipient_Postal_Code__c+ &quot;&apos; AND Vendor_Account__r.RecordTypeId = &apos;&quot; + recordTypes[0].Id + &quot;&apos; AND Status__c = &apos;Active&apos;&quot;; //updated by RBustarde 3/10/2015 D-0316(UAT) - Changed Name to Vendor Code
+//Updated for UD-0604 added active as a criteria Ronald dagaraga
+var queryVendor = sforce.connection.query(queryVendorStr);
+var vendors = queryVendor.getArray(&apos;records&apos;);
+
+var vendorList = &apos;&lt;table class=&quot;list&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&apos;;
+vendorList += &apos;&lt;tbody&gt;&lt;tr class=&quot;headerRow&quot;&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Select&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Vendor&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Telephone Office&lt;/th&gt;&lt;th class=&quot; zen-deemphasize&quot; scope=&quot;col&quot;&gt;Handphone Number&lt;/th&gt;&lt;/tr&gt;&apos;;
+
+for (var i=0; i &lt; vendors.length; i++) {
+vendorList += &apos;&lt;tr class=&quot;dataRow&quot;&gt;&apos;;
+vendorList += &apos;&lt;td&gt;&lt;input name=&quot;vendor&quot; type=&quot;radio&quot; value=&quot;&apos; + vendors[i].Vendor_Account__c + &apos;&quot; onclick=&quot;javascript:getVendorId(this.value)&quot;/&gt;&apos;;
+vendorList += &apos;&lt;/td&gt;&apos;;
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos;;
+if(vendors[i].Vendor_Code__c != null &amp;&amp; vendors[i].Vendor_Code__c != &apos;null&apos;) //updated by RBustarde 3/10/2015 D-0316(UAT) - Changed Name to Vendor Code
+{
+vendorList += vendors[i].Vendor_Code__c;
+}
+vendorList += &apos;&lt;/td&gt;&apos;;
+
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos;;
+if(vendors[i].Telephone_Office__c != null &amp;&amp; vendors[i].Telephone_Office__c != &apos;null&apos;)
+{
+vendorList += vendors[i].Telephone_Office__c;
+}
+vendorList += &apos;&lt;/td&gt;&apos;;
+
+vendorList += &apos;&lt;td class=&quot; dataCell&quot;&gt;&apos;;
+if(vendors[i].Handphone_Number__c != null &amp;&amp; vendors[i].Handphone_Number__c != &apos;null&apos;)
+{
+vendorList += vendors[i].Handphone_Number__c;
+}
+vendorList += &apos;&lt;/td&gt;&apos;;
+vendorList += &apos;&lt;/tr&gt;&apos;;
+
+}
+vendorList += &apos;&lt;/tbody&gt;&lt;/table&gt;&apos;;
+vendorList += &apos;&lt;p align=&quot;center&quot;&gt;&lt;button type=&quot;submit&quot; onclick=&quot;javascript:updateOrderLineItem();&quot;&gt;Submit&lt;/button&gt;&lt;/p&gt;&apos;;
+vendorList += customJs;
+
+var j$modalDialog = j$(&apos;&lt;div&gt;&lt;/div&gt;&apos;)
+.html(vendorList)
+.dialog({
+autoOpen: false,
+title: &apos;Assign Vendor&apos;,
+resizable: false,
+width: 400,
+height: 400,
+autoResize: true,
+modal: false,
+draggable: true
+});
+
+//updated by KEstoya 3/12/2015 D-0293(UAT) - Added validation on Onclick
+j$(document).ready(function(){
+//
+if(&apos;{!Order_Line_Item_Vendor__c.Vendor__c}&apos; != &apos;&apos;) {
+alert(&apos;Vendor has already been assigned!&apos;);
+}
+else {
+j$modalDialog.dialog(&apos;open&apos;);
+}
+});</url>
+    </webLinks>
+</CustomObject>

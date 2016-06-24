@@ -264,14 +264,14 @@ public class CaseVoidButtonControllerTest
             UserName='standard2@test.com'
             );
         userList.add(testUser2);
-        
+       
         insert userList;        
             
             //ACC
             Account acc = TestDataFactory.createAccount(1, 'Direct Individual')[0];
             insert acc;
             
-            Test.startTest();
+            
             
             //CASES
             Case cosCaseValid = new Case();
@@ -285,7 +285,6 @@ public class CaseVoidButtonControllerTest
             stopCaseValid.OwnerId = testUser1.Id;
             //stopCaseValid.Effective_Date__c = null;
             insert stopCaseValid;
-            
             //BILLING ACC
             Zuora__CustomerAccount__c billAcc = TestDataFactory.createBillingAccount(1)[0];
             billAcc.Zuora__Account__c = acc.Id;
@@ -417,6 +416,7 @@ public class CaseVoidButtonControllerTest
             orderlineCOS.Start_Date__c = Date.Today().addDays(2);
             insert orderlineCOS;
             
+             Test.startTest();
             //EXECUTION
             //CaseVoidButtonController.voidCase(complainCase.Id, testUser2.Id);
             //CaseVoidButtonController.voidCase(complainCase.Id, testUser1.Id);

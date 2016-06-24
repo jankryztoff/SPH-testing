@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Summary of Detailed Billing Reports extracted from Oracle</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Accounting_Period__c</fullName>
+        <description>Billing accounting period</description>
+        <externalId>false</externalId>
+        <label>Accounting_Period</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <description>Billing account</description>
+        <externalId>false</externalId>
+        <label>Billing_Account</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Summary_Seq__c</fullName>
+        <description>External Sequence Number coming from Orale</description>
+        <externalId>true</externalId>
+        <inlineHelpText>External Sequence Number coming from Orale</inlineHelpText>
+        <label>Billing_Summary_Seq</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Calendar_Period__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATE( VALUE( RIGHT( Accounting_Period__c, 2 )) + 2000, VALUE( LEFT( Accounting_Period__c, 2 )), 1 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Calendar Period</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Copies__c</fullName>
+        <description>Total number of copies information for the amount being posted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of copies information for the amount being posted</inlineHelpText>
+        <label>Copies</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GST_Amount__c</fullName>
+        <description>GST Amount</description>
+        <externalId>false</externalId>
+        <inlineHelpText>GST Amount</inlineHelpText>
+        <label>GST_Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Out_of_Scope_GST__c</fullName>
+        <description>Amount for subsidiaries that are part of the GST Registration group as SPHL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount for subsidiaries that are part of the GST Registration group as SPHL</inlineHelpText>
+        <label>Out_of_Scope_GST</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Platform__c</fullName>
+        <description>Product Platform coming from Zuora</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Platform coming from Zuora</inlineHelpText>
+        <label>Product_Platform</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publication_Type__c</fullName>
+        <description>Type of Publication – Newspaper/Magazine</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of Publication – Newspaper/Magazine</inlineHelpText>
+        <label>Publication_Type</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publication__c</fullName>
+        <description>Publication Code to which the amount is associated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Publication Code to which the amount is associated</inlineHelpText>
+        <label>Publication</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publisher__c</fullName>
+        <description>Publisher Name/Group – SPH, SPH Mag</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Publisher Name/Group – SPH, SPH Mag</inlineHelpText>
+        <label>Publisher</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Standard_Rated_GST__c</fullName>
+        <description>Standard 7% GST rated subscription amounts</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Standard 7% GST rated subscription amounts</inlineHelpText>
+        <label>Standard_Rated_GST</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_AMT_After_GST__c</fullName>
+        <description>Total subscription amount after GST</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total subscription amount after GST</inlineHelpText>
+        <label>Subscription_AMT_After_GST</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_AMT_Before_GST__c</fullName>
+        <description>Total subscription amount before GST</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total subscription amount before GST</inlineHelpText>
+        <label>Subscription_AMT_Before_GST</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date__c</fullName>
+        <description>End Date of the susbcription</description>
+        <externalId>false</externalId>
+        <inlineHelpText>End Date of the susbcription</inlineHelpText>
+        <label>Subscription_End_Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Id__c</fullName>
+        <description>Subscription id</description>
+        <externalId>false</externalId>
+        <label>Subscription_Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transaction_Type__c</fullName>
+        <description>The TRAN TYPE breakdown is according to Report ID: SSP5AE6/1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The TRAN TYPE breakdown is according to Report ID: SSP5AE6/1</inlineHelpText>
+        <label>Transaction_Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zero_Rated_GST__c</fullName>
+        <description>Amounts for overseas subscribers</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Amounts for overseas subscribers</inlineHelpText>
+        <label>Zero_Rated_GST</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Billing_Summary</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Billing_Summary</fullName>
+        <columns>Publisher__c</columns>
+        <columns>Transaction_Type__c</columns>
+        <columns>Publication__c</columns>
+        <columns>Copies__c</columns>
+        <columns>Out_of_Scope_GST__c</columns>
+        <columns>Zero_Rated_GST__c</columns>
+        <columns>Standard_Rated_GST__c</columns>
+        <columns>Subscription_AMT_Before_GST__c</columns>
+        <columns>GST_Amount__c</columns>
+        <columns>Subscription_AMT_After_GST__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Billing Summary</label>
+    </listViews>
+    <nameField>
+        <label>Billing_Summary Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Billing_Summary</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

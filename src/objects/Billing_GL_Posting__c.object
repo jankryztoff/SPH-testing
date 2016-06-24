@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This report displays the amount to be posted by GL account for each posting period.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Accounting_Period__c</fullName>
+        <description>Billing accounting period</description>
+        <externalId>false</externalId>
+        <label>Accounting_Period</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <description>Amount to be posted for the specific GL Account</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount to be posted for the specific GL Account</inlineHelpText>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <description>Billing account</description>
+        <externalId>false</externalId>
+        <label>Billing_Account</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_GL_Posting_Seq__c</fullName>
+        <description>External field sequence coming from Oracle</description>
+        <externalId>true</externalId>
+        <inlineHelpText>External field sequence coming from Oracle</inlineHelpText>
+        <label>Billing_GL_Posting_Seq</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CRSM_Publication_Code__c</fullName>
+        <description>CRSM Publication Code for the amount</description>
+        <externalId>false</externalId>
+        <inlineHelpText>CRSM Publication Code for the amount</inlineHelpText>
+        <label>CRSM Publication Code</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Calendar_Period__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATE( VALUE( RIGHT( Accounting_Period__c, 2 )) + 2000, VALUE( LEFT( Accounting_Period__c, 2 )), 1 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Calendar Period</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Company_Code__c</fullName>
+        <description>SAP mapping company code</description>
+        <externalId>false</externalId>
+        <label>Company_Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cost_Center__c</fullName>
+        <description>SPH Cost Center to which the amount is posted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SPH Cost Center to which the amount is posted</inlineHelpText>
+        <label>Cost Center</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Doc_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Doc Type</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GL_Code__c</fullName>
+        <description>SAP GL Accounting Code to which the amount is posted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP GL Accounting Code to which the amount is posted</inlineHelpText>
+        <label>GL Code</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Posting_Date__c</fullName>
+        <description>Date when posting is done</description>
+        <externalId>false</externalId>
+        <label>Posting Date</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Posting_Key__c</fullName>
+        <description>SAP mapping posting key</description>
+        <externalId>false</externalId>
+        <label>Posting_Key</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Posting_Period__c</fullName>
+        <description>Accounting period</description>
+        <externalId>false</externalId>
+        <label>Posting Period</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Profit_Center__c</fullName>
+        <description>SPH Profit Center to which the amount is posted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SPH Profit Center to which the amount is posted</inlineHelpText>
+        <label>Profit Center</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <description>Quantity for the amount being posted (where applicable)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Quantity for the amount being posted (where applicable)</inlineHelpText>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Product_Code__c</fullName>
+        <description>SAP Product Code to which the amount is posted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP Product Code to which the amount is posted</inlineHelpText>
+        <label>SAP Product Code</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Id__c</fullName>
+        <description>Subscription id</description>
+        <externalId>false</externalId>
+        <label>Subscription_Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Text__c</fullName>
+        <description>GL posting description</description>
+        <externalId>false</externalId>
+        <label>Text</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Partner__c</fullName>
+        <description>SAP mapping trader partner</description>
+        <externalId>false</externalId>
+        <label>Trading_Partner</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Billing GL Posting Report</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Billing_GL_Posting_Reports</fullName>
+        <columns>GL_Code__c</columns>
+        <columns>Cost_Center__c</columns>
+        <columns>Profit_Center__c</columns>
+        <columns>SAP_Product_Code__c</columns>
+        <columns>CRSM_Publication_Code__c</columns>
+        <columns>Quantity__c</columns>
+        <columns>Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Billing GL Posting Reports</label>
+    </listViews>
+    <nameField>
+        <label>Billing GL Posting Report Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Billing GL Posting Reports</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

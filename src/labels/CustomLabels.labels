@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ADDRESS_INVALID_POSTAL_CODE</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Postal Code</shortDescription>
+        <value>Invalid Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>ADDRESS_NOT_EXIST</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address does not exist in Address Detail</shortDescription>
+        <value>Address does not exist in Address Detail object</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_ChangeOfSub</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_ChangeOfSub</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_RenewalDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_RenewalDirect</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_StartSubDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_StartSubDirect</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_StartSubVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_StartSubVendor</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_StopSubDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_StopSubDirect</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_StopSubVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_StopSubVendor</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_TempStopDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_TempStopDirect</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Link_TempStopVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Link_TempStopVendor</shortDescription>
+        <value>cs6.salesforce.com/knowledge/publishing/articlePreview.apexp?id=kA2N00000004CIb&amp;popup=true&amp;pubstatus=o&amp;preview=true</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_ChangeOfSub</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_ChangeOfSub</shortDescription>
+        <value>Change of Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_RenewalDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_RenewalDirect</shortDescription>
+        <value>Renewal of Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_StartSubDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_StartSubDirect</shortDescription>
+        <value>Order Entry Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_StartSubVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_StartSubVendor</shortDescription>
+        <value>Order Entry - Start Vendor Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_StopSubDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_StopSubDirect</shortDescription>
+        <value>Order Entry - Stop Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_StopSubVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_StopSubVendor</shortDescription>
+        <value>Order Entry - Stop Vendor Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_TempStopDirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_TempStopDirect</shortDescription>
+        <value>Order Entry - Temp-Stop Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Article_Name_TempStopVendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article_Name_TempStopVendor</shortDescription>
+        <value>Order Entry - Temp-Stop Subscription Related Article</value>
+    </labels>
+    <labels>
+        <fullName>Asia1_Activation_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Asia1 Activation Page</shortDescription>
+        <value>http://crsmdv-ap1-crsmsf-sph.cs6.force.com/Asia1ActivationPage</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ACCOUNT_NUMBER_NOT_EXIST</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Number provided cannot be found in the system.</shortDescription>
+        <value>Account Number provided cannot be found in the system.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ACCOUNT_NUMBER_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Number validation</shortDescription>
+        <value>AccountNumber is required if BillingAccountNumber was provided.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_AIRLINE_INDICATOR_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Airline validation</shortDescription>
+        <value>For Airline Address RecordType, &quot;Airline Indicator&quot; of the Acount must be enabled.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ARMS_ALREADY_EXIST</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ARMS validation</shortDescription>
+        <value>There is an existing Invoice Billing Account, please use the existing Invoice Billing Account.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ARMS_CUS_NUM_ALREADY_IN_USED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ARMS validation</shortDescription>
+        <value>ARMS Customer selected is currently used by Billing Account on different Account.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ARMS_DEBT_MGNT_PROFILE_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ARMS validation</shortDescription>
+        <value>Debt Management Treatment and Business Profile are required if ARMS will be used.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_ARMS_EXIST_ON_SAME_TYPE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ARMS validation</shortDescription>
+        <value>Account already has existing Invoice Billing Account with the same Billing Type.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_CONTACT_PERSON_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Person validation</shortDescription>
+        <value>Contact Person is required for &quot;Direct Corporate&quot; Account.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_CREATION_FAILURE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Creation failure</shortDescription>
+        <value>Your Orders creation could not be completed due to the following errors:&lt;br /&gt;&lt;br /&gt;Orders created - 0&lt;br /&gt;Failure Reason -</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_GL_CODE_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GL Code required</shortDescription>
+        <value>GL Code is required if pay by Internal Charge.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INTERNAL_CHARGE_NOT_APPLICABLE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Internal Charge validation</shortDescription>
+        <value>Internal Charge payment mode is only applicable to Direct SPH Inter-Division Account.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_ADD_ON_PACKAGE_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid add-on package code</shortDescription>
+        <value>Invalid add-on package code.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_BILLING_ACCOUNT_NUMBER</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Account Number validation</shortDescription>
+        <value>Billing Account Number is not associated to the Account.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_BILLING_CONTACT</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Contact validation</shortDescription>
+        <value>Existing Contact is not valid as Billing Contact. Billing Indicator must be enabled.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_BILLING_TYPE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Type against Package billing type</shortDescription>
+        <value>Billing Type of the Billing Account did not matched with Billing Type of the Package selected.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_COLUMN_HEADER</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Column header validation</shortDescription>
+        <value>Column header name is not configured in &quot;Bulk Order Configuration&quot; custom settings.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_COUNTRY_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid country code for overseas recipient.</shortDescription>
+        <value>Invalid country code for overseas recipient.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_DATE_VALUE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid date value</shortDescription>
+        <value>Invalid date value.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_DELIVERED_BY</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid &quot;Delivered by&quot; value.</shortDescription>
+        <value>Invalid &quot;Delivered by&quot; value.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_DELIVERED_BY_4_INTERNAL_ADDR</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mailing Agent on Internal</shortDescription>
+        <value>Order line items should be delivered by Mailing Agent if the recipient contact is Internal.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_GIFT_UNDER_PROMOTION</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Gift code is not belong to the Promotion selected.</shortDescription>
+        <value>Gift code is not belong to the Promotion selected.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_LEVEL_NUMBER</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Level must be at least two characters</shortDescription>
+        <value>Level must be at least two characters.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_MAILING_AGENT_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mailing Agent Code validation</shortDescription>
+        <value>Invalid Mailing Agent Code provided.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_OTHER_PAYMENT_MODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Other payment mode validation</shortDescription>
+        <value>Invalid Other Payment Mode provided.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PACKAGE_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid package code</shortDescription>
+        <value>Invalid package code.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PACKAGE_CODE_UNDER_PROMOTION</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Package code is not below the to Promotion selected.</shortDescription>
+        <value>Package code is not below the to Promotion selected.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PACKAGE_SELECTED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid package selected.</shortDescription>
+        <value>Invalid package selected.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PAYMENT_MODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Mode validation</shortDescription>
+        <value>Invalid Payment Mode provided.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PAYMENT_MODE_INTER_DIVISION</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account type agains Payment Mode</shortDescription>
+        <value>For Direct SPH Inter-Division account with recurring subscription, please pay via Credit Card, Invoice or Internal Charge.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PAYMENT_MODE_RECURRING</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Type against Payment Mode</shortDescription>
+        <value>For recurring subscription, please pay via Credit Card, Invoice, Internal Charge or External Parties.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_POSTAL_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Postal Code validation</shortDescription>
+        <value>Invalid Postal Code for Recipient/Billing Contact.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_PROMOTION_CODE</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid promotion code</shortDescription>
+        <value>Invalid promotion code.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_QUANTITY</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid quantity</shortDescription>
+        <value>Invalid quantity.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_UNIT_NUMBER</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unit must be at least two characters</shortDescription>
+        <value>Unit must be at least two characters.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_INVALID_VENDOR_DELIVERY</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vendor Delivery</shortDescription>
+        <value>Order line item cannot be delivered by Vendor if the recipient contact is either Internal, Airline or Overseas.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_MAX_ALLOWABLE_GIFT_EXCEEDED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Gift validation</shortDescription>
+        <value>Gifts selected cannot be greather than the Promotion&apos;s maximum allowable number of gifts.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_NOT_ENOUGH_STOCK</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not enough stock.</shortDescription>
+        <value>Not enough stock.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_NO_DELIVERED_BY</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivered By has no value.</shortDescription>
+        <value>Delivered By has no value.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_NO_PACKAGE_ITEM</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No available package item on the selected package.</shortDescription>
+        <value>No available package item on the selected package.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_OTHER_PAYMENT_MODE_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Other payment mode validation</shortDescription>
+        <value>&quot;Other Payment Mode&quot; is required if &quot;Other&quot; is selected as &quot;Payment Mode&quot;</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_PAYMENT_MODE_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Mode validation</shortDescription>
+        <value>Payment Mode is required.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_PAYPAL_NOT_ALLOWED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Paypal validation</shortDescription>
+        <value>New customers/subscriptions cannot avail of PayPal as a Payment Type.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_RECIPIENT_CONTACT_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recipient Contact is required</shortDescription>
+        <value>Recipient Contact is required.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_RECORD_LOCK</fullName>
+        <categories>Bulk Quote Creation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quote Lock Error</shortDescription>
+        <value>System is currently busy. Unable to create quote due to record locking issue.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_REQUIRED_MAILING_AGENT</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mailing Agent Code</shortDescription>
+        <value>Mailing Agent Code is required if address is Airline and Delived by Mailing Agent.</value>
+    </labels>
+    <labels>
+        <fullName>BO_ERR_STAFF_ID_REQUIRED</fullName>
+        <categories>BulkOrderUpload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Staff ID validation</shortDescription>
+        <value>Staff ID is required for &quot;Direct SPH Inter-Division&quot; Account.</value>
+    </labels>
+    <labels>
+        <fullName>COA_Local_to_Local</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COA Local to Local</shortDescription>
+        <value>Change of Delivery Address - Local to Local</value>
+    </labels>
+    <labels>
+        <fullName>COA_Local_to_Overseas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COA Local to Overseas</shortDescription>
+        <value>Change of Delivery Address - Local to Overseas</value>
+    </labels>
+    <labels>
+        <fullName>COA_Overseas_to_Local</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COA Overseas to Local</shortDescription>
+        <value>Change of Delivery Address - Overseas to Local</value>
+    </labels>
+    <labels>
+        <fullName>Change_of_Billing_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Change of Billing address</shortDescription>
+        <value>Change of Billing address</value>
+    </labels>
+    <labels>
+        <fullName>Change_of_Billing_and_Delivery_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Change of Billing and Delivery Address</shortDescription>
+        <value>Change of Billing and Delivery Address</value>
+    </labels>
+    <labels>
+        <fullName>Change_of_Vendor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Change of Vendor</shortDescription>
+        <value>Change of Vendor</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_VOID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ERROR_VOID</shortDescription>
+        <value>You cannot VOID a COS case involving Full Prepaid Subscription.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_ADJ_AMT_POSITIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Adjustment Amount must be Positive</shortDescription>
+        <value>Please provide a Positive Value for Adjustment Amount</value>
+    </labels>
+    <labels>
+        <fullName>ERR_BILLING_BATCH</fullName>
+        <categories>Error, Zuora, Billing</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unable to assign a Billing Batch Number</shortDescription>
+        <value>System is unable to allocate a Billing Batch Number based on selected Payment Mode (e.g. Credit Card) and Billing Type (e.g. Prepaid). Please contact your System Administrator for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_CHOOSE_MAILING_AGENT</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please select Mailing Agent</shortDescription>
+        <value>Please select a Mailing Agent</value>
+    </labels>
+    <labels>
+        <fullName>ERR_CODC_AMEND</fullName>
+        <categories>Error, Zuora</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Encountered during Amend Call</shortDescription>
+        <value>Error encountered during Amend Call</value>
+    </labels>
+    <labels>
+        <fullName>ERR_CONTACT_NO_ZONE</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Zone defined for the Contact</shortDescription>
+        <value>No Zone Information defined for the Recipient Contact</value>
+    </labels>
+    <labels>
+        <fullName>ERR_COSPackageItemPriceNull</fullName>
+        <categories>error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Need package item price for refund computation.</shortDescription>
+        <value>Invalid Data. Please check old sub package item price if zero.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_COS_B4_START_DATE</fullName>
+        <categories>Error, COS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COS Start Date is before Start Date</shortDescription>
+        <value>COS Start Date cannot be earlier than Subscription Start Date. To void this subscription, please set COS Start Date as the same date as Subscription Start Date.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_INVALID_COMM_RATE</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Commission Rate</shortDescription>
+        <value>Invalid Commission Rate</value>
+    </labels>
+    <labels>
+        <fullName>ERR_INVALID_CONTACT</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Contact</shortDescription>
+        <value>Cannot find the Recipient Contact by ID</value>
+    </labels>
+    <labels>
+        <fullName>ERR_INVALID_PACKAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Wrong Package Configuration</shortDescription>
+        <value>There is problem with your selected Package Configuration. Please check with your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_INVALID_PAGE_RATE</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Pagination Rate</shortDescription>
+        <value>Invalid Pagination Rate</value>
+    </labels>
+    <labels>
+        <fullName>ERR_INVOICE_SUB_NOT_MATCHED</fullName>
+        <categories>Adjustment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subscription is not under the Invoice</shortDescription>
+        <value>Subscription is not under the Invoice.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_MAX_30_CHARGE_GROUP</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zuora API only supports max 30 Charge Groups</shortDescription>
+        <value>Zuora API only supports max 30 Charge Groups</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_COUNTRY</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Country Record Found</shortDescription>
+        <value>No Country Record Found</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_DELIVERY_RATE_PLAN</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Delivery Rate Plan Configured</shortDescription>
+        <value>No Suitable Delivery Rate Plan Configured</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_PAGINATION_RATE_DATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ERR NO PAGINATION RATE DATA</shortDescription>
+        <value>No Pagination Rate data exists for this batch</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_POSTAGE_CHARGE</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Postage Charge Configured</shortDescription>
+        <value>No Postage Charge configured for the specified Zone and Product</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_PUB_COMMISSON_RATE</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Commission Rate</shortDescription>
+        <value>No Valid Publication Commission Rates are configured</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_PUB_DAILY_ISSUE_DATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ERR NO PUB DAILY ISSUE DATA</shortDescription>
+        <value>No Publication Issue data found for this batch</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_STOP_DATE</fullName>
+        <categories>Error, PSTOP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop Request Date cannot be blank</shortDescription>
+        <value>Stop Request Date cannot be blank</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_VENDOR_DTL</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Vendor Detail Info</shortDescription>
+        <value>No Vendor Detail Info</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NO_VENDOR_INST</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Vendor Insert Data</shortDescription>
+        <value>No Vendor Insert Data</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NULL_BILLING_TYPE</fullName>
+        <categories>Error, Zuora, Billing</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Type is NULL</shortDescription>
+        <value>Billing Type is NULL</value>
+    </labels>
+    <labels>
+        <fullName>ERR_NULL_PAYMENT_MODE</fullName>
+        <categories>Error, Zuora, Billing</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Mode is NULL</shortDescription>
+        <value>Payment Mode is NULL</value>
+    </labels>
+    <labels>
+        <fullName>ERR_OLI_DIFF_BILLING_TYPE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Different Billing Type for Order Line Item</shortDescription>
+        <value>Order Line Items under the same order must have the same Billing Type</value>
+    </labels>
+    <labels>
+        <fullName>ERR_POP_ORDER_NOT_CLOSE</fullName>
+        <categories>Error, Vendor Crediting/Debiting</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>POP Order Not Closed</shortDescription>
+        <value>POP Order Not Closed</value>
+    </labels>
+    <labels>
+        <fullName>ERR_PUB_CONFIG</fullName>
+        <categories>Error,Publication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Publication Data is invalid</shortDescription>
+        <value>There is problem with your selected Publication data. Please check with your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_SAME_ORDER_FFP</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Align Sub Period for Vendor Delivery FFP</shortDescription>
+        <value>For Full Prepaid Vendor Delivery Subscriptions created in the same order, subscriptions period must be aligned</value>
+    </labels>
+    <labels>
+        <fullName>ERR_STOP_B4_START_DATE</fullName>
+        <categories>Error, PSTOP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop Date is before Start Date</shortDescription>
+        <value>Stop Request Date cannot be earlier than Subscription Start Date. To void this subscription, please set Stop Request Date as the same date as Subscription Start Date.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_STOP_DATE_B4_TODAY</fullName>
+        <categories>Error, PSTOP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop Request Date must be later than today.</shortDescription>
+        <value>Stop Request Date must be later than today.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_STOP_DATE_NON_PUB</fullName>
+        <categories>Error, PSTOP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop Date cannot be Non Pub Date</shortDescription>
+        <value>Stop Request Date cannot be a Non Publication Date</value>
+    </labels>
+    <labels>
+        <fullName>ERR_SingPost</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ERR_SingPost</shortDescription>
+        <value>Address does not exist in AddressDetails object. Please create desired address in Address Details to continue.</value>
+    </labels>
+    <labels>
+        <fullName>ERR_ZUORA_INVOICE_ADJ</fullName>
+        <categories>Error, Zuora</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed to update Invoice Adjustment in Zuora</shortDescription>
+        <value>Failed to update Invoice Adjustment in Zuora</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_ADJ_AMT</fullName>
+        <categories>Adjustment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Ajustment Amount</shortDescription>
+        <value>Adjustment Amount cannot be greater than Invoice Amount.</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_ADJ_DATE</fullName>
+        <categories>Adjustment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Ajustment Date</shortDescription>
+        <value>Adjustment should be later than or equal to Invoice Date.</value>
+    </labels>
+    <labels>
+        <fullName>MCOP_INVALID_CONFIG_0</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MCOP_INVALID_CONFIG_0</shortDescription>
+        <value>The configurations shall be the same if the “Preferred Job Start Time” is the same</value>
+    </labels>
+    <labels>
+        <fullName>MCOP_INVALID_CONFIG_DUPL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MCOP_INVALID_CONFIG_DUPL</shortDescription>
+        <value>Invalid Config – Duplicated “To Package”</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Defect_Open</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Defect_Open</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Defect_Subject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Defect_Subject</shortDescription>
+        <value>Defect Found on Requirement #</value>
+    </labels>
+    <labels>
+        <fullName>PMO_TaskType_Customization</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_TaskType_Customization</shortDescription>
+        <value>Customization</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Task_CodeReview</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Task_CodeReview</shortDescription>
+        <value>Code Review</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Task_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Task_Error</shortDescription>
+        <value>Some error occured while creating a new Task</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Task_Execution</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Task_Execution</shortDescription>
+        <value>Execution</value>
+    </labels>
+    <labels>
+        <fullName>PMO_Task_Review</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PMO_Task_Review</shortDescription>
+        <value>Review</value>
+    </labels>
+    <labels>
+        <fullName>REQUIRED_ILI</fullName>
+        <categories>Adjustment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Line Items required</shortDescription>
+        <value>To validate if Subscription is under the Invoice, Invoice Line Items must be loaded in the system first.</value>
+    </labels>
+    <labels>
+        <fullName>RT_ADDRESS_LOCAL_NOT_FOUND</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Local Address Recordtype does not exist</shortDescription>
+        <value>Local Address Recordtype does not exist</value>
+    </labels>
+</CustomLabels>

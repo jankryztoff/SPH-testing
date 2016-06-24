@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Package__c.Subscriptions__r$Number_of_Copies__c</field>
+    </columns>
+    <columns>
+        <field>Package__c.Subscriptions__r$Zuora__Account__c.Name</field>
+    </columns>
+    <description>This report shows the number of subscribers and copies by product family and subscription type (print, digital, all in one. There shall be five reports created in CRSM for this requirement as follows.</description>
+    <filter>
+        <criteriaItems>
+            <column>Package__c.Subscriptions__r$Account_Record_Type__c</column>
+            <operator>contains</operator>
+            <value>Direct</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Package__c$Package_Code__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Package__c$Product_Family_Current_Package__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c$Package_Code__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c$Product_Family_Current_Package__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Package__c.Subscriptions__r$Account_Record_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Number Of Subscribers By Publication</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscriptions_Management__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Package__c.Subscriptions__r$Zuora__SubscriptionStartDate__c</dateColumn>
+        <interval>INTERVAL_LASTMONTH</interval>
+    </timeFrameFilter>
+</Report>

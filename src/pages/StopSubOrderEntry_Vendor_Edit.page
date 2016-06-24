@@ -1,0 +1,175 @@
+<apex:page controller="StopSubOrderEntry_VendorController" action="{!getPubSelections}"  tabStyle="Order__c" docType="html-5.0">
+
+    <style>
+        .day {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0px 0px 0px 0px !important;
+            //background-color: #F2F5A9;
+            //display: block;
+            //overflow: hidden;
+        }
+        
+        .headerStyle {
+            background-color: #336699;
+            color: #ffffff;
+            font-size: 13px;
+            text-align: center !important;
+            vertical-align: middle !important;
+            height: 20px !important;
+        }
+        
+        .centeredCell {
+            vertical-align: middle !important;
+            text-align: center !important;
+            border-right: 0 !impoertant;
+        }
+        
+        .head {
+            background-color: #088A85;
+        }
+        
+        .scroll {
+            overflow-y: auto;
+            height: 150px;
+        }
+        
+        .error {
+            width: 40px;
+            background-color: #FF0000;
+        }
+        
+        .borderedCell {
+            border-top: 1px solid #8E8E99 !important;
+            border-right: 1px solid #8E8E99 !important;
+            border-left: 1px solid #8E8E99 !important;
+            border-bottom: 1px solid #8E8E99 !important;
+        }
+        
+        .selectError {
+            border:2px solid #ff0000;
+        }
+        
+        .selectedPackage {
+            background-color: #336699;
+            color: #ffffff;
+        }
+        
+        #lineItemTable, .resultContainer, .packageResults {
+            width: 100%;
+            border-spacing: 1px;
+        }
+    </style>
+    
+    <apex:form >
+        <apex:pageBlock title="Order Entry - Stop Vendor Subscription">
+            <apex:outputPanel id="errorPanel">       
+                <apex:pageMessages id="myMsg"/>
+            </apex:outputPanel> 
+            <apex:pageBlockButtons location="top" >
+                <apex:commandButton value="Edit" disabled="true"/>
+                <apex:commandButton value="Save as Draft" action="{!saveDraft}"/>
+                <apex:commandButton value="Submit" disabled="true"/>
+                <apex:commandButton value="Void" disabled="true"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/> 
+            </apex:pageBlockButtons>
+            
+            <!-- START: D-1105 Jerella Mayel Ledesma 12/17/2014 -->
+            <!--link-->
+            <h1>Knowledge Article:</h1>&nbsp;<a id="theLink" name="{!$Label.Article_Name_StopSubVendor}" href="https://{!$Label.Article_Link_StopSubVendor}">Order Entry - Stop Vendor Subscription Related Article</a> <br/><br/>
+            <!-- end link -->
+            <!-- END: D-1105 Jerella Mayel Ledesma 12/17/2014 -->
+        
+            <apex:pageBlockSection collapsible="true" title="Case Information" columns="2">
+                <apex:outputField value="{!order.OwnerId}" label="Owner"/>
+                <apex:outputField value="{!order.Case_Record_Type__c}" label="Case Record Type"/>
+                <apex:outputField value="{!order.Name}" label="Order Number"/>
+                <apex:outputField value="{!order.Category__c}" label="Category"/>
+                <apex:outputField value="{!order.Status__c}" label="Status"/>
+                <apex:outputField value="{!order.Sub_Category__c}" label="Sub Category"/>
+            </apex:pageBlockSection>
+                    
+            <apex:pageBlockSection id="pubSelection" collapsible="true" title="Order Line Item" columns="1">
+                <apex:outputPanel layout="block" styleClass="scroll" id="pubTable">
+                    <apex:dataTable value="{!finalPublicationList}" var="o" title="PublicationSection" border="1px" width="100%">
+                    <apex:column headerValue="Publication" width="30%">
+                        <apex:outputText value="{!o['publicationName']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Mo" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['mon']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Tu" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['tue']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="We" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['wed']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Th" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['thu']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Fr" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['fri']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Sa" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['sat']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Su" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['sun']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="PHd" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['PHd']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="PHe" headerClass="selectedPackage" width="4%">
+                        <apex:outputText value="{!o['PHe']}" styleClass="day"/>
+                    </apex:column>
+                    <apex:column headerValue="Notify Vendor" width="4%">
+                        <center><apex:inputcheckbox value="{!o['isNotified']}" styleClass="day"/></center>
+                    </apex:column>
+                    <apex:column headerValue="Action" width="6%">
+                        <center><apex:commandButton value="Remove" action="{!removePub}" reRender="pubTable, earliestStopDate" immediate="true" status="loading">
+                            <apex:param id="index" name="index" value="{!o['publicationId']}" assignTo="{!index}"/>
+                        </apex:commandButton></center>
+                     </apex:column>
+                    </apex:dataTable>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+                        
+            <apex:pageBlockSection id="SubsInfo" columns="2" collapsible="true" title="Subscription Information">
+                
+                <!--START: D-1105 12/11/14 Added by Jerella Ledesma - show Earliest Stop Date -->
+                    <apex:inputField value="{!pubObject.Subscription_Vendor__c}" label="Publication" required="true" >
+			<!--START: D-2980 05/26/15 Added by J.Sarion - Remove Action Support -->
+				<!--START: D-3041 06/01/15 Added by Jason A. - show Earliest Stop Date -->
+                        <apex:actionSupport action="{!earliestStopDate}" event="onchange" rerender="earliestStopDate, myMsg"/>
+				<!--END: D-3041 06/01/15 Added by Jason A. - show Earliest Stop Date -->
+                    </apex:inputField>
+                <!--END: D-1105 12/11/14 Added by Jerella Ledesma - show Earliest Stop Date -->
+                    <apex:outputField value="{!account.Name}" label="Subscriber Account" />
+                    <apex:outputField value="{!pubObject.Publication__r.Earliest_Start_Date__c}" label="Earliest Stop Date" id="earliestStopDate"/>
+                    <apex:outputField value="{!objcontact.name}" label="Recipient Name"/>
+                    <apex:inputField value="{!olivf.Stop_Request_Date__c}">&nbsp;&nbsp;
+                        <apex:image value="{!WarningIcon}" id="warning" width="15" height="15" rendered="{!warningIcon != null}"/>
+			<!--START: D-2980 05/26/15 Added by J.Sarion - Remove Action Support -->
+                        <apex:actionSupport action="{! checkExistingCOA}" rerender="myMsg" event="onchange"/>
+			<!--END: D-2980 05/26/15 Added by J.Sarion - Remove Action Support -->
+                    </apex:inputField>
+                    <apex:inputfield value="{!olivf.Terminating_Reason__c}" label="Terminating Reason"/>
+                    <apex:inputfield value="{!olivf.Additional_Termination_Comment_del__c}" label="Additional Termination Comments"/>
+                    <apex:inputfield value="{!oli.Suppress_Vendor_Notification__c}" label="Suppress Vendor Notification"/>  
+                    <!--<apex:inputfield value="{!olivf.Send_to_Retention__c}" label="Send to Retention"/>-->
+                <apex:panelGrid style="float:right;">
+                    <apex:commandButton action="{!addLineItem}" value="Add to Line Item" status="loading" rerender="pubTable, earliestStopDate"/>                        
+                    <apex:actionStatus id="loading">
+                        <apex:facet name="start">&nbsp;&nbsp;<img src="{!$Resource.loading_gif}"/>&nbsp;<b><i>Please wait...</i></b></apex:facet>
+                    </apex:actionStatus>
+                </apex:panelGrid>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!pubObject}" var="a">
+                <apex:column style="display:none">
+                    <apex:inputField value="{!a.Account__c}"/>
+                </apex:column>
+            </apex:pageBlockTable>   
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

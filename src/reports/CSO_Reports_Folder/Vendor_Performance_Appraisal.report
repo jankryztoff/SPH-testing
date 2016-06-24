@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case$Category__c</field>
+    </columns>
+    <columns>
+        <field>Case$Sub_Category__c</field>
+    </columns>
+    <columns>
+        <field>Case.Orders__r.Subscriptions__r.Case_Subscriptions__r$Publication__c</field>
+    </columns>
+    <columns>
+        <field>Case.Orders__r.Subscriptions__r.Case_Subscriptions__r$Complaint_Copies__c</field>
+    </columns>
+    <columns>
+        <field>Case.Orders__r.Subscriptions__r.Case_Subscriptions__r$Complaint_From__c</field>
+    </columns>
+    <columns>
+        <field>Case.Orders__r.Subscriptions__r.Case_Subscriptions__r$Complaint_To__c</field>
+    </columns>
+    <description>The report shows details complaints lodged against vendors.</description>
+    <filter>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <operator>equals</operator>
+            <value>Case.Complaint_Newspaper</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Vendor Performance Appraisal</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Case_and_Case_Subscription__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case$Approval_Process_Submission_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

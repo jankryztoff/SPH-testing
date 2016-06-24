@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Gift_Letter</letterhead>
+    <name>Redemption Letter</name>
+    <style>formalLetter</style>
+    <subject>Redeem Gift</subject>
+    <textOnly>{!Contact.MailingAddress}
+Dear {!Contact.FirstName} {!Contact.LastName},
+
+Thank you for subscribing to {!Package__c.Name}. Your subscription details are as follows:
+
+SPH Order Number
+
+{!Order__c.Name}
+
+Monthly Subscription Fee
+
+$47.49
+
+Monthly Delivery Fee
+
+$3
+
+Contract Period
+
+{!Promotion__c.Contract_Period__c}
+
+1. For collection of the {!Gift__c.Name}, please produce this original letter and your original NRIC (for verification) in person to collect your gift at the below addresses:
+
+Digital Style Concept Stores:
+
+Funan DigitaLife Mall:
+
+#03-32, 109 North Bridge Road, Singapore 179097
+
+Tel: 6837 8186
+
+Jurong Point Shopping Centre:
+
+#B1-92/93, Jurong West Central 2, Singapore 648886
+
+Tel: 6794 5338
+
+Parkway Parade:
+
+#B1-156, 80 Marine Parade Road, Singapore 449269
+
+Tel: 6342 5985
+
+Gift Redemption period: Till 30 June 2014
+
+2. This Promotion is only applicable to Credit Card holders from DBS Bank Ltd. A valid DBS or POSB Credit Card must be presented for charging and activation of your subscription account. Subsequently, the monthly recurring subscription fee will also be charged to this same card for the entire contractual period. No cancellation will be allowed for the period of the contract. For the purpose of this promotion, we will not accept Credit Cards from any other banks.
+
+3. The above stated amount will be charged to the credit card/account information provided. Please be informed that the contract follows an installment plan programme administered by your Credit Card Issuing Bank and you will observe an amount of 1817.64 being withheld from your Credit limit.
+
+4. Please ensure that you have read and agreed to all Terms and Conditions (http://www.sphsubscription.com.sg/promoterms) for this subscription promotion before redemption of the gift.
+
+5. Your account will only be activated after your gift is collected. [AAE2]
+
+6. Please complete your credit card details for billing purposes:
+
+Credit Card Type: MasterCard / Visa / Amex
+
+Credit Card No:      _  _ _  _  - _  _  _ _  -  _ _  _  _ -  _  _ _  _  Expiry Date: _  _ / _ _ (MM / YY)
+
+We thank you for your support and should you require further assistance on your subscription, please call our Customer Service Hotline at 6388 3838 from 6am to 6pm on Monday to Friday, or 6am to 12pm on Saturday, Sunday. The hotline will not be available on Public Holidays. Alternatively, you may email circs@sph.com.sg.
+
+Marketing
+
+Circulation
+
+Singapore Press Holdings Limited
+
+
+Please note that this is a computerised printout. No signature is required.
+
+________________________________________________________________________________</textOnly>
+    <type>html</type>
+</EmailTemplate>

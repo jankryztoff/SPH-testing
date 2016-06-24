@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Line Item (Vendor)</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Line Items (Vendor)</value>
+    </caseValues>
+    <fields>
+        <label><!-- Additional Termination Comments --></label>
+        <name>Additional_Termination_Comment_del__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Order Line Items (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- DTL Date --></label>
+        <name>DTL_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Earliest Start Date --></label>
+        <name>Earliest_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Earliest Stop Date --></label>
+        <name>Earliest_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fri --></label>
+        <name>Fri__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mon --></label>
+        <name>Mon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notify Vendor --></label>
+        <name>Notify_Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Order Line Items (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- PHd --></label>
+        <name>PHd__c</name>
+    </fields>
+    <fields>
+        <label><!-- PHe --></label>
+        <name>PHe__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Order Line Item --></label>
+        <name>Parent_Order_Line_Item__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <lookupFilter>
+            <errorMessage><!-- Vendor Subscription can only select Newspapers --></errorMessage>
+        </lookupFilter>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Odd Subscription Patterns</masterLabel>
+            <translation><!-- Odd Subscription Patterns --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prefer Cash Payment</masterLabel>
+            <translation><!-- Prefer Cash Payment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prefer Vendor Service</masterLabel>
+            <translation><!-- Prefer Vendor Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Policy</masterLabel>
+            <translation><!-- SPH Policy --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipient Postal Code --></label>
+        <name>Recipient_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sat --></label>
+        <name>Sat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to Retention --></label>
+        <name>Send_to_Retention__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) Publication --></label>
+        <name>Subscription_Vendor_Publication__c</name>
+        <relationshipLabel><!-- Order Line Items (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription (Vendor) --></label>
+        <name>Subscription_Vendor__c</name>
+        <relationshipLabel><!-- Publications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sun --></label>
+        <name>Sun__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suppress Vendor Notification --></label>
+        <name>Suppress_Vendor_Notification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Terminating Reason --></label>
+        <name>Terminating_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change to another pub</masterLabel>
+            <translation><!-- Change to another pub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Digital / apps issues</masterLabel>
+            <translation><!-- Customer request - Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Moving overseas</masterLabel>
+            <translation><!-- Customer request - Moving overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - No reason given</masterLabel>
+            <translation><!-- Customer request - No reason given --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Not reading</masterLabel>
+            <translation><!-- Customer request - Not reading --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Policy</masterLabel>
+            <translation><!-- Customer request - Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Service / Delivery issues</masterLabel>
+            <translation><!-- Customer request - Service / Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Downgrade</masterLabel>
+            <translation><!-- Package - Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Misc. Change</masterLabel>
+            <translation><!-- Package - Misc. Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Upgrade</masterLabel>
+            <translation><!-- Package - Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Credit card</masterLabel>
+            <translation><!-- Payment failure - Credit card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Invoice</masterLabel>
+            <translation><!-- Payment failure - Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - PayPal</masterLabel>
+            <translation><!-- Payment failure - PayPal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reduction in quantity</masterLabel>
+            <translation><!-- Reduction in quantity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Thu --></label>
+        <name>Thu__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tue --></label>
+        <name>Tue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent? --></label>
+        <name>Urgent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Sms Remarks --></label>
+        <name>Vendor_Sms_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Wed --></label>
+        <name>Wed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wrapper Number --></label>
+        <name>Wrapper_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Order Line Item (Vendor) Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Start Date must be greater than today. --></errorMessage>
+        <name>Order_Start_Date_Rule_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Order line STOP DATE must be greater than the order line START DATE. --></errorMessage>
+        <name>Order_Stop_Date_Rule_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter Start Subscription Date. --></errorMessage>
+        <name>Required_Start_Subscription_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Stop Request Date must be later than Earliest Stop Date and Non-Publication day. --></errorMessage>
+        <name>Stop_Request_Date_not_valid</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Qty should not be less than zero and there should be at least a day with qty greater than zero. --></errorMessage>
+        <name>Validate_entered_qty</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Assign_Vendor --></label>
+        <name>Assign_Vendor</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Mass Change of Package Batch</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mass Change of Package Batch</value>
+    </caseValues>
+    <fields>
+        <label><!-- Subscriber Account Type --></label>
+        <name>Account_Type__c</name>
+        <picklistValues>
+            <masterLabel>Direct Corporate</masterLabel>
+            <translation><!-- Direct Corporate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Direct Individual</masterLabel>
+            <translation><!-- Direct Individual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Direct SPH Inter-Division</masterLabel>
+            <translation><!-- Direct SPH Inter-Division --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Actual Job Start Time --></label>
+        <name>Actual_Job_Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End Date From --></label>
+        <name>Contract_End_Date_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End Date To --></label>
+        <name>Contract_End_Date_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- # of Successful Converted --></label>
+        <name>Converted_Sub_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Conversion Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- From Package --></label>
+        <name>From_Package__c</name>
+        <relationshipLabel><!-- Mass Change of Package Batch (From Package) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Job End Time --></label>
+        <name>Job_End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Apex Job ID --></label>
+        <name>Job_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Status --></label>
+        <name>Job_Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Running</masterLabel>
+            <translation><!-- Running --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is On Contract? --></label>
+        <name>On_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Mode --></label>
+        <name>Payment_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice</masterLabel>
+            <translation><!-- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PayPal</masterLabel>
+            <translation><!-- PayPal --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Remark --></label>
+        <name>Remark__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preferred Job Start Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Quantity From --></label>
+        <name>Sub_Qty_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Quantity To --></label>
+        <name>Sub_Qty_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- # of Eligible Subscriptions --></label>
+        <name>Target_Sub_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Package --></label>
+        <name>To_Package__c</name>
+        <relationshipLabel><!-- Mass Change of Package Batch (To Package) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Mass Change of Package Config Layout</layout>
+        <sections>
+            <label><!-- Batch Result --></label>
+            <section>Batch Result</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Please specify Conversion Effective Date: --></label>
+            <section>Please specify Conversion Effective Date:</section>
+        </sections>
+        <sections>
+            <label><!-- Please specify the From and To Package: --></label>
+            <section>Please specify the From and To Package:</section>
+        </sections>
+        <sections>
+            <label><!-- Please specify the paramters to filter the Subscriptions: --></label>
+            <section>Please specify the paramters to filter the Subscriptions:</section>
+        </sections>
+        <sections>
+            <label><!-- Schedule the Batch Run: --></label>
+            <section>Schedule the Batch Run:</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Invalid Contract End Date Range --></errorMessage>
+        <name>ContEDateFrom_and_ConEDateTo_Mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Contract End Date To cannot before Contract End Date From --></errorMessage>
+        <name>ContEndDateTo_cnotbefore_ContEndDateFrom</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conversion Effective Date should be greater than Preferred Job Start Time + 1 Day --></errorMessage>
+        <name>ConvEffeDate_greater_PrefrJobStartTime1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Conversion Effective Date should be after the Contract End Date To --></errorMessage>
+        <name>ConversinEffDate_after_ContractEndDateTo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- From Package and To Package should be Same BillingType --></errorMessage>
+        <name>From_and_To_Package_Same_BillingType</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- From Package and To Package cannot be a Bundle or Add-on Package --></errorMessage>
+        <name>From_and_To_Package_cannot_Bundle_AddOn</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- From Package and To Package cannot be a Full Prepaid Package --></errorMessage>
+        <name>From_and_To_Package_cannot_Full_Prepaid</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Preferred Job Start Time should be greater than NOW --></errorMessage>
+        <name>PreferredJobStartTime_greaterthan_NOW</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Quantity To value cannot be less than Subscription Quantity From --></errorMessage>
+        <name>SubQtyTo_value_cannot_lesthan_SubQtyFrom</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Quantity From value should be greater than 0 --></errorMessage>
+        <name>Subscription_Qty_From_value_greatertha_0</name>
+    </validationRules>
+</CustomObjectTranslation>

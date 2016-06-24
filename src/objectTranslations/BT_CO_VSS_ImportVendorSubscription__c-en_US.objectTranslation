@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_VSS_ImportVendorSubscription</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_VSS_ImportVendorSubscriptions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- crsmAccountId --></label>
+        <name>crsmAccountId__c</name>
+    </fields>
+    <fields>
+        <label><!-- crsmContactId --></label>
+        <name>crsmContactId__c</name>
+    </fields>
+    <fields>
+        <label><!-- crsmVendorSubscriptionId --></label>
+        <name>crsmVendorSubscriptionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- cssCustomerIdForRecipient --></label>
+        <name>cssCustomerIdForRecipient__c</name>
+    </fields>
+    <fields>
+        <label><!-- cssCustomerIdForSubscriber --></label>
+        <name>cssCustomerIdForSubscriber__c</name>
+    </fields>
+    <fields>
+        <label><!-- cssSubscriptionCode --></label>
+        <name>cssSubscriptionCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- effectiveDate --></label>
+        <name>effectiveDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- hdsClassificationId --></label>
+        <name>hdsClassificationId__c</name>
+    </fields>
+    <fields>
+        <label><!-- hdsComplimentaryTypeName --></label>
+        <name>hdsComplimentaryTypeName__c</name>
+    </fields>
+    <fields>
+        <label><!-- hdsContactId --></label>
+        <name>hdsContactId__c</name>
+    </fields>
+    <fields>
+        <label><!-- hdsRecipientId --></label>
+        <name>hdsRecipientId__c</name>
+    </fields>
+    <fields>
+        <label><!-- hdsSubscriptionId --></label>
+        <name>hdsSubscriptionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- paymentCode --></label>
+        <name>paymentCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- publicationCode --></label>
+        <name>publicationCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- pubtag --></label>
+        <name>pubtag__c</name>
+    </fields>
+    <fields>
+        <label><!-- rcpnSbn --></label>
+        <name>rcpnSbn__c</name>
+    </fields>
+    <fields>
+        <label><!-- rcpn --></label>
+        <name>rcpn__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientBuildingCode --></label>
+        <name>recipientBuildingCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientCompanyName --></label>
+        <name>recipientCompanyName__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientEmail --></label>
+        <name>recipientEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientFaxNumber --></label>
+        <name>recipientFaxNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientHandphoneNumber --></label>
+        <name>recipientHandphoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientHouseBlockNumber --></label>
+        <name>recipientHouseBlockNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientLevel --></label>
+        <name>recipientLevel__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientName --></label>
+        <name>recipientName__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientNric --></label>
+        <name>recipientNric__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientOfficeTelephoneExtension --></label>
+        <name>recipientOfficeTelephoneExtension__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientOfficeTelephoneNumber --></label>
+        <name>recipientOfficeTelephoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientPostalCode --></label>
+        <name>recipientPostalCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientResidenceTelephoneNumber --></label>
+        <name>recipientResidenceTelephoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientSalutation --></label>
+        <name>recipientSalutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientStreetCode --></label>
+        <name>recipientStreetCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientUnit --></label>
+        <name>recipientUnit__c</name>
+    </fields>
+    <fields>
+        <label><!-- recipientUpdateIndicator --></label>
+        <name>recipientUpdateIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- startDate --></label>
+        <name>startDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- stopDate --></label>
+        <name>stopDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberBuildingCode --></label>
+        <name>subscriberBuildingCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberCompanyName --></label>
+        <name>subscriberCompanyName__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberEmail --></label>
+        <name>subscriberEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberFaxNumber --></label>
+        <name>subscriberFaxNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberHandphoneNumber --></label>
+        <name>subscriberHandphoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberHouseBlockNumber --></label>
+        <name>subscriberHouseBlockNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberLevel --></label>
+        <name>subscriberLevel__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberName --></label>
+        <name>subscriberName__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberNric --></label>
+        <name>subscriberNric__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberOfficeTelephoneExtension --></label>
+        <name>subscriberOfficeTelephoneExtension__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberOfficeTelephoneNumber --></label>
+        <name>subscriberOfficeTelephoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberPostalCode --></label>
+        <name>subscriberPostalCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberResidentTelephoneNumber --></label>
+        <name>subscriberResidentTelephoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberSalutation --></label>
+        <name>subscriberSalutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberStreetCode --></label>
+        <name>subscriberStreetCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberUnit --></label>
+        <name>subscriberUnit__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriberUpdateIndicator --></label>
+        <name>subscriberUpdateIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriptionCopies --></label>
+        <name>subscriptionCopies__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriptionPeriod --></label>
+        <name>subscriptionPeriod__c</name>
+    </fields>
+    <fields>
+        <label><!-- subscriptionUpdateIndicator --></label>
+        <name>subscriptionUpdateIndicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorGroup --></label>
+        <name>vendorGroup__c</name>
+    </fields>
+    <fields>
+        <label><!-- vendorNumber --></label>
+        <name>vendorNumber__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

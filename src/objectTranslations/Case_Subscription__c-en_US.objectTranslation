@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Case Subscription</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Case Subscriptions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Case Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account on Case --></label>
+        <name>Account_on_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- Case Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Address Change Only --></label>
+        <name>Billing_Address_Change_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASE Subscription Legacy Id --></label>
+        <name>CASE_Subscription_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Record Type ID --></label>
+        <name>Case_Record_Type_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Replacement Required --></label>
+        <name>Case_Replacement_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Within Cir Schedule --></label>
+        <name>Case_Within_Cir_Schedule__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Subscriptions (Direct) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Complaint Copies --></label>
+        <name>Complaint_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint From --></label>
+        <name>Complaint_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint To --></label>
+        <name>Complaint_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Copies --></label>
+        <name>Credit_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount --></label>
+        <name>Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Copies --></label>
+        <name>Goodwill_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsNewspaperMagazineDigitalCase? --></label>
+        <name>IsNewspaperMagazineDigitalCase__c</name>
+        <picklistValues>
+            <masterLabel>Digital</masterLabel>
+            <translation><!-- Digital --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper</masterLabel>
+            <translation><!-- Newspaper --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Issue No. --></label>
+        <name>Issue_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Case Team Member Added --></label>
+        <name>Last_Case_Team_Member_Added__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month --></label>
+        <name>Month__c</name>
+        <picklistValues>
+            <masterLabel>April</masterLabel>
+            <translation><!-- April --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>August</masterLabel>
+            <translation><!-- August --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>December</masterLabel>
+            <translation><!-- December --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>February</masterLabel>
+            <translation><!-- February --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>January</masterLabel>
+            <translation><!-- January --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>July</masterLabel>
+            <translation><!-- July --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>June</masterLabel>
+            <translation><!-- June --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>March</masterLabel>
+            <translation><!-- March --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May</masterLabel>
+            <translation><!-- May --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>November</masterLabel>
+            <translation><!-- November --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>October</masterLabel>
+            <translation><!-- October --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>September</masterLabel>
+            <translation><!-- September --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Old Recipient Address --></label>
+        <name>Old_Recipient_Address__c</name>
+        <relationshipLabel><!-- Case Subscriptions (Old Recipient Address) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Old Recipient Contact --></label>
+        <name>Old_Recipient_Contact__c</name>
+        <relationshipLabel><!-- Case Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Old Vendor Credit --></label>
+        <name>Old_Vendor_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Name --></label>
+        <name>Package_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Code --></label>
+        <name>Product_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replace From --></label>
+        <name>Replace_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replace To --></label>
+        <name>Replace_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replacement Copies --></label>
+        <name>Replacement_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replacement Required --></label>
+        <name>Replacement_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Status --></label>
+        <name>Sub_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subs Start Date  -  Subs End Date --></label>
+        <name>Subs_Start_Date_Subs_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription ExtId --></label>
+        <name>Subscription_ExtId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Main Package --></label>
+        <name>Subscription_Main_Package_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Name --></label>
+        <name>Subscription_Name_Mapping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Start Date --></label>
+        <name>Subscription_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Case Subscriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Vendor Code --></label>
+        <name>Vendor_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Debit --></label>
+        <name>Vendor_Debit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor ID --></label>
+        <name>Vendor_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- isComplaint --></label>
+        <name>isComplaint__c</name>
+    </fields>
+    <layouts>
+        <layout>Case Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Case Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Approved/Rejected Goodwill Amount cannot be updated. --></errorMessage>
+        <name>ApprovedRejectedGoodwillNewspaper</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Case cannot be closed if goodwill amount is entered and not approved. --></errorMessage>
+        <name>CloseCaseValidation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Complaint copies cannot be greater than the Subscription Copies --></errorMessage>
+        <name>Complaint_Copies_Subscription_Copies</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Complaint Dates cannot be greater than today --></errorMessage>
+        <name>Complaint_Dates_cannot_be_future_dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CSO Admin cant edit subscription. Please contact CSO. --></errorMessage>
+        <name>Complaint_SubCantBeEditedByCSOAdmin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Complaint to date must not be less than Complaint From date --></errorMessage>
+        <name>Complaint_To_Date_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Copies cannot be greater than Complaint Copies --></errorMessage>
+        <name>Credit_Copies_cannot_be_negative</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replace From Date should not be in the past. --></errorMessage>
+        <name>ReplaceFromDateMustBeFutureDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replace from date must be required if Replace to date has a value. --></errorMessage>
+        <name>Replace_From_Date_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replace to date must be required if Replace from date has a value. --></errorMessage>
+        <name>Replace_To_Date_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replace To Date must not be less than Replace From Date --></errorMessage>
+        <name>Replace_To_Date_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement From should be within Complaint Period. --></errorMessage>
+        <name>ReplacementFromDateWithinComplaintPeriod</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue From Date should not be older than  14 days. --></errorMessage>
+        <name>ReplacementFromNotGreaterThan14</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementFromfieldRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Dates are required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementIssueDateFieldsRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Required checkbox is unchecked, Replacement Copies should be blank or zero. --></errorMessage>
+        <name>ReplacementReqReplacementCopies</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement To should be within Complaint Period --></errorMessage>
+        <name>ReplacementToDateIsNotToday</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>ReplacementTofieldRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- User cannot update subscription. --></errorMessage>
+        <name>SubscriptionEdit</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Additional Info --></label>
+        <name>Additional_Info__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 1 --></label>
+        <name>Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 2 --></label>
+        <name>Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 3 --></label>
+        <name>Address_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address 4 --></label>
+        <name>Address_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address_Legacy_Id --></label>
+        <name>Address_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Singpost Address Type --></label>
+        <name>Address_Type__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>H</masterLabel>
+            <translation><!-- H --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>U</masterLabel>
+            <translation><!-- U --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W</masterLabel>
+            <translation><!-- W --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Address Unique ID --></label>
+        <name>Address_Unique_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Number --></label>
+        <name>Airline_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- House/Block Number --></label>
+        <name>Block_House_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Building Name --></label>
+        <name>Building_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- C/O Company --></label>
+        <name>C_O_Company__c</name>
+        <picklistValues>
+            <masterLabel>TBD</masterLabel>
+            <translation><!-- TBD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- City Code --></label>
+        <name>City__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Company Name --></label>
+        <name>Company_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Concatenated Address Fields 2 --></label>
+        <name>Concatenated_Address_Fields_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Concatenated Address Fields --></label>
+        <name>Concatenated_Address_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Legacy Id --></label>
+        <name>Contact_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Department --></label>
+        <name>Department__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Division Code --></label>
+        <name>Division_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 1 --></label>
+        <name>Flight_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flight Number 2 --></label>
+        <name>Flight_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Address --></label>
+        <name>Full_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- GST Applicable? --></label>
+        <name>GST_Applicable__c</name>
+    </fields>
+    <fields>
+        <label><!-- House Type --></label>
+        <name>House_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created By --></label>
+        <name>Legacy_Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Created Date --></label>
+        <name>Legacy_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated By --></label>
+        <name>Legacy_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Updated Date --></label>
+        <name>Legacy_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level Number --></label>
+        <name>Level_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code --></label>
+        <name>Location_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- No of Newspaper Complaint Cases (16 wks) --></label>
+        <name>Non_Delivery_Complaint_Cases_16_wks__c</name>
+    </fields>
+    <fields>
+        <label><!-- No of Newspaper Complaint Case (30 days) --></label>
+        <name>Non_Delivery_Complaint_Cases_30_days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Units --></label>
+        <name>Number_of_Units__c</name>
+    </fields>
+    <fields>
+        <label><!-- Packing Code --></label>
+        <name>Packing_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Packing Group Description --></label>
+        <name>Packing_Group_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code Text --></label>
+        <name>Postal_Code_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Postal Sector --></label>
+        <name>Postal_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Section Code --></label>
+        <name>Section_Code__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sequence Number --></label>
+        <name>Sequence_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name 2 --></label>
+        <name>Street_Name_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>Street_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Number --></label>
+        <name>Unit_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit --></label>
+        <name>Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zonal Code --></label>
+        <name>Zonal_Code__c</name>
+    </fields>
+    <layouts>
+        <layout>Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Airline</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Internal</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Local</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Overseas</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Airline --></label>
+        <name>Airline</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Internal --></label>
+        <name>Internal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Local --></label>
+        <name>Local</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Overseas --></label>
+        <name>Overseas</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Level must be at least two characters. --></errorMessage>
+        <name>ValidateMinof2CharEnteredLevelNumber</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Unit must be at least two characters. --></errorMessage>
+        <name>ValidateMinof2CharEnteredUnitNumber</name>
+    </validationRules>
+</CustomObjectTranslation>

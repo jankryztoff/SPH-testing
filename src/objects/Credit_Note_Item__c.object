@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>[25 Feb 2016] [Credit Note CR] Credit Note Item stores the breakdown of the Credit Note information by Invoice</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Amt_After_Tax__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>After Tax Amount based on Zuora Invoice Charge Amount</description>
+        <externalId>false</externalId>
+        <label>Amount After Tax</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amt_Before_Tax__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Before Tax Amount based on Zuora Invoice Charge Amount</description>
+        <externalId>false</externalId>
+        <label>Amount Before Tax</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Note__c</fullName>
+        <description>Parent Credit Note Record</description>
+        <externalId>false</externalId>
+        <label>Credit Note</label>
+        <referenceTo>Credit_Note__c</referenceTo>
+        <relationshipLabel>Credit Note Items</relationshipLabel>
+        <relationshipName>Credit_Note_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <description>Invoice Date of the Invoice</description>
+        <externalId>false</externalId>
+        <formula>Invoice__r.Zuora__InvoiceDate__c</formula>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Invoice which this Credit Note Item is created for</description>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Zuora__ZInvoice__c</referenceTo>
+        <relationshipLabel>Credit Note Items</relationshipLabel>
+        <relationshipName>Credit_Note_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Amt__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Tax Amount based on Zuora Invoice Charge Amount</description>
+        <externalId>false</externalId>
+        <label>Tax Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Exempt_Amt__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Tax Exempt Amount based on Zuora Invoice Charge Amount</description>
+        <externalId>false</externalId>
+        <label>Tax Exempt Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Credit_Note__r.Tax_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tax Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <label>Credit Note Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CNI-{00000000}</displayFormat>
+        <label>Credit Note Item Number</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Credit Note Items</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Credit_Note__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Amt_Before_Tax__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Tax_Rate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Tax_Amt__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Tax_Exempt_Amt__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Amt_After_Tax__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Credit_Note__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Invoice__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Invoice_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Amt_Before_Tax__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Tax_Rate__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Tax_Amt__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Tax_Exempt_Amt__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Amt_After_Tax__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Credit_Note__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amt_Before_Tax__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Tax_Rate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Tax_Amt__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Tax_Exempt_Amt__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amt_After_Tax__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

@@ -1,0 +1,1306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Orders</value>
+    </caseValues>
+    <fields>
+        <label><!-- ARMS Account ID --></label>
+        <name>ARMS_Account_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Account Number --></label>
+        <name>ARMS_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Credit Term --></label>
+        <name>ARMS_Credit_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Resp Business Profile --></label>
+        <name>ARMS_Resp_Business_Profile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Number --></label>
+        <name>Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Acquisition Type --></label>
+        <name>Acquisition_Type__c</name>
+        <picklistValues>
+            <masterLabel>Call</masterLabel>
+            <translation><!-- Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ESHOP / ECOMZ (ONLINE)</masterLabel>
+            <translation><!-- ESHOP / ECOMZ (ONLINE) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine (Circulation)</masterLabel>
+            <translation><!-- Magazine (Circulation) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine (Publisher)</masterLabel>
+            <translation><!-- Magazine (Publisher) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mail</masterLabel>
+            <translation><!-- Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ROAD SHOW</masterLabel>
+            <translation><!-- ROAD SHOW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retention</masterLabel>
+            <translation><!-- Retention --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Additional Termination Comments --></label>
+        <name>Additional_Termination_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Address1 --></label>
+        <name>Address1__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Address2 --></label>
+        <name>Address2__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Address3 --></label>
+        <name>Address3__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Address4 --></label>
+        <name>Address4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Admin Charge --></label>
+        <name>Admin_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount Paid --></label>
+        <name>Amount_Paid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved Debt Exposure – Amount --></label>
+        <name>Approved_Debt_Exposure_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Base Subscription --></label>
+        <name>Base_Subscription__c</name>
+        <relationshipLabel><!-- Orders (Subscription for Renewal) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Account Creation Mode --></label>
+        <name>Billing_Account_Creation_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Create New Billing Account</masterLabel>
+            <translation><!-- Create New Billing Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Use existing Billing Account</masterLabel>
+            <translation><!-- Use existing Billing Account --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing Account External ID --></label>
+        <name>Billing_Account_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account ID --></label>
+        <name>Billing_Account_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please select a Billing Account with correct Billing Type --></errorMessage>
+        </lookupFilter>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact --></label>
+        <name>Billing_Contact__c</name>
+        <relationshipLabel><!-- Orders (Billing Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Type --></label>
+        <name>Billing_Type__c</name>
+        <picklistValues>
+            <masterLabel>Full Prepaid</masterLabel>
+            <translation><!-- Full Prepaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Postpaid</masterLabel>
+            <translation><!-- Recurring Postpaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recurring Prepaid</masterLabel>
+            <translation><!-- Recurring Prepaid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ARMS Blacklist Colour Code --></label>
+        <name>Blacklist_Colour_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Blacklist Indicator --></label>
+        <name>Blacklist_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Blacklist Reason --></label>
+        <name>Blacklist_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Block/House No --></label>
+        <name>Block_House_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Building/Secondary --></label>
+        <name>Building_Secondary__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Business Profile --></label>
+        <name>Business_Profile__c</name>
+        <picklistValues>
+            <masterLabel>GIRO</masterLabel>
+            <translation><!-- GIRO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GOVT</masterLabel>
+            <translation><!-- GOVT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NORMAL</masterLabel>
+            <translation><!-- NORMAL --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Business Sector --></label>
+        <name>Business_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- COS Urgent Request --></label>
+        <name>COS_Urgent_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Care-of/Attention-to Indicator --></label>
+        <name>Care_of_Attention_to_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Care-of/Attention-to Party --></label>
+        <name>Care_of_Attention_to_Party__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Owner --></label>
+        <name>Case_Owner__c</name>
+        <relationshipLabel><!-- Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case Record Type --></label>
+        <name>Case_Record_Type__c</name>
+        <picklistValues>
+            <masterLabel>Stop Subscription</masterLabel>
+            <translation><!-- Stop Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Subscription Request</masterLabel>
+            <translation><!-- Subscription Request --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Change of Subscription Reason --></label>
+        <name>Change_of_Subscription_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change in quantity</masterLabel>
+            <translation><!-- Change in quantity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Frequency</masterLabel>
+            <translation><!-- Change of Frequency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Payment Mode</masterLabel>
+            <translation><!-- Change of Payment Mode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Product Family</masterLabel>
+            <translation><!-- Change of Product Family --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Downgrade packages</masterLabel>
+            <translation><!-- Downgrade packages --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upgrade package</masterLabel>
+            <translation><!-- Upgrade package --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Check Amount --></label>
+        <name>Check_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Dated --></label>
+        <name>Check_Dated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Issuing Bank --></label>
+        <name>Check_Issuing_Bank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check No --></label>
+        <name>Check_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Number --></label>
+        <name>Check_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS City/Zip --></label>
+        <name>City_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End Date --></label>
+        <name>Contract_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost Centre --></label>
+        <name>Cost_Centre__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Create ARMS Account Only --></label>
+        <name>Create_ARMS_Account_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Create ARMS Customer Account --></label>
+        <name>Create_ARMS_Customer_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Creation Mode --></label>
+        <name>Creation_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter</masterLabel>
+            <translation><!-- Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telemarketing</masterLabel>
+            <translation><!-- Telemarketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Walk-in</masterLabel>
+            <translation><!-- Walk-in --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Balance --></label>
+        <name>Credit_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit – External Limit --></label>
+        <name>Credit_Limit_External_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Limit – Internal Limit --></label>
+        <name>Credit_Limit_Internal_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Credit Risk Rating --></label>
+        <name>Credit_Risk_Rating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Term Reference --></label>
+        <name>Credit_Term_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cust Giro Acct Number --></label>
+        <name>Cust_Giro_Acct_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cust Giro Bank Number --></label>
+        <name>Cust_Giro_Bank_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Customer Create Date --></label>
+        <name>Customer_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Customer Name --></label>
+        <name>Customer_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Customer No --></label>
+        <name>Customer_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Customer Status --></label>
+        <name>Customer_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- DOW Pattern --></label>
+        <name>DOW_Pattern__c</name>
+    </fields>
+    <fields>
+        <label><!-- DTL Date --></label>
+        <name>DTL_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS_Debt Management Treatment --></label>
+        <name>Debt_Management_Treatment__c</name>
+        <picklistValues>
+            <masterLabel>GOVT</masterLabel>
+            <translation><!-- GOVT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NORM</masterLabel>
+            <translation><!-- NORM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SUBH</masterLabel>
+            <translation><!-- SUBH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SUBL</masterLabel>
+            <translation><!-- SUBL --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Deleted Transaction --></label>
+        <name>Deleted_Transaction__c</name>
+    </fields>
+    <fields>
+        <help><!-- H - HDB
+L - Landed
+C - Condo
+N/Z - No Delivery Charge
+S/9 - Special Delivery Charge --></help>
+        <label><!-- Delivery Charge Type --></label>
+        <name>Delivery_Charge_Type__c</name>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>H</masterLabel>
+            <translation><!-- H --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N</masterLabel>
+            <translation><!-- N --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z</masterLabel>
+            <translation><!-- Z --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Delivery Charge --></label>
+        <name>Delivery_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Start Date --></label>
+        <name>Delivery_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Earliest Stop Date --></label>
+        <name>Earliest_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Eligible for Retention --></label>
+        <name>Eligible_for_Retention__c</name>
+    </fields>
+    <fields>
+        <label><!-- FP Del Usage --></label>
+        <name>FP_Del_Usage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Override --></label>
+        <name>Fee_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Floor No --></label>
+        <name>Floor_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Prepaid Delivery Charge --></label>
+        <name>Full_Prepaid_Delivery_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full_Prepaid Inc Del Charge --></label>
+        <name>Full_Prepaid_Inc_Del_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- GL Code --></label>
+        <name>GL_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS GST Out Of Scope Indicator --></label>
+        <name>GST_Out_Of_Scope_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS ID No --></label>
+        <name>ID_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS ID Type --></label>
+        <name>ID_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Informed Customer? --></label>
+        <name>Informed_Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Initial Term --></label>
+        <name>Initial_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latest Start Date --></label>
+        <name>Latest_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monthly Delivery Charge for Full Payment --></label>
+        <name>Monthly_Delivery_Charge_for_Full_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Months Between Start/End --></label>
+        <name>Months_Between_Start_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Quantity --></label>
+        <name>New_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Vendor Needed --></label>
+        <name>No_Vendor_Needed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Quantity --></label>
+        <name>Old_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Action --></label>
+        <name>Order_Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Legacy Id --></label>
+        <name>Order_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Status --></label>
+        <name>Order_Status__c</name>
+        <picklistValues>
+            <masterLabel>Close</masterLabel>
+            <translation><!-- Close --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Order Type --></label>
+        <name>Order_Type1__c</name>
+        <picklistValues>
+            <masterLabel>Start</masterLabel>
+            <translation><!-- Start --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop</masterLabel>
+            <translation><!-- Stop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temp Stop</masterLabel>
+            <translation><!-- Temp Stop --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Order Type --></label>
+        <name>Order_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other Payment Mode --></label>
+        <name>Other_Payment_Mode__c</name>
+        <picklistValues>
+            <masterLabel>External Parties</masterLabel>
+            <translation><!-- External Parties --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freelist</masterLabel>
+            <translation><!-- Freelist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IPP</masterLabel>
+            <translation><!-- IPP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Charge</masterLabel>
+            <translation><!-- Internal Charge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice</masterLabel>
+            <translation><!-- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eNets</masterLabel>
+            <translation><!-- eNets --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Overridden Reason --></label>
+        <name>Overridden_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- PO Number --></label>
+        <name>PO_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS P.O. Box No --></label>
+        <name>P_O_Box_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package ID (Add On) --></label>
+        <name>Package_ID__c</name>
+        <relationshipLabel><!-- Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Package Name --></label>
+        <name>Package_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Account Id --></label>
+        <name>Parent_Account_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Case --></label>
+        <name>Parent_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Passport Country Code --></label>
+        <name>Passport_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method ID --></label>
+        <name>Payment_Method_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Mode --></label>
+        <name>Payment_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Check</masterLabel>
+            <translation><!-- Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment Type --></label>
+        <name>Payment_Type__c</name>
+        <picklistValues>
+            <masterLabel>Postpaid</masterLabel>
+            <translation><!-- Postpaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prepaid</masterLabel>
+            <translation><!-- Prepaid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ARMS Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Qty Change --></label>
+        <name>Qty_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Odd Subscription Patterns</masterLabel>
+            <translation><!-- Odd Subscription Patterns --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prefer Cash Payment</masterLabel>
+            <translation><!-- Prefer Cash Payment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prefer Vendor Service</masterLabel>
+            <translation><!-- Prefer Vendor Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Policy</masterLabel>
+            <translation><!-- SPH Policy --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason for Waiver --></label>
+        <name>Reason_for_Waiver__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Add Type --></label>
+        <name>Recipient_Add_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Address --></label>
+        <name>Recipient_Address_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Address --></label>
+        <name>Recipient_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Contact --></label>
+        <name>Recipient_Contact__c</name>
+        <relationshipLabel><!-- Orders (Recipient Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipient Type --></label>
+        <name>Recipient_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recurring Delivery Charge --></label>
+        <name>Recurring_Delivery_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Recurring Charge Inc D&amp;P --></label>
+        <name>Recurring_Inc_Del_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Refund Amount --></label>
+        <name>Refund_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks_Check__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Renewal Term --></label>
+        <name>Renewal_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Source --></label>
+        <name>Request_Source__c</name>
+        <picklistValues>
+            <masterLabel>Call</masterLabel>
+            <translation><!-- Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eshop</masterLabel>
+            <translation><!-- Eshop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mail</masterLabel>
+            <translation><!-- Mail --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Request for Waiving of Admin Charge --></label>
+        <name>Request_for_Waiving_of_Admin_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOA Suppression Indicator --></label>
+        <name>SOA_Suppression_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS SPH Staff Indicator --></label>
+        <name>SPH_Staff_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to Retention --></label>
+        <name>Send_to_Retention__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sponsor --></label>
+        <name>Sponsor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Close</masterLabel>
+            <translation><!-- Close --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Vendor Assignment</masterLabel>
+            <translation><!-- Pending Vendor Assignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provisioning</masterLabel>
+            <translation><!-- Provisioning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Void</masterLabel>
+            <translation><!-- Void --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Category --></label>
+        <name>Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>Stop Subscription</masterLabel>
+            <translation><!-- Stop Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Account --></label>
+        <name>Subscriber_Account__c</name>
+        <relationshipLabel><!-- Orders (Subscriber Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Charge --></label>
+        <name>Subscriber_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription End Date --></label>
+        <name>Subscription_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Rate --></label>
+        <name>Subscription_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Start Date --></label>
+        <name>Subscription_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription --></label>
+        <name>Subscription__c</name>
+        <relationshipLabel><!-- Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Suppress Vendor Notification --></label>
+        <name>Suppress_Vendor_Notification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Type --></label>
+        <name>Temp_Stop_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cancel</masterLabel>
+            <translation><!-- Cancel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update</masterLabel>
+            <translation><!-- Update --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Terminating Reason --></label>
+        <name>Terminating_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change to another pub</masterLabel>
+            <translation><!-- Change to another pub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Digital / apps issues</masterLabel>
+            <translation><!-- Customer request - Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Moving overseas</masterLabel>
+            <translation><!-- Customer request - Moving overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - No reason given</masterLabel>
+            <translation><!-- Customer request - No reason given --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Not reading</masterLabel>
+            <translation><!-- Customer request - Not reading --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Policy</masterLabel>
+            <translation><!-- Customer request - Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Service / Delivery issues</masterLabel>
+            <translation><!-- Customer request - Service / Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Downgrade</masterLabel>
+            <translation><!-- Package - Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Misc. Change</masterLabel>
+            <translation><!-- Package - Misc. Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Upgrade</masterLabel>
+            <translation><!-- Package - Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Credit card</masterLabel>
+            <translation><!-- Payment failure - Credit card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Invoice</masterLabel>
+            <translation><!-- Payment failure - Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Paypal</masterLabel>
+            <translation><!-- Payment failure - Paypal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reduction in quantity</masterLabel>
+            <translation><!-- Reduction in quantity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For recurring subscriptions, the &quot;total due to customer&quot; amount is derived by credit balance less monthly delivery fee. Do ignore the amount shown in this page. --></help>
+        <label><!-- Total Due to Customer --></label>
+        <name>Total_Due_to_Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Due to SPH --></label>
+        <name>Total_Due_to_SPH__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Full Prepaid Charge --></label>
+        <name>Total_Full_Prepaid_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full_Prepaid Inc Del Charge --></label>
+        <name>Total_Full_Prepaid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Gift Charge --></label>
+        <name>Total_Gift_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Line Item --></label>
+        <name>Total_Line_Item__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postage Charge --></label>
+        <name>Total_Monthly_Postage_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Monthly Recurring Charge --></label>
+        <name>Total_Monthly_Recurring_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Non Vendor Line Item --></label>
+        <name>Total_Non_Vendor_Line_Item__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Outstanding Balance --></label>
+        <name>Total_Outstanding_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Postage Charge --></label>
+        <name>Total_Postage_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Quantity --></label>
+        <name>Total_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Subscription Rate --></label>
+        <name>Total_Subscription_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transient Indicator --></label>
+        <name>Transient_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Unit No --></label>
+        <name>Unit_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update Date --></label>
+        <name>Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Update ID --></label>
+        <name>Update_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARMS Update Time --></label>
+        <name>Update_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent Stop? --></label>
+        <name>Urgent_Stop__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Credit --></label>
+        <name>Vendor_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Sms Remarks --></label>
+        <name>Vendor_Sms_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zone Charge --></label>
+        <name>Zone_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- isChangeOfSubEntry? --></label>
+        <name>isChangeOfSubEntry__c</name>
+    </fields>
+    <fields>
+        <label><!-- isOrderLegacy? --></label>
+        <name>isOrderLegacy__c</name>
+    </fields>
+    <fields>
+        <label><!-- isWaive? --></label>
+        <name>isWaive__c</name>
+    </fields>
+    <layouts>
+        <layout>Locked Layout</layout>
+        <sections>
+            <label><!-- ARMS Detail --></label>
+            <section>ARMS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Billing Information --></label>
+            <section>Billing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Check Related Information --></label>
+            <section>Check Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MIG - Order Layout</layout>
+        <sections>
+            <label><!-- ARMS Detail --></label>
+            <section>ARMS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Billing Information --></label>
+            <section>Billing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Check Related Information --></label>
+            <section>Check Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Order Form</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Order Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Locked Record --></label>
+        <name>Locked_Record</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Amount should be greater than total due amount. --></errorMessage>
+        <name>Amount_Paid</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Billing Account is required when Account Record is of type Direct and use existing billing account mode was selected. --></errorMessage>
+        <name>Billing_Account_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Billing Contact is required when creating Invoice Billing Account. --></errorMessage>
+        <name>Billing_Contact_is_required_for_Invoice</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Unable to submit to Zuora because case tied is not ready for submission. --></errorMessage>
+        <name>CS_Case_Sub_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Amount must be greater than total amount due. --></errorMessage>
+        <name>Check_Amount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cost Centre is required when Other Payment Mode is Internal Charge --></errorMessage>
+        <name>CostCentreRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;Debt Mgmt Treatment&apos; field is required. --></errorMessage>
+        <name>Debt_Management_Treatment_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;Debt Management Treatment&apos; and &apos;Business Profile&apos; fields are required. --></errorMessage>
+        <name>Debt_Mgmt_Treatment_Bus_Profile_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please input GL Code. --></errorMessage>
+        <name>GLCodeRequiredForInternalCharges</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription End Date must not less than Subscription Start Date --></errorMessage>
+        <name>OrderSubEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Payment Mode is not allowed for selected Payment Method and Payment Mode. --></errorMessage>
+        <name>Payment_Mode_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- New customers/subscriptions cannot avail of PayPal as a Payment Type. --></errorMessage>
+        <name>PaypalPaymentModeValidation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- New customers/subscriptions will not be able to select this billing period. --></errorMessage>
+        <name>PostpaidBillingPeriodValidation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Quantity cannot be reduce to zero during change of susbscription. --></errorMessage>
+        <name>Quantity_cannot_be_zero</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Billing Account must be provided the Account is Direct. --></errorMessage>
+        <name>Required_Billing_Account</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Billing Contact is required when creating New Billing Account. --></errorMessage>
+        <name>Required_Billing_Contact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Delivery Charge is required when the selected delivery charge type is among the following: H, C, L, S, or 9. --></errorMessage>
+        <name>Required_Delivery_Charge</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Have you informed vendor? --></errorMessage>
+        <name>Required_Informed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Reason must be provided when the Account is a Vendor Subscriber. --></errorMessage>
+        <name>Required_Reason</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscriber/Billing Contact is required if account is Direct and selected Creation Mode was &quot;Create New Billing Account&quot;. --></errorMessage>
+        <name>Required_Subscriber_Contact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter recipient. --></errorMessage>
+        <name>Required_Subscriber_Recipient</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Vendor Credit is required when Delivery Charge is among the following types: H, C, L, S, N, or 9. --></errorMessage>
+        <name>Required_Vendor_Credit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective Start Date should be a future date. --></errorMessage>
+        <name>Validate_Effective_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Quantity invalid. --></errorMessage>
+        <name>Validate_Quantity</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription End Date cannot be changed based from the selected promotion. --></errorMessage>
+        <name>Validate_Subscription_End_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Subscription Start Date should be a future date. --></errorMessage>
+        <name>Validate_Subscription_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Other Payment Mode is required --></errorMessage>
+        <name>Validation_for_Other_payment_Mode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Voiding Order is not permitted. --></errorMessage>
+        <name>Voiding_Order</name>
+    </validationRules>
+</CustomObjectTranslation>

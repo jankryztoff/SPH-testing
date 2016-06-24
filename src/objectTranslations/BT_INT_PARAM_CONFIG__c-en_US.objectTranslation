@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_INT_PARAM_CONFIG</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_INT_PARAM_CONFIGS</value>
+    </caseValues>
+    <fields>
+        <label><!-- field_name --></label>
+        <name>field_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- field_sequence --></label>
+        <name>field_sequence__c</name>
+    </fields>
+    <fields>
+        <label><!-- from_object --></label>
+        <name>from_object__c</name>
+    </fields>
+    <fields>
+        <label><!-- interface_name --></label>
+        <name>interface_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- postOpFieldName --></label>
+        <name>postOpFieldName__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

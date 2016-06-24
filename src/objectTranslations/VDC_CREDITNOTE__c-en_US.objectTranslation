@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>VDC_CREDITNOTE</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>VDC_CREDITNOTES</value>
+    </caseValues>
+    <fields>
+        <label><!-- Credit/Debit Indicator --></label>
+        <name>Credit_Debit_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Note Number --></label>
+        <name>Credit_Note_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Execution --></label>
+        <name>Date_of_Execution__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Id --></label>
+        <name>Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code Category --></label>
+        <name>Reason_Code_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Number --></label>
+        <name>Vendor_Number__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

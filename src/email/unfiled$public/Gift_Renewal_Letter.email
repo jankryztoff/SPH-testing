@@ -1,0 +1,20 @@
+<pre>
+{{Today}}
+
+Account no: {{Account.AccountNumber}}
+{{Contact.FirstName}} {{Contact.LastName}}
+{{Contact.MailingAddress}}
+
+Dear {{Contact.FirstName}} {{Contact.LastName}},
+
+SPH Subscriber Engagement Programme
+
+Thank you for renewing your subscription by another {{Promotion__c.Contract_Period__c}} months. Your subscription has been processed and the following requested newspaper(s) will be delivered to your stated address from the mentioned date(s).
+
+Start Date: {{Zuora__Subscription__c.Zuora__SubscriptionStartDate__c}}
+Publication: {{Publication__c.Name}}
+
+{{Promotion_Gift__c.Redemption_Letter_Details__c}}
+
+This is a computer-generated letter. No signature is required. 
+</pre>

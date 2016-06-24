@@ -9,13 +9,16 @@ Descriprion: Test class for BatchCOCPMain
 
 public class BatchCOCPMainTest{
 
+
+    
+    
     static testmethod void testCOCPMain(){
         Integer count;
-    
+        Id jobId; 
        //Account__c
         List<Account> accounts = TestDataFactory.createAccount(1, 'Direct Corporate');
         database.insert(accounts); 
-    
+        jobId = accounts[0].Id;
       //Order__c
         List<Order__c> orders = TestDataFactory.createOrder(2);
         count = 0;
@@ -73,7 +76,8 @@ public class BatchCOCPMainTest{
        Test.startTest();
        try{
            Test.setMock(WebServiceMock.class, new zLoginMock());
-           BatchCOCPMain batch= new BatchCOCPMain(date.today());
+           //BatchCOCPMain batch= new BatchCOCPMain(date.today());
+           BatchCOCPMain batch= new BatchCOCPMain(date.today(),jobId); 
            Database.BatchableContext BC;
            batch.start(BC);
            batch.execute(BC, subs);

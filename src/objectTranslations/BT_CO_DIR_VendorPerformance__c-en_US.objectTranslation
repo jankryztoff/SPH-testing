@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_DIR_VendorPerformance</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_DIR_VendorPerformances</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Record Type --></label>
+        <name>Account_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- BT_CO_DIR_VendorPerformanceMaster --></label>
+        <name>BT_CO_DIR_VendorPerformanceMaster__c</name>
+        <relationshipLabel><!-- BT_CO_DIR_VendorPerformances --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CaseVenSubId --></label>
+        <name>CaseVenSubId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Category --></label>
+        <name>Case_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Number --></label>
+        <name>Case_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Status --></label>
+        <name>Case_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case SubCategory --></label>
+        <name>Case_SubCategory__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publication Code --></label>
+        <name>Publication_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- VendorAccountId --></label>
+        <name>VendorAccountId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Code --></label>
+        <name>Vendor_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Group --></label>
+        <name>Vendor_Group__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

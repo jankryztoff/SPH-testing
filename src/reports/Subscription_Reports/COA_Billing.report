@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Address_Assignment__c$Contact__c.Account.Account_Auto_Number__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Contact__c.Account.Name</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Contact__c.Account.Attention_To_Care_Of__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Contact__c.Account.Contact_Person__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Effective_Date__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$Address__c.Id</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$old_address__c</field>
+    </columns>
+    <columns>
+        <field>Address_Assignment__c$New_Address__c</field>
+    </columns>
+    <description>Change Of Billing Address</description>
+    <filter>
+        <criteriaItems>
+            <column>Address_Assignment__c$Case__c.Change_of_Address_Type__c</column>
+            <operator>equals</operator>
+            <value>Change of Billing address,Change of Billing and Delivery Address</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Change Of Billing Address</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Address_Assignment_with_Address_and_Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Address_Assignment__c$Effective_Date__c</dateColumn>
+        <interval>INTERVAL_THISMONTH</interval>
+    </timeFrameFilter>
+</Report>

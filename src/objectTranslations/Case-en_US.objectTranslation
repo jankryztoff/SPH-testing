@@ -1,0 +1,2862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Creation Mode</value>
+        </caseValues>
+        <name>case_origin</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <label><!-- AccountIdHidden --></label>
+        <name>AccountIdHidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Record Type --></label>
+        <name>Account_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Sub Group --></label>
+        <name>Account_Sub_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Cases (Account) (Do Not Use) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Action Type --></label>
+        <name>Action_Type__c</name>
+        <picklistValues>
+            <masterLabel>Amend</masterLabel>
+            <translation><!-- Amend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop Start</masterLabel>
+            <translation><!-- Stop Start --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Actual Approver Name --></label>
+        <name>Actual_Approver_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Offer Add On Package --></label>
+        <name>Add_On_Package__c</name>
+        <relationshipLabel><!-- Cases (Offer Add On Package) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Termination Comments --></label>
+        <name>Additional_Termination_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please provide a Positive Value for Adjustment Amount --></help>
+        <label><!-- Adjustment Amount --></label>
+        <name>Adjustment_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Adjustment Status --></label>
+        <name>Adjustment_Status__c</name>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Admin Charges --></label>
+        <name>Admin_Charges__c</name>
+    </fields>
+    <fields>
+        <label><!-- Admin Remarks --></label>
+        <name>Admin_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Age --></label>
+        <name>Age__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount To Refund --></label>
+        <name>Amount_To_Refund__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approval Process Submission Date --></label>
+        <name>Approval_Process_Submission_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approval Submitted --></label>
+        <name>Approval_Submitted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved Refund --></label>
+        <name>Approved_Refund__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attention To/Care Of Indicator --></label>
+        <name>Attention_To_Care_Of_Indicator__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Attention To/Care Of Salutation --></label>
+        <name>Attention_To_Care_Of_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>ASST</masterLabel>
+            <translation><!-- ASST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DR</masterLabel>
+            <translation><!-- DR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MDM</masterLabel>
+            <translation><!-- MDM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MR</masterLabel>
+            <translation><!-- MR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MRS</masterLabel>
+            <translation><!-- MRS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MS</masterLabel>
+            <translation><!-- MS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PROF</masterLabel>
+            <translation><!-- PROF --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Balance Amount --></label>
+        <name>Balance_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account_Name__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CASE Legacy Id --></label>
+        <name>CASE_Legacy_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- COA --></label>
+        <name>COA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>COCC_ContactPhoneEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Phone --></label>
+        <name>COCC_ContactPhone__c</name>
+    </fields>
+    <fields>
+        <label><!-- CSO Remarks --></label>
+        <name>CSO_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Out Response --></label>
+        <name>Call_Out_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Refund Check --></label>
+        <name>Case_Refund_Check__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Sub Status --></label>
+        <name>Case_Sub_Status__c</name>
+        <picklistValues>
+            <masterLabel>Case Created</masterLabel>
+            <translation><!-- Case Created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temp Stop Approved</masterLabel>
+            <translation><!-- Temp Stop Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temp Stop Rejected</masterLabel>
+            <translation><!-- Temp Stop Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent Temp Stop/Restart Approval</masterLabel>
+            <translation><!-- Waiting for Urgent Temp Stop/Restart Approval --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Team Member IDs --></label>
+        <name>Case_Team_Member_IDs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Collection/Payment</masterLabel>
+            <translation><!-- Collection/Payment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Digital</masterLabel>
+            <translation><!-- Digital --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Follow Up</masterLabel>
+            <translation><!-- Follow Up --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Enquiry</masterLabel>
+            <translation><!-- General Enquiry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper</masterLabel>
+            <translation><!-- Newspaper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper Delivery</masterLabel>
+            <translation><!-- Newspaper Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Request</masterLabel>
+            <translation><!-- Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop Subscription</masterLabel>
+            <translation><!-- Stop Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Enquiry</masterLabel>
+            <translation><!-- Subscription Enquiry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Request</masterLabel>
+            <translation><!-- Subscription Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Issues</masterLabel>
+            <translation><!-- Technical Issues --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Change of Address Type --></label>
+        <name>Change_of_Address_Type__c</name>
+        <picklistValues>
+            <masterLabel>Change of Billing address</masterLabel>
+            <translation><!-- Change of Billing address --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Billing and Delivery Address</masterLabel>
+            <translation><!-- Change of Billing and Delivery Address --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Delivery Address - Local to Local</masterLabel>
+            <translation><!-- Change of Delivery Address - Local to Local --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Delivery Address - Local to Overseas</masterLabel>
+            <translation><!-- Change of Delivery Address - Local to Overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Delivery Address - Overseas to Local</masterLabel>
+            <translation><!-- Change of Delivery Address - Overseas to Local --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Delivery Address - Overseas to Overseas</masterLabel>
+            <translation><!-- Change of Delivery Address - Overseas to Overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Vendor</masterLabel>
+            <translation><!-- Change of Vendor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Charge Status --></label>
+        <name>Charge_Status__c</name>
+        <picklistValues>
+            <masterLabel>Charge</masterLabel>
+            <translation><!-- Charge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Do Not Charge</masterLabel>
+            <translation><!-- Do Not Charge --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Charges Waived? --></label>
+        <name>Charges_Waived__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reminder Date to Recharge --></label>
+        <name>Charging_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Goodwill Amount --></label>
+        <name>Check_Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Code --></label>
+        <name>Complaint_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Period From Date --></label>
+        <name>Complaint_Period_From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Period To Date --></label>
+        <name>Complaint_Period_To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Pub Code --></label>
+        <name>Complaint_Pub_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Address --></label>
+        <name>Contact_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Mobile --></label>
+        <name>Contact_Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name Formula --></label>
+        <name>Contact_Name_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Number --></label>
+        <name>Contact_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact To Update --></label>
+        <name>Contact_To_Update__c</name>
+        <relationshipLabel><!-- Cases (Contact To Update) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Courier Fee --></label>
+        <name>Courier_Fee__c</name>
+    </fields>
+    <fields>
+        <label><!-- Create Follow Up Task --></label>
+        <name>Create_Follow_Up_Task__c</name>
+    </fields>
+    <fields>
+        <label><!-- Creation Mode --></label>
+        <name>Creation_Mode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Creation Mode --></label>
+        <name>Creation_Mode_del__c</name>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter</masterLabel>
+            <translation><!-- Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telemarketing</masterLabel>
+            <translation><!-- Telemarketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Walk-in</masterLabel>
+            <translation><!-- Walk-in --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Creation Mode --></label>
+        <name>Creation_Mode_picklist__c</name>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter</masterLabel>
+            <translation><!-- Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telemarketing</masterLabel>
+            <translation><!-- Telemarketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Walk-in</masterLabel>
+            <translation><!-- Walk-in --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CreditExtension Code --></label>
+        <name>CreditExtension_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- CreditExtension From Date --></label>
+        <name>CreditExtension_From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- CreditExtension To Date --></label>
+        <name>CreditExtension_To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount Rollup --></label>
+        <name>Credit_Amount_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Balance --></label>
+        <name>Credit_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Note Number --></label>
+        <name>Credit_Note_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- To be selected for Refunds where mode is Invoice --></help>
+        <label><!-- Credit Note Reason Code --></label>
+        <name>Credit_Note_Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>S1-Change of publication/quantity/frequency</masterLabel>
+            <translation><!-- S1-Change of publication/quantity/frequency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S2-Delivery issues</masterLabel>
+            <translation><!-- S2-Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S3-Delivery fee adjustment</masterLabel>
+            <translation><!-- S3-Delivery fee adjustment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S4-GST amount dispute</masterLabel>
+            <translation><!-- S4-GST amount dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S5-Wrong billing party</masterLabel>
+            <translation><!-- S5-Wrong billing party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S6-Wrong billing details</masterLabel>
+            <translation><!-- S6-Wrong billing details --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S7-Waive administrative/cancellation fee</masterLabel>
+            <translation><!-- S7-Waive administrative/cancellation fee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S8-Goodwill waiver</masterLabel>
+            <translation><!-- S8-Goodwill waiver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S9-Other billing adjustments</masterLabel>
+            <translation><!-- S9-Other billing adjustments --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Current Date for Year To Date --></label>
+        <name>Current_Date_for_Year_To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Payment Mode --></label>
+        <name>Current_Payment_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cheque</masterLabel>
+            <translation><!-- Cheque --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GIRO</masterLabel>
+            <translation><!-- GIRO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IPP</masterLabel>
+            <translation><!-- IPP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice</masterLabel>
+            <translation><!-- Invoice --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Customer Confidentiality --></label>
+        <name>Customer_Confidentiality__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Contact No. --></label>
+        <name>Customer_Contact_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Name --></label>
+        <name>Customer_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Closed --></label>
+        <name>Date_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Replaced --></label>
+        <name>Date_Replaced__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Code --></label>
+        <name>Device_Code__c</name>
+        <picklistValues>
+            <masterLabel>Any Type</masterLabel>
+            <translation><!-- Any Type --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- DuplicateEffectiveDate --></label>
+        <name>DuplicateEffectiveDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Earliest Stop Date --></label>
+        <name>Earliest_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Eligible for Retention Offer --></label>
+        <name>Eligible_for_Retention_Offer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Message Counter 2 --></label>
+        <name>Email_Message_Counter_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Message Counter --></label>
+        <name>Email_Message_Counter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email to Case Id --></label>
+        <name>Email_to_Case_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Follow Up --></label>
+        <name>Follow_Up__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generate Arms Invoice --></label>
+        <name>Generate_Arms_Invoice__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount --></label>
+        <name>Goodwill_Amount_Newspaper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount --></label>
+        <name>Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Approval Status --></label>
+        <name>Goodwill_Approval_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Approver --></label>
+        <name>Goodwill_Approver__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Copies --></label>
+        <name>Goodwill_Copies__c</name>
+    </fields>
+    <fields>
+        <label><!-- InternalAddress --></label>
+        <name>InternalAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invalid Complaint --></label>
+        <name>Invalid_Complaint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IsEOMCycle? --></label>
+        <name>IsEOMCycle__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsHiddenFromCSO --></label>
+        <name>IsHiddenFromCSO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification for Reclassification --></label>
+        <name>Justification_for_Reclassification__c</name>
+    </fields>
+    <fields>
+        <label><!-- KeyDuplicateEffectiveDate --></label>
+        <name>KeyDuplicateEffectiveDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Approved Date --></label>
+        <name>Last_Approved_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create By --></label>
+        <name>Legacy_Create_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Create Date --></label>
+        <name>Legacy_Create_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update By --></label>
+        <name>Legacy_Update_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Update Date --></label>
+        <name>Legacy_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- LocalAddress --></label>
+        <name>LocalAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Package --></label>
+        <name>Main_Package__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Application --></label>
+        <name>Mobile_Application__c</name>
+        <picklistValues>
+            <masterLabel>Zaobao Mobile</masterLabel>
+            <translation><!-- Zaobao Mobile --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- New Address --></label>
+        <name>New_Address__c</name>
+        <relationshipLabel><!-- Cases (New Address) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- New Order Details --></label>
+        <name>New_Order_Details__c</name>
+        <relationshipLabel><!-- Cases (New Order Details) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- New Record --></label>
+        <name>New_Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Year for Year To Date --></label>
+        <name>Next_Year_for_Year_To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notification Sent Indicator --></label>
+        <name>Notification_Sent_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notify Vendor --></label>
+        <name>Notify_Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Asia1 Account --></label>
+        <name>Number_of_Asia1_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Goodwill in 3 months --></label>
+        <name>Number_of_Goodwill_in_3_months__c</name>
+    </fields>
+    <fields>
+        <label><!-- Offer Package Product Family --></label>
+        <name>Offer_Package_Product_Family__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Offer Package --></label>
+        <name>Offer_Package__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Offer Promotion --></label>
+        <name>Offer_Promotion__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Offer Type --></label>
+        <name>Offer_Type__c</name>
+        <picklistValues>
+            <masterLabel>Non Subscription Related</masterLabel>
+            <translation><!-- Non Subscription Related --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Related</masterLabel>
+            <translation><!-- Subscription Related --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Old Batch Number --></label>
+        <name>Old_Batch_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operating System --></label>
+        <name>Operating_System__c</name>
+        <picklistValues>
+            <masterLabel>Android</masterLabel>
+            <translation><!-- Android --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Android + iOS</masterLabel>
+            <translation><!-- Android + iOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS</masterLabel>
+            <translation><!-- iOS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ops Rep ID --></label>
+        <name>Ops_Rep_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Number --></label>
+        <name>Order_Number__c</name>
+        <relationshipLabel><!-- Cases (Order Number) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <name>Origin</name>
+        <picklistValues>
+            <masterLabel>Call</masterLabel>
+            <translation><!-- Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chatter Answers</masterLabel>
+            <translation><!-- Chatter Answers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eshop/Ecomz</masterLabel>
+            <translation><!-- Eshop/Ecomz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter</masterLabel>
+            <translation><!-- Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine (Circulation)</masterLabel>
+            <translation><!-- Magazine (Circulation) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine (Publisher)</masterLabel>
+            <translation><!-- Magazine (Publisher) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mail</masterLabel>
+            <translation><!-- Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retention</masterLabel>
+            <translation><!-- Retention --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roadshow</masterLabel>
+            <translation><!-- Roadshow --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Circulation</masterLabel>
+            <translation><!-- SPH Circulation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Paypal</masterLabel>
+            <translation><!-- SPH Paypal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPH Rewards</masterLabel>
+            <translation><!-- SPH Rewards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled Process</masterLabel>
+            <translation><!-- Scheduled Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telemarketing</masterLabel>
+            <translation><!-- Telemarketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Walk-in</masterLabel>
+            <translation><!-- Walk-in --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Original Owner --></label>
+        <name>Original_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Outcome --></label>
+        <name>Outcome__c</name>
+        <picklistValues>
+            <masterLabel>Not Retained</masterLabel>
+            <translation><!-- Not Retained --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retained</masterLabel>
+            <translation><!-- Retained --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Overridden Admin Charges Amount --></label>
+        <name>Overridden_Admin_Charges_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- OverseasAddress --></label>
+        <name>OverseasAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- POP Start Date --></label>
+        <name>POP_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Paper Fee --></label>
+        <name>Paper_Fee__c</name>
+    </fields>
+    <fields>
+        <help><!-- Payee Name to be printed on the Cheque --></help>
+        <label><!-- Payee Name --></label>
+        <name>Payee_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method ID --></label>
+        <name>Payment_Method_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Mode --></label>
+        <name>Payment_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cheque</masterLabel>
+            <translation><!-- Cheque --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CreditCard</masterLabel>
+            <translation><!-- CreditCard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Parties</masterLabel>
+            <translation><!-- External Parties --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Charge</masterLabel>
+            <translation><!-- Internal Charge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice</masterLabel>
+            <translation><!-- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paypal</masterLabel>
+            <translation><!-- Paypal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eNets</masterLabel>
+            <translation><!-- eNets --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>Platform__c</name>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online + Smartphone</masterLabel>
+            <translation><!-- Online + Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone</masterLabel>
+            <translation><!-- Smartphone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone + Tablet</masterLabel>
+            <translation><!-- Smartphone + Tablet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smartphone + Tablet + Online</masterLabel>
+            <translation><!-- Smartphone + Tablet + Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet</masterLabel>
+            <translation><!-- Tablet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tablet + Online</masterLabel>
+            <translation><!-- Tablet + Online --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>Priority</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medium</masterLabel>
+            <translation><!-- Medium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Pub Type --></label>
+        <name>Pub_Type__c</name>
+        <picklistValues>
+            <masterLabel>MAG</masterLabel>
+            <translation><!-- MAG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NP</masterLabel>
+            <translation><!-- NP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Publication --></label>
+        <name>Publication__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Qty --></label>
+        <name>Qty__c</name>
+    </fields>
+    <fields>
+        <name>Reason</name>
+        <picklistValues>
+            <masterLabel>Complex functionality</masterLabel>
+            <translation><!-- Complex functionality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Existing problem</masterLabel>
+            <translation><!-- Existing problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Instructions not clear</masterLabel>
+            <translation><!-- Instructions not clear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New problem</masterLabel>
+            <translation><!-- New problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User didn&apos;t attend training</masterLabel>
+            <translation><!-- User didn&apos;t attend training --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason for Overriding --></label>
+        <name>Reason_for_Overriding__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason for Terminating --></label>
+        <name>Reason_for_Terminating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Address --></label>
+        <name>Recipient_Address__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipient --></label>
+        <name>Recipient__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reclass Approved / Rejected By --></label>
+        <name>Reclass_Approved_Rejected_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Code --></label>
+        <name>Reclass_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Date --></label>
+        <name>Reclass_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclass Status --></label>
+        <name>Reclass_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reclass Sub Category --></label>
+        <name>Reclass_Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>App Crash/Slow Loading/System Issues</masterLabel>
+            <translation><!-- App Crash/Slow Loading/System Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing Dispute (Direct Sub)</masterLabel>
+            <translation><!-- Billing Dispute (Direct Sub) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing Dispute (Vendor Sub)</masterLabel>
+            <translation><!-- Billing Dispute (Vendor Sub) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Force Logout</masterLabel>
+            <translation><!-- Force Logout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gift Redemption Check</masterLabel>
+            <translation><!-- Gift Redemption Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gift Redemption Status</masterLabel>
+            <translation><!-- Gift Redemption Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Late Delivery</masterLabel>
+            <translation><!-- Late Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine Late Delivery</masterLabel>
+            <translation><!-- Magazine Late Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine Non Delivery</masterLabel>
+            <translation><!-- Magazine Non Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Missing Inserts</masterLabel>
+            <translation><!-- Missing Inserts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Circulation Related</masterLabel>
+            <translation><!-- Non Circulation Related --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Delivery</masterLabel>
+            <translation><!-- Non Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Delivery Notification&gt;3 days from Pub Date</masterLabel>
+            <translation><!-- Non Delivery Notification&gt;3 days from Pub Date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Start</masterLabel>
+            <translation><!-- Non Start --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Start Temp-Stop</masterLabel>
+            <translation><!-- Non Start Temp-Stop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Stop TempStop</masterLabel>
+            <translation><!-- Non Stop TempStop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Stop</masterLabel>
+            <translation><!-- Non-Stop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchase of Backdated Issues</masterLabel>
+            <translation><!-- Purchase of Backdated Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchase of Receptacle</masterLabel>
+            <translation><!-- Purchase of Receptacle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Requests to Vendor</masterLabel>
+            <translation><!-- Requests to Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service Flag not updated</masterLabel>
+            <translation><!-- Service Flag not updated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Short Delivery</masterLabel>
+            <translation><!-- Short Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription General Info</masterLabel>
+            <translation><!-- Subscription General Info --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Promo</masterLabel>
+            <translation><!-- Subscription Promo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Related Forms</masterLabel>
+            <translation><!-- Subscription Related Forms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Torn / Wet Papers</masterLabel>
+            <translation><!-- Torn / Wet Papers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User ID not created / activated</masterLabel>
+            <translation><!-- User ID not created / activated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wrong Delivery Location</masterLabel>
+            <translation><!-- Wrong Delivery Location --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wrong Papers Delivered</masterLabel>
+            <translation><!-- Wrong Papers Delivered --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reclass Submitted by --></label>
+        <name>Reclass_Submitted_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reclassify --></label>
+        <name>Reclassify__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Locked --></label>
+        <name>Record_Locked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rejected Renewal --></label>
+        <name>Rejected_Renewal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Renewal Request Date --></label>
+        <name>Renewal_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replaced By --></label>
+        <name>Replaced_By__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Replaced by Courier --></label>
+        <name>Replaced_by_Courier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replaced by Vendor --></label>
+        <name>Replaced_by_Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Replacement Required --></label>
+        <name>Replacement_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Credit --></label>
+        <name>Request_Total_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Total Issue --></label>
+        <name>Request_Total_Issue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request for Waiving of Admin Charge? --></label>
+        <name>Request_for_Waiving_of_Admin_Charge__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requires Urgent Approval --></label>
+        <name>Requires_Urgent_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Restart Date --></label>
+        <name>Restart_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retention Flag --></label>
+        <name>Retention_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Route to Retention 2 --></label>
+        <name>Route_to_Retention_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Route to Retention --></label>
+        <name>Route_to_Retention__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selected Subscriptions Only --></label>
+        <name>Selected_Subscriptions_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to Retention --></label>
+        <name>Send_to_Retention__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sent Auto Response Flag --></label>
+        <name>Sent_Auto_Response_Flag__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field identifies if the case created from email is a spam. --></help>
+        <label><!-- Spam Email --></label>
+        <name>Spam_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Charging Credit Card --></label>
+        <name>Start_Charging_Credit_Card__c</name>
+    </fields>
+    <fields>
+        <name>Status</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Escalated</masterLabel>
+            <translation><!-- Escalated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Hold</masterLabel>
+            <translation><!-- On Hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provisioned</masterLabel>
+            <translation><!-- Provisioned --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Void</masterLabel>
+            <translation><!-- Void --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stop Charging Credit Card --></label>
+        <name>Stop_Charging_Credit_Card__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop/Complaint Date --></label>
+        <name>Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Request/Complaint --></label>
+        <name>Stop_Request_Complaint__c</name>
+        <picklistValues>
+            <masterLabel>Complaint</masterLabel>
+            <translation><!-- Complaint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop Request</masterLabel>
+            <translation><!-- Stop Request --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Waive Request --></label>
+        <name>Stop_Waive_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Category --></label>
+        <name>Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>Adjustment</masterLabel>
+            <translation><!-- Adjustment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>App Crash / Slow Loading / Sys Issues</masterLabel>
+            <translation><!-- App Crash / Slow Loading / Sys Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>App Crash / Slow Loading / System Issues</masterLabel>
+            <translation><!-- App Crash / Slow Loading / System Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing Dispute (Direct Sub)</masterLabel>
+            <translation><!-- Billing Dispute (Direct Sub) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing Dispute (Vendor Sub)</masterLabel>
+            <translation><!-- Billing Dispute (Vendor Sub) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bypass Credit Card</masterLabel>
+            <translation><!-- Bypass Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casual Sales (Buzz, Newsstand, Outlet)</masterLabel>
+            <translation><!-- Casual Sales (Buzz, Newsstand, Outlet) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Address</masterLabel>
+            <translation><!-- Change of Address --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Credit Card</masterLabel>
+            <translation><!-- Change of Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Particulars</masterLabel>
+            <translation><!-- Change of Particulars --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Subscription Packages</masterLabel>
+            <translation><!-- Change of Subscription Packages --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Vendor</masterLabel>
+            <translation><!-- Change of Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change/Reset Password</masterLabel>
+            <translation><!-- Change/Reset Password --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivate User Id</masterLabel>
+            <translation><!-- Deactivate User Id --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Force Logout</masterLabel>
+            <translation><!-- Force Logout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gift Redemption Check</masterLabel>
+            <translation><!-- Gift Redemption Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gift Redemption Status</masterLabel>
+            <translation><!-- Gift Redemption Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Late Delivery</masterLabel>
+            <translation><!-- Late Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine Late Delivery</masterLabel>
+            <translation><!-- Magazine Late Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine Non Delivery</masterLabel>
+            <translation><!-- Magazine Non Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Missing Inserts</masterLabel>
+            <translation><!-- Missing Inserts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspapers - Gift Redemption Status</masterLabel>
+            <translation><!-- Newspapers - Gift Redemption Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Circulation Related Matters</masterLabel>
+            <translation><!-- Non-Circulation Related Matters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Delivery</masterLabel>
+            <translation><!-- Non-Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Delivery, notified date &gt; 3 days from pub date</masterLabel>
+            <translation><!-- Non-Delivery, notified date &gt; 3 days from pub date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Start</masterLabel>
+            <translation><!-- Non-Start --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Start (Temp-Stop)</masterLabel>
+            <translation><!-- Non-Start (Temp-Stop) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Stop</masterLabel>
+            <translation><!-- Non-Stop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Stop (Temp Stop)</masterLabel>
+            <translation><!-- Non-Stop (Temp Stop) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchase of Backdated Issues</masterLabel>
+            <translation><!-- Purchase of Backdated Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchase of Receptacle</masterLabel>
+            <translation><!-- Purchase of Receptacle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refund</masterLabel>
+            <translation><!-- Refund --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal of Subscription</masterLabel>
+            <translation><!-- Renewal of Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Requests to Vendor</masterLabel>
+            <translation><!-- Requests to Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service Flag Not Updated</masterLabel>
+            <translation><!-- Service Flag Not Updated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Short Delivery</masterLabel>
+            <translation><!-- Short Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Start Subscription</masterLabel>
+            <translation><!-- Start Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop Subscription</masterLabel>
+            <translation><!-- Stop Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription General Info</masterLabel>
+            <translation><!-- Subscription General Info --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Promo</masterLabel>
+            <translation><!-- Subscription Promo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Related Forms</masterLabel>
+            <translation><!-- Subscription Related Forms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Torn / Wet Papers</masterLabel>
+            <translation><!-- Torn / Wet Papers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Id Not Created/Activated</masterLabel>
+            <translation><!-- User Id Not Created/Activated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wrong Delivery Location</masterLabel>
+            <translation><!-- Wrong Delivery Location --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wrong Papers Delivered</masterLabel>
+            <translation><!-- Wrong Papers Delivered --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Status --></label>
+        <name>Sub_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Assess for Goodwill</masterLabel>
+            <translation><!-- Assess for Goodwill --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case Created</masterLabel>
+            <translation><!-- Case Created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change Subscription Completed</masterLabel>
+            <translation><!-- Change Subscription Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Subscription Completed</masterLabel>
+            <translation><!-- Change of Subscription Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Complaint Resolved</masterLabel>
+            <translation><!-- Complaint Resolved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Retained</masterLabel>
+            <translation><!-- Customer Retained --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>For Retention Offer</masterLabel>
+            <translation><!-- For Retention Offer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Goodwill Approved</masterLabel>
+            <translation><!-- Goodwill Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Goodwill Rejected</masterLabel>
+            <translation><!-- Goodwill Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper Redelivered</masterLabel>
+            <translation><!-- Newspaper Redelivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Retention</masterLabel>
+            <translation><!-- No Retention --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Retained</masterLabel>
+            <translation><!-- Not Retained --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provisioning</masterLabel>
+            <translation><!-- Provisioning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Submission</masterLabel>
+            <translation><!-- Ready for Submission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Subscription</masterLabel>
+            <translation><!-- Ready for Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reclassification Approved</masterLabel>
+            <translation><!-- Reclassification Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reclassification Rejected</masterLabel>
+            <translation><!-- Reclassification Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Request Recalled</masterLabel>
+            <translation><!-- Request Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retained</masterLabel>
+            <translation><!-- Retained --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted for Reclassification</masterLabel>
+            <translation><!-- Submitted for Reclassification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to CSO Admin</masterLabel>
+            <translation><!-- Submitted to CSO Admin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to CSO to Initiate Courier</masterLabel>
+            <translation><!-- Submitted to CSO to Initiate Courier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to Mailing Agent</masterLabel>
+            <translation><!-- Submitted to Mailing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to Ops Rep/Cir-Planner</masterLabel>
+            <translation><!-- Submitted to Ops Rep/Cir-Planner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to Technical CSO</masterLabel>
+            <translation><!-- Submitted to Technical CSO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted to Vendor</masterLabel>
+            <translation><!-- Submitted to Vendor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Created</masterLabel>
+            <translation><!-- Subscription Created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Stop Completed</masterLabel>
+            <translation><!-- Subscription Stop Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temp Stop Approved</masterLabel>
+            <translation><!-- Temp Stop Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temp Stop Rejected</masterLabel>
+            <translation><!-- Temp Stop Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent CoA Approved</masterLabel>
+            <translation><!-- Urgent CoA Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent CoA Rejected</masterLabel>
+            <translation><!-- Urgent CoA Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent Rejected</masterLabel>
+            <translation><!-- Urgent Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent Start Approved</masterLabel>
+            <translation><!-- Urgent Start Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent Start Rejected</masterLabel>
+            <translation><!-- Urgent Start Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent Stop Approved</masterLabel>
+            <translation><!-- Urgent Stop Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent Stop Rejected</masterLabel>
+            <translation><!-- Urgent Stop Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Goodwill Approval</masterLabel>
+            <translation><!-- Waiting for Goodwill Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Reclassification Approval</masterLabel>
+            <translation><!-- Waiting for Reclassification Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent Approval</masterLabel>
+            <translation><!-- Waiting for Urgent Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent CoA Approval</masterLabel>
+            <translation><!-- Waiting for Urgent CoA Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent Start Approval</masterLabel>
+            <translation><!-- Waiting for Urgent Start Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent Stop Approval</masterLabel>
+            <translation><!-- Waiting for Urgent Stop Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Urgent Temp Stop/Restart Approval</masterLabel>
+            <translation><!-- Waiting for Urgent Temp Stop/Restart Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Vendor Assignment</masterLabel>
+            <translation><!-- Waiting for Vendor Assignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Waiver Approval</masterLabel>
+            <translation><!-- Waiting for Waiver Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting for Waiving of Charges Approval</masterLabel>
+            <translation><!-- Waiting for Waiving of Charges Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waived Approved</masterLabel>
+            <translation><!-- Waived Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waived Rejected</masterLabel>
+            <translation><!-- Waived Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiving of Charges Rejected</masterLabel>
+            <translation><!-- Waiving of Charges Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zuora Issue - Subscription Cancellation</masterLabel>
+            <translation><!-- Zuora Issue - Subscription Cancellation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zuora Issue - Subscription Creation</masterLabel>
+            <translation><!-- Zuora Issue - Subscription Creation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zuora Issue - Usage Creation</masterLabel>
+            <translation><!-- Zuora Issue - Usage Creation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber --></label>
+        <name>Subscriber__c</name>
+        <relationshipLabel><!-- Cases (Subscriber) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription End Date --></label>
+        <name>Subscription_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription History --></label>
+        <name>Subscription_History__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription Name --></label>
+        <name>Subscription_Name__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscription Start Date --></label>
+        <name>Subscription_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Date --></label>
+        <name>Temp_Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Qty --></label>
+        <name>Temp_Stop_Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Sub --></label>
+        <name>Temp_Stop_Sub__c</name>
+        <relationshipLabel><!-- Cases (Temp Stop Sub) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Type --></label>
+        <name>Temp_Stop_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cancel</masterLabel>
+            <translation><!-- Cancel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update</masterLabel>
+            <translation><!-- Update --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop Updated --></label>
+        <name>Temp_Stop_Updated__c</name>
+        <relationshipLabel><!-- Cases (Temp Stop Updated) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop VSub --></label>
+        <name>Temp_Stop_VSub__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Temp Stop --></label>
+        <name>Temp_Stop__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Terminating Reason --></label>
+        <name>Terminating_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change to another pub</masterLabel>
+            <translation><!-- Change to another pub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Digital / apps issues</masterLabel>
+            <translation><!-- Customer request - Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Moving overseas</masterLabel>
+            <translation><!-- Customer request - Moving overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - No reason given</masterLabel>
+            <translation><!-- Customer request - No reason given --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Not reading</masterLabel>
+            <translation><!-- Customer request - Not reading --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Policy</masterLabel>
+            <translation><!-- Customer request - Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Service / Delivery issues</masterLabel>
+            <translation><!-- Customer request - Service / Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Downgrade</masterLabel>
+            <translation><!-- Package - Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Misc. Change</masterLabel>
+            <translation><!-- Package - Misc. Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Upgrade</masterLabel>
+            <translation><!-- Package - Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Credit card</masterLabel>
+            <translation><!-- Payment failure - Credit card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Paypal</masterLabel>
+            <translation><!-- Payment failure - Paypal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure- Invoice</masterLabel>
+            <translation><!-- Payment failure- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reduction in quantity</masterLabel>
+            <translation><!-- Reduction in quantity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Termination Reason --></label>
+        <name>Termination_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Change to another pub</masterLabel>
+            <translation><!-- Change to another pub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Digital / apps issues</masterLabel>
+            <translation><!-- Customer request - Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Moving overseas</masterLabel>
+            <translation><!-- Customer request - Moving overseas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - No reason given</masterLabel>
+            <translation><!-- Customer request - No reason given --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Not reading</masterLabel>
+            <translation><!-- Customer request - Not reading --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Policy</masterLabel>
+            <translation><!-- Customer request - Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer request - Service / Delivery issues</masterLabel>
+            <translation><!-- Customer request - Service / Delivery issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery service issues</masterLabel>
+            <translation><!-- Delivery service issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Digital / apps issues</masterLabel>
+            <translation><!-- Digital / apps issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dissatisfied with newspaper content</masterLabel>
+            <translation><!-- Dissatisfied with newspaper content --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No promotion / free gift (decline retention offers)</masterLabel>
+            <translation><!-- No promotion / free gift (decline retention offers) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No time to read</masterLabel>
+            <translation><!-- No time to read --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Downgrade</masterLabel>
+            <translation><!-- Package - Downgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Misc. Change</masterLabel>
+            <translation><!-- Package - Misc. Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package - Upgrade</masterLabel>
+            <translation><!-- Package - Upgrade --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Credit card</masterLabel>
+            <translation><!-- Payment failure - Credit card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure - Paypal</masterLabel>
+            <translation><!-- Payment failure - Paypal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment failure- Invoice</masterLabel>
+            <translation><!-- Payment failure- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read from other free sources</masterLabel>
+            <translation><!-- Read from other free sources --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reduction in quantity</masterLabel>
+            <translation><!-- Reduction in quantity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscriber is uncontactable</masterLabel>
+            <translation><!-- Subscriber is uncontactable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription fee too expensive</masterLabel>
+            <translation><!-- Subscription fee too expensive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel often / moving overseas (decline digital subn)</masterLabel>
+            <translation><!-- Travel often / moving overseas (decline digital subn) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Undecided on renewal</masterLabel>
+            <translation><!-- Undecided on renewal --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Thread ID --></label>
+        <name>Thread_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Credit Balance Amount --></label>
+        <name>Total_Credit_Balance_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Issue --></label>
+        <name>Total_Issue__c</name>
+    </fields>
+    <fields>
+        <name>Type</name>
+        <picklistValues>
+            <masterLabel>Feature Request</masterLabel>
+            <translation><!-- Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem</masterLabel>
+            <translation><!-- Problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Question</masterLabel>
+            <translation><!-- Question --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Urgent Approved --></label>
+        <name>Urgent_Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent Request --></label>
+        <name>Urgent_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgent --></label>
+        <name>Urgent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Chargeable- Courier --></label>
+        <name>Vendor_Chargeable_Courier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Chargeable - Paper --></label>
+        <name>Vendor_Chargeable_Paper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Email --></label>
+        <name>Vendor_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor No --></label>
+        <name>Vendor_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Subscription Created --></label>
+        <name>Vendor_Subscription_Created__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is only populated for Change of Vendor. --></help>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- Cases (Vendor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Void By --></label>
+        <name>Void_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Void Date --></label>
+        <name>Void_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Waived Request --></label>
+        <name>Waived_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Within Circulation Planning Schedule --></label>
+        <name>Within_Circulation_Planning_Schedule__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year To Date Count --></label>
+        <name>Year_To_Date_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- wasRecalled --></label>
+        <name>wasRecalled__c</name>
+    </fields>
+    <layouts>
+        <layout>Adjustment</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bypass Credit Card</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CSO TEAM LEADER VIEW FOR STOP SUBSCRIPTION</layout>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Retention Information --></label>
+            <section>Retention Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change in Credit Card</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change in Payment Type</layout>
+        <sections>
+            <label><!-- Billing Account Information --></label>
+            <section>Billing Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Payment Details --></label>
+            <section>Payment Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change of Address</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change of Address - I</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change of Particulars</layout>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Change of Subscription Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Order Details --></label>
+            <section>Order Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unnecessary Fields for Change Subscription --></label>
+            <section>Unnecessary Fields for Change Subscription</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Refund</layout>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Refund Details --></label>
+            <section>Refund Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Renewal of Subscription Layout</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Subscription Details --></label>
+            <section>Subscription Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unnecessary Fields for Renewal of Subscription --></label>
+            <section>Unnecessary Fields for Renewal of Subscription</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Retention Outbound Layout</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Subscription --></label>
+            <section>Subscription</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unnecessary fields --></label>
+            <section>Unnecessary fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Start Subscription Layout</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Subscription --></label>
+            <section>Subscription</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Stop Subscription</layout>
+        <sections>
+            <label><!-- Case Information --></label>
+            <section>Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Retention Information --></label>
+            <section>Retention Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Temp Stop Subscription</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Temp Stop Details --></label>
+            <section>Temp Stop Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Vendor Start Subscription Layout</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Subscription --></label>
+            <section>Subscription</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Vendor Stop Request</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Child Case --></label>
+        <name>Child_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Event --></label>
+        <name>Event</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>Log_a_Call</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewChildCase --></label>
+        <name>NewChildCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Task --></label>
+        <name>Task</name>
+    </quickActions>
+    <recordTypes>
+        <label><!-- Adjustments --></label>
+        <name>Adjustments</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Bypass Credit Card --></label>
+        <name>Bypass_Credit_Card</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Complaint - Digital --></label>
+        <name>Case_Complaint_Digital</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change/Reset Password --></label>
+        <name>Change_Reset_Password</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Address/Vendor --></label>
+        <name>Change_of_Address</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Credit Card --></label>
+        <name>Change_of_Credit_Card</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Particulars --></label>
+        <name>Change_of_Particulars</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Payment Type --></label>
+        <name>Change_of_Payment_Type</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Subscription --></label>
+        <name>Change_of_Subscription</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Complaint - Magazine --></label>
+        <name>Complaint_Magazine</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Complaint - Newspaper --></label>
+        <name>Complaint_Newspaper</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Enquiry --></label>
+        <name>Enquiry</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Refund --></label>
+        <name>Refund</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Renewal of Subscription --></label>
+        <name>Renewal_of_Subscription</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Retention Outbound --></label>
+        <name>Retention_Outbound</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Start Subscription --></label>
+        <name>Start_Subscription</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Stop Subscription --></label>
+        <name>Stop_Subscription</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Temp Stop Subscription --></label>
+        <name>Temp_Stop_Subscription</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Vendor Stop Request/Complaint --></label>
+        <name>Vendor_Stop_Request</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Please enter Account value --></errorMessage>
+        <name>AccountRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Approved/Rejected Goodwill Amount cannot be updated. --></errorMessage>
+        <name>ApprovedRejectedGoodwillDigital</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter Billing Account value --></errorMessage>
+        <name>BillingAccountRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please choose one of the following: Start Charging Credit Card or Stop Charging Credit Card --></errorMessage>
+        <name>BypassCreditCard</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Generate Arms Invoice should come along with Stop Charging Credit Card. --></errorMessage>
+        <name>Bypass_CC_Generate_Arms</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Generate Arms Invoice is not allowed for Start Charging Credit Card. --></errorMessage>
+        <name>Bypass_CC_Start_Charging</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please unpopulate Reminder Date to Recharge when Start Charging Credit Card is checked. --></errorMessage>
+        <name>Bypass_Start_ChargeDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please populate either of the main fields (Start Charging Credit Card,
+Stop Charging Credit Card,
+Generate ARMS Invoice,
+Reminder Date to Recharge) --></errorMessage>
+        <name>Bypass_Start_Stop_Date_Invoice</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Case cannot be closed if goodwill amount is entered and not approved. --></errorMessage>
+        <name>CaseWithGoodWillAmountButNotApproved</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select Billing Customer Contact. Valid contacts should have billing indicator checked. --></errorMessage>
+        <name>ChangeOfAddressBillingAdChange</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select Customer Contact with both recipient and billing indicator checked. --></errorMessage>
+        <name>ChangeOfAddressBothAdChange</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select Recipient Customer Contact. Valid contacts should have recipient indicator checked. --></errorMessage>
+        <name>ChangeOfAddressDeliveryAdChange</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Vendor look up should not be populated if Change of Address Type is not Change of Vendor --></errorMessage>
+        <name>Change_of_Address_No_Vendor_Look_up</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Contact to Update and Vendor fields should be populated if Change of Address Type is Change of Vendor --></errorMessage>
+        <name>Change_of_Vendor</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Charging Date should be at least the next month --></errorMessage>
+        <name>ChargingDateValidation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Charging date should be populated. --></errorMessage>
+        <name>Charging_Date_Check</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Justification for Reclassification should not be blank if Vendor Charge is for Reclassification. --></errorMessage>
+        <name>CheckJustificationForReclassification</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>CheckReplacementIssueDatefield_1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue Date is required if Replacement Required checkbox is checked. --></errorMessage>
+        <name>CheckReplacementIssueDatefield_2</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue From Date should not be older than 14 days. --></errorMessage>
+        <name>CheckReplacementIssueDatefield_3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Replacement Issue To Date should not be later than today. --></errorMessage>
+        <name>CheckReplacementIssueDatefield_4</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only Users with CSO Profile can change the status to &quot;Closed&quot; --></errorMessage>
+        <name>CloseStatusComplaintCase</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cannot create complaint case for future active subscriptions. --></errorMessage>
+        <name>ComplaintDigitalForFutureDateSubs</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please untick Vendor Chargeable - Courier as complaint case is replaced by Vendor. --></errorMessage>
+        <name>ComplaintNewsReplacedByVendor</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please indicate Courier Fee. --></errorMessage>
+        <name>CourierFeeNeededIfReplacedByCourier</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Amount to Refund is not greater than Total Credit Balance Amount --></errorMessage>
+        <name>CreateRefund</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Case cannot be marked as closed as Complaint Dates are within Bill Run period --></errorMessage>
+        <name>Dont_Close_ComplaintsorGoodwill_on_EOM</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission of Urgent Pstops are not allowed During End of Month Bill Run Cycle --></errorMessage>
+        <name>Dont_Submit_UrgentPstops_on_EOM</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective date must be greater than current date. --></errorMessage>
+        <name>EffectiveDateGreaterThanCurrentDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective date should be greater than or equal to subscription start date. --></errorMessage>
+        <name>EffectiveDateGreaterThanSubStartDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective Date must not be null. --></errorMessage>
+        <name>EffectiveDateNotNullChangeOfAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Goodwill Amount cannot be a negative value. --></errorMessage>
+        <name>NegativeGoodwill</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- New Address cannot be equal to Old Address --></errorMessage>
+        <name>NewAddressNotEqualToOldAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cannot Update/ Cancel Temp Stops during End of Month Bill Run Cycle. --></errorMessage>
+        <name>No_Update_Cancel_of_TempStop_when_EOM</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please choose 1 between Replaced by Vendor and Replaced by Courier. --></errorMessage>
+        <name>Replaced_by_Vendor_or_Courier</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restart date must be greater than temp stop date and must not be a past date. --></errorMessage>
+        <name>Restart_date_must_be_greater_than_Temp_S</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please add a Termination Reason. --></errorMessage>
+        <name>RetentionOutboundCloseCase</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter Subscription Name value --></errorMessage>
+        <name>SubscriptionRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter Subscription value --></errorMessage>
+        <name>SubscriptionRequiredField</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please add a &quot;Termination Reason&quot; if the Renewal of Subscription Case is being Closed. --></errorMessage>
+        <name>Termination_Reason_on_Case_close</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Dont do this! --></errorMessage>
+        <name>VoidToPending</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Assign_Vendor --></label>
+        <name>Assign_Vendor</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Change_of_Credit_Card --></label>
+        <name>Change_of_Credit_Card</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Close_Case --></label>
+        <name>Close_Case</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Renewal --></label>
+        <name>Create_Renewal</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Edit --></label>
+        <name>Edit</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Initiate_Refund --></label>
+        <name>Initiate_Refund</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Maintenance --></label>
+        <name>Maintenance</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Notify_Vendor --></label>
+        <name>Notify_Vendor</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Process_Refund --></label>
+        <name>Process_Refund</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Reset_Password_Activate_Deactivate_User --></label>
+        <name>Reset_Password_Activate_Deactivate_User</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_to_Z_Billing --></label>
+        <name>Send_to_Z_Billing</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_Account --></label>
+        <name>Update_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_Contact --></label>
+        <name>Update_Contact</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_Zuora_Account --></label>
+        <name>Update_Zuora_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Void_Case --></label>
+        <name>Void_Case</name>
+    </webLinks>
+    <workflowTasks>
+        <name>Charging_Date_for_Bypass_CC</name>
+        <subject><!-- Charging Date for Bypass CC --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <description><!-- Once urgent COA approved a task to be created for CSO to credit vendor.
+Manual crediting should be done if the urgent Change of Address is approved after 10AM. --></description>
+        <name>Credit_Vendor</name>
+        <subject><!-- Manual crediting should be done if the urgent Change of Address is approved after 10AM --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>Deactivate_Asia_1</name>
+        <subject><!-- Deactivate Asia 1 --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>Follow_up</name>
+        <subject><!-- Follow up --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>Follow_up_Call</name>
+        <subject><!-- Follow up: Call --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>New_Task</name>
+        <subject><!-- New Task --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>Please_call_and_remind_the_vendor</name>
+        <subject><!-- Please call and remind the vendor --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>TS_CreateFollowUpTask</name>
+        <subject><!-- Temp Stop Follow Up --></subject>
+    </workflowTasks>
+    <workflowTasks>
+        <name>TS_CreateFollowUpTaskUrgent</name>
+        <subject><!-- Urgent Temp Stop Approved - Notify Vendor Ops --></subject>
+    </workflowTasks>
+</CustomObjectTranslation>

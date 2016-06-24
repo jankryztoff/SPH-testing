@@ -1,0 +1,140 @@
+<!-- *VF Page Name: ReportHardCopy
+         * @author: Rica Kirsten Joy Mayo
+         * Date: 11/08/2014
+         * Requirement/Project Name: SPH 
+         * D-2013 3/20/2015 Alyana Navarro - Reconstruct whole VF Page
+         -->
+    <!--Start/End UD-2960 VPernicia 10/27/15: Reconstruct to put header and table header for every page-->
+    <apex:page controller="PackingLabelsController_POC" action="{! airlineReportHardCopy}" renderAs="PDF">
+
+        <head>
+            <style>
+            body {
+                font-family: 'Arial Unicode MS'; 
+                font-size:14px;
+                } 
+             @page  
+             {            
+             <!-- START UD-2961 VPernicia 10/30/15-->
+             size: 13.90in 9.84in;
+             <!-- END UD-2961 VPernicia 10/30/15--> 
+                 
+                 @top-center { content: element(header); }  
+             }
+             <!-- START : D-2591 3/25/2015 Alyana Navarro - For Page Number-->
+             .pagenumber:before {                
+                content: counter(page);                
+             }
+             <!-- END : D-2591 3/25/2015 Alyana Navarro -->    
+
+            div.header {
+                display: block; 
+                position: running(header); 
+                margin:10px 10px 0px 10px;
+                height:50px;     
+                margin-top: 57px;
+            }
+            
+            
+            table {-fs-table-paginate: paginate;} /*START/END UD-2289 VPernicia 8/12/15 Header for every Page */
+
+             
+          </style> 
+        </head>
+        <div style="border-width:1px; border-style: solid;">
+            
+            <div class="header">
+                <table width="100%">
+                    <tr>
+                        <td width="20%">CRSM SUBSCRIPTION</td><!--Start/End UD-2137 VPernicia: Change from CMIS to CRSM 08/24/15-->
+                        <td align="center" width = "80%">
+                            SPH CIRCULATION DEPARTMENT (CO. REGN. NO.: 198402868E) DATE:&nbsp;
+                            <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                <apex:param value="{!refDate}" /> <!-- START/END: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery-->
+                            </apex:outputText> Page: <span class="pagenumber"/> <!-- START : D-2591 3/26/2015 Alyana Navarro - Added Page number-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="20%">REPORT-ID : SSF1AC9/1</td>
+                        <td align="center" width = "80%">
+                            <!-- SUBSCRIPTION COPIES FOR {! subAccountName} -->SUBSCRIPTION COPIES FOR SINGAPORE AIRLINES OVERSEAS STATION   TIME:&nbsp; <!-- START-END : UD-2962 11/2/2015 Alyana Navarro -->
+                            <apex:outputText value="{0,date,hh:mm:ss}">
+                                <apex:param value="{!refDate}" />      <!-- START/END: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery-->
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+             
+            <table width="100%" cellpadding="0" cellspacing="0"> 
+                <table width = "100%" style="border-collapse: collapse;" cellpadding="0" cellspacing="0">                
+                    <thead>
+                        <tr>
+                            <td>
+                                <br/><br/><br/><br/><br/><br/>
+                                 <tr>
+                                     <td width="20%"></td>
+                                     <apex:repeat value="{! pubCodeSet2}" var="pub"><!--Start/End UD-2137 VPernicia 08/24/15-->
+                                         <td align = "center">
+                                             {! pub}<br/>
+                                             <apex:outputText value="{0,date,dd.MM.YYYY}">
+                                                 <apex:param value="{!refDate}" />    <!-- START/END: D-3672 11/13/2015 Added by Kristine Balaoing - added for batch recovery-->
+                                             </apex:outputText>
+                                         </td>
+                                     </apex:repeat>
+                                 </tr>
+                            </td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td>
+                                 <apex:repeat value="{! sortedDestination}" var="destination"> <!-- START-END : UD-2962 10/30/2015 Alyana Navarro -->
+                                     <tr>
+                                         <td><br/></td>
+                                     </tr>
+                                     <tr>
+                                         <td>Destination: {! destination} </td> <!-- START-END : D-2591 3/26/2015 Alyana Navarro - Added word Destination -->
+                                     </tr>
+                                     <tr>
+                                         <td><br/></td>
+                                     </tr>
+                                     <apex:repeat value="{! destinationRecipientIdMap[destination]}" var="recipient">
+                                         <tr>                     
+                                             <td width = "20%">{! recIdRecName[recipient]}</td>
+                                             <apex:repeat value="{! pubCodeSet2}" var="pub"><!--Start/End UD-2137 VPernicia 08/24/15-->
+                                                 <td align = "center"  width="10%">{!recIdPubCodeQuanMapMap[recipient][pub]}</td>
+                                             </apex:repeat>                             
+                                         </tr>                                                                                                      
+                                     </apex:repeat> <!-- START-END : D-2591 3/26/2015 Alyana Navarro - Move repeat here from line 87 -->
+                                     <tr>
+                                         <td><br/></td>
+                                     </tr>
+                                     
+                                     <tr>
+                                         <td style="margin:0; padding:0;" width="20%"><hr/>
+                                         SUB TOTAL:
+                                         <hr/></td>
+                                         <apex:repeat value="{! pubCodeSet2}" var="pub"><!--Start/End UD-2137 VPernicia 08/24/15-->
+                                             <td width="10%" align = "center" style="margin:0; padding:0;"><hr/>{!destinationPubCodeTotalQuanMap[destination][pub]}<hr/></td>
+                                         </apex:repeat>
+                                     </tr>
+                                 </apex:repeat>
+                                 <tr>
+                                     <td><br/></td>
+                                 </tr>
+                                 <tr>
+                                     <td width="20%" style="margin:0; padding:0;"><hr/>GRAND TOTAL: <hr/></td>
+                                         <apex:repeat value="{! pubCodeSet2}" var="pub"><!--Start/End UD-2137 VPernicia 08/24/15-->
+
+                                         <td align = "center" style="margin:0; padding:0;" width="10%"> <hr/>{! pubTotalMap[pub]}<hr/> </td>
+                                     </apex:repeat>
+                                 </tr>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </table>
+         </div>                   
+    </apex:page>

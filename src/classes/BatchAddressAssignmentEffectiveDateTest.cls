@@ -122,7 +122,7 @@ private class BatchAddressAssignmentEffectiveDateTest{
         contactList[0].Billing_Indicator__c = true;
         contactList[1].Billing_Indicator__c = true;
         contactList[1].HomePhone__c = '123456';
-        //insert contactList; 
+        insert contactList; 
 
         List<Zuora__CustomerAccount__c> billAccounts = TestDataFactory.createBillingAccount(1);
         for(Zuora__CustomerAccount__c billAcc: billAccounts){
@@ -204,7 +204,7 @@ private class BatchAddressAssignmentEffectiveDateTest{
         order.Order_Type__c = 'Change of Subscription Package';
         order.PO_Number__c = 'PO00000';
         order.Order_Status__c = 'Close';
-        /*insert order;*/
+        insert order;
         
         casList = TestDataFactory.createCase(2, 'Complaint - Magazine');
         for(Case cas: casList) {
@@ -318,10 +318,15 @@ private class BatchAddressAssignmentEffectiveDateTest{
             if(sub != null){
                 aa.Subscription__c = subRecs[0].id;
             }
+            
+            // Raus Ablaza
+            // Put address and contact to all Address_Assignment__c
+            aa.Address__c = addressRecords[1].Id;
+            aa.Contact__c = contactList[1].Id;
         }
         
         if(addAssCount > 1) {
-            //aa1[1].Contact__c = contactList[1].Id;
+            aa1[1].Contact__c = contactList[1].Id;
             if(vendorSub != null) {
                 aa1[1].Subscription_Vendor__c = svs[1].id;
             }
@@ -342,6 +347,11 @@ private class BatchAddressAssignmentEffectiveDateTest{
         insert aa1;
     }
     
+    // static testMethod void testBatchAddressEffectiveDate(){
+    //     prepareInitialTestData();
+    //     prepateTestData();
+    // }
+    
     /**
     * @name: testBatch
     * @author : Recuerdo Bregente
@@ -349,16 +359,16 @@ private class BatchAddressAssignmentEffectiveDateTest{
     * @date: 07/31/2015
     */
     static testMethod void testBatch(){
-         /*prepareInitialTestData('Change of Delivery Address - Local to Local', true, 2, 'local');*/
-        /*prepareTestData('', '', 2, 2);
+        Test.StartTest();
+        prepareInitialTestData('Change of Delivery Address - Local to Local', true, 2, 'local');
+        prepareTestData('', '', 2, 2);
         
         
         for(Case cas: casList) {
             cas.Status = GlobalVariableClass.STATUS_CLOSED;
         }
         update casList;
-        */
-        Test.StartTest();
+        
         BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
         ID batchprocessid = Database.executeBatch(batch, 200);
             
@@ -379,13 +389,13 @@ private class BatchAddressAssignmentEffectiveDateTest{
     * @date: 07/31/2015
     */
     static testMethod void testBatchWithPublicationSubscriptionIsOne(){
-         /*prepareInitialTestData('Change of Delivery Address - Local to Local', true, 1, 'local');*/
+        prepareInitialTestData('Change of Delivery Address - Local to Local', true, 1, 'local');
+        prepareTestData(null, '', 1, 1);
         Test.StartTest();
-        /*prepareTestData(null, '', 1, 1);
         for(Case cas: casList) {
             cas.Status = GlobalVariableClass.STATUS_CLOSED;
         }
-        update casList;*/
+        update casList;
         try{
             BatchAddressAssignmentEffectiveDate batch = new BatchAddressAssignmentEffectiveDate();
             ID batchprocessid = Database.executeBatch(batch, 200);
@@ -1259,7 +1269,7 @@ private class BatchAddressAssignmentEffectiveDateTest{
         Key_Id__c keyId;
         Other__c otherC;
         
-        String[] keyIdNameArray = new String[]{'Account_Direct Individual','Account_Vendor Subscriber','Address_Local','Contact_Customer Contact','Package Item_Base Product','Package Item_Bundle Product','Package Item_Discount','Package Item_Extension Discount','UpdateARMSInfoResultId','NEXT_RECIPIENT_NUMBER1','Account_Direct Corporate','Account_Direct SPH Inter-Division','Case_Change of Subscription','Case_Start Sub','Case_Stop','Case_Temp Stop','CSO Asst. Manager/ Manager Queue','CSO TL Queue','Head of Customer Service Queue','Case Renewal of Subscription','Case_Change in Address','Complaint_Newspaper','Case_Complaint Magazine','SubTypeDel','SubTypePostage','SubTypePub','Address_Airline','Address_Internal','Address_Overseas'};
+        String[] keyIdNameArray = new String[]{'Account_Direct Individual','Account_Vendor Subscriber','Address_Local','Contact_Customer Contact','Package Item_Base Product','Package Item_Bundle Product','Package Item_Discount','Package Item_Extension Discount','UpdateARMSInfoResultId','NEXT_RECIPIENT_NUMBER','Account_Direct Corporate','Account_Direct SPH Inter-Division','Case_Change of Subscription','Case_Start Sub','Case_Stop','Case_Temp Stop','CSO Asst. Manager/ Manager Queue','CSO TL Queue','Head of Customer Service Queue','Case Renewal of Subscription','Case_Change in Address','Complaint_Newspaper','Case_Complaint Magazine','SubTypeDel','SubTypePostage','SubTypePub','Address_Airline','Address_Internal','Address_Overseas'};
         String[] keyIdIdcArray = new String[]{'012N00000008ic1IAA','012N00000008ibwIAA','012N00000008idiIAA','012N00000008r43IAA','012N00000008jCOIAY','012N00000008jCdIAI','012N00000008jCTIAY','012N00000008jCsIAI','123vd','123457177','012N00000008ic6IAA','012N00000008icBIAQ','012N00000008lpwIAA','012N00000008jvYIAQ','012N00000008k09IAA','012N00000008k0EIAQ','00GN0000000mMcJ','00GN0000000lUNp','00GN0000000mUXw','012N00000008lqG','012N00000008lAoIAI','012N00000008kI8IAI','012N00000008kIDIAY','Delivery','Postage','Publication','012N00000008idx','012N00000008idnIAA','012N00000008idsIAA'};
         String[] keyIdTypeArray = new String[]{'Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Id','Number','Record Type','Record Type','Record Type','Record Type','Record Type','Record Type','Id','Id','Id','Record Type','Record Type','Record Type','Record Type','Name','Name','Name','Record Type','Record Type','Record Type'};
         

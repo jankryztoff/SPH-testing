@@ -15,13 +15,20 @@ public class CaseTriggerHandlerTest2{
         User userU = TestDataFactory.prepareTestusers();    
         
         System.runAs(userU){
+        
+            
             Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor');
             database.insert(acc);
             
-            RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
-        
+            RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Local'];
+            
+            SingPost_Address__c spAdd = TestDataFactory.createSingpostAddress(1)[0];
+            insert spAdd;
+            
             Address__c ad = TestDataFactory.createAddress(1)[0];
             ad.RecordTypeId = rec.id;
+            ad.Postal_Code__c = spAdd.Id;
             database.insert(ad);
             
             Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
@@ -45,7 +52,7 @@ public class CaseTriggerHandlerTest2{
             Case casRec = new Case();
             casRec.Current_Date_for_Year_To_Date__c = 1;
             database.insert(casRec);
-            
+             
             Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
             tempS.Order__c = ord.Id;
             tempS.Case__c = casRec.Id;
@@ -61,10 +68,21 @@ public class CaseTriggerHandlerTest2{
             sub.Zuora__CustomerAccount__c = billAcc[0].Id;
             sub.Zuora__Account__c = acc.Id;
             sub.Subscription_Type_1__c = 'Publication';
+            sub.Recipient_Contact__c = con2.Id;
+            sub.Delivered_By_1__c = 'Mailing Agent';
             database.insert(sub);
             //End D-4452 02-Apr-2016 Added By S.Puli        
-            test.startTest();
             
+            //Account accV = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+            //accV.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+            //database.insert(accV);
+            
+            Vendor_Allocation__c venAlloc = TestDataFactory.createVendorAlloc(1)[0];
+            venAlloc.SingPost_Address__c = spAdd.Id;
+            venAlloc.Vendor_Account__c = acc.Id;
+            venAlloc.Effective_End_Date__c = Date.today().addDays(2);
+            venAlloc.Allocated__c  = TRUE;
+            insert venAlloc;
            
            // Order__c orders = [SELECT id FROM Order__c WHERE Recipient_Type__c = 'Overseas' LIMIT 1];
            // system.assertNotEquals(orders.Id, null);
@@ -83,7 +101,7 @@ public class CaseTriggerHandlerTest2{
              //cas.Subscription_Name__c = sub.Id;
      
             database.insert(cas);
-            
+            test.startTest();
            /* Case_Subscription__c caseSub = TestDataFactory.createCaseSubscription(1)[0];
             caseSub.Case__c = cas.Id;
             caseSub.Subscription__c = sub.Id;
@@ -111,7 +129,7 @@ public class CaseTriggerHandlerTest2{
             }catch(exception e){
                 system.debug(e);
             }
-            
+            System.debug(cas.RecordtypeID + 'CaseRec');
             cas.RecordTypeId = (Id) ConstantsSLB.getKeyID('Case_Adjustments');
             cas.Status = GlobalVariableClass.STATUS_PENDING;
             cas.Sub_Status__c = 'Approved';
@@ -161,11 +179,12 @@ public class CaseTriggerHandlerTest2{
            // database.update(cas); 
             //database.insert(cas);
             
-            //Case_Subscription__c caseSub = TestDataFactory.createCaseSubscription(1)[0];
-            //caseSub.isComplaint__c = false;
-            //caseSub.Case__c = cas.Id;
-            //caseSub.Subscription__c = sub.Id;
-            //database.insert(caseSub);
+            Case_Subscription__c caseSub = TestDataFactory.createCaseSubscription(1)[0];
+            caseSub.isComplaint__c = false;
+            caseSub.Case__c = cas.Id;
+            caseSub.Subscription__c = sub.Id;
+            caseSub.Account__c = acc.Id;
+            database.insert(caseSub);
             //End D-4452 02-Apr-2016 Added By S.Puli        
             //System.assertEquals(cas.Order__r.Recipient_Type__c, 'Overseas');
             
@@ -3140,4 +3159,736 @@ public class CaseTriggerHandlerTest2{
         }catch(Exception e){}
     }
     
+    static testMethod void testCaseTrigger2() {
+        Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+        database.insert(acc);
+        
+        RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
+    
+        Address__c ad = TestDataFactory.createAddress(1)[0];
+        ad.RecordTypeId = rec.id;
+        database.insert(ad);
+        
+        Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+        con.Address__c = ad.Id;
+        con.AccountId = acc.Id;
+        con.Recipient_Indicator__c = true;
+        database.insert(con);
+        
+        Order__c ord = TestDataFactory.createOrder(1)[0];
+        ord.Account__c = acc.Id;
+        ord.Recipient_Contact__c = con.Id;
+        database.insert(ord);
+        
+        List<Zuora__CustomerAccount__c> billAcc = TestDataFactory.createBillingAccount(2);
+        for(Zuora__CustomerAccount__c bill : billAcc){
+            bill.Zuora__Account__c = acc.Id;
+        }
+        database.insert(billAcc);
+        
+        Zuora__Subscription__c sub = TestDataFactory.createSubscription(1)[0];
+        sub.Zuora__CustomerAccount__c = billAcc[0].Id;
+        sub.Next_Year_Temp_Stop_Days__c = null;
+        sub.Year_to_Date_Temp_Stop_Days__c = null;
+        database.insert(sub);
+        
+        Order__c orders = [SELECT id,Recipient_Type__c FROM Order__c WHERE Id=:ord.Id];
+        system.assertNotEquals(orders.Id, null);
+        system.assertEquals(orders.Recipient_Type__c, 'Overseas');
+        
+        Order_Line_Item_Vendor__c oliv = TestDataFactory.createOrderLineItemVendor(1)[0];
+        oliv.Wrapper_Number__c = 5;
+        oliv.Order__c = orders.Id;    
+        database.insert(oliv);
+        
+        Case ca = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
+        ca.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        ca.Next_Year_for_Year_To_Date__c = 5;
+        database.insert(ca);
+        
+        Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
+        tempS.Order__c = ord.Id;
+        tempS.Case__c = ca.Id;
+        database.insert(tempS);
+        
+        List<Zuora__SubscriptionProductCharge__c> spc = TestDataFactory.createSubscriptionProductCharge(2);
+        for(Zuora__SubscriptionProductCharge__c sp : spc){
+            sp.Zuora__Subscription__c = sub.Id;
+            sp.PublicationCode__c = 'N';
+        }
+        database.insert(spc);
+        
+        Package__c pack = new Package__c();
+        pack = TestDataFactory.createPackage(1)[0];
+        pack.Name = 'Pack name';
+        pack.Billing_Type__c = 'Full Prepaid';
+        pack.Package_Type__c = 'Base';
+        pack.Subscription_Period__c = '18';
+        pack.Package_Code__c = 'afds132';
+        database.insert(pack);
+        
+        Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+        orderline.Order__c = ord.Id;
+        orderline.Main_Package_ID__c = pack.Id;
+        orderline.Terminating_Reason__c = 'Payment failure - Credit card';
+        orderline.Case__c = ca.Id;
+        orderline.Subscription__c = sub.Id;
+        database.insert(orderline);
+        
+        test.startTest();
+        Integer counter = 0;
+        List<Case> cases = TestDataFactory.createCase(16, 'Start Subscription');
+        for(Case c : cases){
+            c.recipient_address__c = ad.Id;
+            c.Order__c = orders.Id;
+            if(counter==0){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Temp Stop');
+                c.Temp_Stop_Type__c = 'Cancel';
+                c.Requires_Urgent_Approval__c = true;
+                c.Status = 'Closed';
+            }
+            else if(counter==1){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Start Sub');
+                c.Temp_Stop_Type__c = 'Update';
+                c.Requires_Urgent_Approval__c = false;
+                c.Sub_Status__c = 'Urgent Start Approved';
+                c.Status = 'Closed';
+                c.Category__c = 'Subscription Request';
+                c.Sub_Category__c = 'Change of Subscription Packages';
+            }
+            else if(counter==2){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Complaint_Newspaper');
+                c.Temp_Stop_Type__c = 'Create';
+                c.Status = 'Closed';
+            }
+            else if(counter==3){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Change in Address');
+                c.Temp_Stop_Type__c = 'Create';
+                c.Status = 'Closed';
+            }
+            else if(counter==4){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Stop');
+                c.Sub_Status__c = 'Subscription Stop Completed';
+                c.Sub_Status__c = 'Temp Stop Approved';
+                c.Status = 'Closed';
+            }
+            else if(counter==5){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Start Sub');
+                c.Temp_Stop_Type__c = 'Create';
+                c.Requires_Urgent_Approval__c = false;
+                c.Status = 'Pending';
+                c.Sub_Status__c = 'Ready for Subscription';
+                c.Category__c = 'Subscription Request';   
+                c.Sub_Category__c = 'Start Subscription';
+            }
+            else if(counter==6){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Start Sub');
+                c.Temp_Stop_Type__c = 'Update';
+                c.Requires_Urgent_Approval__c = false;
+                c.Sub_Status__c = 'Waiting for Urgent Start Approval';
+                c.Status = 'Pending';
+                c.Category__c = 'Subscription Request';
+                c.Sub_Category__c = 'Start Subscription';    
+            }
+            else if(counter==7){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Temp Stop');
+                c.Temp_Stop_Type__c = 'Cancel';
+                c.Requires_Urgent_Approval__c = true;
+                c.Status = 'Pending';
+                c.Sub_Status__c = 'Waiting for Urgent Temp Stop/Restart Approval';
+                c.Origin = 'Email';
+            }
+            else if(counter==8){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Change of Subscription');
+                c.Sub_Status__c = 'Waiting for Urgent Approval';
+                c.Status = 'Pending';
+            }
+            else if(counter==9){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case Renewal of Subscription');
+                c.Category__c = 'Subscription Request';
+                c.Sub_Category__c = 'Renewal of Subscription';
+                c.Sub_Status__c = 'Waiting for Urgent Start Approval';
+                c.Status = 'Pending';
+            }
+            else if(counter==10){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Particulars');
+                c.Category__c = 'Subscription Request';
+                c.Sub_Category__c = 'Change of Particulars';
+                c.Status = 'Pending';
+            }
+            else if(counter==11){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Retention');
+                c.Category__c = 'Subscription Request';
+                c.Sub_Category__c = 'Change of Particulars';
+                c.Status = 'Pending';
+            }
+            else if(counter==12){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+                c.Status = 'Void';
+            }
+            else if(counter==13){
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+                c.Status = 'Pending';
+            }
+            else{
+                c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Change in Address');
+                c.Sub_Category__c = 'Change of Address';  
+                c.Status = 'Pending'; 
+                c.POP_Start_Date__c = date.today()+5;
+                c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local'; 
+            }
+            c.ContactID = con.Id;
+            c.Temp_Stop_Sub__c = sub.Id;
+            c.Effective_Date__c = date.today()+1;
+            c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+            c.AccountId = acc.Id;
+            c.Temp_Stop_Date__c = date.today()+1;
+            c.Restart_Date__c = date.today()+5;
+            c.Temp_Stop_Updated__c = tempS.Id;
+            c.Qty__c = 3;
+            c.Temp_Stop__c = tempS.Id;
+            c.Next_Year_for_Year_To_Date__c = 5;
+            c.Earliest_Stop_Date__c = date.today()+10;
+            c.Stop_Request_Date__c = date.today()+2;
+            c.Approval_Submitted__c = true;
+            c.Vendor_Subscription_Created__c = false;
+            //c.Account_Record_Type__c = GlobalVariableClass.VENDORSUB;
+            counter++;
+        }
+        database.insert(cases);
+        
+        system.assertEquals(cases.size(), 16);
+        system.assertEquals(cases[3].RecordTypeId, (Id) ConstantsSLB.getKeyId('Case_Change in Address'));
+        
+        List<Case_Subscription__c> caseSub = TestDataFactory.createCaseSubscription(2);
+        for(Case_Subscription__c cs : caseSub){
+            cs.Case__c = cases[3].Id;
+            cs.Subscription__c = sub.Id;
+        }
+        database.insert(caseSub);
+        
+        //List<Case> casesToBeUpdated = new List<Case>();
+        cases[14].Status = 'Closed';
+        cases[14].Sub_Status__c = null;
+        update cases[14];
+        /*
+        casesToBeUpdated.add(cases[14]);
+        cases[13].Status = 'Void';
+        cases[13].Sub_Status__c = null;
+        update cases[13];
+        casesToBeUpdated.add(cases[13]);
+        cases[4].Status = 'Pending';
+        cases[4].Sub_Status__c = GlobalVariableClass.SUB_STATUS_READY_FOR_SUBMISSION;
+        update cases[4];
+        casesToBeUpdated.add(cases[4]);
+        cases[10].Status = 'Closed';
+        cases[10].Sub_Status__c = null;
+        update cases[10];*/
+
+
+        test.stopTest();
+
+    }
+    
+    static testMethod void testCaseTrigger3() {
+        Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+        database.insert(acc);
+        
+        RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
+    
+        Address__c ad = TestDataFactory.createAddress(1)[0];
+        ad.RecordTypeId = rec.id;
+        database.insert(ad);
+        
+        Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+        con.Address__c = ad.Id;
+        con.AccountId = acc.Id;
+        con.Recipient_Indicator__c = true;
+        database.insert(con);
+        
+        Order__c ord = TestDataFactory.createOrder(1)[0];
+        ord.Account__c = acc.Id;
+        ord.Recipient_Contact__c = con.Id;
+        database.insert(ord);
+        
+        List<Zuora__CustomerAccount__c> billAcc = TestDataFactory.createBillingAccount(2);
+        for(Zuora__CustomerAccount__c bill : billAcc){
+            bill.Zuora__Account__c = acc.Id;
+        }
+        database.insert(billAcc);
+        
+        Zuora__Subscription__c sub = TestDataFactory.createSubscription(1)[0];
+        sub.Zuora__CustomerAccount__c = billAcc[0].Id;
+        sub.Next_Year_Temp_Stop_Days__c = null;
+        sub.Year_to_Date_Temp_Stop_Days__c = null;
+        database.insert(sub);
+        
+        Order__c orders = [SELECT id,Recipient_Type__c FROM Order__c WHERE Id=:ord.Id];
+        system.assertNotEquals(orders.Id, null);
+        system.assertEquals(orders.Recipient_Type__c, 'Overseas');
+        
+        Order_Line_Item_Vendor__c oliv = TestDataFactory.createOrderLineItemVendor(1)[0];
+        oliv.Wrapper_Number__c = 5;
+        oliv.Order__c = orders.Id;    
+        database.insert(oliv);
+        
+        Case ca = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
+        ca.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        ca.Next_Year_for_Year_To_Date__c = 5;
+        database.insert(ca);
+        
+        Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
+        tempS.Order__c = ord.Id;
+        tempS.Case__c = ca.Id;
+        database.insert(tempS);
+        
+        List<Zuora__SubscriptionProductCharge__c> spc = TestDataFactory.createSubscriptionProductCharge(2);
+        for(Zuora__SubscriptionProductCharge__c sp : spc){
+            sp.Zuora__Subscription__c = sub.Id;
+            sp.PublicationCode__c = 'N';
+        }
+        database.insert(spc);
+        
+        Package__c pack = new Package__c();
+        pack = TestDataFactory.createPackage(1)[0];
+        pack.Name = 'Pack name';
+        pack.Billing_Type__c = 'Full Prepaid';
+        pack.Package_Type__c = 'Base';
+        pack.Subscription_Period__c = '18';
+        pack.Package_Code__c = 'afds132';
+        database.insert(pack);
+        
+        Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+        orderline.Order__c = ord.Id;
+        orderline.Main_Package_ID__c = pack.Id;
+        orderline.Terminating_Reason__c = 'Payment failure - Credit card';
+        orderline.Case__c = ca.Id;
+        orderline.Subscription__c = sub.Id;
+        database.insert(orderline);
+        
+        test.startTest();
+        Integer counter = 0;
+        Case c = TestDataFactory.createCase(1, 'Start Subscription')[0];
+        c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        c.Status = 'Pending';
+        c.ContactID = con.Id;
+        c.Temp_Stop_Sub__c = sub.Id;
+        c.Effective_Date__c = date.today()+1;
+        c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+        c.AccountId = acc.Id;
+        c.Temp_Stop_Date__c = date.today()+1;
+        c.Restart_Date__c = date.today()+5;
+        c.Temp_Stop_Updated__c = tempS.Id;
+        c.Qty__c = 3;
+        c.Temp_Stop__c = tempS.Id;
+        c.Next_Year_for_Year_To_Date__c = 5;
+        c.Earliest_Stop_Date__c = date.today()+10;
+        c.Stop_Request_Date__c = date.today()+2;
+        c.Approval_Submitted__c = true;
+        c.Vendor_Subscription_Created__c = false;
+        database.insert(c);
+        
+        /*
+        List<Case_Subscription__c> caseSub = TestDataFactory.createCaseSubscription(2);
+        for(Case_Subscription__c cs : caseSub){
+            cs.Case__c = c.Id;
+            cs.Subscription__c = sub.Id;
+        }
+        database.insert(caseSub);
+        */
+        
+        c.Status = 'Void';
+        c.Sub_Status__c = null;
+        update c;
+        
+
+        test.stopTest();
+
+    }
+    
+    static testMethod void testCaseTrigger5() {
+        Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+        database.insert(acc);
+        
+        RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
+    
+        Address__c ad = TestDataFactory.createAddress(1)[0];
+        ad.RecordTypeId = rec.id;
+        database.insert(ad);
+        
+        Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+        con.Address__c = ad.Id;
+        con.AccountId = acc.Id;
+        con.Recipient_Indicator__c = true;
+        database.insert(con);
+        
+        Order__c ord = TestDataFactory.createOrder(1)[0];
+        ord.Account__c = acc.Id;
+        ord.Recipient_Contact__c = con.Id;
+        database.insert(ord);
+        
+        List<Zuora__CustomerAccount__c> billAcc = TestDataFactory.createBillingAccount(2);
+        for(Zuora__CustomerAccount__c bill : billAcc){
+            bill.Zuora__Account__c = acc.Id;
+        }
+        database.insert(billAcc);
+        
+        Zuora__Subscription__c sub = TestDataFactory.createSubscription(1)[0];
+        sub.Zuora__CustomerAccount__c = billAcc[0].Id;
+        sub.Next_Year_Temp_Stop_Days__c = null;
+        sub.Year_to_Date_Temp_Stop_Days__c = null;
+        database.insert(sub);
+        
+        Order__c orders = [SELECT id,Recipient_Type__c FROM Order__c WHERE Id=:ord.Id];
+        system.assertNotEquals(orders.Id, null);
+        system.assertEquals(orders.Recipient_Type__c, 'Overseas');
+        
+        Order_Line_Item_Vendor__c oliv = TestDataFactory.createOrderLineItemVendor(1)[0];
+        oliv.Wrapper_Number__c = 5;
+        oliv.Order__c = orders.Id;    
+        database.insert(oliv);
+        
+        Case ca = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
+        ca.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        ca.Next_Year_for_Year_To_Date__c = 5;
+        database.insert(ca);
+        
+        Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
+        tempS.Order__c = ord.Id;
+        tempS.Case__c = ca.Id;
+        database.insert(tempS);
+        
+        List<Zuora__SubscriptionProductCharge__c> spc = TestDataFactory.createSubscriptionProductCharge(2);
+        for(Zuora__SubscriptionProductCharge__c sp : spc){
+            sp.Zuora__Subscription__c = sub.Id;
+            sp.PublicationCode__c = 'N';
+        }
+        database.insert(spc);
+        
+        Package__c pack = new Package__c();
+        pack = TestDataFactory.createPackage(1)[0];
+        pack.Name = 'Pack name';
+        pack.Billing_Type__c = 'Full Prepaid';
+        pack.Package_Type__c = 'Base';
+        pack.Subscription_Period__c = '18';
+        pack.Package_Code__c = 'afds132';
+        database.insert(pack);
+        
+        Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+        orderline.Order__c = ord.Id;
+        orderline.Main_Package_ID__c = pack.Id;
+        orderline.Terminating_Reason__c = 'Payment failure - Credit card';
+        orderline.Case__c = ca.Id;
+        orderline.Subscription__c = sub.Id;
+        database.insert(orderline);
+        
+        test.startTest();
+        Integer counter = 0;
+        Case c = TestDataFactory.createCase(1, 'Start Subscription')[0];
+        c.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Particulars');
+        c.Category__c = 'Subscription Request';
+        c.Sub_Category__c = 'Change of Particulars';
+        c.Status = 'Pending';
+        c.ContactID = con.Id;
+        c.Temp_Stop_Sub__c = sub.Id;
+        c.Effective_Date__c = date.today()+1;
+        c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+        c.AccountId = acc.Id;
+        c.Temp_Stop_Date__c = date.today()+1;
+        c.Restart_Date__c = date.today()+5;
+        c.Temp_Stop_Updated__c = tempS.Id;
+        c.Qty__c = 3;
+        c.Temp_Stop__c = tempS.Id;
+        c.Next_Year_for_Year_To_Date__c = 5;
+        c.Earliest_Stop_Date__c = date.today()+10;
+        c.Stop_Request_Date__c = date.today()+2;
+        c.Approval_Submitted__c = true;
+        c.Vendor_Subscription_Created__c = false;
+        database.insert(c);
+        
+        List<Case_Subscription__c> caseSub = TestDataFactory.createCaseSubscription(2);
+        for(Case_Subscription__c cs : caseSub){
+            cs.Case__c = c.Id;
+            cs.Subscription__c = sub.Id;
+        }
+        database.insert(caseSub);
+        
+        Subscription_Vendor__c subVen = TestDataFactory.createSubscriptionVendor(1)[0];
+        subVen.Account__c = acc.Id;
+        subVen.Subscription_Start_Date__c = date.today()+1;
+        subVen.Subscription_Stop_Date__c = date.today()+365;
+        subVen.Order_Number__c = ord.Id;
+        subVen.Recipient__c = con.Id;
+        database.insert(subVen);
+        
+        Case_Vendor_Subscription__c csVen = TestDataFactory.createCaseVendorSub(1)[0];
+        csVen.Account__c = acc.Id;
+        csVen.Case__c = c.Id;
+        csVen.Subscription_Vendor__c = subVen.Id;
+        csVen.Address__c = ad.Id;
+        database.insert(csVen);
+        
+        
+        c.Status = 'Closed';
+        c.Sub_Status__c = null;
+        update c;
+        
+
+        test.stopTest();
+
+    }
+    
+        static testMethod void testCaseTrigger6() {
+        Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+        database.insert(acc);
+        
+        RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
+    
+        Address__c ad = TestDataFactory.createAddress(1)[0];
+        ad.RecordTypeId = rec.id;
+        database.insert(ad);
+        
+        Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+        con.Address__c = ad.Id;
+        con.AccountId = acc.Id;
+        con.Recipient_Indicator__c = true;
+        database.insert(con);
+        
+        Order__c ord = TestDataFactory.createOrder(1)[0];
+        ord.Account__c = acc.Id;
+        ord.Recipient_Contact__c = con.Id;
+        database.insert(ord);
+        
+        List<Zuora__CustomerAccount__c> billAcc = TestDataFactory.createBillingAccount(2);
+        for(Zuora__CustomerAccount__c bill : billAcc){
+            bill.Zuora__Account__c = acc.Id;
+        }
+        database.insert(billAcc);
+        
+        Zuora__Subscription__c sub = TestDataFactory.createSubscription(1)[0];
+        sub.Zuora__CustomerAccount__c = billAcc[0].Id;
+        sub.Next_Year_Temp_Stop_Days__c = null;
+        sub.Year_to_Date_Temp_Stop_Days__c = null;
+        database.insert(sub);
+        
+        Order__c orders = [SELECT id,Recipient_Type__c FROM Order__c WHERE Id=:ord.Id];
+        system.assertNotEquals(orders.Id, null);
+        system.assertEquals(orders.Recipient_Type__c, 'Overseas');
+        
+        Order_Line_Item_Vendor__c oliv = TestDataFactory.createOrderLineItemVendor(1)[0];
+        oliv.Wrapper_Number__c = 5;
+        oliv.Order__c = orders.Id;    
+        database.insert(oliv);
+        
+        Case ca = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
+        ca.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        ca.Next_Year_for_Year_To_Date__c = 5;
+        database.insert(ca);
+        
+        Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
+        tempS.Order__c = ord.Id;
+        tempS.Case__c = ca.Id;
+        database.insert(tempS);
+        
+        List<Zuora__SubscriptionProductCharge__c> spc = TestDataFactory.createSubscriptionProductCharge(2);
+        for(Zuora__SubscriptionProductCharge__c sp : spc){
+            sp.Zuora__Subscription__c = sub.Id;
+            sp.PublicationCode__c = 'N';
+        }
+        database.insert(spc);
+        
+        Package__c pack = new Package__c();
+        pack = TestDataFactory.createPackage(1)[0];
+        pack.Name = 'Pack name';
+        pack.Billing_Type__c = 'Full Prepaid';
+        pack.Package_Type__c = 'Base';
+        pack.Subscription_Period__c = '18';
+        pack.Package_Code__c = 'afds132';
+        database.insert(pack);
+        
+        Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+        orderline.Order__c = ord.Id;
+        orderline.Main_Package_ID__c = pack.Id;
+        orderline.Terminating_Reason__c = 'Payment failure - Credit card';
+        orderline.Case__c = ca.Id;
+        orderline.Subscription__c = sub.Id;
+        database.insert(orderline);
+        
+        test.startTest();
+        Integer counter = 0;
+        Case c = TestDataFactory.createCase(1, 'Start Subscription')[0];
+        c.RecordTypeId = ConstantsSLB.getKeyId('Case_Temp Stop');
+        c.Category__c = 'Subscription Request';
+        c.Sub_Category__c = 'Change of Particulars';
+        c.Status = 'Pending';
+        c.ContactID = con.Id;
+        c.Temp_Stop_Sub__c = sub.Id;
+        c.Effective_Date__c = date.today()+1;
+        c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+        c.AccountId = acc.Id;
+        c.Temp_Stop_Date__c = date.today()+1;
+        c.Restart_Date__c = date.today()+5;
+        c.Temp_Stop_Updated__c = tempS.Id;
+        c.Qty__c = 3;
+        c.Temp_Stop__c = tempS.Id;
+        c.Next_Year_for_Year_To_Date__c = 5;
+        c.Earliest_Stop_Date__c = date.today()+10;
+        c.Stop_Request_Date__c = date.today()+2;
+        c.Approval_Submitted__c = true;
+        c.Vendor_Subscription_Created__c = false;
+        database.insert(c);
+        
+        List<Case_Subscription__c> caseSub = TestDataFactory.createCaseSubscription(2);
+        for(Case_Subscription__c cs : caseSub){
+            cs.Case__c = c.Id;
+            cs.Subscription__c = sub.Id;
+        }
+        database.insert(caseSub);
+        
+        Subscription_Vendor__c subVen = TestDataFactory.createSubscriptionVendor(1)[0];
+        subVen.Account__c = acc.Id;
+        subVen.Subscription_Start_Date__c = date.today()+1;
+        subVen.Subscription_Stop_Date__c = date.today()+365;
+        subVen.Order_Number__c = ord.Id;
+        subVen.Recipient__c = con.Id;
+        database.insert(subVen);
+        
+        Case_Vendor_Subscription__c csVen = TestDataFactory.createCaseVendorSub(1)[0];
+        csVen.Account__c = acc.Id;
+        csVen.Case__c = c.Id;
+        csVen.Subscription_Vendor__c = subVen.Id;
+        csVen.Address__c = ad.Id;
+        database.insert(csVen);
+        
+        
+        c.Order__c = ord.Id;
+        c.Status = 'Closed';
+        c.Sub_Status__c = null;
+        update c;
+        
+
+        test.stopTest();
+
+    }
+    
+    static testMethod void testCaseTrigger7() {
+        Account acc = TestDataFactory.createAccount(1, 'Direct Corporate')[0];
+        acc.RecordTypeId = ConstantsSLB.getKeyId('Account_Vendor Subscriber');
+        database.insert(acc);
+        
+        RecordType rec = [SELECT id, Name FROM RecordType WHERE SObjectType = 'Address__c' AND Name = 'Overseas'];
+    
+        Address__c ad = TestDataFactory.createAddress(1)[0];
+        ad.RecordTypeId = rec.id;
+        database.insert(ad);
+        
+        Contact con = TestDataFactory.createContactRecType(1, 'Customer Contact')[0];
+        con.Address__c = ad.Id;
+        con.AccountId = acc.Id;
+        con.Recipient_Indicator__c = true;
+        con.Billing_Indicator__c = true;
+        database.insert(con);
+        
+        Order__c ord = TestDataFactory.createOrder(1)[0];
+        ord.Account__c = acc.Id;
+        ord.Recipient_Contact__c = con.Id;
+        database.insert(ord);
+        
+        List<Zuora__CustomerAccount__c> billAcc = TestDataFactory.createBillingAccount(2);
+        for(Zuora__CustomerAccount__c bill : billAcc){
+            bill.Zuora__Account__c = acc.Id;
+        }
+        database.insert(billAcc);
+        
+        Zuora__Subscription__c sub = TestDataFactory.createSubscription(1)[0];
+        sub.Zuora__CustomerAccount__c = billAcc[0].Id;
+        sub.Next_Year_Temp_Stop_Days__c = null;
+        sub.Year_to_Date_Temp_Stop_Days__c = null;
+        database.insert(sub);
+        
+        Order__c orders = [SELECT id,Recipient_Type__c FROM Order__c WHERE Id=:ord.Id];
+        system.assertNotEquals(orders.Id, null);
+        system.assertEquals(orders.Recipient_Type__c, 'Overseas');
+        
+        Order_Line_Item_Vendor__c oliv = TestDataFactory.createOrderLineItemVendor(1)[0];
+        oliv.Wrapper_Number__c = 5;
+        oliv.Order__c = orders.Id;    
+        database.insert(oliv);
+        
+        Case ca = TestDataFactory.createCase(1, 'Complaint - Magazine')[0];
+        ca.RecordTypeId = (Id) ConstantsSLB.getKeyId('Case_Complaint Magazine');
+        ca.Next_Year_for_Year_To_Date__c = 5;
+        database.insert(ca);
+        
+        Temp_Stop__c tempS = TestDataFactory.createTempStop(1)[0];
+        tempS.Order__c = ord.Id;
+        tempS.Case__c = ca.Id;
+        database.insert(tempS);
+        
+        List<Zuora__SubscriptionProductCharge__c> spc = TestDataFactory.createSubscriptionProductCharge(2);
+        for(Zuora__SubscriptionProductCharge__c sp : spc){
+            sp.Zuora__Subscription__c = sub.Id;
+            sp.PublicationCode__c = 'N';
+        }
+        database.insert(spc);
+        
+        Package__c pack = new Package__c();
+        pack = TestDataFactory.createPackage(1)[0];
+        pack.Name = 'Pack name';
+        pack.Billing_Type__c = 'Full Prepaid';
+        pack.Package_Type__c = 'Base';
+        pack.Subscription_Period__c = '18';
+        pack.Package_Code__c = 'afds132';
+        database.insert(pack);
+        
+        Order_Line_Item__c orderline = TestDataFactory.createOrderLineItem(1)[0];
+        orderline.Order__c = ord.Id;
+        orderline.Main_Package_ID__c = pack.Id;
+        orderline.Terminating_Reason__c = 'Payment failure - Credit card';
+        orderline.Case__c = ca.Id;
+        orderline.Subscription__c = sub.Id;
+        database.insert(orderline);
+        
+        test.startTest();
+        Integer counter = 0;
+        Case c = TestDataFactory.createCase(1, 'Start Subscription')[0];
+        
+        c.RecordTypeId = ConstantsSLB.getKeyId('Case_Change in Address');
+        c.Category__c = 'Subscription Request';
+        c.Sub_Category__c = 'Change of Address';
+        c.Sub_Status__c = GlobalVariableClass.URGENTCOAAPPROVED;
+        c.Status = 'Pending';
+        c.ContactID = con.Id;
+        c.Temp_Stop_Sub__c = sub.Id;
+        c.Effective_Date__c = date.today()+1;
+        c.Change_of_Address_Type__c = 'Change of Delivery Address - Local to Local';
+        c.AccountId = acc.Id;
+        c.Temp_Stop_Date__c = date.today()+1;
+        c.Restart_Date__c = date.today()+5;
+        c.Temp_Stop_Updated__c = tempS.Id;
+        c.Qty__c = 3;
+        c.Temp_Stop__c = tempS.Id;
+        c.Next_Year_for_Year_To_Date__c = 5;
+        c.Earliest_Stop_Date__c = date.today()+10;
+        c.Stop_Request_Date__c = date.today()+2;
+        c.Approval_Submitted__c = true;
+        c.Vendor_Subscription_Created__c = false;
+        database.insert(c);
+        
+        
+        c.Order__c = ord.Id;
+        c.Status = 'Closed';
+        c.Change_of_Address_Type__c = GlobalVariableClass.BILLDELIVERYADD;
+        update c;
+        
+
+        test.stopTest();
+
+    }
+    
+ 
 }

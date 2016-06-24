@@ -33,7 +33,7 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
     //START UD-3002 12/10/2015 Added by J.Sarion - Record Type Id for Direct Corporate
     public Id ACCOUNT_DIRECTCORPORATE = ConstantsSLB.getKeyId(GlobalVariableClass.ACCDIRCORP);
     //END UD-3002 12/10/2015 Added by J.Sarion - Record Type Id for Direct Corporate
-    static map<string, decimal> invoiceZuoraId_adjustedBalance = new map<string, decimal>();	// Start/End 23May16 JohnD
+    static map<string, decimal> invoiceZuoraId_adjustedBalance = new map<string, decimal>();    // Start/End 23May16 JohnD
     
     public static Logger logger = new Logger(InvoicePaymentQueueableClass.class.getName()); //START/END 04 October 2015 UD-2504 Kevin Evasco - Initialize Invoice Previous Balance
     public InvoicePaymentQueueableClass(Set<Id> subIDs) {
@@ -524,14 +524,15 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
             Decimal invoiceAmt = (Decimal) zObj.getValue('Balance');
             Decimal creditAmtToApply = 0.0;
             Decimal remainingAmt = invoiceAmt; //Outstanding amount requires further payments
-            decimal newCreditBalance = 0.0;	// Start/End PD-0266 21May16 JohnD
+            decimal newCreditBalance = 0.0; // Start/End PD-0266 21May16 JohnD
             
             if(totalCreditBalance != null && totalCreditBalance > 0 && invoiceAmt != null && invoiceAmt > 0)
             {
                 creditAmtToApply = (totalCreditBalance > invoiceAmt) ? invoiceAmt : totalCreditBalance;
                 remainingAmt = (totalCreditBalance > invoiceAmt) ? 0 : invoiceAmt - totalCreditBalance;
             }
-            
+            system.debug('------------creditAmtToApply : '+creditAmtToApply );
+            system.debug('------------totalCreditBalance : '+totalCreditBalance );
             if(creditAmtToApply > 0)
             {
                 Map<String, Object> creditBalanceMap = new Map<String, Object>();
@@ -539,14 +540,15 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
                 creditBalanceMap.put('Type', 'Decrease');
                 creditBalanceMap.put('SourceTransactionId', zObj.getValue('Id'));
                 listCBMap.add(creditBalanceMap);
-				// Start PD-0266 23May16 JohnD - added logic for credit balance deduction
-				newCreditBalance = totalCreditBalance - creditAmtToApply;
-				mapInvBAToTotalCBAmt.put(targetBAId, newCreditBalance);
-				// End PD-0266 23May16 JohnD - added logic for credit balance deduction
+                // Start PD-0266 23May16 JohnD - added logic for credit balance deduction
+                newCreditBalance = totalCreditBalance - creditAmtToApply;
+                mapInvBAToTotalCBAmt.put(targetBAId, newCreditBalance);
+                system.debug('------------newCreditBalance: '+newCreditBalance);
+                // End PD-0266 23May16 JohnD - added logic for credit balance deduction
             }
             
-			invoiceZuoraId_adjustedBalance.put((string)zObj.getValue('Id'), remainingAmt);	// Start/End PD-0266 22May16 JohnD
-            //mapInvBAToRemainingAmt.put(targetBAId, remainingAmt);	// Start/End PD-0266 22May16 JohnD - commented out
+            invoiceZuoraId_adjustedBalance.put((string)zObj.getValue('Id'), remainingAmt);  // Start/End PD-0266 22May16 JohnD
+            //mapInvBAToRemainingAmt.put(targetBAId, remainingAmt); // Start/End PD-0266 22May16 JohnD - commented out
         }                     
 
         //Perform Apply Credit Balance Callout
@@ -579,7 +581,7 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
         Map<String, String> mapBAToPayMet = new Map<String, String>();
         Set<String> setBAExId = new Set<String>();
         List<Zuora.zObject> zobjsPayMet = new List<Zuora.zObject>();
-        final string BA_CREATION_MODE_EXISTING = 'Use existing Billing Account';	// Start/End PD-0194 18May16 JohnD
+        final string BA_CREATION_MODE_EXISTING = 'Use existing Billing Account';    // Start/End PD-0194 18May16 JohnD
         //END rom 10/12
         
         for(Zuora.zObject zObj: zobjs)
@@ -609,7 +611,7 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
         //START D-4591 4-19-2016 Added by Jason A.
         if(baIds.size() > 0){
             lstBillAcc = [SELECT Id, Zuora__External_Id__c, Zuora__DefaultPaymentMethod__c,(SELECT id, Order_Number_1__r.Payment_Method_ID__c, Order_Number_1__r.Billing_Account_Creation_Mode__c 
-            		From Zuora__Subscriptions__r order by createddate desc LIMIT 1)
+                    From Zuora__Subscriptions__r order by createddate desc LIMIT 1)
                           FROM Zuora__CustomerAccount__c WHERE Id IN:baIds];
         }
         //END D-4591 4-19-2016 Added by Jason A.
@@ -627,13 +629,13 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
                 // End PD-0194 18May16 JohnD - commented out
                 //START D-4591 4-19-2016 Added by Jason A.
                 for(Zuora__Subscription__c subsMap : ba.Zuora__Subscriptions__r) {
-                	// Start PD-0194 18May16 JohnD
-                	if (subsMap.Order_Number_1__r.Billing_Account_Creation_Mode__c == BA_CREATION_MODE_EXISTING) {
-                    	setBAExId.add(ba.Zuora__External_Id__c);
-                	} else {
-                		mapBAToPayMet.put(ba.Zuora__External_Id__c, subsMap.Order_Number_1__r.Payment_Method_ID__c);
-                	}
-                	// End PD-0194 18May16 JohnD
+                    // Start PD-0194 18May16 JohnD
+                    if (subsMap.Order_Number_1__r.Billing_Account_Creation_Mode__c == BA_CREATION_MODE_EXISTING) {
+                        setBAExId.add(ba.Zuora__External_Id__c);
+                    } else {
+                        mapBAToPayMet.put(ba.Zuora__External_Id__c, subsMap.Order_Number_1__r.Payment_Method_ID__c);
+                    }
+                    // End PD-0194 18May16 JohnD
                 }
                 //END D-4591 4-19-2016 Added by Jason A.
             }
@@ -658,11 +660,11 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
         // Start PD-0194 18May16 JohnD
         if (!setBAExId.isEmpty()) {
 
-	    	for (Zuora__CustomerAccount__c billingAccount : [select Zuora__External_Id__c, Zuora__Default_Payment_Method__r.Zuora__External_Id__c 
-	    			from Zuora__CustomerAccount__c where Zuora__External_Id__c in :setBAExId]) {
-	    		
-	    		mapBAToPayMet.put(billingAccount.Zuora__External_Id__c, billingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);		
-	    	}        	
+            for (Zuora__CustomerAccount__c billingAccount : [select Zuora__External_Id__c, Zuora__Default_Payment_Method__r.Zuora__External_Id__c 
+                    from Zuora__CustomerAccount__c where Zuora__External_Id__c in :setBAExId]) {
+                
+                mapBAToPayMet.put(billingAccount.Zuora__External_Id__c, billingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);     
+            }           
         }
         // End PD-0194 18May16 JohnD
         
@@ -672,8 +674,8 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
         for(Zuora.zObject zObj: zobjs)
         {
             String targetBAId = (String)zObj.getValue('AccountId');
-            //Decimal remainingAmt = mapInvBAToRemainingAmt.get(targetBAId);	// Start/End PD-0266 23May16 JohnD - commented out
-			Decimal remainingAmt = invoiceZuoraId_adjustedBalance.get((String)zObj.getValue('Id'));	// Start/End PD-0266 23May16 JohnD
+            //Decimal remainingAmt = mapInvBAToRemainingAmt.get(targetBAId);    // Start/End PD-0266 23May16 JohnD - commented out
+            Decimal remainingAmt = invoiceZuoraId_adjustedBalance.get((String)zObj.getValue('Id')); // Start/End PD-0266 23May16 JohnD
             Zuora__CustomerAccount__c billingAcct = mapBAZuoraIdToBA.get(targetBAId);
             Id orderId = mapBAZuoraIdToOrderID.get(targetBAId);
             if(targetBAId != null && remainingAmt != null && billingAcct != null && orderId != null && remainingAmt >= 0) //start/end rom 10/13 //START-END D-3601 10/29/2015 Added by J.Sarion - create payment for non-negative reamaining amount
@@ -692,7 +694,7 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
                     paymentMap.put('AppliedCreditBalanceAmount', mapOrderIdToCheckAmount.get(orderId) - remainingAmt);
                     paymentMap.put('Type', 'External'); 
                 }
-                else if (billingAcct.Zuora__DefaultPaymentMethod__c == GlobalVariableClass.OTHER && remainingAmt > 0) {	// Start/End PD-0266 23May16 JohnD - added " && remainingAmt > 0" 
+                else if (billingAcct.Zuora__DefaultPaymentMethod__c == GlobalVariableClass.OTHER && remainingAmt > 0) { // Start/End PD-0266 23May16 JohnD - added " && remainingAmt > 0" 
                     paymentMap.put('PaymentMethodId', ConstantsSLB.getKeyId('ZuoraPaymentMethod_Other'));
                     paymentMap.put('Amount', remainingAmt);                 
                     paymentMap.put('Type', 'External');
@@ -702,7 +704,7 @@ public class InvoicePaymentQueueableClass implements queueable, Database.AllowsC
                             paymentMap.put('Comment', 'eNets Payment Number: ' + mapAcctIdToPayNum.get(billingAcct.Zuora__Account__c));
                     }
                 }
-                else if(remainingAmt > 0) {	// Start/End PD-0266 23May16 JohnD - added "if(remainingAmt > 0)"
+                else if(remainingAmt > 0) { // Start/End PD-0266 23May16 JohnD - added "if(remainingAmt > 0)"
                     paymentMap.put('PaymentMethodId', mapBAToPayMet.get(billingAcct.Zuora__External_Id__c)); //start/end rom 10/20
                     paymentMap.put('Amount', remainingAmt);
                     paymentMap.put('Type', 'Electronic');

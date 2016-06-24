@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BA_INT_DATA_POOL</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BA_INT_DATA_POOL</value>
+    </caseValues>
+    <fields>
+        <label><!-- Record ID --></label>
+        <name>Record_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- export data --></label>
+        <name>export_data__c</name>
+    </fields>
+    <fields>
+        <label><!-- group id --></label>
+        <name>group_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- insertion time --></label>
+        <name>insert_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- job_id --></label>
+        <name>job_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- record type --></label>
+        <name>record_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- run for date --></label>
+        <name>run_for_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- sort order --></label>
+        <name>sort_order__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

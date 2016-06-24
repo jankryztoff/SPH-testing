@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Address Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Address Details</value>
+    </caseValues>
+    <fields>
+        <label><!-- Identifier --></label>
+        <name>Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level Number Formatted --></label>
+        <name>Level_Number_Formatted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+        <relationshipLabel><!-- Address Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Postal Code Text --></label>
+        <name>Postal_code_text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Number Formatted --></label>
+        <name>Unit_Number_Formatted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit --></label>
+        <name>Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingCode --></label>
+        <name>buildingCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- buildingNo --></label>
+        <name>buildingNo__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

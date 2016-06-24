@@ -50,10 +50,13 @@ public class Subscription_Handler {
             lCase = c.createCase2(lOrder,true);
         
         // Assign Vendor / Mailing Agent  
+        //START PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
         List<Order_Line_Item__c> lOrderLineItems = [SELECT Id, Delivered_By__c, Recipient_Postal_Code__c, Vendor_Mailing_Agent__c, 
                         Main_Package_Product_Platform__c, Order__r.Recipient_Contact__r.Address__r.Recordtype.DeveloperName, 
-                        Case__r.Subscription_Name__c, Case__r.Subscription_Name__r.Delivered_By_1__c, Case__r.Subscription_Name__r.Vendor_1__c
+                        Case__r.Subscription_Name__c, Case__r.Subscription_Name__r.Delivered_By_1__c, Case__r.Subscription_Name__r.Vendor_1__c,
+                        Order__r.Base_Subscription__r.Vendor_1__c, Order__r.Order_Type__c
                         FROM Order_Line_Item__c where Order__c =: SOrder.Id];
+        //END PD-0422 AddedBy KatherinePunzalan : added Vendor Value for Mailing Agent Renewal Subs -->
         Vendor_Assignment vendorAssignment = new Vendor_Assignment();
         vendorAssignment.Assign_Vendor_To_Order_line_Items(lOrderLineItems);
         //END D-3423 Wenjun 27 Aug 15
@@ -95,13 +98,13 @@ public class Subscription_Handler {
             boolean bCreateNewBillingAccount  = false;
             boolean bCreateDeliverySubscription=false;
             boolean bPayDeliveryChargeNow = false;
-            ID ExistingDeliverySubscriptionId;
+            ID ExistingDeliverySubscriptionId; 
             ID SFBillingAccount;
             string zBillingAccount;
             decimal SubscriberCharge = 0;
             ID AccountId;
             decimal DeliveryFPSubscriptionUsage;
-            string CCPaymentMethodId;
+            string CCPaymentMethodId; 
             
             //Start UD-678 VPernicia/MGatchalian 4/06/2015            
             list<id> lstofOrderLine = new list<id>();
@@ -173,8 +176,12 @@ public class Subscription_Handler {
                                     bCreateNewBillingAccount, bCreateDeliverySubscription, bPayDeliveryChargeNow, 
                                     ExistingDeliverySubscriptionId, SFBillingAccount, zBillingAccount, SubscriberCharge,
                                     AccountId, SOrder.Id, DeliveryFPSubscriptionUsage, CCPaymentMethodId);
-                Database.executeBatch(sendQuotesToZuoraBatch,1); //START/END 04/20/2015 D-2743 Kevin Evasco - Set batch size to 1
-            }
+                //START PD-0250 For Test Class 06152016
+                if(!Test.isRunningTest()){
+                    Database.executeBatch(sendQuotesToZuoraBatch,1); //START/END 04/20/2015 D-2743 Kevin Evasco - Set batch size to 1
+                }
+                //END PD-0250 For Test Class 06152016
+           }
             /*else if(origin == 'Change of Subscription') {
                 SendQuotesToZuora2 zSendQuote = new SendQuotesToZuora2();    
                 zSendQuote.NonFutureSendQuoteToZBilling(lQuoteIds, PaymentMode, PaymentModeOther, sDeliveryChargeType, 

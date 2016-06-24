@@ -10,8 +10,10 @@
 
 public class InvoiceController {    
     
-    Logger logger = new Logger('InvoiceController');//Start/End PD-0349 29-May-2016 Added By S.Puli
-    
+    final static string DUMMY_UOM = 'Dummy Charge';  // Start/End PD-0490 15Jun16 JohnD
+    final static string PSTOP = 'PStop';
+  Logger logger = new Logger('InvoiceController');//Start/End PD-0349 29-May-2016 Added By S.Puli
+  
     public String address1 { get; set; }
     public String address2 { get; set; }
     public String address3 { get; set; }
@@ -103,6 +105,9 @@ public class InvoiceController {
     public Integer tableLineCounter {get; set;}
     public Integer totalPackageChar {get; set;}
     //END : UD-3207 9/11/2015 Gdelrosario
+    
+    map<string, date> subsriptionName_dummyUomUsageStartDate = new map<string, date>();  // Start/End PD-0490 16Jun16 JohnD
+    
     public class SubscriptionDetails {
         public String recipientName { get; set; }
         //START: UD-1771 7/4/15 VPernicia
@@ -140,8 +145,8 @@ public class InvoiceController {
     }
     
     public void generateInvoiceController() {
-        try 
-        {   
+        //try 
+        //{   
             giftChargeFee = 0.00; // START-END : D-2837 4/30/2015 Alyana Navarro
             subDetailsList = new List<SubscriptionDetails>();
             Set<String> subscriptionIdSet = new Set<String>();
@@ -266,7 +271,7 @@ public class InvoiceController {
                                         Billing_Contact__r.Address__r.City__r.Name,
                                         Billing_Contact__r.Address__r.Packing_Code__c,
                                         Billing_Contact__r.Address__r.City__r.Country__r.Country_Name__c,
-                                        Billing_Contact__r.Company_Name__c
+                                        Billing_Contact__r.Company_Name__c,Zuora__DefaultPaymentMethod__c //START-END PD-0465 06-21-2016 added by Jason A.
                     //END: D-3934 11/12/2015 Added by Jason A.
                     // END: UD-1781 Jul-06-2015 Added by S.Puli
                                     FROM Zuora__CustomerAccount__c
@@ -277,7 +282,6 @@ public class InvoiceController {
                 //END D-3722 Gdelrosario 23/10/2015: added to query
                     getBarCode();
                     
-                    
                     footerInvoiceAmount = '';
                     invoiceNumber = '';                 
                     Integer dateTotal = 0;
@@ -286,22 +290,24 @@ public class InvoiceController {
                     //START PD-0212 5-23-2016 Changes by Jason A
                     //Start PD-0349 29-May-2016 Added by S.Puli - Previous balance is null for some scenarios and needs to be computed i.e. Recurring
                     decimal tempvalue = 0;
-                    if(invoice.Previous_Balance__c <> null){    
-                        tempvalue = decimal.valueof(invoice.Previous_Balance__c) + invoice.Zuora__TotalAmount__c;
+          if(invoice.Previous_Balance__c <> null){  
+            tempvalue = decimal.valueof(invoice.Previous_Balance__c) + invoice.Zuora__TotalAmount__c;
                     }else{
-                        tempvalue = billingAccount.Zuora__Balance__c + invoice.Zuora__PaymentAmount__c;
-                    }
-                    //End PD-0349 29-May-2016 Added by S.Puli
-                    String tempAmount = String.valueOf(tempvalue * 100);
+            tempvalue = billingAccount.Zuora__Balance__c + invoice.Zuora__PaymentAmount__c;
+          }
+          //End PD-0349 29-May-2016 Added by S.Puli
+          String tempAmount = String.valueOf(tempvalue * 100);
                     //END PD-0212 5-23-2016 Changes by Jason A
                     tempAmount = tempAmount.substring(0, tempAmount.length() - 3);
                     String dateTodayString = String.valueOf(invoice.Zuora__InvoiceDate__c).substring(0, 10);            
                     List<Integer> baseDigitsDate = new List<Integer>{5, 4, 3, 2, 0, 2, 7, 0, 5, 4};
                     List<Integer> baseDigitsAccount = new List<Integer>{5, 4, 3, 2, 7, 6, 5, 4, 3, 2};
+                    /*
                     for(Integer counter = 0; counter < 11 - tempAmount.length(); counter++){
                         footerInvoiceAmount += 0;
                     }
                     footerInvoiceAmount += tempAmount;
+                    */
                     if(invoice.ARMS_Invoice_ID__c != null){
                         invoiceNumber = String.valueOf(invoice.ARMS_Invoice_ID__c).substring(2, invoice.ARMS_Invoice_ID__c.length());
                     } else {
@@ -396,7 +402,18 @@ public class InvoiceController {
                             totalOutstanding = 0;
                         
                         //Start UD-3893 31-Mar-2016 Added By S.Puli
+                        //START PD-0465 06-21-2016 added by Jason A.
                         footerAmount = totalOutstanding;
+                        String footerValue = String.valueOf(footerAmount * 100);
+                        if(footerValue == '0'){
+                            footerValue = '000';
+                        }
+                        footerValue = footerValue.substring(0, footerValue.length() - 3);
+                        for(Integer counter = 0; counter < 11 - footerValue.length(); counter++){
+                            footerInvoiceAmount += 0;
+                        }
+                        footerInvoiceAmount += footerValue; 
+                        //END PD-0465 06-21-2016 added by Jason A.
                         //End UD-3893 31-Mar-2016 Added By S.Puli
                         //END 21 September 2015 UD-2504 and UD-2826 Kevin Evasco - use the previous balance field from Invoice Record.                      
                         //END 2 October 2015 UD-2504 Kevin Evasco - Previous Balance = BA Balance - Invoice Total Amount + Invoice Payment.
@@ -428,11 +445,13 @@ public class InvoiceController {
                     //START D-3878 11/09/15 RReyes - added sub end date in query
                     //START D-3929 18-Nov-2015 Added by S.Puli
     //START UD-3758 02-23-2016 added by Jason A.
-                    invoiceLineItemList = [SELECT id, name, Invoice_ID__c, Subscription_ID__c, Subscription_Number__c, Charge_Amount__c, Tax_Exempt_Amount__c, Tax_Amount__c, Subscription__c,
+            // Start PD-0490 15Jun16 JohnD - added Charge_Name__c and Quantity__c fields
+                    invoiceLineItemList = [SELECT id, name, Invoice_ID__c, Subscription_ID__c, Subscription_Number__c, Charge_Amount__c, Tax_Exempt_Amount__c, Tax_Amount__c, Subscription__c, Charge_Name__c, Quantity__c, 
                                             Service_Start_Date__c, Service_End_Date__c, Applied_To_Invoice_Item_ID__c, UOM__c, ID__c,Product_Name__c,  //START/END 14 August 2015 UD-2259 Kevin Evasco - Seperate Line Item for Discount
                                             Subscription__r.Zuora__SubscriptionEndDate__c, Subscription__r.Order_Line_Item_Number_1__c, Subscription__r.Main_Package_1__r.Package_Type__c, Subscription__r.Subscription_Type__c  
                                             FROM Invoice_Line_Item__c 
                                             WHERE Invoice_ID__c =: invoice.Zuora__Zuora_Id__c];
+                    // End PD-0490 15Jun16 JohnD - added Charge_Name__c field
     //END UD-3758 02-23-2016 added by Jason A.
                     //END D-3929 18-Nov-2015 Added by S.Puli
                     //END D-3878 11/09/15 RReyes - added sub end date in query
@@ -675,6 +694,7 @@ public class InvoiceController {
                 Date serviceEnd;
                 Date subEndDate;//START/END D-3878 11/09/15 RReyes
                 //START UD-1784 07/02/2015 Added By S.Puli
+        date dummyUomStartDate;  // Start/End PD-0490 15Jun16 JohnD
                 earliestStart = null;
                 latestEnd = null;
                 //START D-3878 11/09/15 RReyes - considers only charges > 0 and compared end date with sub end date
@@ -738,9 +758,21 @@ public class InvoiceController {
                         }
                             
                     }
+          
+          // Start PD-0490 15Jun16 JohnD - store dummy uom start date
+          if (invoiceLine.Charge_Name__c == DUMMY_UOM && invoiceLine.Quantity__c > 0) {
+            dummyUomStartDate = invoiceLine.Service_Start_Date__c;
+          }
+          // End PD-0490 15Jun16 JohnD - store dummy uom start date
                 }
                 //END PD-0349 28-May-2016 Added By S.Puli
                 //END D-3878 11/09/15 RReyes
+        // Start PD-0490 15Jun16 JohnD - overwrite start date with dummy uom start date
+        if (dummyUomStartDate != null) {
+          earliestStart = dummyUomStartDate;
+        }
+        // End PD-0490 15Jun16 JohnD - overwrite start date with dummy uom start date
+        
                 if(earliestStart <> null){
                     mapSubtoDate.put (subId, new Map<String, Date> {'startDate' => earliestStart});
                 }
@@ -1035,14 +1067,15 @@ public class InvoiceController {
             //currentChargesBeforeGST += otherAdjustmentsFee;
             
             getTaxRate(); //START/END D-3327 04 August 2015 Kevin Evasco - GST Rate will be based from custom settings only if tax amount is not 
-            getPaymentDescription();
-            
+            getPaymentDescription();   
+        /*
         }       
         catch(Exception e) {
             system.debug('Error message : ' + e);
-            logger.log(e);//Start/End PD-0349 29-May-2016 Added By S.Puli
+      logger.log(e);//Start/End PD-0349 29-May-2016 Added By S.Puli
         }
-        logger.save();//Start/End PD-0349 29-May-2016 Added By S.Puli
+        */
+    logger.save();//Start/End PD-0349 29-May-2016 Added By S.Puli
     }
     
     public void initialize() {  
@@ -1093,12 +1126,13 @@ public class InvoiceController {
             }
         }
         //END UD-3212 11/11/2015 added by Jason A. 
-
-        if((billingAccount.GIRO_A_C__c != null && billingAccount.GIRO_A_C__c != '') || (billingAccount.Billing_Type__c.contains(GlobalVariableClass.BILLING_TYPE_RECURRING) && billingAccount.Payment_Mode__c == GlobalVariableClass.CREDITCARD)) {
+        //START PD-0465 06-21-2016 added by Jason A.
+        if((billingAccount.GIRO_A_C__c != null && billingAccount.GIRO_A_C__c != '') || (billingAccount.Billing_Type__c.contains(GlobalVariableClass.BILLING_TYPE_RECURRING) && (billingAccount.Payment_Mode__c == GlobalVariableClass.CREDITCARD || billingAccount.Zuora__DefaultPaymentMethod__c == GlobalVariableClass.PAYPAL))) {
             headnoteType = 1; 
         } else {
             headnoteType = 0;
-        }        
+        }
+        //END PD-0465 06-21-2016 added by Jason A.
     }
     //END 15 July 2015 Kevin Evasco - UD-1695, UD-1760, UD-1762, UD-1785, UD-1773, UD-1766, UD-1765, UD-1798, D-3208, D-3207, D-3206 - Used Billing Account to determine billing type.
     
@@ -1164,4 +1198,5 @@ public class InvoiceController {
         
     }   
     //END : D-2037 03/09/2015 S.Puli
+    
 }

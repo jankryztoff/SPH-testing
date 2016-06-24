@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Zuora__Subscription__c$Name</field>
+    </columns>
+    <columns>
+        <field>Zuora__Subscription__c.Vendor_Allocations__r$Name</field>
+    </columns>
+    <description>Vendor Allocation with no Recipient Contact</description>
+    <filter>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Legacy_Subscription_ID__c</column>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Legacy_Subscription_ID__c</column>
+            <operator>notContain</operator>
+            <value>null</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Zuora__Subscription__c$Recipient_Contact__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Vendor_Allocation_No_RecipientContact</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Subscription_Vendor_Allocation__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Zuora__Subscription__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

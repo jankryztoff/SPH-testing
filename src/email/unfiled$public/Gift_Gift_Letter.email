@@ -1,0 +1,35 @@
+<pre>
+{{Contact.FirstName}} {{Contact.LastName}} {{Contact.MailingAddress}}
+
+Dear Subscriber,
+Notification for the collection of Gift for the {!Zuora__SubscriptionProductCharge__c.PublicationCode__c} Subscription Account no:
+
+Thank you for subscribing to {!Zuora__SubscriptionProductCharge__c.PublicationCode__c}.
+
+As a token of our appreciation, we are pleased to present you {!Gift__c.Name}.
+
+Collection Venue 	        Collection Hours
+Singapore Press Holdings 	Mondays to Fridays : 9:00am – 5:00pm
+Circulation Department
+82 Genting Lane             (Closed on Saturdays, Sundays and Public Holidays)
+Media Centre, Level 2
+Singapore 349567
+
+Please bring along this letter and your identification card to collect the gift within eight weeks from the date of this letter. You will need to show this letter to the guardhouse at the entrance to obtain a security pass for access to the collection venue.
+
+You may authorize a representative to collect the gift on your behalf by giving him/her an authorization letter with a photocopy copy of your NRIC for verification. This letter must also be produced at the point of redemption together with your representative’s NRIC.
+
+Kindly note that all gifts not claimed within two month from the stipulated date will be forfeited. Gift must be taken as provided and is not exchangeable for cash or other items.
+
+We trust that you will enjoy your upcoming issues of {!Zuora__SubscriptionProductCharge__c.PublicationCode__c}.
+______________________________________________________________________
+ACKNOWLEDGEMENT
+
+I hereby acknowledge receipt of {!Gift__c.Name}.
+
+Name: ____________________________  NRIC: ____________________________ 
+
+
+___________________________________
+Signature / Date
+</pre>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Renewal Notifications for Magazines and Newspaper</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>X1st_Expiry_Notification_Date__c</fullName>
+        <defaultValue>28</defaultValue>
+        <externalId>false</externalId>
+        <label>1st Expiry Notification Date</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Notification_Magazine__c</fullName>
+        <defaultValue>42</defaultValue>
+        <description>this is used for configurable days in renewal notification</description>
+        <externalId>false</externalId>
+        <label>1st Notification Magazine</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Notification_Newspaper__c</fullName>
+        <defaultValue>42</defaultValue>
+        <externalId>false</externalId>
+        <label>1st Notification Newspaper</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Expiry_Notification_Date__c</fullName>
+        <defaultValue>10</defaultValue>
+        <externalId>false</externalId>
+        <label>2nd Expiry Notification Date</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Notification_Magazine__c</fullName>
+        <defaultValue>14</defaultValue>
+        <externalId>false</externalId>
+        <label>2nd Notification Magazine</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Notification_Newspaper__c</fullName>
+        <defaultValue>14</defaultValue>
+        <externalId>false</externalId>
+        <label>2nd Notification Newspaper</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Renewal Notifications</label>
+    <visibility>Public</visibility>
+</CustomObject>

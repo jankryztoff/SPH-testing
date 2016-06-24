@@ -1,0 +1,29 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Today}}</font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div><font face="Verdana, Helvetica, sans-serif" size="2" style="color: rgb(0, 0, 0);">Account no:&nbsp;</font><font face="Verdana, Helvetica, sans-serif" size="2">{{Account.AccountNumber}}</font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Contact.FirstName}}&nbsp;{{Contact.LastName}}</font></div><div style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Contact.MailingAddress}}</font></div>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<font style="color: rgb(0, 0, 0);" face="Verdana, Helvetica, sans-serif" size="2">Dear&nbsp;{{Contact.FirstName}} {{Contact.LastName}},</font><div><p class="MsoNormal" style="color: rgb(0, 0, 0); text-align: justify; line-height: 150%;"><b><u><span lang="EN-GB" style="line-height: 150%;"><font face="Verdana, Helvetica, sans-serif" size="2">SPH Subscriber
+Engagement Programme</font></span></u></b></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; color: rgb(0, 0, 0); text-align: justify;"><font face="Verdana, Helvetica, sans-serif" size="2"><span lang="EN-GB">Thank you for renewing your subscription by another {{Promotion__c.Contract_Period__c}}</span><span class="MsoCommentReference">&nbsp;</span><span lang="EN-GB">months. Your subscription has been processed and the following requested
+newspaper(s) will be delivered to your stated address from the mentioned
+date(s).<o:p></o:p></span></font></p>
+
+<div style="font-size: 12pt; font-family: arial;"><!--[if !supportAnnotations]-->
+
+<div><div id="_com_1" class="msocomtxt" language="JavaScript" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2"><b><u>Start Date</u><span class="Apple-tab-span" style="white-space: pre;">		</span><u>Publication</u></b>
+
+<!--[if !supportAnnotations]--></font></div><div id="_com_1" class="msocomtxt" language="JavaScript" style="color: rgb(0, 0, 0);"><font face="Verdana, Helvetica, sans-serif" size="2">{{Zuora__Subscription__c.Zuora__SubscriptionStartDate__c}}<span class="Apple-tab-span" style="white-space:pre">		</span>{{Publication__c.Name}}</font></div><div id="_com_1" class="msocomtxt" language="JavaScript"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div id="_com_1" class="msocomtxt" language="JavaScript"><font face="Verdana, Helvetica, sans-serif" size="2">{{Promotion_Gift__c.Redemption_Letter_Details__c}}</font></div><div id="_com_1" class="msocomtxt" language="JavaScript"><font face="Verdana, Helvetica, sans-serif" size="2"><br></font></div><div id="_com_1" class="msocomtxt" language="JavaScript"><font face="Verdana, Helvetica, sans-serif" size="2">This is a computer-generated letter. No signature is required.&nbsp;</font></div>
+
+<!--[endif]--></div>
+
+</div></div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[<p class="MsoNormal" style="margin: 0in 5.25pt 7.5pt 0in;"><br></p>]]></td>
+</tr>
+</table>

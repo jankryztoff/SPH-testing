@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Record_Type_Hidden__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order_Line_Item__r.Order__r.Account__r.RecordType.Name</formula>
+        <label>Account Record Type Hidden</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gift ID</label>
+        <referenceTo>Gift__c</referenceTo>
+        <relationshipLabel>Order Line Item Gifts</relationshipLabel>
+        <relationshipName>Order_Line_Item_Gifts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Letter_Batch_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Gift Letter Batch Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gift_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Promotion_Gift__r.Gift__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Gift Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Has_Letter_Attached__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox that specifies that the Order Line Item Gift record already has a letter attached to it.</description>
+        <externalId>false</externalId>
+        <label>Has Letter Attached</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hidden_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Hidden Status</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Internal_Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NRIC_Collect_on_Behalf__c</fullName>
+        <externalId>false</externalId>
+        <label>NRIC (Collect on Behalf)</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Name_Collect_on_Behalf__c</fullName>
+        <externalId>false</externalId>
+        <label>Name (Collect on Behalf)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Line_Item__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Line Item</label>
+        <referenceTo>Order_Line_Item__c</referenceTo>
+        <relationshipLabel>Order Line Item Gifts</relationshipLabel>
+        <relationshipName>Order_Line_Item_Gifts</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Order_Quantity_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Quantity</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Promotion_Gift__r.Gift__r.One_Time_Charge__c * Order_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Promotion_Gift__c</fullName>
+        <externalId>false</externalId>
+        <label>Promotion Gift</label>
+        <referenceTo>Promotion_Gift__c</referenceTo>
+        <relationshipLabel>Order Line Item Gifts</relationshipLabel>
+        <relationshipName>Order_Line_Item_Gifts</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Qty__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order_Line_Item__r.Qty__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qty</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Redemption_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Redemption_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Redemption_Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Redemption Remarks</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Serial_Number__c</fullName>
+        <description>Serial Number which is appended to the Id that is displayed at the upper right corner of all letters.</description>
+        <displayFormat>{000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Serial Number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Telephone_Collect_on_Behalf__c</fullName>
+        <externalId>false</externalId>
+        <label>Telephone (Collect on Behalf)</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Promotion_Gift__r.Gift__r.Gift_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unique_Number__c</fullName>
+        <description>Combination of Gift Code and Serial Number</description>
+        <externalId>false</externalId>
+        <formula>Promotion_Gift__r.Gift__r.Gift_Code__c + &apos;-&apos; + Serial_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unique Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Order Line Item Gift</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>OLIG{000000}</displayFormat>
+        <label>Order Line Item Gift Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Order Line Item Gifts</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>RedemptionDateNotPopulated</fullName>
+        <active>true</active>
+        <description>This Validation Rule fires if the Redemption Quantity is given a value but the Redemption Date has no value yet.</description>
+        <errorConditionFormula>!ISNULL(Redemption_Quantity__c) &amp;&amp; ISNULL(Redemption_Date__c)</errorConditionFormula>
+        <errorDisplayField>Redemption_Quantity__c</errorDisplayField>
+        <errorMessage>Redemption Date must be specified when Redemption Quantity is entered</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RedemptionQuantityNotPopulated</fullName>
+        <active>true</active>
+        <description>This Validation Rule fires if the Redemption Date is given a value but the Redemption Quantity has no value yet.</description>
+        <errorConditionFormula>!ISNULL(Redemption_Date__c) &amp;&amp; ISNULL(Redemption_Quantity__c)</errorConditionFormula>
+        <errorDisplayField>Redemption_Date__c</errorDisplayField>
+        <errorMessage>Redemption Quantity must be specified when Redemption Date is entered</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Redemption_Qty_not_more_than_Order_Qty</fullName>
+        <active>true</active>
+        <description>The redemption quantity should not be more than the order quantity.</description>
+        <errorConditionFormula>Redemption_Quantity__c &gt;  Order_Quantity__c</errorConditionFormula>
+        <errorMessage>The redemption quantity should not be more than the order quantity.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BT_CO_ARMS_OutstandingAmountInterface</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BT_CO_ARMS_OutstandingAmountInterfaces</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch_Job_Id --></label>
+        <name>Batch_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Run Date --></label>
+        <name>Batch_Run_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Details --></label>
+        <name>Validation_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountNumber --></label>
+        <name>accountNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- accountType --></label>
+        <name>accountType__c</name>
+    </fields>
+    <fields>
+        <label><!-- badDebtRecoveryAmount --></label>
+        <name>badDebtRecoveryAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- bankCode --></label>
+        <name>bankCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- creditBalance --></label>
+        <name>creditBalance__c</name>
+    </fields>
+    <fields>
+        <label><!-- currentOverdueAmount --></label>
+        <name>currentOverdueAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- debitManagementStatus --></label>
+        <name>debitManagementStatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- giroAccountNumber --></label>
+        <name>giroAccountNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- indicatorForWriteOff --></label>
+        <name>indicatorForWriteOff__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicator1 --></label>
+        <name>negativeAmountIndicator1__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicator2 --></label>
+        <name>negativeAmountIndicator2__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor10th --></label>
+        <name>negativeAmountIndicatorFor10th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor11th --></label>
+        <name>negativeAmountIndicatorFor11th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor12th --></label>
+        <name>negativeAmountIndicatorFor12th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor1st --></label>
+        <name>negativeAmountIndicatorFor1st__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor2nd --></label>
+        <name>negativeAmountIndicatorFor2nd__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor3rd --></label>
+        <name>negativeAmountIndicatorFor3rd__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor4th --></label>
+        <name>negativeAmountIndicatorFor4th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor5th --></label>
+        <name>negativeAmountIndicatorFor5th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor6th --></label>
+        <name>negativeAmountIndicatorFor6th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor7th --></label>
+        <name>negativeAmountIndicatorFor7th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor8th --></label>
+        <name>negativeAmountIndicatorFor8th__c</name>
+    </fields>
+    <fields>
+        <label><!-- negativeAmountIndicatorFor9th --></label>
+        <name>negativeAmountIndicatorFor9th__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor10thPreviousMonth --></label>
+        <name>oustandingAmountFor10thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor11thPreviousMonth --></label>
+        <name>oustandingAmountFor11thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor12thPreviousMonth --></label>
+        <name>oustandingAmountFor12thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor1stPreviousMonth --></label>
+        <name>oustandingAmountFor1stPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor2ndPreviousMonth --></label>
+        <name>oustandingAmountFor2ndPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor3rdPreviousMonth --></label>
+        <name>oustandingAmountFor3rdPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor4thPreviousMonth --></label>
+        <name>oustandingAmountFor4thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor5thPreviousMonth --></label>
+        <name>oustandingAmountFor5thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor6thPreviousMonth --></label>
+        <name>oustandingAmountFor6thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor7thPreviousMonth --></label>
+        <name>oustandingAmountFor7thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor8thPreviousMonth --></label>
+        <name>oustandingAmountFor8thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountFor9thPreviousMonth --></label>
+        <name>oustandingAmountFor9thPreviousMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- oustandingAmountForCurrentMonth --></label>
+        <name>oustandingAmountForCurrentMonth__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor10Months --></label>
+        <name>overdueAmountFor10Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor11Months --></label>
+        <name>overdueAmountFor11Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor12Months --></label>
+        <name>overdueAmountFor12Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor1Month --></label>
+        <name>overdueAmountFor1Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor2Months --></label>
+        <name>overdueAmountFor2Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor3Months --></label>
+        <name>overdueAmountFor3Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor4Months --></label>
+        <name>overdueAmountFor4Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor5Months --></label>
+        <name>overdueAmountFor5Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor6Months --></label>
+        <name>overdueAmountFor6Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor7Months --></label>
+        <name>overdueAmountFor7Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor8Months --></label>
+        <name>overdueAmountFor8Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- overdueAmountFor9Months --></label>
+        <name>overdueAmountFor9Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- synonym --></label>
+        <name>synonym__c</name>
+    </fields>
+    <fields>
+        <label><!-- totalBadDebtAmount --></label>
+        <name>totalBadDebtAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- totalOutstandingAmount --></label>
+        <name>totalOutstandingAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- totalOverdueAmount --></label>
+        <name>totalOverdueAmount__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>
